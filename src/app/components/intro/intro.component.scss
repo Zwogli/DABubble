@@ -1,0 +1,26 @@
+.block__intro {
+  background: linear-gradient(1deg, #313ae5 1.22%, #797ef3 98.76%);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    // animation-delay: 2500ms;
+    animation: LogoMove 1.5s ease-in-out forwards;
+    // animation-duration: 2.5s;
+    // animation-iteration-count: 1;
+    // animation-timing-function: ease-in;
+    // animation-direction: normal;
+  }
+}
+
+@keyframes LogoMove {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-80px);
+  }
+}

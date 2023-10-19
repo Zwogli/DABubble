@@ -10,11 +10,13 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IntroComponent } from './components/intro/intro.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, IntroComponent, SignInComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
