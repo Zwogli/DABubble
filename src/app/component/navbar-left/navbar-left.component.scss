@@ -1,7 +1,7 @@
 // parent element <app-navbar-left>
 main{
   padding: 2rem 1rem 0 1rem;
-  height: calc(100% - 2rem);
+  height: calc(100% - 2rem - 80px);
   position: relative;
   display: flex;
   flex-direction: column;
