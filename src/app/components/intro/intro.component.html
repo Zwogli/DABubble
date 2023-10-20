@@ -1,8 +1,12 @@
 <div [class.block__intro--change-bg]="animationToTop" class="block__intro">
   <div [class.block__headline--move-top]="animationToTop" class="block__headline">
-    <img [class.img--move-left]="animationToLeft" src="assets/img/logo.png" />
+    <img [class.img--move-left]="animationToLeft && !animationToTop" src="assets/img/logo.png" />
     <div [class.hide-box--move-left]="animationToLeft" [class.hide-box--d-none]="animationToTop" class="hide-box"></div>
-    <span [class.headline--move-right]="animationToRight" [class.headline--become-black]="animationToTop" class="headline"
+    <span [class.headline--move-right]="animationToRight && !animationToTop"
+          [class.headline--become-black]="animationToTop"
+          [class.headline--d-flex]="animationToTop" class="headline"
       >DABubble</span>
   </div>
+
+  <app-sign-in *ngIf="animationToTop"></app-sign-in>
 </div>
