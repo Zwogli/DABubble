@@ -16,11 +16,11 @@ button{
 .mat-expansion-panel:not([class*=mat-elevation-z]){
   box-shadow: unset;
 }
-.rotate{
-  transform: rotate(-90deg);
-}
 .mat-expansion-panel__content{
-	margin-left: 24px;
+  margin-left: 24px;
 	display: flex;
 	gap: 1rem;
+}
+.rotate{
+  transform: rotate(-90deg);
 }
