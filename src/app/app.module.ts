@@ -12,11 +12,12 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarLeftComponent } from './component/navbar-left/navbar-left.component';
 import { NavbarSearchbarComponent } from './component/navbar-searchbar/navbar-searchbar.component';
+import { HeaderNavbarMobileComponent } from './component/header-navbar-mobile/header-navbar-mobile.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent, NavbarLeftComponent, NavbarSearchbarComponent],
+  declarations: [AppComponent, NavbarLeftComponent, NavbarSearchbarComponent, HeaderNavbarMobileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
