@@ -1,0 +1,46 @@
+<main>
+
+  <mat-expansion-panel
+	hideToggle
+	(opened)="panelOpenState = true"
+	(closed)="panelOpenState = false"
+  >
+	<mat-expansion-panel-header>
+	  <mat-panel-title (click)="rotateArrow('channel')" > 
+		<div id="channel--arrow_drop_down" class="rotate">
+			<span  class="material-icons-outlined">
+			  arrow_drop_down
+			</span>
+	  	</div>
+		<span>Channels</span>
+	  </mat-panel-title>
+	</mat-expansion-panel-header>
+
+	<div class="mat-expansion-panel__content">
+		<p>Add Channel</p>
+	</div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+	hideToggle
+	(opened)="panelOpenState = true"
+	(closed)="panelOpenState = false"
+  >
+	<mat-expansion-panel-header>
+	  <mat-panel-title (click)="rotateArrow('directMessage')" > 
+		<div id="directMessage--arrow_drop_down" class="rotate">
+			<span  class="material-icons-outlined">
+			  arrow_drop_down
+			</span>
+	  	</div>
+		<span>Direct message</span>
+	  </mat-panel-title>
+	</mat-expansion-panel-header>
+
+	<div class="mat-expansion-panel__content">
+		<p>Test Image</p>
+		<p>Test Member</p>
+	</div>
+  </mat-expansion-panel>
+
+</main>
