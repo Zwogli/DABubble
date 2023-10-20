@@ -1,10 +1,18 @@
+// parent element <app-navbar-left>
 main{
-  padding: 2rem;
+  padding: 2rem 1rem 0 1rem;
+  height: calc(100% - 2rem);
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-
+button{
+  position: absolute;
+  right: 1rem;
+  bottom: 2rem;
+  z-index: 5;
+}
 .mat-expansion-panel:not([class*=mat-elevation-z]){
   box-shadow: unset;
 }
