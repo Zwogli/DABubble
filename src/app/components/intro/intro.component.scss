@@ -5,22 +5,115 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 
   img {
-    // animation-delay: 2500ms;
-    animation: LogoMove 1.5s ease-in-out forwards;
-    // animation-duration: 2.5s;
-    // animation-iteration-count: 1;
-    // animation-timing-function: ease-in;
-    // animation-direction: normal;
+    z-index: 3;
   }
 }
 
-@keyframes LogoMove {
+.block__intro--change-bg {
+  background: #ECEEFE !important;
+}
+
+.block__headline {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.img--move-left {
+  animation: LogoMoveLeft 500ms ease-in-out forwards;
+  z-index: 2;
+}
+
+@keyframes LogoMoveLeft {
   0% {
     transform: translateX(0);
+    //left: 0;
   }
   100% {
-    transform: translateX(-80px);
+    transform: translateX(-100px);
+    //left: -100px;
   }
+}
+
+.hide-box {
+  height: 72px;
+  width: 128px;
+  position: absolute;
+  z-index: 2;
+  background-color: #555CEC;
+}
+
+.hide-box--move-left {
+  animation: HideBoxMoveLeft 500ms ease-in-out forwards;
+  z-index: 2;
+}
+
+@keyframes HideBoxMoveLeft {
+  0% {
+    transform: translateX(0);
+    //left: 0;
+  }
+  100% {
+    transform: translateX(-156px);
+    //left: -100px;
+  }
+}
+
+.headline {
+  color: white;
+  font-size: 1.8rem;
+  display: none;
+  position: absolute;
+  right: 100px;
+  z-index: 1;
+}
+
+.headline--move-right {
+  display: flex !important;
+  animation: HeadlineMoveRight 500ms ease-in-out forwards;
+}
+
+@keyframes HeadlineMoveRight {
+  0% {
+    transform: translateX(0);
+    //left: 0;
+  }
+  100% {
+    transform: translateX(140px);
+    //left: -100px;
+  }
+}
+
+.block__headline--move-top {
+  animation: BlockHeadlineMoveTop 500ms ease-in-out forwards;
+}
+
+@keyframes BlockHeadlineMoveTop {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateY(-240px);
+    opacity: unset;
+  }
+}
+
+.hide-box--d-none {
+  display: none !important;
+}
+
+.headline--become-black {
+  color: black !important;
 }
