@@ -1,20 +1,32 @@
 <mat-card>
   <mat-card-content>
-    <span class="sign-in__headline">Anmeldung</span>
-    <span class="sign-in__info-text">Wir empfehlen dir, die E-Mail Adresse zu nutzen, die du bei der Arbeit verwendest.</span>
-    <div class="block__input">
-      <mat-icon class="material-icons-outlined mail-icon">mail</mat-icon>
-      <input placeholder="beispielname@email.com">
-    </div>
-    <div class="block__input">
-      <mat-icon class="material-icons-outlined mail-icon">lock</mat-icon>
-      <input placeholder="Passwort">
-    </div>
-    <span class="sign-in__forgot-password">Passwort vergessen?</span>
-    <div class="block__btn-box">
-      <button class="btn__log-in">Anmelden</button>
-      <button class="btn__guest-log-in">Gäste-Login</button>
-    </div>
+    <form class="example-form" [formGroup]="signInForm">
+      <span class="sign-in__headline">Anmeldung</span>
+      <span class="sign-in__info-text">Wir empfehlen dir, die E-Mail Adresse zu nutzen, die du bei der Arbeit verwendest.</span>
+
+      <div class="block__input">
+        <mat-icon class="material-icons-outlined mail-icon">mail</mat-icon>
+        <input formControlName="emailForm" type="email" placeholder="beispielname@email.com">
+      </div>
+      <div class="block__alert-email" *ngIf="emailForm?.invalid && (emailForm?.dirty || emailForm?.touched)">
+        <div *ngIf="emailForm?.errors?.['required']">*Eine E-Mail-Adresse ist notwendig.</div>
+        <div *ngIf="emailForm?.errors?.['email']">*Diese E-Mail-Adresse ist leider ungültig.</div>
+      </div>
+
+      <div class="block__input">
+        <mat-icon class="material-icons-outlined mail-icon">lock</mat-icon>
+        <input formControlName="passwordForm" type="password" placeholder="Passwort">
+      </div>
+      <div class="block__alert-password" *ngIf="passwordForm?.invalid && (passwordForm?.dirty || passwordForm?.touched)">
+        <div *ngIf="passwordForm?.errors?.['required']">*Bitte geben Sie ein Passwort ein.</div>
+      </div>
+
+      <span class="sign-in__forgot-password">Passwort vergessen?</span>
+      <div class="block__btn-box">
+        <button class="btn__log-in">Anmelden</button>
+        <button class="btn__guest-log-in">Gäste-Login</button>
+      </div>
+  </form>
   </mat-card-content>
 </mat-card>
 

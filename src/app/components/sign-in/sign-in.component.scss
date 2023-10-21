@@ -26,6 +26,13 @@ mat-card-content {
   padding: 0;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
 //when loading the card the opacity will be increase step by step that the intro animation is visible
 @keyframes IncreaseOpacity {
   0% {
@@ -87,6 +94,7 @@ mat-card-content {
 .mail-icon {
   position: absolute;
   left: 30px;
+  font-size: 1.222rem;
 }
 
 .sign-in__forgot-password {
@@ -168,4 +176,20 @@ mat-card-content {
       cursor: pointer;
     }
   }
+}
+
+.block__alert-email {
+  position: absolute;
+  top: 143px;
+  color: #ED1E79;
+  font-size: 0.667rem;
+  left: 18px;
+}
+
+.block__alert-password {
+  position: absolute;
+  top: 207px;
+  color: #ED1E79;
+  font-size: 0.667rem;
+  left: 18px;
 }

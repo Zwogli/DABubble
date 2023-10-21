@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from './custom_modules/material.module';
 
@@ -19,6 +20,8 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
   declarations: [AppComponent, IntroComponent, SignInComponent],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     MaterialModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
