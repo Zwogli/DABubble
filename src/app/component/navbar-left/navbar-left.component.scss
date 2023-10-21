@@ -1,11 +1,11 @@
 // parent element <app-navbar-left>
 main{
-  padding: 2rem 1rem 0 1rem;
-  height: calc(100dvh - 2rem - 80px);
+  padding: 2rem 1rem 2rem 1rem;
+  height: calc(100dvh - 4rem - 80px);
   position: relative;
   display: flex;
   flex-direction: column;
-  // overflow-y: auto;
+  // overflow: auto;
 }
 button{
   position: absolute;
