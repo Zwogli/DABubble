@@ -5,7 +5,6 @@ main{
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 button{
   position: absolute;
@@ -13,14 +12,83 @@ button{
   bottom: 2rem;
   z-index: 5;
 }
-.mat-expansion-panel:not([class*=mat-elevation-z]){
-  box-shadow: unset;
+.user__container--avatar{
+  height: 50px;
+  width: 50px;
+  position: relative;
+  .onlinestatus{
+    height: 10px;
+    width: 10px;
+
+    border: 2px solid #FFFFFF;
+    border-radius: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    &--color{
+      background-color: #686868;
+    }
+  }
+}
+.container__leftbound--attr{
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  div{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+}
+.container__elements--column{
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.container__element--spacebetween{
+  justify-content: space-between;
+}
+.sort__elemts--row{
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.element--blue{
+  color: #535AF1;
+}
+.fix--space-left{
+  margin-left: calc(0.5rem); //gap between arrow -> channel-titel
+}
+.panel__header--titel{
+  font-weight: 700;
+}
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+animation
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.rotate{
+  transform: rotate(-90deg);
+}
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+material design
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.mat-expansion-panel-header{
+  padding: 0 1rem 0 24px;
+}
+.mat-expansion-panel-header-title{
+  margin-right: unset;
 }
 .mat-expansion-panel__content{
   margin-left: 24px;
 	display: flex;
 	gap: 1rem;
 }
-.rotate{
-  transform: rotate(-90deg);
+.mat-expansion-panel:not([class*=mat-elevation-z]){
+  box-shadow: unset;
 }
+p {
+  margin: 0 0 0;
+}
+
+
