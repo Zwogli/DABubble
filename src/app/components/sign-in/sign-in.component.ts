@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'app-sign-in',
@@ -13,6 +14,8 @@ export class SignInComponent {
     emailForm: new FormControl('', [Validators.required, Validators.email]),
     passwordForm: new FormControl('', [Validators.required]),
   });
+
+  constructor(public authService: AuthService) { }
 
 
   /**
