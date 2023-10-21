@@ -1,5 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+:root{
+  --color-black: black;
 
+  --color-blue-primary-default: #444DF2;
+  --color-blue-primary-hover: #797EF3;
+  --color-blue-secondary-hover: #535AF1;
+
+  --color-grey-primary-disable:#686868;
+  --color-grey-hover:#E6E6E6;
+  
+  --color-green:#92C83E;
+  --color-purple-error: #ED1E79;
+  --color-white:#ECEEFE;
+  
+  --avatar_desktop: 168px;
+  --avatar_desktop-small: 64px;
+  --avatar-message: 50px;
+  --avatar-messagefield: 34px;
+  --avatar_mobile: 128px;
+  --avatar_mobile-small: 48px;
+  --icon: 30px;
+  --icon-small: 24px;
+  --icon-online: 16px;
+
+}
 html,
 body {
   height: 100%;
