@@ -8,9 +8,9 @@ import { Component } from '@angular/core';
 export class NavbarPanelMessageComponent {
   panelOpenState: boolean = false;
 
-  rotateArrow(container: string) {
+  rotateArrow() {
     const channelArrow: any = document.getElementById(
-      `${container}--arrow_drop_down`
+      `directMessage--arrow_drop_down`
     );
     channelArrow.classList.toggle('rotate');
   }
