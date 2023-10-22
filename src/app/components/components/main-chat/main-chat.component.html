@@ -18,21 +18,19 @@
 </div>
 
 <main>
-  <div class="message">
+  <div *ngFor="let message of chatRecord" class="message">
     <div class="message__avatar-container">
       <img src="../../../../assets/img/avatars/avatar_male_one.svg" alt="" />
     </div>
 
     <div class="message__content-container">
       <div class="message__header">
-        <span class="message__header-name">Display Name</span>
+        <span class="message__header-name">{{ message.sentByName }}</span>
         <span class="message__header-time">14:25 Uhr</span>
       </div>
 
       <p class="message__content">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi veniam
-        eos id iste sunt eaque a. Perferendis sed asperiores aperiam animi
-        suscipit amet magni beatae ipsam ab facilis? Beatae, voluptate!
+       {{ message.message }}
       </p>
 
       <div class="message__footer">

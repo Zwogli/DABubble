@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { Message } from 'src/app/models/message.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -7,13 +9,26 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./main-chat.component.scss'],
 })
 export class MainChatComponent implements OnInit {
-  testChatId: string = 'XJs8a192fOAERg5D9kJg';
+  testChatId: string = 'yf80qNMJDA1smEm3J8aX';
+  private componentIsDestroyed$ = new Subject<boolean>();
+
+  public chatRecord!: Message[];
 
   constructor(private fireService: FirestoreService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadChatRecord();
+  }
 
-  ngOnDestroy() {
-    this.fireService.unsubSingleChat();
+  ngOnDestroy() {}
+
+  loadChatRecord() {
+    this.fireService.startSubChat(this.testChatId);
+    this.fireService.singleChatRecord$
+      .pipe(takeUntil(this.componentIsDestroyed$))
+      .subscribe((chat: any[]) => {
+        this.chatRecord = chat;
+        console.log(chat);
+      });
   }
 }

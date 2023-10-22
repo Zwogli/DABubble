@@ -4,9 +4,12 @@ import {
   onSnapshot,
   doc,
   collection,
+  getDocs,
+  query,
 } from '@angular/fire/firestore';
 import { Unsubscribe } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
+import { Message } from '../models/message.class';
 
 @Injectable({
   providedIn: 'root',
@@ -14,33 +17,33 @@ import { BehaviorSubject } from 'rxjs';
 export class FirestoreService {
   firestore: Firestore = inject(Firestore);
 
-  singleChat!: any;
-  private singleCustomerSubject = new BehaviorSubject<any>(this.singleChat);
-  singleChat$ = this.singleCustomerSubject.asObservable();
+  singleChatRecord: Message[] = [];
+  private singleChatRecordSubject = new BehaviorSubject<any>(
+    this.singleChatRecord
+  );
+  singleChatRecord$ = this.singleChatRecordSubject.asObservable();
 
-  unsubSingleChat!: Unsubscribe;
+  unsubChatRecord!: Unsubscribe;
 
-  constructor() {
-    this.startSubSingleChat('XJs8a192fOAERg5D9kJg');
+  constructor() {}
+
+  
+
+  subChatRecord(docId: string) {
+    return onSnapshot(
+      query(collection(this.firestore, 'chatRecords', docId, 'messages')),
+      (docs: any) => {
+        this.singleChatRecord = [];
+        docs.forEach((doc: any) => {
+          this.singleChatRecord.push(doc.data());
+        });
+        this.singleChatRecordSubject.next(this.singleChatRecord);
+        console.log(this.singleChatRecord);
+      }
+    );
   }
 
-  ngOnDestroy() {
-    this.unsubSingleChat();
-  }
-
-  startSubSingleChat(docId: string) {
-    this.unsubSingleChat = this.subSingleChat(docId);
-  }
-
-  subSingleChat(docId: string) {
-    return onSnapshot(this.getSingleDocRef('chatRecords', docId), (chat) => {
-      this.singleChat = chat.data();
-      console.log('Chat data: ', chat.data());
-      console.log(this.singleChat);
-    });
-  }
-
-  getSingleDocRef(collId: string, docId: string) {
-    return doc(collection(this.firestore, collId, 'messages'), docId);
+  startSubChat(docId: string) {
+    this.unsubChatRecord = this.subChatRecord(docId);
   }
 }
