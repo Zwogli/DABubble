@@ -1,0 +1,14 @@
+main{
+    padding: 2rem 1rem 2rem 1rem;
+    height: calc(100dvh - 4rem - 80px);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    // overflow: auto;
+  }
+  button{
+    position: absolute;
+    right: 1rem;
+    bottom: 2rem;
+    z-index: 5;
+  }

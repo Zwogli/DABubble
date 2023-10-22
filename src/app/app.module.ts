@@ -10,14 +10,23 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavbarLeftComponent } from './component/navbar-left/navbar-left.component';
-import { NavbarSearchbarComponent } from './component/navbar-searchbar/navbar-searchbar.component';
-import { HeaderNavbarMobileComponent } from './component/header-navbar-mobile/header-navbar-mobile.component';
+import { NavbarComponent } from './components/wrapper/navbar/navbar.component';
+import { NavbarHeaderMobileComponent } from './components/component/navbar-header-mobile/navbar-header-mobile.component';
+import { NavbarPanelChannelsComponent } from './components/component/navbar-panel-channels/navbar-panel-channels.component';
+import { NavbarPanelMessageComponent } from './components/component/navbar-panel-message/navbar-panel-message.component';
+import { NavbarSearchbarComponent } from './components/component/navbar-searchbar/navbar-searchbar.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent, NavbarLeftComponent, NavbarSearchbarComponent, HeaderNavbarMobileComponent],
+  declarations: [
+    AppComponent, 
+    NavbarComponent, 
+    NavbarHeaderMobileComponent, 
+    NavbarPanelChannelsComponent, 
+    NavbarPanelMessageComponent, 
+    NavbarSearchbarComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

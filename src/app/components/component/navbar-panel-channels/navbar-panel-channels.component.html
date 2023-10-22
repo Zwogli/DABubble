@@ -1,0 +1,36 @@
+<mat-expansion-panel
+		  hideToggle
+		  (opened)="panelOpenState = true"
+		  (closed)="panelOpenState = false"
+		>
+		  <mat-expansion-panel-header>
+			<mat-panel-title
+			  (click)="rotateArrow('channel')"
+			  class="container__element--spacebetween"
+			>
+	  
+			  <div class="panel__titel--left">
+				<span
+				  id="channel--arrow_drop_down"
+				  class="material-icons-outlined rotate"
+				>
+				  arrow_drop_down
+				</span>
+				<div>
+				  <span class="material-icons-outlined"> workspaces </span>
+				  <span class="panel__header--titel">Channels</span>
+				</div>
+			  </div>
+	  
+			  <span class="material-icons-outlined element--blue"> add </span>
+	  
+			</mat-panel-title>
+		  </mat-expansion-panel-header>
+	  
+		  <div class="mat-expansion-panel__content">
+			<div class="fix--space-left sort__elemts--row">
+			  <span class="material-icons-outlined element--blue"> add_circle </span>
+			  <p class="element--blue">Add Channel</p>
+			</div>
+		  </div>
+		</mat-expansion-panel>

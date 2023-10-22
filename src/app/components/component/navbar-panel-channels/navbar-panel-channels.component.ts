@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-navbar-left',
-  templateUrl: './navbar-left.component.html',
-  styleUrls: ['./navbar-left.component.scss'],
+  selector: 'app-navbar-panel-channels',
+  templateUrl: './navbar-panel-channels.component.html',
+  styleUrls: ['./navbar-panel-channels.component.scss']
 })
-export class NavbarLeftComponent {
+export class NavbarPanelChannelsComponent {
   panelOpenState: boolean = false;
 
   rotateArrow(container: string) {

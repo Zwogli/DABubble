@@ -1,63 +1,4 @@
-<main>
-  <app-navbar-searchbar></app-navbar-searchbar>
-
-  <button
-    mat-fab
-    color="primary"
-    aria-label="Example icon button with a delete icon"
-  >
-    <mat-icon> edit_square </mat-icon>
-  </button>
-
-  <!-- todo max-heigth dropDownMenu-->
-  <!-- todo *ngfor to fill dropDownMenu -->
-
-  	<!-- 
-		expansion-panel channels
- 	-->
-	<div class="element__margin--bottom">
-		<mat-expansion-panel
-		  hideToggle
-		  (opened)="panelOpenState = true"
-		  (closed)="panelOpenState = false"
-		>
-		  <mat-expansion-panel-header>
-			<mat-panel-title
-			  (click)="rotateArrow('channel')"
-			  class="container__element--spacebetween"
-			>
-	  
-			  <div class="container__leftbound--attr">
-				<span
-				  id="channel--arrow_drop_down"
-				  class="material-icons-outlined rotate"
-				>
-				  arrow_drop_down
-				</span>
-				<div>
-				  <span class="material-icons-outlined"> workspaces </span>
-				  <span class="panel__header--titel">Channels</span>
-				</div>
-			  </div>
-	  
-			  <span class="material-icons-outlined element--blue"> add </span>
-	  
-			</mat-panel-title>
-		  </mat-expansion-panel-header>
-	  
-		  <div class="mat-expansion-panel__content">
-			<div class="fix--space-left sort__elemts--row">
-			  <span class="material-icons-outlined element--blue"> add_circle </span>
-			  <p class="element--blue">Add Channel</p>
-			</div>
-		  </div>
-		</mat-expansion-panel>
-	</div>
-
-	<!-- 
-		expansion-panel direct message
- 	-->
-  <mat-expansion-panel
+<mat-expansion-panel
     hideToggle
     (opened)="panelOpenState = true"
     (closed)="panelOpenState = false"
@@ -65,7 +6,7 @@
     <mat-expansion-panel-header>
       <mat-panel-title (click)="rotateArrow('directMessage')">
 
-		<div class="container__leftbound--attr">
+		<div class="panel__titel--left">
 			<span
 			  id="directMessage--arrow_drop_down"
 			  class="material-icons-outlined rotate"
@@ -140,4 +81,3 @@
 
     </div>
   </mat-expansion-panel>
-</main>
