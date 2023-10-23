@@ -11,10 +11,10 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
+import { MainChatComponent } from './components/components/main-chat/main-chat.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MainChatComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
