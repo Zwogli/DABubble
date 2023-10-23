@@ -7,6 +7,7 @@ export class Message {
   thread: {
     id: string;
     length: string;
+    lastAnswer: any;
   };
   message: string;
 
@@ -19,6 +20,7 @@ export class Message {
     this.thread = {
       id: '',
       length: '',
+      lastAnswer: '',
     };
     this.message = '';
   }

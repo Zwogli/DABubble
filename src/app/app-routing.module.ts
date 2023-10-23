@@ -4,7 +4,7 @@ import { IntroComponent } from './components/intro/intro.component';
 import { MainChatComponent } from './components/components/main-chat/main-chat.component';
 
 const routes: Routes = [
-  { path: '', component: IntroComponent },
+  // { path: '', component: IntroComponent },
   { path: '', component: MainChatComponent, outlet: 'main'},
   ];
 

@@ -20,7 +20,9 @@ export class MainChatComponent implements OnInit {
     this.loadChatRecord();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.fireService.unsubChatRecord();
+  }
 
   loadChatRecord() {
     this.fireService.startSubChat(this.testChatId);
@@ -34,9 +36,20 @@ export class MainChatComponent implements OnInit {
   }
 
   convertTimestampToDate() {
-    this.chatRecord.forEach((msg) => {
+    this.chatRecord.forEach((msg: Message) => {
       let convertTime = msg.sentAt.toDate().toLocaleTimeString();
-      msg.sentAt = convertTime;
+      msg.sentAt = convertTime.slice(0, -3);
+
+      this.checkThreadAndConvertTime(msg);
     });
+  }
+
+  checkThreadAndConvertTime(msg: Message) {
+    if (msg.thread.id) {
+      let convertTimeThread = msg.thread.lastAnswer
+        .toDate()
+        .toLocaleTimeString();
+      msg.thread.lastAnswer = convertTimeThread.slice(0, -3);
+    }
   }
 }

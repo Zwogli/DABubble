@@ -26,7 +26,7 @@
     <div class="message__content-container">
       <div class="message__header">
         <span class="message__header-name">{{ message.sentByName }}</span>
-        <span class="message__header-time">14:25 Uhr</span>
+        <span class="message__header-time">{{ message.sentAt }} Uhr</span>
       </div>
 
       <p class="message__content">
@@ -36,7 +36,7 @@
       <div *ngIf="message.thread.id" class="message__footer">
         <span class="message__footer-count">{{ message.thread.length }} Antworten</span>
         <span class="message__footer-last-timestamp"
-          >Letzte Antwort {{ message.sentAt }} Uhr</span
+          >Letzte Antwort {{ message.thread.lastAnswer }}  Uhr</span
         >
       </div>
     </div>
