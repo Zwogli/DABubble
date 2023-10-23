@@ -45,11 +45,8 @@ export class AuthService {
   getCurrentUser() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
         this.currentUserId = user.uid;
         console.log('currentUserUID:', this.currentUserId);
-        // ...
       } else {
         // User is signed out
         this.currentUserId = '';
