@@ -14,10 +14,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IntroComponent } from './components/intro/intro.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 
-
+import { MainChatComponent } from './components/components/main-chat/main-chat.component';
 
 @NgModule({
-  declarations: [AppComponent, IntroComponent, SignInComponent],
+  declarations: [AppComponent, IntroComponent, SignInComponent, MainChatComponent],
+
   imports: [
     BrowserModule,
     FormsModule,

@@ -1,8 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+    --gray-text: #686868;
+    --purple-text: #535AF1;
 
 :root {
   font-size: 18px;
+    --purple-lines: #ADB0D9;
+
+    --bg-light: #ECEEFE;
+    --bg-dark: #797EF3;
 }
+
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
