@@ -55,6 +55,7 @@ main {
 .message {
     display: flex;
     gap: 20px;
+    margin-top: 45px;
 }
 
 .message__avatar-container {
@@ -90,6 +91,11 @@ main {
         background-color: var(--bg-light);
 
         border-radius: 0 30px 30px 30px;
+    }
+
+    .message__footer {
+        display: flex;
+        gap: 20px;
     }
 }
 

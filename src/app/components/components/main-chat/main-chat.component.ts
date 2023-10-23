@@ -28,7 +28,15 @@ export class MainChatComponent implements OnInit {
       .pipe(takeUntil(this.componentIsDestroyed$))
       .subscribe((chat: any[]) => {
         this.chatRecord = chat;
+        this.convertTimestampToDate();
         console.log(chat);
       });
+  }
+
+  convertTimestampToDate() {
+    this.chatRecord.forEach((msg) => {
+      let convertTime = msg.sentAt.toDate().toLocaleTimeString();
+      msg.sentAt = convertTime;
+    });
   }
 }

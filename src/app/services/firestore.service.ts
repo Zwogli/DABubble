@@ -2,9 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
   onSnapshot,
-  doc,
   collection,
-  getDocs,
   query,
 } from '@angular/fire/firestore';
 import { Unsubscribe } from '@angular/fire/auth';
@@ -28,7 +26,6 @@ export class FirestoreService {
   constructor() {}
 
   
-
   subChatRecord(docId: string) {
     return onSnapshot(
       query(collection(this.firestore, 'chatRecords', docId, 'messages')),

@@ -4,7 +4,10 @@ export class Message {
   sentByName: string;
   sentByPhotoUrl: string;
   sentAt: any;
-  thread: string;
+  thread: {
+    id: string;
+    length: string;
+  };
   message: string;
 
   constructor() {
@@ -13,7 +16,10 @@ export class Message {
     this.sentByName = '';
     this.sentByPhotoUrl = '';
     this.sentAt = '';
-    this.thread = '';
+    this.thread = {
+      id: '',
+      length: '',
+    };
     this.message = '';
   }
 }
