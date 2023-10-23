@@ -5,7 +5,7 @@ import { MainChatComponent } from './components/components/main-chat/main-chat.c
 
 const routes: Routes = [
   { path: '', component: IntroComponent },
-  { path: '', component: MainChatComponent, outlet: 'main'},
+  { path: 'home', component: MainChatComponent },
   ];
 
 @NgModule({
