@@ -4,6 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class NavbarService {
+  showMenu: boolean = false
 
   constructor() { }
+
+  toggleMenu() {
+    return this.showMenu = !this.showMenu;
+  }
 }

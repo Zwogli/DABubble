@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavbarService } from 'src/app/service/navbar/navbar.service';
 
 @Component({
   selector: 'app-navbar-header-mobile',
@@ -7,11 +8,13 @@ import { Component } from '@angular/core';
 })
 
 export class NavbarHeaderMobileComponent {
-  showMenu: boolean = false;
+  showMenu: boolean;
 
-  constructor() {}
+  constructor(private navbarService: NavbarService) {
+    this.showMenu = this.navbarService.showMenu;
+  }
 
-  toggleMenu() {
-    this.showMenu = !this.showMenu;
+  toggleMenu(){
+    this.showMenu = this.navbarService.toggleMenu()
   }
 }

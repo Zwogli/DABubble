@@ -6,7 +6,14 @@
 <router-outlet>
   <app-navbar-header-mobile></app-navbar-header-mobile>
   <app-navbar></app-navbar>
-</router-outlet>
+
+  <!-- [style.display]="showMenu ? 'flex' : 'none'" -->
+  <div 
+  class="overlay"
+  >
+    <app-menu-profil-mobile></app-menu-profil-mobile>
+</div>
+</router-outlet>5
 
 <!-- 
   <router-outlet name="main"></router-outlet> 

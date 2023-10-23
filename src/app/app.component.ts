@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavbarService } from './service/navbar/navbar.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'DABubble';
+  showMenu: boolean;
+  
+  constructor(private navbarService: NavbarService){
+    this.showMenu = this.navbarService.showMenu;
+  }
+
+  toggleMenu(){
+    console.log(this.showMenu);
+    
+    this.showMenu = this.navbarService.toggleMenu()
+  }
+  
 }
