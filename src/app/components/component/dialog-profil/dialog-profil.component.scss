@@ -1,0 +1,95 @@
+main{
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+header{
+    h2{
+        margin: unset;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+.dialog__img{
+    display: flex;
+    justify-content: center;
+    &--style{
+        width: var(--sice-avatar_mobile);
+        height: var(--sice-avatar_mobile);
+        border-radius: 50%;
+    }
+}
+
+.dialog__content{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+
+    &--header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h1{
+            margin: unset;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        span{
+            padding: 3px;
+            background-color: var(--color-blue-bg);
+            border-radius: 50%;
+        }
+    }
+    &--status{
+        margin-top: .5rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+        span{
+            color: var(--color-grey-primary-disable);
+            font-size: 1rem;
+        }
+    }
+    &--email{
+        margin-top: 1rem;
+        display: flex;
+        gap: 1rem;          
+    }
+}
+.container__status{
+    width: 24px;
+    display: flex;
+    justify-content: center;
+}
+.onlinestatus {
+    height: 10px;
+    width: 10px;
+    border: 2px solid #ffffff;
+    border-radius: 100%;
+    &--color {
+      background-color: var(--color-grey-primary-disable);
+    }
+}
+.container__email{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    &--headline{
+        font-weight: 700;
+        font-size: 1rem;
+    }
+    &--data{
+        font-size: 1rem;
+    }
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    border-top-left-radius: 30px !important;
+    border-top-right-radius: 30px !important;
+    border-bottom-right-radius: 30px !important;
+    border-bottom-left-radius: 30px !important;
+    box-shadow: 0 6px 10px 0 #00000033 !important;
+  }
