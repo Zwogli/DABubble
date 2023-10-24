@@ -19,7 +19,7 @@ export class SignInComponent {
 
 
   /**
-   * Get the name input field from the form group to use form control
+   * Get the email input field from the form group to use form control
    *
    */
   get emailForm() {
@@ -27,7 +27,7 @@ export class SignInComponent {
   }
 
   /**
-   * Get the name input field from the form group to use form control
+   * Get the password input field from the form group to use form control
    *
    */
   get passwordForm() {

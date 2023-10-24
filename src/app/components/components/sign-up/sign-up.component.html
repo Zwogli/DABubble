@@ -1,1 +1,49 @@
-<p>sign-up works!</p>
+<div class="block__sign-up">
+  <img src="../../../../assets/img/logo+text.png">
+
+  <mat-card>
+    <mat-card-content>
+      <form class="example-form" [formGroup]="signUpForm">
+        <div class="block__headline-info-box">
+          <mat-icon class="icon__arrow-back" routerLink="">arrow_back</mat-icon>
+          <span class="sign-in__headline">Konto erstellen</span>
+          <span class="sign-in__info-text">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</span>
+        </div>
+
+        <div class="block__input">
+          <mat-icon class="material-icons-outlined mail-icon">person</mat-icon>
+          <input formControlName="nameForm" type="email" placeholder="Name und Nachname" #userName>
+        </div>
+        <div class="block__alert-email" *ngIf="nameForm?.invalid && (nameForm?.dirty || nameForm?.touched)">
+          <div *ngIf="nameForm?.errors?.['required']">*Bitte geben Sie einen Vor- und Nachnamen ein.</div>
+          <div *ngIf="nameForm?.errors?.['pattern']">*Bitte verwenden Sie nur Buchstaben.</div>
+        </div>
+
+        <div class="block__input">
+          <mat-icon class="material-icons-outlined mail-icon">mail</mat-icon>
+          <input formControlName="emailForm" type="email" placeholder="beispielname@email.com" #userEmail>
+        </div>
+        <div class="block__alert-email" *ngIf="emailForm?.invalid && (emailForm?.dirty || emailForm?.touched)">
+          <div *ngIf="emailForm?.errors?.['required']">*Bitte geben Sie eine E-Mail-Adresse ein.</div>
+          <div *ngIf="emailForm?.errors?.['email']">*Diese E-Mail-Adresse ist leider ungültig.</div>
+        </div>
+
+        <div class="block__input">
+          <mat-icon class="material-icons-outlined mail-icon">lock</mat-icon>
+          <input formControlName="passwordForm" type="password" placeholder="Passwort" #userPassword>
+        </div>
+        <div class="block__alert-password" *ngIf="passwordForm?.invalid && (passwordForm?.dirty || passwordForm?.touched)">
+          <div *ngIf="passwordForm?.errors?.['required']">*Bitte geben Sie ein Passwort ein.</div>
+        </div>
+
+        <div class="block__btn-box">
+          <button class="btn__log-in">Weiter</button>
+        </div>
+
+        <div class="block__error" *ngIf="this.authService.logInError">
+          *Log-in Daten stimmen nicht überein.
+        </div>
+    </form>
+    </mat-card-content>
+  </mat-card>
+</div>
