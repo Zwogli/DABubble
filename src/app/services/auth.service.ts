@@ -42,6 +42,13 @@ export class AuthService {
   }
 
 
+  guestSignIn() {
+    this.currentUserId = 'QyqQVfCO6HMj2jcNN2YKTAFhGz62'; //currentUserId get's the id from guest user
+    this.router.navigate(['home']);
+    console.log('guest userid:', this.currentUserId);
+  }
+
+
   getCurrentUser() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
