@@ -1,0 +1,32 @@
+<header>
+    <h2 mat-dialog-title> Profil </h2>
+    <span (click)="onNoClick()" class="material-icons-outlined"> close </span>
+</header>
+
+<img src="assets/img/avatar_female-v1.png" alt="profil-avatar">
+
+<div mat-dialog-content>
+
+    <div>
+        <h1> User Name </h1>
+        <span class="material-icons-outlined"> edit </span>
+    </div>
+
+    <div>
+        <span>online icon</span>
+        <span> Aktive </span>
+    </div>
+
+    <div>
+        <span class="material-icons-outlined"> email </span>
+        <div>
+            <span> E-Mail-Address </span>
+            <span> user@email.test </span>
+        </div>
+    </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button cdkFocusInitial>Ok</button>
+</div>

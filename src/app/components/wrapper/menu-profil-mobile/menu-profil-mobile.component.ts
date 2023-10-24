@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { NavbarService } from 'src/app/service/navbar/navbar.service';
+import { DialogProfilComponent } from '../../component/dialog-profil/dialog-profil.component';
 
 @Component({
   selector: 'app-menu-profil-mobile',
@@ -9,7 +11,11 @@ import { NavbarService } from 'src/app/service/navbar/navbar.service';
 export class MenuProfilMobileComponent {
   showMenu: boolean;
 
-  constructor(private navbarService: NavbarService){
+  constructor(private navbarService: NavbarService, public dialog: MatDialog){
     this.showMenu = this.navbarService.showMenu;
+  }
+
+  openDialogProfil(){
+    this.dialog.open(DialogProfilComponent)
   }
 }

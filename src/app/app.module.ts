@@ -16,6 +16,7 @@ import { NavbarPanelChannelsComponent } from './components/component/navbar-pane
 import { NavbarPanelMessageComponent } from './components/component/navbar-panel-message/navbar-panel-message.component';
 import { NavbarSearchbarComponent } from './components/component/navbar-searchbar/navbar-searchbar.component';
 import { MenuProfilMobileComponent } from './components/wrapper/menu-profil-mobile/menu-profil-mobile.component';
+import { DialogProfilComponent } from './components/component/dialog-profil/dialog-profil.component';
 
 
 
@@ -26,7 +27,7 @@ import { MenuProfilMobileComponent } from './components/wrapper/menu-profil-mobi
     NavbarHeaderMobileComponent, 
     NavbarPanelChannelsComponent, 
     NavbarPanelMessageComponent, 
-    NavbarSearchbarComponent, MenuProfilMobileComponent
+    NavbarSearchbarComponent, MenuProfilMobileComponent, DialogProfilComponent
   ],
   imports: [
     BrowserModule,
