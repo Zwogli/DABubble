@@ -24,13 +24,20 @@ main{
 }
 
 button{
+  padding: 10px 45px 10px 1rem;
   background-color: unset;
   border: unset;
+  border-radius: 100px;
   display: flex;
   align-items: center;
   gap: 1rem;
   &:hover{
     cursor: pointer;
+  }
+  &:active, &:focus{
+    color: var(--color-blue-secondary-hover);
+    background-color: var(--color-blue-bg);
+    border-radius: 100px;
   }
   .material-icons-outlined{
     font-size: 30px;
