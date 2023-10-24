@@ -1,10 +1,11 @@
 main{
+  max-height: 300px;
   padding: 30px 26px 30px 26px;
   background-color: var(--color-white);
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  // bottom: -300px;
   border-radius: 30px 30px 0 0;
   display: flex;
   flex-direction: column;
@@ -37,5 +38,34 @@ button{
   .button__txt{
     font-size: 1.1rem;
     font-weight: 600;
+  }
+}
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+animation
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.slide--up{
+  bottom: 0;
+  animation: 1s slide-up;
+}
+.slide--down{
+  bottom: 0;
+  transform: translate(-300px);
+  animation: 1s slide-down;
+}
+
+@keyframes slide-up{
+  0%{
+    transform: translateY(300px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}
+@keyframes slide-down{
+  0%{
+    transform: translateY(0px);
+  }
+  100%{
+    transform: translateY(300px);
   }
 }
