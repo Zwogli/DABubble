@@ -13,6 +13,7 @@ export class MainChatComponent implements OnInit {
   private componentIsDestroyed$ = new Subject<boolean>();
 
   public chatRecord!: Message[];
+  selectedMsg!: Message | null;
 
   constructor(private fireService: FirestoreService) {}
 
@@ -30,32 +31,15 @@ export class MainChatComponent implements OnInit {
       .pipe(takeUntil(this.componentIsDestroyed$))
       .subscribe((chat: any[]) => {
         this.chatRecord = chat;
-        // this.convertTimestampToDate();
         console.log(chat);
       });
   }
 
-  convertTimestampToDate() {
-    this.chatRecord.forEach((msg: Message) => {
-      let convertTime = msg.sentAt.toDate().toLocaleTimeString();
-      msg.sentAt = convertTime.slice(0, -3);
-
-      this.checkThreadAndConvertTime(msg);
-    });
-  }
-
-  checkThreadAndConvertTime(msg: Message) {
-    if (msg.thread.id) {
-      let convertTimeThread = msg.thread.lastAnswer
-        .toDate()
-        .toLocaleTimeString();
-      msg.thread.lastAnswer = convertTimeThread.slice(0, -3);
+  toggleMsgMenu(msg: Message) {
+    if (this.selectedMsg == msg) {
+      this.selectedMsg = null;
+    } else {
+      this.selectedMsg = msg;
     }
-  }
-
-  toggleMsgMenu(i: number) {
-    let msg = document.getElementById(`msg${i}`);
-
-    msg?.classList.add('message__menu');
   }
 }

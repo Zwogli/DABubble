@@ -19,10 +19,10 @@
 
 <main>
   <div
-    *ngFor="let message of chatRecord; index as i"
-    id="msg{{ i }}"
-    (click)="toggleMsgMenu(i)"
+    *ngFor="let message of chatRecord"
+    (click)="toggleMsgMenu(message)"
     class="message__wrapper"
+    [ngClass]="{ message__menu: message === selectedMsg }"
   >
     <div class="message">
       <div class="message__avatar-container">
@@ -32,7 +32,9 @@
       <div class="message__content-container">
         <div class="message__header">
           <span class="message__header-name">{{ message.sentByName }}</span>
-          <span class="message__header-time">{{ message.sentAt.toDate() | date : 'shortTime' }} Uhr</span>
+          <span class="message__header-time"
+            >{{ message.sentAt.toDate() | date : "shortTime" }} Uhr</span
+          >
         </div>
 
         <p class="message__content">
@@ -44,7 +46,11 @@
             >{{ message.thread.length }} Antworten</span
           >
           <span class="message__footer-last-timestamp"
-            >Letzte Antwort {{ message.thread.lastAnswer.toDate() | date : 'short' }} Uhr</span
+            >Letzte Antwort
+            {{
+              message.thread.lastAnswer.toDate() | date : "EEEE hh:mm"
+            }}
+            Uhr</span
           >
         </div>
       </div>
