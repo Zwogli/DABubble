@@ -30,7 +30,7 @@ export class MainChatComponent implements OnInit {
       .pipe(takeUntil(this.componentIsDestroyed$))
       .subscribe((chat: any[]) => {
         this.chatRecord = chat;
-        this.convertTimestampToDate();
+        // this.convertTimestampToDate();
         console.log(chat);
       });
   }
@@ -51,5 +51,11 @@ export class MainChatComponent implements OnInit {
         .toLocaleTimeString();
       msg.thread.lastAnswer = convertTimeThread.slice(0, -3);
     }
+  }
+
+  toggleMsgMenu(i: number) {
+    let msg = document.getElementById(`msg${i}`);
+
+    msg?.classList.add('message__menu');
   }
 }
