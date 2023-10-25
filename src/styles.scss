@@ -1,5 +1,6 @@
 @import './app/style/theme-dabubble.scss';
-
+@import './assets/fonts/nunito/font-nunito.scss';
+@import './app/style/material-design.scss';
 /* You can add global styles to this file, and also import other style files */
 :root{
   --color-black: black;
@@ -19,6 +20,8 @@
   --color-green:#92C83E;
   --color-purple-error: #ED1E79;
   
+  --font-selection: Nunito, Roboto, "Helvetica Neue", sans-serif;
+
   --sice-avatar_desktop: 168px;
   --sice-avatar_desktop-small: 64px;
   --sice-avatar-dialog: 200px;
@@ -31,16 +34,16 @@
   --sice-icon-online: 16px;
 
 }
-html{
-  font-size: 18px;
-}
 html,
 body {
   height: 100%;
 }
+html{
+  font-size: 18px;
+}
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: var(--font-selection);
 }
 
 .avatar-small{
@@ -53,13 +56,7 @@ body {
 .element__margin--bottom{
   margin-bottom: 1rem;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.mat-mdc-dialog-container .mdc-dialog__surface {
-  border-top-left-radius: 30px !important;
-  border-top-right-radius: 30px !important;
-  border-bottom-right-radius: 30px !important;
-  border-bottom-left-radius: 30px !important;
-  box-shadow: 0 6px 10px 0 #00000033 !important;
+button {
+  font-family: var(--font-selection);
 }
