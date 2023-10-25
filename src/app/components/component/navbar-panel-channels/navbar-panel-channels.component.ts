@@ -9,9 +9,9 @@ export class NavbarPanelChannelsComponent {
   panelOpenState: boolean = false;
 
   rotateArrow() {
-    const channelArrow: any = document.getElementById(
+    const channelArrow: HTMLElement | null = document.getElementById(
       `channel--arrow_drop_down`
     );
-    channelArrow.classList.toggle('rotate');
+    channelArrow?.classList.toggle('rotate');
   }
 }

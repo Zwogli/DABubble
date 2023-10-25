@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavbarService } from 'src/app/service/navbar/navbar.service';
 import { DialogProfilComponent } from '../../component/dialog-profil/dialog-profil.component';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-menu-profil-mobile',
@@ -14,7 +15,13 @@ export class MenuProfilMobileComponent {
   }
 
   toggleMenu(){
-    this.navbarService.toggleMenu();
+    let menu: HTMLElement | null = document.getElementById('menu');
+    menu?.classList.remove('slide--up');
+    menu?.classList.add('slide--down');
+    setTimeout(() => {
+      this.navbarService.toggleMenu();
+    }, 1000);
+    menu?.classList.add('slide--up');
   }
 
   openDialogProfil(){
