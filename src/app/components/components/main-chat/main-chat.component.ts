@@ -35,6 +35,13 @@ export class MainChatComponent implements OnInit {
       });
   }
 
+  openThread(msg: Message, event: any) {
+    if (msg != this.selectedMsg) {
+      event.stopPropagation();
+    }
+    console.log('OpenThread');
+  }
+
   toggleMsgMenu(msg: Message) {
     if (this.selectedMsg == msg) {
       this.selectedMsg = null;
