@@ -14,7 +14,7 @@
           <mat-icon class="material-icons-outlined mail-icon">person</mat-icon>
           <input formControlName="nameForm" type="email" placeholder="Name und Nachname" #userName>
         </div>
-        <div class="block__alert-email" *ngIf="nameForm?.invalid && (nameForm?.dirty || nameForm?.touched)">
+        <div class="block__alert-name" *ngIf="nameForm?.invalid && (nameForm?.dirty || nameForm?.touched)">
           <div *ngIf="nameForm?.errors?.['required']">*Bitte geben Sie einen Vor- und Nachnamen ein.</div>
           <div *ngIf="nameForm?.errors?.['pattern']">*Bitte verwenden Sie nur Buchstaben.</div>
         </div>
@@ -37,11 +37,11 @@
         </div>
 
         <div class="block__btn-box">
-          <button class="btn__log-in">Weiter</button>
+          <button class="btn__log-in" (click)="this.authService.signUp(userName.value, userEmail.value, userPassword.value)">Weiter</button>
         </div>
 
-        <div class="block__error" *ngIf="this.authService.logInError">
-          *Log-in Daten stimmen nicht überein.
+        <div class="block__error" *ngIf="this.authService.signUpError">
+          *Bitte füllen Sie alle Felder korrekt aus.
         </div>
     </form>
     </mat-card-content>
