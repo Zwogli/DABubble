@@ -24,3 +24,7 @@ font-family: var(--font-selection);
   border-bottom-left-radius: 30px !important;
   box-shadow: 0 6px 10px 0 #00000033 !important;
 }
+
+.mat-mdc-dialog-container, .mat-mdc-dialog-container .mdc-dialog__container, .mat-mdc-dialog-container .mdc-dialog__surface{
+  min-width: 290px !important;
+}
