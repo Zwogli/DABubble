@@ -8,8 +8,8 @@
   <app-navbar></app-navbar>
 
   <!-- [style.display]="showMenu ? 'flex' : 'none'" -->
-  <div *ngIf="showMenu" class="overlay">
-    <app-menu-profil-mobile></app-menu-profil-mobile>
+  <div *ngIf="showMenu" (click)="toggleMenu()" class="overlay">
+    <app-menu-profil-mobile (click)="$event.stopPropagation()"></app-menu-profil-mobile>
   </div>
 </router-outlet>
 

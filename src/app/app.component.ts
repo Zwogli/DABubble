@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavbarService } from './service/navbar/navbar.service';
-import { Subscribable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -20,10 +20,8 @@ export class AppComponent {
    )
   }
 
-  // toggleMenu(){
-  //   console.log(this.showMenu);
-    
-  //   this.showMenu = this.navbarService.toggleMenu()
-  // }
+  toggleMenu(){
+    this.navbarService.toggleMenu()
+  }
   
 }

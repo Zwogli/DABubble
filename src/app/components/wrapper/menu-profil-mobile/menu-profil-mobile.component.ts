@@ -13,6 +13,10 @@ export class MenuProfilMobileComponent {
   constructor(private navbarService: NavbarService, public dialog: MatDialog){
   }
 
+  toggleMenu(){
+    this.navbarService.toggleMenu();
+  }
+
   openDialogProfil(){
     this.dialog.open(DialogProfilComponent)
   }
