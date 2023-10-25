@@ -25,7 +25,6 @@ export class FirestoreService {
 
   constructor() {}
 
-  
   subChatRecord(docId: string) {
     return onSnapshot(
       query(collection(this.firestore, 'chatRecords', docId, 'messages')),

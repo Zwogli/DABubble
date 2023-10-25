@@ -60,13 +60,16 @@ main {
 .message {
     display: flex;
     gap: 20px;
+    transition: 125ms ease-in-out;
 }
 
 .message__menu {
     background-color: var(--bg-light);
+    transition: 125ms ease-in-out;
 
     .message__content {
         background-color: white !important;
+        transition: 125ms ease-in-out;
     }
 }
 

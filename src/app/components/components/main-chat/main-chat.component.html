@@ -20,11 +20,10 @@
 <main>
   <div
     *ngFor="let message of chatRecord"
-    (click)="toggleMsgMenu(message)"
     class="message__wrapper"
     [ngClass]="{ message__menu: message === selectedMsg }"
   >
-    <div class="message">
+    <div class="message" (click)="toggleMsgMenu(message)">
       <div class="message__avatar-container">
         <img src="../../../../assets/img/avatars/avatar_male_one.svg" alt="" />
       </div>
@@ -47,9 +46,7 @@
           >
           <span class="message__footer-last-timestamp"
             >Letzte Antwort
-            {{
-              message.thread.lastAnswer.toDate() | date : "EEEE hh:mm"
-            }}
+            {{ message.thread.lastAnswer.toDate() | date : "EEEE hh:mm" }}
             Uhr</span
           >
         </div>
