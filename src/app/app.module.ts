@@ -11,13 +11,14 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IntroComponent } from './components/intro/intro.component';
-import { SignInComponent } from './components/sign-in/sign-in.component';
+import { IntroComponent } from './components/components/intro/intro.component';
+import { SignInComponent } from './components/components/sign-in/sign-in.component';
 
 import { MainChatComponent } from './components/components/main-chat/main-chat.component';
+import { SignUpComponent } from './components/components/sign-up/sign-up.component';
 
 @NgModule({
-  declarations: [AppComponent, IntroComponent, SignInComponent, MainChatComponent],
+  declarations: [AppComponent, IntroComponent, SignInComponent, MainChatComponent, SignUpComponent],
 
   imports: [
     BrowserModule,

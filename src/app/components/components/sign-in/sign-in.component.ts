@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-//import { AuthService } from "../../services/auth.service";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
   selector: 'app-sign-in',
@@ -15,11 +15,11 @@ export class SignInComponent {
     passwordForm: new FormControl('', [Validators.required]),
   });
 
-  //constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService) { }
 
 
   /**
-   * Get the name input field from the form group to use form control
+   * Get the email input field from the form group to use form control
    *
    */
   get emailForm() {
@@ -27,7 +27,7 @@ export class SignInComponent {
   }
 
   /**
-   * Get the name input field from the form group to use form control
+   * Get the password input field from the form group to use form control
    *
    */
   get passwordForm() {

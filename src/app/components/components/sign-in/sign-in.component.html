@@ -23,8 +23,12 @@
 
       <span class="sign-in__forgot-password">Passwort vergessen?</span>
       <div class="block__btn-box">
-        <button class="btn__log-in">Anmelden</button>
-        <button class="btn__guest-log-in">Gäste-Login</button>
+        <button class="btn__log-in" (click)="this.authService.signIn(userEmail.value, userPassword.value)">Anmelden</button>
+        <button class="btn__guest-log-in" (click)="this.authService.guestSignIn()">Gäste-Login</button>
+      </div>
+
+      <div class="block__error" *ngIf="this.authService.logInError">
+        *Log-in Daten sind unvollständig oder stimmen nicht überein.
       </div>
   </form>
   </mat-card-content>
@@ -32,5 +36,5 @@
 
 <div class="block__create-account">
   <span>Neu bei DABubble?</span>
-  <button>Konto erstellen</button>
+  <button routerLink="/sign-up">Konto erstellen</button>
 </div>
