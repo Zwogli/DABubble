@@ -9,10 +9,8 @@ import { DialogProfilComponent } from '../../component/dialog-profil/dialog-prof
   styleUrls: ['./menu-profil-mobile.component.scss']
 })
 export class MenuProfilMobileComponent {
-  showMenu: boolean;
 
   constructor(private navbarService: NavbarService, public dialog: MatDialog){
-    this.showMenu = this.navbarService.showMenu;
   }
 
   openDialogProfil(){

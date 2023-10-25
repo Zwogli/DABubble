@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavbarService } from './service/navbar/navbar.service';
+import { Subscribable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,16 +9,21 @@ import { NavbarService } from './service/navbar/navbar.service';
 })
 export class AppComponent {
   title = 'DABubble';
-  showMenu: boolean;
+  showMenu: boolean = false;
+  private subscription: Subscription;
   
   constructor(private navbarService: NavbarService){
-    this.showMenu = this.navbarService.showMenu;
+   this.subscription = this.navbarService.showMenu$.subscribe(
+    visible => {
+      this.showMenu = visible;
+    }
+   )
   }
 
-  toggleMenu(){
-    console.log(this.showMenu);
+  // toggleMenu(){
+  //   console.log(this.showMenu);
     
-    this.showMenu = this.navbarService.toggleMenu()
-  }
+  //   this.showMenu = this.navbarService.toggleMenu()
+  // }
   
 }

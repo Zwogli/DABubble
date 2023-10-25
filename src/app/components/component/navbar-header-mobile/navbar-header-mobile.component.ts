@@ -8,13 +8,11 @@ import { NavbarService } from 'src/app/service/navbar/navbar.service';
 })
 
 export class NavbarHeaderMobileComponent {
-  showMenu: boolean;
 
   constructor(private navbarService: NavbarService) {
-    this.showMenu = this.navbarService.showMenu;
   }
 
   toggleMenu(){
-    this.showMenu = this.navbarService.toggleMenu()
+    this.navbarService.toggleMenu();
   }
 }
