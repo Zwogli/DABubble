@@ -55,13 +55,13 @@ form {
 .sign-in__headline {
   font-size: 1.778rem;
   font-weight: 700;
-  color: #444df2;
+  color: var(--color-blue-primary-default);
 }
 
 .sign-in__info-text {
   font-size: 0.777rem;
   font-weight: 400;
-  color: black;
+  color: var(--color-black);
   margin: 20px 0;
   text-align: center;
 }
@@ -76,12 +76,12 @@ form {
   input {
     border-radius: 100px;
     padding: 13px 32px 13px 72px;
-    background-color: #eceefe;
-    border: 1px solid white;
+    background-color: var(--color-blue-bg);
+    border: 1px solid var(--color-white);
     width: 100%;
 
     &:hover {
-      border: 1px solid#686868;
+      border: 1px solid var(--color-grey-primary-disable);
     }
 
     &:focus {
@@ -98,7 +98,7 @@ form {
 }
 
 .sign-in__forgot-password {
-  color: #797ef3;
+  color: var(--color-blue-primary-hover);
   font-size: 0.833rem;
   font-weight: 400;
   padding: 5px 15px;
@@ -109,8 +109,8 @@ form {
     cursor: pointer;
     font-size: 0.85rem;
     font-weight: 500;
-    color: #444df2;
-    background-color: #eceefe;
+    color: var(--color-blue-primary-default);
+    background-color: var(--color-blue-bg);
   }
 }
 
@@ -121,30 +121,30 @@ form {
 
 .btn__log-in {
   font-weight: 700;
-  color: white;
-  background-color: #444df2;
+  color: var(--color-white);
+  background-color: var(--color-blue-primary-default);
   border: none;
   border-radius: 25px;
   padding: 12px 25px;
   margin-right: 10px;
 
   &:hover {
-    background-color: #797ef3;
+    background-color: var(--color-blue-primary-hover);
     cursor: pointer;
   }
 }
 
 .btn__guest-log-in {
   font-weight: 700;
-  color: #444df2;
-  background-color: white;
-  border: 1px solid #444df2;
+  color: var(--color-blue-primary-default);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-blue-primary-default);
   border-radius: 25px;
   padding: 12px 25px;
 
   &:hover {
-    background-color: #444df2;
-    color: white;
+    background-color: var(--color-blue-primary-default);
+    color: var(--color-white);
     cursor: pointer;
   }
 }
@@ -158,21 +158,21 @@ form {
   :first-child {
     font-size: 0.833rem;
     font-weight: 400;
-    color: black;
+    color: var(--color-black);
     margin-bottom: 20px;
   }
 
   button {
     font-weight: 700;
-    color: #444df2;
-    border: 1px solid #444df2;
-    background-color: #eceefe;
+    color: var(--color-blue-primary-default);
+    border: 1px solid var(--color-blue-primary-default);
+    background-color: var(--color-blue-bg);
     border-radius: 25px;
     padding: 7px 18px;
 
     &:hover {
-      background-color: #444df2;
-      color: white;
+      background-color: var(--color-blue-primary-default);
+      color: var(--color-white);
       cursor: pointer;
     }
   }
@@ -181,7 +181,7 @@ form {
 .block__alert-email {
   position: absolute;
   top: 143px;
-  color: #ED1E79;
+  color: var(--color-purple-error);
   font-size: 0.667rem;
   left: 18px;
 }
@@ -189,7 +189,16 @@ form {
 .block__alert-password {
   position: absolute;
   top: 207px;
-  color: #ED1E79;
+  color: var(--color-purple-error);
   font-size: 0.667rem;
   left: 18px;
+}
+
+.block__error {
+  position: absolute;
+  top: 327px;
+  color: var(--color-purple-error);
+  font-size: 0.667rem;
+  left: 49px;
+  line-height: 120%;
 }

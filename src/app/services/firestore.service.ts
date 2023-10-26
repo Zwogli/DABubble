@@ -4,6 +4,8 @@ import {
   onSnapshot,
   collection,
   query,
+  setDoc,
+  doc,
 } from '@angular/fire/firestore';
 import { Unsubscribe } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
@@ -41,5 +43,18 @@ export class FirestoreService {
 
   startSubChat(docId: string) {
     this.unsubChatRecord = this.subChatRecord(docId);
+  }
+
+
+  async addUser(userObject:any, name:string) {
+    await setDoc(doc(this.firestore, "user", userObject.uid), {
+      name: name,
+      email: userObject.email,
+      id: userObject.uid,
+      photoUrl: '',
+      onlineStatus: true,
+      memberInChannel: [],
+      activePrivateChats: [],
+    });
   }
 }

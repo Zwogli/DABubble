@@ -17,7 +17,7 @@
 }
 
 .block__intro--change-bg {
-  background: #ECEEFE !important;
+  background: var(--color-blue-bg) !important;
 }
 
 .block__headline {
@@ -63,7 +63,7 @@
 }
 
 .headline {
-  color: white;
+  color: var(--color-white);
   font-size: 1.8rem;
   display: none;
   position: absolute;
@@ -113,7 +113,7 @@
 }
 
 .headline--become-black {
-  color: black !important;
+  color: var(--color-black) !important;
 }
 
 .headline--d-flex {

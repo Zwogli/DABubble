@@ -1,26 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 
 :root {
-  font-size: 18px;
-    --purple-lines: #ADB0D9;
-    --gray-text: #686868;
-    --purple-text: #535AF1;
-    --bg-light: #ECEEFE;
-    --bg-dark: #797EF3;
+  --color-black: black;
+  --color-white: white;
+
+  --color-blue-primary-default: #444df2;
+  --color-blue-primary-hover: #797ef3;
+  --color-blue-secondary-hover: #535af1;
+  --color-blue-bg: #eceefe;
+
+  --color-grey-primary-disable: #686868;
+  --color-grey-hover: #e6e6e6;
+
+  --color-green: #92c83e;
+  --color-purple-error: #ed1e79;
+
+  --sice-avatar_desktop: 168px;
+  --sice-avatar_desktop-small: 64px;
+  --sice-avatar-message: 50px;
+  --sice-avatar-messagefield: 34px;
+  --sice-avatar_mobile: 128px;
+  --sice-avatar_mobile-small: 48px;
+  --sice-icon: 30px;
+  --sice-icon-small: 24px;
+  --sice-icon-online: 16px;
 }
 
-
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
 body {
-    height: 100%;
+  height: 100%;
+  font-size: 18px;
 }
 
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-
