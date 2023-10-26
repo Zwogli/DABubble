@@ -21,7 +21,7 @@ export class AppComponent {
   }
 
   toggleMenu(){
-    this.navbarService.toggleMenu()
+    this.navbarService.closeMenu()
   }
   
 }
