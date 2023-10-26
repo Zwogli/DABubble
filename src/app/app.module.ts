@@ -16,34 +16,31 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-<<<<<<< HEAD
 import { NavbarComponent } from './components/wrapper/navbar/navbar.component';
 import { NavbarHeaderMobileComponent } from './components/component/navbar-header-mobile/navbar-header-mobile.component';
 import { NavbarPanelChannelsComponent } from './components/component/navbar-panel-channels/navbar-panel-channels.component';
 import { NavbarPanelMessageComponent } from './components/component/navbar-panel-message/navbar-panel-message.component';
 import { NavbarSearchbarComponent } from './components/component/navbar-searchbar/navbar-searchbar.component';
-=======
 import { IntroComponent } from './components/components/intro/intro.component';
 import { SignInComponent } from './components/components/sign-in/sign-in.component';
->>>>>>> development
 
 import { MainChatComponent } from './components/components/main-chat/main-chat.component';
 import { SignUpComponent } from './components/components/sign-up/sign-up.component';
 
 @NgModule({
-<<<<<<< HEAD
   declarations: [
-    AppComponent, 
+    AppComponent,
+    IntroComponent,
+    MainChatComponent,
     NavbarComponent, 
     NavbarHeaderMobileComponent, 
     NavbarPanelChannelsComponent, 
     NavbarPanelMessageComponent, 
-    NavbarSearchbarComponent
+    NavbarSearchbarComponent,
+    SignInComponent,
+    SignUpComponent,
   ],
-=======
-  declarations: [AppComponent, IntroComponent, SignInComponent, MainChatComponent, SignUpComponent],
 
->>>>>>> development
   imports: [
     BrowserModule,
     FormsModule,
