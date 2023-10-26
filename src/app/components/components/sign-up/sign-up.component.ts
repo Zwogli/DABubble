@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,9 +16,25 @@ export class SignUpComponent {
     ]),
     emailForm: new FormControl('', [Validators.required, Validators.email]),
     passwordForm: new FormControl('', [Validators.required]),
+    checkboxForm: new FormControl(),
   });
 
+  @ViewChild('checkbox') checkboxData!: ElementRef;
+  test:boolean = false;
+
   constructor(public authService: AuthService) {}
+
+  testCheck() {
+    console.log(this.checkboxForm?.value);
+  }
+
+  checkCheckbox() {
+    if (!this.checkboxForm?.value) {
+      this.authService.checkboxData = true;
+    } else {
+      this.authService.checkboxData = false;
+    }
+  }
 
   /**
    * Get the email input field from the form group to use form control
@@ -42,5 +58,13 @@ export class SignUpComponent {
    */
   get passwordForm() {
     return this.signUpForm.get('passwordForm');
+  }
+
+  /**
+   * Get the password input field from the form group to use form control
+   *
+   */
+  get checkboxForm() {
+    return this.signUpForm.get('checkboxForm');
   }
 }

@@ -17,6 +17,8 @@ export class AuthService {
   auth = getAuth();
   signUpError = false;
   public logInError = false;
+  checkboxData = false;
+  dataError = false;
   currentUserId = '';
   currentUser:any = [];
   currentUserSubject = new BehaviorSubject<any>(
@@ -67,17 +69,23 @@ export class AuthService {
 
 
   signUp(name:string, email:string, password:string) {
-    createUserWithEmailAndPassword(this.auth, email, password)
+    if (this.checkboxData) {
+      createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
         console.log('neuer user:', user);
         this.signUpError = false;
+        this.dataError = false;
         this.firestoreService.addUser(user, name);
         this.router.navigate(['home']);
       })
       .catch((error) => {
         this.signUpError = true;
       });
+    } else {
+      this.dataError = true;
+    }
+
   }
 }

@@ -39,7 +39,7 @@
         </div>
 
         <div class="block__input-checkbox">
-          <input type="checkbox" id="checkbox-data" name="checkbox_data">
+          <input type="checkbox" id="checkbox-data" name="checkbox_data" #checkboxData formControlName="checkboxForm" (click)="checkCheckbox()">
           <label for="checkbox-data">
             <span>Ich stimme der&nbsp;<p>Datenschutzerklärung</p>&nbsp;zu.</span>
           </label>
@@ -51,6 +51,10 @@
 
         <div class="block__error" *ngIf="this.authService.signUpError">
           *Bitte füllen Sie alle Felder korrekt aus.
+        </div>
+
+        <div class="block__error-checkbox" *ngIf="this.authService.dataError">
+          *Bitte Datenschutzerklärung bestätigen.
         </div>
     </form>
     </mat-card-content>

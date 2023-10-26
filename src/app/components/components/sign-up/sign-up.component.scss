@@ -62,19 +62,28 @@ mat-card {
 }
 
 .block__error {
-  top: 344px !important;
+  top: 370px !important;
   left: 18px !important;
 }
+
+/*------------------------------------*\
+  Design for checkbox
+\*------------------------------------*/
 
 .block__input-checkbox {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   font-size: 0.722rem;
   margin-bottom: 13px;
 
   input[type=checkbox] + label {
     display: flex;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   input[type=checkbox] {
@@ -98,6 +107,7 @@ mat-card {
     transition: .1s;
   }
 
+
   input[type=checkbox] + label:active:before {
     transform: scale(0);
   }
@@ -119,8 +129,6 @@ mat-card {
   //   border-color: #bfb;
   // }
 
-
-
   span {
     width: 100%;
     display: flex;
@@ -130,4 +138,8 @@ mat-card {
       margin: 0;
     }
   }
+
+  /*------------------------------------*\
+
+  \*------------------------------------*/
 }
