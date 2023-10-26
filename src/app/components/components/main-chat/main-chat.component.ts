@@ -13,6 +13,7 @@ export class MainChatComponent implements OnInit {
   private componentIsDestroyed$ = new Subject<boolean>();
 
   public chatRecord!: Message[];
+  selectedMsg!: Message | null;
 
   constructor(private fireService: FirestoreService) {}
 
@@ -20,7 +21,9 @@ export class MainChatComponent implements OnInit {
     this.loadChatRecord();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.fireService.unsubChatRecord();
+  }
 
   loadChatRecord() {
     this.fireService.startSubChat(this.testChatId);
@@ -28,15 +31,22 @@ export class MainChatComponent implements OnInit {
       .pipe(takeUntil(this.componentIsDestroyed$))
       .subscribe((chat: any[]) => {
         this.chatRecord = chat;
-        this.convertTimestampToDate();
         console.log(chat);
       });
   }
 
-  convertTimestampToDate() {
-    this.chatRecord.forEach((msg) => {
-      let convertTime = msg.sentAt.toDate().toLocaleTimeString();
-      msg.sentAt = convertTime;
-    });
+  openThread(msg: Message, event: any) {
+    if (msg != this.selectedMsg) {
+      event.stopPropagation();
+    }
+    console.log('OpenThread');
+  }
+
+  toggleMsgMenu(msg: Message) {
+    if (this.selectedMsg == msg) {
+      this.selectedMsg = null;
+    } else {
+      this.selectedMsg = msg;
+    }
   }
 }

@@ -7,7 +7,7 @@ import { SignUpComponent } from './components/components/sign-up/sign-up.compone
 const routes: Routes = [
   { path: '', component: IntroComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'home', component: MainChatComponent },
+  { path: 'home', component: MainChatComponent, outlet: 'main' },
   ];
 
 @NgModule({
