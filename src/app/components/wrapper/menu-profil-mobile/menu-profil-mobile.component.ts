@@ -16,17 +16,6 @@ export class MenuProfilMobileComponent {
   toggleMenu(){
     this.navbarService.closeMenu();
   }
-  // toggleMenu(){
-  //   let menu: HTMLElement | null = document.getElementById('menu');
-  //   menu?.classList.remove('slide--up');
-  //   menu?.classList.add('slide--down');
-
-  //   setTimeout(() => {
-  //     this.navbarService.toggleMenu();
-  //   }, 1000);
-
-  //   menu?.classList.add('slide--up');
-  // }
 
   openDialogProfil(){
     this.dialog.open(DialogProfilComponent)
