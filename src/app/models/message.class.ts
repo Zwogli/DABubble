@@ -1,5 +1,6 @@
 export class Message {
   id: string;
+  message: string;
   sentById: string;
   sentByName: string;
   sentByPhotoUrl: string;
@@ -9,10 +10,14 @@ export class Message {
     length: string;
     lastAnswer: any;
   };
-  message: string;
+  reactedBy: {
+    id: string;
+    emoteUrl: string;
+  }[];
 
   constructor() {
     this.id = '';
+    this.message = '';
     this.sentById = '';
     this.sentByName = '';
     this.sentByPhotoUrl = '';
@@ -22,6 +27,6 @@ export class Message {
       length: '',
       lastAnswer: '',
     };
-    this.message = '';
+    this.reactedBy = [];
   }
 }
