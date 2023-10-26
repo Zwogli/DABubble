@@ -1,0 +1,160 @@
+.sub-header {
+    display: flex;
+    justify-content: space-between;
+
+    box-shadow: 0 5px 10px rgba($color: #000000, $alpha: 0.3);
+    padding: 16px;
+}
+
+.sub-header__title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: fit-content;
+
+    padding: 10px;
+    border-radius: 30px;
+
+    font-size: 20px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: antiquewhite;
+    }
+}
+
+.sub-header__avatar-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sub-header__avatar-wrapper {
+    display: flex;
+    align-items: center;
+
+    img {
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    span {
+        margin-left: 4px;
+        font-weight: bold;
+    }
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.message__wrapper {
+    width: 100%;
+    padding: 10px 16px;
+    margin-top: 45px;
+}
+
+.message {
+    display: flex;
+    gap: 20px;
+    transition: 125ms ease-in-out;
+}
+
+.message__menu {
+    background-color: var(--bg-light);
+    transition: 125ms ease-in-out;
+
+    .message__content {
+        background-color: white !important;
+        transition: 125ms ease-in-out;
+    }
+}
+
+.message__avatar-container {
+
+    img {
+        height: 50px;
+        border-radius: 50%;
+    }
+}
+
+.message__content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .message__header {
+        display: flex;
+        gap: 20px;
+
+        .message__header-name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .message__header-time {
+            font-size: 14px;
+            color: var(--gray-text);
+        }
+    }
+
+    .message__content {
+        padding: 15px;
+        background-color: var(--bg-light);
+
+        border-radius: 0 30px 30px 30px;
+    }
+
+    .message__footer {
+        display: flex;
+        gap: 20px;
+
+        span {
+            white-space: nowrap;
+        }
+    }
+}
+
+.message__input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    position: fixed;
+    bottom: 30px;
+    left: 16px;
+    right: 16px;
+
+
+    padding: 20px;
+
+    border: 1px solid var(--purple-lines);
+    border-radius: 20px;
+
+    &:focus-within {
+        border: 1px solid var(--purple-text);
+    }
+
+    textarea {
+        height: 65px;
+        border: none;
+        resize: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .message-input__btn-container {
+        display: flex;
+        justify-content: space-between;
+
+        .btn-container__extra-btn-wrapper {
+            display: flex;
+            gap: 5px;
+        }
+    }
+}

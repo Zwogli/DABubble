@@ -1,0 +1,204 @@
+:host {
+  display: block;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+}
+
+mat-card {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 32px);
+  margin: 105px 16px 0 16px;
+  height: 410px;
+  z-index: 1;
+  padding: 25px 15px;
+  opacity: 0;
+  animation: IncreaseOpacity 500ms ease-in-out forwards;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
+  border-radius: 30px;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+//when loading the card the opacity will be increase step by step that the intro animation is visible
+@keyframes IncreaseOpacity {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.sign-in__headline {
+  font-size: 1.778rem;
+  font-weight: 700;
+  color: var(--color-blue-primary-default);
+}
+
+.sign-in__info-text {
+  font-size: 0.777rem;
+  font-weight: 400;
+  color: var(--color-black);
+  margin: 20px 0;
+  text-align: center;
+}
+
+.block__input {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+
+  input {
+    border-radius: 100px;
+    padding: 13px 32px 13px 72px;
+    background-color: var(--color-blue-bg);
+    border: 1px solid var(--color-white);
+    width: 100%;
+
+    &:hover {
+      border: 1px solid var(--color-grey-primary-disable);
+    }
+
+    &:focus {
+      outline: 1px solid #535af1;
+      border: 1px solid white;
+    }
+  }
+}
+
+.mail-icon {
+  position: absolute;
+  left: 30px;
+  font-size: 1.222rem;
+}
+
+.sign-in__forgot-password {
+  color: var(--color-blue-primary-hover);
+  font-size: 0.833rem;
+  font-weight: 400;
+  padding: 5px 15px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+
+  &:hover {
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-blue-primary-default);
+    background-color: var(--color-blue-bg);
+  }
+}
+
+.block__btn-box {
+  display: flex;
+  align-items: center;
+}
+
+.btn__log-in {
+  font-weight: 700;
+  color: var(--color-white);
+  background-color: var(--color-blue-primary-default);
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: var(--color-blue-primary-hover);
+    cursor: pointer;
+  }
+}
+
+.btn__guest-log-in {
+  font-weight: 700;
+  color: var(--color-blue-primary-default);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-blue-primary-default);
+  border-radius: 25px;
+  padding: 12px 25px;
+
+  &:hover {
+    background-color: var(--color-blue-primary-default);
+    color: var(--color-white);
+    cursor: pointer;
+  }
+}
+
+.block__create-account {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 30px;
+
+  :first-child {
+    font-size: 0.833rem;
+    font-weight: 400;
+    color: var(--color-black);
+    margin-bottom: 20px;
+  }
+
+  button {
+    font-weight: 700;
+    color: var(--color-blue-primary-default);
+    border: 1px solid var(--color-blue-primary-default);
+    background-color: var(--color-blue-bg);
+    border-radius: 25px;
+    padding: 7px 18px;
+
+    &:hover {
+      background-color: var(--color-blue-primary-default);
+      color: var(--color-white);
+      cursor: pointer;
+    }
+  }
+}
+
+.block__alert-email {
+  position: absolute;
+  top: 143px;
+  color: var(--color-purple-error);
+  font-size: 0.667rem;
+  left: 18px;
+}
+
+.block__alert-password {
+  position: absolute;
+  top: 207px;
+  color: var(--color-purple-error);
+  font-size: 0.667rem;
+  left: 18px;
+}
+
+.block__error {
+  position: absolute;
+  top: 327px;
+  color: var(--color-purple-error);
+  font-size: 0.667rem;
+  left: 49px;
+  line-height: 120%;
+}
