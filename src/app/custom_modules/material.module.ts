@@ -6,7 +6,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 
 const MaterialComponents = [
@@ -15,7 +14,6 @@ const MaterialComponents = [
   MatCardModule,
   MatButtonModule,
   MatDividerModule,
-,
   MatExpansionModule,
   MatFormFieldModule,
   MatInputModule,
