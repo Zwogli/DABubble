@@ -5,7 +5,9 @@
     <mat-card-content>
       <form class="example-form" [formGroup]="signUpForm">
         <div class="block__headline-info-box">
-          <mat-icon class="icon__arrow-back" routerLink="">arrow_back</mat-icon>
+          <div class="block__icon-arrow-back">
+            <mat-icon class="icon__arrow-back" routerLink="">arrow_back</mat-icon>
+          </div>
           <span class="sign-in__headline">Konto erstellen</span>
           <span class="sign-in__info-text">Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</span>
         </div>
@@ -34,6 +36,13 @@
         </div>
         <div class="block__alert-password" *ngIf="passwordForm?.invalid && (passwordForm?.dirty || passwordForm?.touched)">
           <div *ngIf="passwordForm?.errors?.['required']">*Bitte geben Sie ein Passwort ein.</div>
+        </div>
+
+        <div class="block__input-checkbox">
+          <input type="checkbox" id="checkbox-data" name="checkbox_data">
+          <label for="checkbox-data">
+            <span>Ich stimme der&nbsp;<p>Datenschutzerklärung</p>&nbsp;zu.</span>
+          </label>
         </div>
 
         <div class="block__btn-box">
