@@ -17,6 +17,8 @@ export class AuthService {
   auth = getAuth();
   signUpError = false;
   public logInError = false;
+  checkboxIsChecked = false;
+  dataError = false;
   currentUserId = '';
   currentUser:any = [];
   currentUserSubject = new BehaviorSubject<any>(
@@ -31,10 +33,8 @@ export class AuthService {
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
         this.logInError = false;
         this.router.navigate(['home']);
-        console.log('Eingeloggter User:', user);
         this.getCurrentUser();
         // ...
       })
@@ -45,7 +45,7 @@ export class AuthService {
 
 
   guestSignIn() {
-    this.currentUserId = 'QyqQVfCO6HMj2jcNN2YKTAFhGz62'; //currentUserId get's the id from guest user
+    this.currentUserId = 'KmnG9Gk8urcE10vX3n4p0uc40mA2'; //currentUserId get's the id from guest user
     this.router.navigate(['home']);
     console.log('guest userid:', this.currentUserId);
   }
@@ -56,8 +56,6 @@ export class AuthService {
       if (user) {
         this.currentUserId = user.uid;
         this.currentUser.push(user);
-        console.log('currentUserUID:', this.currentUserId);
-        console.log('observable:', this.currentUser$);
       } else {
         // User is signed out
         this.currentUserId = '';
@@ -67,17 +65,21 @@ export class AuthService {
 
 
   signUp(name:string, email:string, password:string) {
-    createUserWithEmailAndPassword(this.auth, email, password)
+    if (this.checkboxIsChecked) {
+      createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-        console.log('neuer user:', user);
         this.signUpError = false;
+        this.dataError = false;
         this.firestoreService.addUser(user, name);
         this.router.navigate(['home']);
       })
       .catch((error) => {
         this.signUpError = true;
       });
+    } else {
+      this.dataError = true;
+    }
   }
 }
