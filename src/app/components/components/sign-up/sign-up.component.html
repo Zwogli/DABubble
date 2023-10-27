@@ -13,7 +13,7 @@
         </div>
 
         <div class="block__input">
-          <mat-icon class="material-icons-outlined mail-icon">person</mat-icon>
+          <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="nameForm?.dirty || nameForm?.touched">person</mat-icon>
           <input formControlName="nameForm" type="email" placeholder="Name und Nachname" #userName>
         </div>
         <div class="block__alert-name" *ngIf="nameForm?.invalid && (nameForm?.dirty || nameForm?.touched)">
@@ -22,7 +22,7 @@
         </div>
 
         <div class="block__input">
-          <mat-icon class="material-icons-outlined mail-icon">mail</mat-icon>
+          <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="emailForm?.dirty || emailForm?.touched">mail</mat-icon>
           <input formControlName="emailForm" type="email" placeholder="beispielname@email.com" #userEmail>
         </div>
         <div class="block__alert-email" *ngIf="emailForm?.invalid && (emailForm?.dirty || emailForm?.touched)">
@@ -32,7 +32,7 @@
         </div>
 
         <div class="block__input">
-          <mat-icon class="material-icons-outlined mail-icon">lock</mat-icon>
+          <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="passwordForm?.dirty || passwordForm?.touched">lock</mat-icon>
           <input formControlName="passwordForm" type="password" placeholder="Passwort" #userPassword>
         </div>
         <div class="block__alert-password" *ngIf="passwordForm?.invalid && (passwordForm?.dirty || passwordForm?.touched)">
@@ -41,7 +41,7 @@
         </div>
 
         <div class="block__input-checkbox">
-          <input type="checkbox" id="checkbox-data" formControlName="checkboxForm" (click)="getCheckboxValue()">
+          <input type="checkbox" id="checkbox-data" required formControlName="checkboxForm" (click)="getCheckboxValue()">
           <label for="checkbox-data">
             <span>Ich stimme der&nbsp;<p>Datenschutzerklärung</p>&nbsp;zu.</span>
           </label>
@@ -51,8 +51,8 @@
           <button
           class="btn__log-in"
           (click)="this.authService.signUp(userName.value, userEmail.value, userPassword.value)"
-          [disabled]="signUpForm.invalid || !this.authService.checkboxIsChecked"
-          [class.btn-disabled]="signUpForm.invalid || !this.authService.checkboxIsChecked">Weiter
+          [disabled]="signUpForm.invalid"
+          [class.btn-disabled]="signUpForm.invalid">Weiter
           </button>
         </div>
 
