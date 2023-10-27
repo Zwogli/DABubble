@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navbar-panel-message',
@@ -7,6 +9,17 @@ import { Component } from '@angular/core';
 })
 export class NavbarPanelMessageComponent {
   panelOpenState: boolean = false;
+  private subscription: Subscription;
+  currentUser: any;
+
+  constructor(private authService: AuthService){
+    this.subscription = this.authService.currentUser$.subscribe(
+      user => {
+        this.currentUser = user;
+        console.log('show me user ',user);
+        
+      })
+    }
 
   rotateArrow() {
     const channelArrow: any = document.getElementById(
