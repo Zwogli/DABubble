@@ -89,9 +89,16 @@ mat-card {
   input[type=checkbox] + label {
     display: flex;
 
+
+
+  p {
+    color: var(--color-blue-primary-hover);
+
     &:hover {
       cursor: pointer;
+      color: var(--color-blue-primary-default);
     }
+  }
   }
 
   input[type=checkbox] {
@@ -113,6 +120,7 @@ mat-card {
     vertical-align: bottom;
     color: transparent;
     transition: .1s;
+    cursor: pointer;
   }
 
 
