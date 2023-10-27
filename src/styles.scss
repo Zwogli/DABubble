@@ -43,6 +43,7 @@ body {
 
 .btn-disabled {
   background-color: var(--color-grey-primary-disable) !important;
+  cursor: not-allowed !important;
 }
 
 .icon-color-black {

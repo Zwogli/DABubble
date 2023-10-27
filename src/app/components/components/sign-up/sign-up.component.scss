@@ -27,7 +27,7 @@ mat-card {
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: 0;
+  left: -4px;
   top: -6px;
   border-radius: 50px;
   padding: 5px;
@@ -36,6 +36,10 @@ mat-card {
     background-color: var(--color-blue-bg);
     cursor: pointer;
   }
+}
+
+.icon__arrow-back {
+  color: var(--color-black) !important;
 }
 
 
