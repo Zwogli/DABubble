@@ -48,7 +48,12 @@
         </div>
 
         <div class="block__btn-box">
-          <button class="btn__log-in" (click)="this.authService.signUp(userName.value, userEmail.value, userPassword.value)">Weiter</button>
+          <button
+          class="btn__log-in"
+          (click)="this.authService.signUp(userName.value, userEmail.value, userPassword.value)"
+          [disabled]="signUpForm.invalid || !this.authService.checkboxIsChecked"
+          [class.btn-disabled]="signUpForm.invalid || !this.authService.checkboxIsChecked">Weiter
+          </button>
         </div>
 
         <div class="block__error" *ngIf="this.authService.signUpError">
