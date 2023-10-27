@@ -66,6 +66,14 @@ mat-card {
   left: 18px !important;
 }
 
+.block__error-checkbox {
+  position: absolute;
+  top: 308px;
+  color: var(--color-purple-error);
+  font-size: 0.667rem;
+  left: 18px;
+}
+
 /*------------------------------------*\
   Design for checkbox
 \*------------------------------------*/

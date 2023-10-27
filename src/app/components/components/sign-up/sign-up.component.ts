@@ -12,27 +12,23 @@ export class SignUpComponent {
   signUpForm = new FormGroup({
     nameForm: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[a-zA-ZöÖüÜäÄß ]+$'),
+      Validators.pattern('^[a-zA-ZöÖüÜäÄß -]+$'),
     ]),
-    emailForm: new FormControl('', [Validators.required, Validators.email]),
-    passwordForm: new FormControl('', [Validators.required]),
+    emailForm: new FormControl('', [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+    passwordForm: new FormControl('', [Validators.required, Validators.minLength(8),]),
     checkboxForm: new FormControl(),
   });
 
-  @ViewChild('checkbox') checkboxData!: ElementRef;
-  test:boolean = false;
-
   constructor(public authService: AuthService) {}
 
-  testCheck() {
-    console.log(this.checkboxForm?.value);
-  }
 
-  checkCheckbox() {
+  getCheckboxValue() {
     if (!this.checkboxForm?.value) {
-      this.authService.checkboxData = true;
+      this.authService.checkboxIsChecked = true;
+      this.authService.dataError = false;
     } else {
-      this.authService.checkboxData = false;
+      this.authService.checkboxIsChecked = false;
+      this.authService.dataError = true;
     }
   }
 

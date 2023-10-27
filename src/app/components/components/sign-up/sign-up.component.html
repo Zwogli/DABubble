@@ -28,6 +28,7 @@
         <div class="block__alert-email" *ngIf="emailForm?.invalid && (emailForm?.dirty || emailForm?.touched)">
           <div *ngIf="emailForm?.errors?.['required']">*Bitte geben Sie eine E-Mail-Adresse ein.</div>
           <div *ngIf="emailForm?.errors?.['email']">*Diese E-Mail-Adresse ist leider ungültig.</div>
+          <div *ngIf="emailForm?.errors?.['pattern']">*Diese E-Mail-Adresse ist leider ungültig.</div>
         </div>
 
         <div class="block__input">
@@ -36,10 +37,11 @@
         </div>
         <div class="block__alert-password" *ngIf="passwordForm?.invalid && (passwordForm?.dirty || passwordForm?.touched)">
           <div *ngIf="passwordForm?.errors?.['required']">*Bitte geben Sie ein Passwort ein.</div>
+          <div *ngIf="passwordForm?.errors?.['minlength']">*Bitte verwenden Sie mindestens 8 Zeichen.</div>
         </div>
 
         <div class="block__input-checkbox">
-          <input type="checkbox" id="checkbox-data" name="checkbox_data" #checkboxData formControlName="checkboxForm" (click)="checkCheckbox()">
+          <input type="checkbox" id="checkbox-data" formControlName="checkboxForm" (click)="getCheckboxValue()">
           <label for="checkbox-data">
             <span>Ich stimme der&nbsp;<p>Datenschutzerklärung</p>&nbsp;zu.</span>
           </label>
