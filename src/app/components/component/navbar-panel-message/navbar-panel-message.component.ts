@@ -10,18 +10,13 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NavbarPanelMessageComponent {
   panelOpenState: boolean = false;
   // private subscription: Subscription;
-  currentUser: any;
+  currentUser: String = '';
 
-  constructor(private authService: AuthService){
-    // this.subscription = this.authService.currentUser$.subscribe(
-    //   user => {
-    //     this.currentUser = user;
-    //     console.log('show me user ',user);
-        
-    //   })
-    this.currentUser = this.authService.currentUserId;
-    console.log('currentUserId ', this.currentUser);
-    
+  constructor(private authService: AuthService){}
+
+    ngOnInit(){
+      this.currentUser = this.authService.currentUserId;
+      console.log('currentUserId ', this.currentUser);
     }
 
   rotateArrow() {

@@ -56,6 +56,7 @@ export class AuthService {
       if (user) {
         this.currentUserId = user.uid;
         this.currentUser.push(user);
+        debugger
       } else {
         // User is signed out
         this.currentUserId = '';

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navbar-panel-channels',
@@ -7,6 +8,14 @@ import { Component } from '@angular/core';
 })
 export class NavbarPanelChannelsComponent {
   panelOpenState: boolean = false;
+  currentUser: String = '';
+
+  constructor(private authService: AuthService){}
+
+  ngOnInit(){
+    this.currentUser = this.authService.currentUserId;
+    console.log('currentUserId ', this.currentUser);
+  }
 
   rotateArrow() {
     const channelArrow: any = document.getElementById(
