@@ -26,10 +26,9 @@ export class NavbarPanelChannelsComponent {
     
   }
 
-  async ngOnInit(){
-    await this.renderInit();
-    debugger
-    await this.renderDoc();
+  ngOnInit(){
+    this.renderInit();
+    this.renderDoc();
     console.log('currentUserData: ', this.firestoreService.currentUserData);
     
   }
