@@ -18,58 +18,72 @@
 </div>
 
 <main>
-  <div *ngFor="let message of chatRecord" class="message">
-    <div class="message__avatar-container">
-      <img src="../../../../assets/img/avatars/avatar_male_one.svg" alt="" />
-    </div>
-
-    <div class="message__content-container">
-      <div class="message__header">
-        <span class="message__header-name">{{ message.sentByName }}</span>
-        <span class="message__header-time">14:25 Uhr</span>
+  <div
+    *ngFor="let message of chatRecord"
+    class="message__wrapper"
+    [ngClass]="{ message__menu: message === selectedMsg }"
+  >
+    <div class="message" (click)="toggleMsgMenu(message)">
+      <div class="message__avatar-container">
+        <img src="../../../../assets/img/avatars/avatar_male_one.svg" alt="" />
       </div>
 
-      <p class="message__content">
-       {{ message.message }}
-      </p>
-      
-      <div *ngIf="message.thread.id" class="message__footer">
-        <span class="message__footer-count">{{ message.thread.length }} Antworten</span>
-        <span class="message__footer-last-timestamp"
-          >Letzte Antwort {{ message.sentAt }} Uhr</span
-        >
-      </div>
-    </div>
-  </div>
-
-  <div class="message__input">
-    <input type="text" placeholder="Nachricht an #Placeholder" />
-
-    <div class="message-input__btn-container">
-      <div class="btn-container__extra-btn-wrapper">
-        <button
-          mat-icon-button
-          aria-label="Icon button to add data files to the message"
-        >
-          <mat-icon fontSet="material-icons-outlined">add</mat-icon>
-        </button>
-
-        <mat-divider [vertical]="true"></mat-divider>
-
-        <button mat-icon-button aria-label="Icon button to select emotes">
-          <mat-icon fontSet="material-icons-outlined"
-            >sentiment_satisfied</mat-icon
+      <div class="message__content-container">
+        <div class="message__header">
+          <span class="message__header-name">{{ message.sentByName }}</span>
+          <span class="message__header-time"
+            >{{ message.sentAt.toDate() | date : "shortTime" }} Uhr</span
           >
-        </button>
-        <button mat-icon-button aria-label="Icon button to link another user">
-          <mat-icon fontSet="material-icons-outlined">alternate_email</mat-icon>
-        </button>
-      </div>
+        </div>
 
-      <div>
-        <button mat-icon-button aria-label="Icon button to send the message">
-          <mat-icon fontSet="material-icons-outlined">send</mat-icon>
-        </button>
+        <p class="message__content">
+          {{ message.message }}
+        </p>
+
+        <div *ngIf="message.thread.id"  class="message__footer">
+          <span (click)="openThread(message, $event)" class="message__footer-count"
+            >{{ message.thread.length }} Antworten</span
+          >
+          <span class="message__footer-last-timestamp"
+            >Letzte Antwort
+            {{ message.thread.lastAnswer.toDate() | date : "EEEE hh:mm" }}
+            Uhr</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="message__input">
+      <textarea type="text" placeholder="Nachricht an #Placeholder"></textarea>
+
+      <div class="message-input__btn-container">
+        <div class="btn-container__extra-btn-wrapper">
+          <button
+            mat-icon-button
+            aria-label="Icon button to add data files to the message"
+          >
+            <mat-icon fontSet="material-icons-outlined">add</mat-icon>
+          </button>
+
+          <mat-divider [vertical]="true"></mat-divider>
+
+          <button mat-icon-button aria-label="Icon button to select emotes">
+            <mat-icon fontSet="material-icons-outlined"
+              >sentiment_satisfied</mat-icon
+            >
+          </button>
+          <button mat-icon-button aria-label="Icon button to link another user">
+            <mat-icon fontSet="material-icons-outlined"
+              >alternate_email</mat-icon
+            >
+          </button>
+        </div>
+
+        <div>
+          <button mat-icon-button aria-label="Icon button to send the message">
+            <mat-icon fontSet="material-icons-outlined">send</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>

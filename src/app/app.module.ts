@@ -1,4 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+
+import { registerLocaleData } from '@angular/common';
+import localeDE from '@angular/common/locales/de';
+registerLocaleData(localeDE, 'de');
+
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -32,7 +37,9 @@ import { ChooseAvatarComponent } from './components/components/choose-avatar/cho
     provideFirestore(() => getFirestore()),
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    {provide: LOCALE_ID, useValue: 'de-DE' }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
