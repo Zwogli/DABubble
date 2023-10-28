@@ -63,7 +63,7 @@ export class FirestoreService {
   readDoc(collId: string, docId:string){
     onSnapshot(this.getDocRef(collId, docId), (docObj) => {
       console.log('read onSnapshot', docObj.data());
-      this.currentUserData = docObj.data();
+      this.currentUserData = docObj;
       });
   }
 

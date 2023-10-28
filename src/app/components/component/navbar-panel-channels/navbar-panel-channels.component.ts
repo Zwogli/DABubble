@@ -28,8 +28,8 @@ export class NavbarPanelChannelsComponent {
 
   ngOnInit(){
     this.renderInit();
-    this.renderDoc();
-    console.log('currentUserData: ', this.firestoreService.currentUserData);
+    this.userData = this.renderDoc();
+    console.log('currentUserData: ', this.user);
     
   }
 
@@ -38,7 +38,7 @@ export class NavbarPanelChannelsComponent {
   }
 
   renderDoc(){
-    this.firestoreService.readDoc('user', this.currentUser);
+    return this.firestoreService.readDoc('user', this.currentUser);
   }
 
   rotateArrow() {
