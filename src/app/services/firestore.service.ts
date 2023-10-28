@@ -25,6 +25,8 @@ export class FirestoreService {
 
   unsubChatRecord!: Unsubscribe;
 
+  currentUserData:any;
+
   constructor() {}
 
   subChatRecord(docId: string) {
@@ -57,4 +59,20 @@ export class FirestoreService {
       activePrivateChats: [],
     });
   }
+
+  readDoc(collId: string, docId:string){
+    onSnapshot(this.getDocRef(collId, docId), (docObj) => {
+      console.log('read onSnapshot', docObj.data());
+      this.currentUserData = docObj.data();
+      });
+  }
+
+  getCollectionRef(collID:string){
+    return collection(this.firestore, collID);
+  }
+
+  getDocRef(collId:string, docId:string){
+    return doc(collection(this.firestore, collId), docId);
+  }
+
 }

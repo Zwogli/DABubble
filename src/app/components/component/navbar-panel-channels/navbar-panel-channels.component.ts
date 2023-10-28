@@ -1,20 +1,45 @@
+import { ArrayType } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-navbar-panel-channels',
   templateUrl: './navbar-panel-channels.component.html',
   styleUrls: ['./navbar-panel-channels.component.scss']
 })
+
 export class NavbarPanelChannelsComponent {
   panelOpenState: boolean = false;
-  currentUser: String = '';
+  currentUser: any;
+  user:any;
 
-  constructor(private authService: AuthService){}
+  userData: any;
+  channel:any = [];
+  privateChat:any = [];
 
-  ngOnInit(){
+
+  constructor(
+    private authService: AuthService, 
+    private firestoreService: FirestoreService
+  ){
+    
+  }
+
+  async ngOnInit(){
+    await this.renderInit();
+    debugger
+    await this.renderDoc();
+    console.log('currentUserData: ', this.firestoreService.currentUserData);
+    
+  }
+
+  renderInit(){
     this.currentUser = this.authService.currentUserId;
-    console.log('currentUserId ', this.currentUser);
+  }
+
+  renderDoc(){
+    this.firestoreService.readDoc('user', this.currentUser);
   }
 
   rotateArrow() {
