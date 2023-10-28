@@ -73,7 +73,7 @@ export class AuthService {
         this.signUpError = false;
         this.dataError = false;
         this.firestoreService.addUser(user, name);
-        this.router.navigate(['home']);
+        this.router.navigate(['home']);        
       })
       .catch((error) => {
         this.signUpError = true;
