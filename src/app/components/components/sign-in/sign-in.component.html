@@ -5,7 +5,7 @@
       <span class="sign-in__info-text">Wir empfehlen dir, die E-Mail Adresse zu nutzen, die du bei der Arbeit verwendest.</span>
 
       <div class="block__input">
-        <mat-icon class="material-icons-outlined mail-icon">mail</mat-icon>
+        <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="emailForm?.dirty || emailForm?.touched">mail</mat-icon>
         <input formControlName="emailForm" type="email" placeholder="beispielname@email.com" #userEmail>
       </div>
       <div class="block__alert-email" *ngIf="emailForm?.invalid && (emailForm?.dirty || emailForm?.touched)">
@@ -13,7 +13,7 @@
       </div>
 
       <div class="block__input">
-        <mat-icon class="material-icons-outlined mail-icon">lock</mat-icon>
+        <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="passwordForm?.dirty || passwordForm?.touched">lock</mat-icon>
         <input formControlName="passwordForm" type="password" placeholder="Passwort" #userPassword>
       </div>
       <div class="block__alert-password" *ngIf="passwordForm?.invalid && (passwordForm?.dirty || passwordForm?.touched)">
@@ -22,7 +22,12 @@
 
       <span class="sign-in__forgot-password">Passwort vergessen?</span>
       <div class="block__btn-box">
-        <button class="btn__log-in" (click)="this.authService.signIn(userEmail.value, userPassword.value)">Anmelden</button>
+        <button
+        class="btn__log-in"
+        (click)="this.authService.signIn(userEmail.value, userPassword.value)"
+        [disabled]="signInForm.invalid"
+        [class.btn-disabled]="signInForm.invalid"
+        >Anmelden</button>
         <button class="btn__guest-log-in" (click)="this.authService.guestSignIn()">Gäste-Login</button>
       </div>
 

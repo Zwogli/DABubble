@@ -19,7 +19,7 @@ export class AuthService {
   public logInError = false;
   checkboxIsChecked = false;
   dataError = false;
-  currentUserId = '';
+  currentUserId:any;
   currentUser:any = [];
   currentUserSubject = new BehaviorSubject<any>(
     this.currentUser
@@ -56,6 +56,7 @@ export class AuthService {
       if (user) {
         this.currentUserId = user.uid;
         this.currentUser.push(user);
+        localStorage.setItem('currentUserId', user.uid);
       } else {
         // User is signed out
         this.currentUserId = '';

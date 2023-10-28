@@ -40,3 +40,12 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.btn-disabled {
+  background-color: var(--color-grey-primary-disable) !important;
+  cursor: not-allowed !important;
+}
+
+.icon-color-black {
+  color: var(--color-black) !important;
+}
