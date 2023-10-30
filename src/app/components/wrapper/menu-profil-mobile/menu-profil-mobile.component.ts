@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NavbarService } from 'src/app/service/navbar/navbar.service';
+import { NavbarService } from 'src/app/services/navbar.service';
 import { DialogProfilComponent } from '../../component/dialog-profil/dialog-profil.component';
 
 @Component({

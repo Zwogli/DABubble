@@ -11,7 +11,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 
 export class NavbarPanelChannelsComponent {
   panelOpenState: boolean = false;
-  currentUser: any;
+  currentUserId: any;
   user:any;
 
   userData: any;
@@ -27,19 +27,16 @@ export class NavbarPanelChannelsComponent {
   }
 
   ngOnInit(){
-    this.renderInit();
-    this.userData = this.renderDoc();
+    // this.renderInit();
+    this.currentUserId = localStorage.getItem("currentUserId")
+    this.userData = this.firestoreService.readDoc('user', this.currentUserId);
     console.log('currentUserData: ', this.user);
     
   }
 
-  renderInit(){
-    this.currentUser = this.authService.currentUserId;
-  }
-
-  renderDoc(){
-    return this.firestoreService.readDoc('user', this.currentUser);
-  }
+  // renderInit(){
+  //   this.currentUserId = this.authService.currentUserId;
+  // }
 
   rotateArrow() {
     const channelArrow: HTMLElement | null = document.getElementById(

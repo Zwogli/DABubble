@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavbarService } from 'src/app/service/navbar/navbar.service';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-navbar-header-mobile',
