@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MenuProfilMobileComponent } from '../../wrapper/menu-profil-mobile/menu-profil-mobile.component';
+import { DialogProfilEditComponent } from '../dialog-profil-edit/dialog-profil-edit.component';
 
 @Component({
   selector: 'app-dialog-profil',
@@ -9,11 +10,15 @@ import { MenuProfilMobileComponent } from '../../wrapper/menu-profil-mobile/menu
 })
 export class DialogProfilComponent {
   constructor(public dialogRef: MatDialogRef<MenuProfilMobileComponent>,
+    public dialog: MatDialog,
     ){}
     
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  openDialogProfilEdit(){}
+  openDialogProfilEdit(){
+    this.dialog.open(DialogProfilEditComponent);
+    this.onNoClick();
+  }
 }

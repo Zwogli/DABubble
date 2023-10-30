@@ -30,6 +30,7 @@ import { MainChatComponent } from './components/components/main-chat/main-chat.c
 import { SignUpComponent } from './components/components/sign-up/sign-up.component';
 import { ChooseAvatarComponent } from './components/components/choose-avatar/choose-avatar.component';
 import { AppBodyComponent } from './components/wrapper/app-body/app-body.component';
+import { DialogProfilEditComponent } from './components/component/dialog-profil-edit/dialog-profil-edit.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { AppBodyComponent } from './components/wrapper/app-body/app-body.compone
     ChooseAvatarComponent, 
     AppBodyComponent, 
     MenuProfilMobileComponent, 
-    DialogProfilComponent
+    DialogProfilComponent, DialogProfilEditComponent
   ],
 
   imports: [
