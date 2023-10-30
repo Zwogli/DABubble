@@ -20,9 +20,9 @@ export class NavbarPanelMessageComponent {
     }
 
   rotateArrow() {
-    const channelArrow: any = document.getElementById(
+    const channelArrow: HTMLElement | null= document.getElementById(
       `directMessage--arrow_drop_down`
     );
-    channelArrow.classList.toggle('rotate');
+    channelArrow?.classList.toggle('rotate');
   }
 }

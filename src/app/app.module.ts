@@ -21,6 +21,8 @@ import { NavbarHeaderMobileComponent } from './components/component/navbar-heade
 import { NavbarPanelChannelsComponent } from './components/component/navbar-panel-channels/navbar-panel-channels.component';
 import { NavbarPanelMessageComponent } from './components/component/navbar-panel-message/navbar-panel-message.component';
 import { NavbarSearchbarComponent } from './components/component/navbar-searchbar/navbar-searchbar.component';
+import { MenuProfilMobileComponent } from './components/wrapper/menu-profil-mobile/menu-profil-mobile.component';
+import { DialogProfilComponent } from './components/component/dialog-profil/dialog-profil.component';
 import { IntroComponent } from './components/components/intro/intro.component';
 import { SignInComponent } from './components/components/sign-in/sign-in.component';
 
@@ -40,7 +42,11 @@ import { AppBodyComponent } from './components/wrapper/app-body/app-body.compone
     NavbarPanelMessageComponent, 
     NavbarSearchbarComponent,
     SignInComponent,
-    SignUpComponent, ChooseAvatarComponent, AppBodyComponent,
+    SignUpComponent, 
+    ChooseAvatarComponent, 
+    AppBodyComponent, 
+    MenuProfilMobileComponent, 
+    DialogProfilComponent
   ],
 
   imports: [
