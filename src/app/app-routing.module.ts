@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', component: IntroComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'choose-avatar', component: ChooseAvatarComponent },
-  // { path: 'home', component: MainChatComponent, outlet: 'main' },
+  // { path: 'home', component: MainChatComponent, outlet:"main" },
   // { path: 'home', component: NavbarComponent },
   { path: 'home', component: AppBodyComponent },
   ];

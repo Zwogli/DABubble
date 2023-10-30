@@ -9,14 +9,14 @@ import { NavbarService } from 'src/app/service/navbar/navbar.service';
 })
 export class AppBodyComponent {
   showMenu: boolean = false;
+  showMainChat: boolean = false;
   private subscription: Subscription;
   
   constructor(private navbarService: NavbarService){
    this.subscription = this.navbarService.showMenu$.subscribe(
     visible => {
       this.showMenu = visible;
-    }
-   )
+    })
   }
 
   toggleMenu(){
