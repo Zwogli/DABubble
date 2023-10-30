@@ -26,6 +26,7 @@ import { SignInComponent } from './components/components/sign-in/sign-in.compone
 
 import { MainChatComponent } from './components/components/main-chat/main-chat.component';
 import { SignUpComponent } from './components/components/sign-up/sign-up.component';
+import { ChooseAvatarComponent } from './components/components/choose-avatar/choose-avatar.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { SignUpComponent } from './components/components/sign-up/sign-up.compone
     NavbarPanelMessageComponent, 
     NavbarSearchbarComponent,
     SignInComponent,
-    SignUpComponent,
+    SignUpComponent, ChooseAvatarComponent,
   ],
 
   imports: [

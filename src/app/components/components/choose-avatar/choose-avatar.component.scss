@@ -1,0 +1,69 @@
+@import "../sign-in/sign-in.component.scss";
+@import "../sign-up/sign-up.component.scss";
+
+mat-card {
+  height: 543px !important;
+}
+
+.sign-in__headline {
+  width: 80% !important;
+  text-align: center;
+  line-height: 120%;
+}
+
+.block__icon-arrow-back {
+  top: 0px !important;
+}
+
+.img__profile-choose-avatar {
+  margin: 24px 0;
+}
+
+.text__name {
+  margin-bottom: 18px;
+  font-size: 1.778rem;
+  font-weight: 700;
+}
+
+.text__choose-avatar {
+  width: 100%;
+  text-align: start;
+  font-weight: 400;
+  font-size: 0.832rem;
+  margin-bottom: 18px;
+}
+
+.block__img-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 18px;
+
+  img {
+    border-radius: 100%;
+    width: 43px;
+    height: 43px;
+  }
+}
+
+.block__upload-img {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+
+  span {
+    margin-right: 8px;
+    font-weight: 400;
+    font-size: 0.832rem;
+  }
+
+  button {
+    padding: 6px 10px;
+  }
+}
+
+.block__btn-box {
+  margin-top: 0 !important;
+}

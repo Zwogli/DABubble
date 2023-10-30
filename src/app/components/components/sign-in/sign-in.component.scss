@@ -26,6 +26,10 @@ mat-card-content {
   padding: 0;
 }
 
+mat-icon {
+  color: var(--color-grey-primary-disable);
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -87,6 +91,10 @@ form {
     &:focus {
       outline: 1px solid #535af1;
       border: 1px solid white;
+    }
+
+    ::placeholder {
+      color: var(--color-grey-primary-disable);
     }
   }
 }
