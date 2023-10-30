@@ -2,7 +2,7 @@
 @import "../sign-up/sign-up.component.scss";
 
 mat-card {
-  height: 543px !important;
+  height: 555px !important;
 }
 
 .sign-in__headline {
@@ -16,11 +16,11 @@ mat-card {
 }
 
 .img__profile-choose-avatar {
-  margin: 24px 0;
+  margin: 24px 0 32px 0;
 }
 
 .text__name {
-  margin-bottom: 18px;
+  margin-bottom: 22px;
   font-size: 1.778rem;
   font-weight: 700;
 }
@@ -44,6 +44,10 @@ mat-card {
     border-radius: 100%;
     width: 43px;
     height: 43px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
