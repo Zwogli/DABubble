@@ -14,4 +14,6 @@ export class DialogProfilComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  openDialogProfilEdit(){}
 }

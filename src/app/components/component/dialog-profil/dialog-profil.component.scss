@@ -43,6 +43,10 @@ header{
             padding: 3px;
             background-color: var(--color-blue-bg);
             border-radius: 50%;
+            &:active{
+                color: var(--color-blue-primary-default);
+                font-weight: 700;
+            }
         }
     }
     &--status{
