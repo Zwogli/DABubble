@@ -29,7 +29,8 @@ export class NavbarPanelChannelsComponent {
   ngOnInit(){
     // this.renderInit();
     this.currentUserId = localStorage.getItem("currentUserId")
-    this.userData = this.firestoreService.readDoc('user', this.currentUserId);
+    // this.userData = this.firestoreService.readDoc('user', this.currentUserId);
+    // this.firestoreService.subUser(this.currentUserId);
     console.log('currentUserData: ', this.user);
     
   }

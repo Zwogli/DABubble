@@ -24,10 +24,23 @@ export class FirestoreService {
   singleChatRecord$ = this.singleChatRecordSubject.asObservable();
 
   unsubChatRecord!: Unsubscribe;
+  // unsubCurrentUser!: subCurrentUser;
 
   currentUserData:any;
 
   constructor() {}
+
+  // subCurrentUser(docId: string) {
+  //   return onSnapshot(collection(this.firestore, 'user', docId, 'messages')),
+  //     (docs: any) => {
+  //       this.singleChatRecord = [];
+  //       docs.forEach((doc: any) => {
+  //         this.singleChatRecord.push(doc.data());
+  //       });
+  //       this.singleChatRecordSubject.next(this.singleChatRecord);
+  //       console.log(this.singleChatRecord);
+  //     };
+  // }
 
   subChatRecord(docId: string) {
     return onSnapshot(
@@ -58,21 +71,6 @@ export class FirestoreService {
       memberInChannel: [],
       activePrivateChats: [],
     });
-  }
-
-  readDoc(collId: string, docId:string){
-    onSnapshot(this.getDocRef(collId, docId), (docObj) => {
-      console.log('read onSnapshot', docObj.data());
-      this.currentUserData = docObj;
-      });
-  }
-
-  getCollectionRef(collID:string){
-    return collection(this.firestore, collID);
-  }
-
-  getDocRef(collId:string, docId:string){
-    return doc(collection(this.firestore, collId), docId);
   }
 
 }

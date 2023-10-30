@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { DialogProfilComponent } from '../../component/dialog-profil/dialog-profil.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu-profil-mobile',
@@ -9,11 +10,22 @@ import { DialogProfilComponent } from '../../component/dialog-profil/dialog-prof
   styleUrls: ['./menu-profil-mobile.component.scss']
 })
 export class MenuProfilMobileComponent {
+  showMenu: boolean = false;
+  showMainChat: boolean = false;
+  private subscription: Subscription;
 
   constructor(private navbarService: NavbarService, public dialog: MatDialog){
+    this.subscription = this.navbarService.showMenu$.subscribe(
+      visible => {
+        this.showMenu = visible;
+      })
   }
 
-  toggleMenu(){
+  openMenu(){
+    this.navbarService.toggleMenu();
+  }
+
+  closeMenu(){
     this.navbarService.closeMenu();
   }
 
