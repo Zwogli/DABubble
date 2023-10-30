@@ -1,1 +1,10 @@
-<p>app-body works!</p>
+<div class="mobile">
+
+    <app-navbar-header-mobile></app-navbar-header-mobile>
+    <app-navbar></app-navbar>
+  
+    <div *ngIf="showMenu" (click)="toggleMenu()" class="overlay">
+      <app-menu-profil-mobile (click)="$event.stopPropagation()"></app-menu-profil-mobile>
+    </div>
+
+</div>

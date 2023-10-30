@@ -10,19 +10,19 @@ import { Subscription } from 'rxjs';
 
 export class AppComponent {
   title = 'DABubble';
-  showMenu: boolean = false;
-  private subscription: Subscription;
+  // showMenu: boolean = false;
+  // private subscription: Subscription;
   
-  constructor(private navbarService: NavbarService){
-   this.subscription = this.navbarService.showMenu$.subscribe(
-    visible => {
-      this.showMenu = visible;
-    }
-   )
-  }
+  // constructor(private navbarService: NavbarService){
+  //  this.subscription = this.navbarService.showMenu$.subscribe(
+  //   visible => {
+  //     this.showMenu = visible;
+  //   }
+  //  )
+  // }
 
-  toggleMenu(){
-    this.navbarService.closeMenu()
-  }
+  // toggleMenu(){
+  //   this.navbarService.closeMenu()
+  // }
   
 }
