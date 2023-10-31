@@ -19,6 +19,9 @@ export class AuthService {
   checkboxIsChecked = false;
   dataError = false;
   currentUserId: string = '';
+  currentUserName: string = '';
+  currentUserEmail: string = '';
+  currentUserPassword: string = '';
 
 
   constructor(public router: Router, public firestoreService: FirestoreService) {
@@ -32,7 +35,7 @@ export class AuthService {
         // Signed in
         this.logInError = false;
         this.router.navigate(['home']);
-        
+
         // ...
       })
       .catch((error) => {
@@ -48,6 +51,14 @@ export class AuthService {
   }
 
 
+  saveCurrentUserData(name: string, email: string, password: string) {
+    this.currentUserName = name;
+    this.currentUserEmail = email;
+    this.currentUserPassword = password;
+    this.router.navigate(['choose-avatar']);
+  }
+
+
   getCurrentUser() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
@@ -56,17 +67,17 @@ export class AuthService {
         localStorage.setItem('currentUserId', user.uid);
         this.firestoreService.startSubUser(this.currentUserId);
         console.log('Auth getCurrentUser() if', user);
-        
+
       } else {
         // User is signed out
         this.currentUserId = '';
-        console.log('Auth getCurrentUser() else', user);    
+        console.log('Auth getCurrentUser() else', user);
       }
     });
   }
 
 
-  signUp(name:string, email:string, password:string) {
+  signUp(name:string, email:string, password:string, photoUrl: string) {
     if (this.checkboxIsChecked) {
       createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
@@ -74,8 +85,8 @@ export class AuthService {
         const user = userCredential.user;
         this.signUpError = false;
         this.dataError = false;
-        this.firestoreService.addUser(user, name);
-        this.router.navigate(['home']);        
+        this.firestoreService.addUser(user, name, photoUrl);
+        this.router.navigate(['home']);
       })
       .catch((error) => {
         this.signUpError = true;

@@ -50,7 +50,7 @@
         <div class="block__btn-box">
           <button
           class="btn__log-in"
-          (click)="this.authService.signUp(userName.value, userEmail.value, userPassword.value)"
+          (click)="this.authService.saveCurrentUserData(userName.value, userEmail.value, userPassword.value)"
           [disabled]="signUpForm.invalid"
           [class.btn-disabled]="signUpForm.invalid">Weiter
           </button>

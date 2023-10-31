@@ -210,3 +210,13 @@ form {
   left: 49px;
   line-height: 120%;
 }
+
+.btn-disabled {
+  background-color: var(--color-grey-primary-disable);
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: var(--color-grey-primary-disable);
+    cursor: not-allowed;
+  }
+}

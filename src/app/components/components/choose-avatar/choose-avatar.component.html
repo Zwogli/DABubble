@@ -10,19 +10,19 @@
           <span class="sign-in__headline">Wähle deinen Avatar</span>
         </div>
 
-        <img class="img__profile-choose-avatar" src="../../../../assets/img/avatars/profile-choose-avatar.png">
+        <img class="img__profile-choose-avatar" #unchoosenAvatar src="../../../../assets/img/avatars/profile-choose-avatar.png">
 
         <span class="text__name">Frederik Beck</span>
 
         <span class="text__choose-avatar">Aus der Liste wählen</span>
 
         <div class="block__img-box">
-          <img src="../../../../assets/img/avatars/avatar1.png">
-          <img src="../../../../assets/img/avatars/avatar2.png">
-          <img src="../../../../assets/img/avatars/avatar3.png">
-          <img src="../../../../assets/img/avatars/avatar4.png">
-          <img src="../../../../assets/img/avatars/avatar5.png">
-          <img src="../../../../assets/img/avatars/avatar6.png">
+          <img (click)="chooseAvatar(1)" src="../../../../assets/img/avatars/avatar1.png">
+          <img (click)="chooseAvatar(2)" src="../../../../assets/img/avatars/avatar2.png">
+          <img (click)="chooseAvatar(3)" src="../../../../assets/img/avatars/avatar3.png">
+          <img (click)="chooseAvatar(4)" src="../../../../assets/img/avatars/avatar4.png">
+          <img (click)="chooseAvatar(5)" src="../../../../assets/img/avatars/avatar5.png">
+          <img (click)="chooseAvatar(6)" src="../../../../assets/img/avatars/avatar6.png">
         </div>
 
         <div class="block__upload-img">
@@ -34,6 +34,7 @@
         <div class="block__btn-box">
           <button
           class="btn__log-in"
+          (click)="this.authService.signUp(this.authService.currentUserName, this.authService.currentUserEmail, this.authService.currentUserPassword, choosenAvatar)"
           >Weiter
           </button>
         </div>

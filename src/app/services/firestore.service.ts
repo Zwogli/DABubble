@@ -33,9 +33,9 @@ export class FirestoreService {
 
   unsubChatRecord!: Unsubscribe;
   unsubCurrentUser!: Unsubscribe;
-  test:any; 
+  test:any;
   // this.test = query(collection(this.firestore, 'channels'), where('member', "in", this.currentUser.id));
-  
+
   constructor() {}
 
   getChannelsFromCurrentUser(){
@@ -82,12 +82,12 @@ export class FirestoreService {
   }
 
 
-  async addUser(userObject: any, name: string) {
+  async addUser(userObject: any, name: string, photoUrl:string) {
     await setDoc(doc(this.firestore, 'user', userObject.uid), {
       name: name,
       email: userObject.email,
       id: userObject.uid,
-      photoUrl: '',
+      photoUrl: photoUrl,
       onlineStatus: true,
       memberInChannel: [],
       activePrivateChats: [],
