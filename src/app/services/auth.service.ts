@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -7,7 +7,6 @@ import {
 } from 'firebase/auth';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -19,12 +18,8 @@ export class AuthService {
   public logInError = false;
   checkboxIsChecked = false;
   dataError = false;
-  currentUserId:any;
-  currentUser:any = [];
-  currentUserSubject = new BehaviorSubject<any>(
-    this.currentUser
-  );
-  currentUser$ = this.currentUserSubject.asObservable();
+  currentUserId: string = '';
+
 
   constructor(public router: Router, public firestoreService: FirestoreService) {
     this.getCurrentUser();
@@ -57,7 +52,7 @@ export class AuthService {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.currentUserId = user.uid;
-        this.currentUser.push(user);
+        const userId = user.uid;
         localStorage.setItem('currentUserId', user.uid);
         this.firestoreService.startSubUser(this.currentUserId);
         console.log('Auth getCurrentUser() if', user);
