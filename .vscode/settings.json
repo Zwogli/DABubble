@@ -1,0 +1,5 @@
+{
+    "editor.wordWrap": "off",
+    "workbench.editor.showTabs": true,
+    "typescript.tsdk": "node_modules\\typescript\\lib"
+}

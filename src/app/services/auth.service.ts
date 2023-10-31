@@ -21,7 +21,9 @@ export class AuthService {
   currentUserId: string = '';
 
 
-  constructor(public router: Router, public firestoreService: FirestoreService) {}
+  constructor(public router: Router, public firestoreService: FirestoreService) {
+    this.getCurrentUser();
+  }
 
 
   signIn(email: string, password: string) {
@@ -30,7 +32,7 @@ export class AuthService {
         // Signed in
         this.logInError = false;
         this.router.navigate(['home']);
-        this.getCurrentUser();
+        
         // ...
       })
       .catch((error) => {
@@ -52,9 +54,13 @@ export class AuthService {
         this.currentUserId = user.uid;
         const userId = user.uid;
         localStorage.setItem('currentUserId', user.uid);
+        this.firestoreService.startSubUser(this.currentUserId);
+        console.log('Auth getCurrentUser() if', user);
+        
       } else {
         // User is signed out
         this.currentUserId = '';
+        console.log('Auth getCurrentUser() else', user);    
       }
     });
   }
@@ -69,7 +75,7 @@ export class AuthService {
         this.signUpError = false;
         this.dataError = false;
         this.firestoreService.addUser(user, name);
-        this.router.navigate(['home']);
+        this.router.navigate(['home']);        
       })
       .catch((error) => {
         this.signUpError = true;

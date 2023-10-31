@@ -15,8 +15,8 @@ export class Message {
     emoteUrl: string;
   }[];
 
-  constructor() {
-    this.id = '';
+  constructor(data: any) {
+    this.id = data.id || '';
     this.message = '';
     this.sentById = '';
     this.sentByName = '';

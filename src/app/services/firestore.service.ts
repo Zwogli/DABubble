@@ -6,11 +6,12 @@ import {
   query,
   setDoc,
   doc,
-  DocumentData,
+  where,
 } from '@angular/fire/firestore';
 import { Unsubscribe } from '@angular/fire/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../models/message.class';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -24,13 +25,42 @@ export class FirestoreService {
   );
   singleChatRecord$ = this.singleChatRecordSubject.asObservable();
 
-  currentUser: any[] = [];
-  currentUserSubject = new BehaviorSubject<any>(this.currentUser);
+  currentUser!: User;
+  private currentUserSubject = new BehaviorSubject<User>(
+    this.currentUser
+  );
   currentUser$ = this.currentUserSubject.asObservable();
 
   unsubChatRecord!: Unsubscribe;
-
+  unsubCurrentUser!: Unsubscribe;
+  test:any; 
+  // this.test = query(collection(this.firestore, 'channels'), where('member', "in", this.currentUser.id));
+  
   constructor() {}
+
+  getChannelsFromCurrentUser(){
+    return onSnapshot(query(collection(this.firestore, 'channels'), where('member', "array-contains", this.currentUser.id)), (channelsArray) => {
+      console.log('firestore getChannelsFromCurrentUser: ', channelsArray.docs);
+    });
+  }
+
+  ngOnDestroy() {
+    this.unsubCurrentUser();
+  }
+
+  subCurrentUser(docId: string) {
+    return onSnapshot(doc(this.firestore, 'user', docId),
+      (doc: any) => {
+        this.currentUser = doc.data();
+        this.currentUserSubject.next(this.currentUser);
+        this.getChannelsFromCurrentUser();
+        console.log('FirestoreService userData', doc.data());
+    });
+  };
+
+  startSubUser(docId: string) {
+    this.unsubCurrentUser = this.subCurrentUser(docId);
+  }
 
   subChatRecord(docId: string) {
     return onSnapshot(
