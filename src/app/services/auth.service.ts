@@ -7,42 +7,21 @@ import {
 } from 'firebase/auth';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import {
-  Firestore,
-  onSnapshot,
-  collection,
-  query,
-  setDoc,
-  doc,
-  collectionData,
-} from '@angular/fire/firestore';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  firestore: Firestore = inject(Firestore);
   auth = getAuth();
   signUpError = false;
   public logInError = false;
   checkboxIsChecked = false;
   dataError = false;
+  currentUserId: string = '';
 
-  allUser$:any;
-  unsubCurrentUser:any;
 
-  currentUserId:any;
-  currentUser:any = [];
-  currentUserSubject = new BehaviorSubject<any>(
-    this.currentUser
-  );
-  currentUser$ = this.currentUserSubject.asObservable();
-
-  constructor(public router: Router, public firestoreService: FirestoreService) {
-    this.allUser$ = collectionData(this.getAllUser());
-  }
+  constructor(public router: Router, public firestoreService: FirestoreService) {}
 
 
   signIn(email: string, password: string) {
@@ -66,37 +45,18 @@ export class AuthService {
     console.log('guest userid:', this.currentUserId);
   }
 
-  getAllUser() {
-    return collection(this.firestore, 'user');
-  }
-
-
-  getCurrentUserRef(docId: string) {
-    return doc(collection(this.firestore, 'user'), docId);
-  }
-
 
   getCurrentUser() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        // this.currentUserId = user.uid;
-        // this.currentUser.push(user);
+        this.currentUserId = user.uid;
         const userId = user.uid;
-        //this.getCurrentUserTest(userId);
-        this.firestoreService.giveUserIdToService(userId);
         localStorage.setItem('currentUserId', user.uid);
       } else {
         // User is signed out
         this.currentUserId = '';
       }
     });
-  }
-
-
-  getCurrentUserTest(docId: string) {
-    onSnapshot(this.getCurrentUserRef(docId), (element) => {
-      console.log(element.data());
-    })
   }
 
 

@@ -29,7 +29,6 @@ export class FirestoreService {
   currentUser$ = this.currentUserSubject.asObservable();
 
   unsubChatRecord!: Unsubscribe;
-  unsubCurrentUser!: Unsubscribe;
 
   constructor() {}
 
@@ -47,50 +46,11 @@ export class FirestoreService {
     );
   }
 
-  getAllUser() {
-    return collection(this.firestore, 'user');
-  }
-
-  getCurrentUserRef(docId: string) {
-    return doc(collection(this.firestore, 'user'), docId);
-  }
-
-  getCurrentUserDoc(userId: string) {
-    return onSnapshot(this.getCurrentUserRef(userId), (element) => {
-      console.log(element.data());
-    });
-  }
-
-  getCurrentUser(userId: string) {
-    return onSnapshot(
-      query(collection(this.firestore, 'user')),
-      (docs: any) => {
-        this.currentUser = [];
-        docs.forEach((doc: any) => {
-          this.currentUser.push(doc.data());
-        });
-        this.currentUserSubject.next(this.currentUser);
-        console.log(this.currentUser);
-      }
-    );
-  }
 
   startSubChat(docId: string) {
     this.unsubChatRecord = this.subChatRecord(docId);
   }
 
-  giveUserIdToService(userId: string) {
-    onSnapshot(this.getCurrentUserRef(userId), (element) => {
-      console.log(element.data());
-      this.currentUser = [];
-      //this.currentUser = element.data();
-      this.currentUser.push(element.data());
-      console.log(this.currentUser);
-      this.currentUserSubject.next(this.currentUser);
-    });
-    console.log(this.currentUser);
-    console.log(this.currentUser$);
-  }
 
   async addUser(userObject: any, name: string) {
     await setDoc(doc(this.firestore, 'user', userObject.uid), {
