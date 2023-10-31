@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
+import { Subject, Subscription, takeUntil } from 'rxjs';
+import { User } from 'src/app/models/user.class';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-navbar-panel-message',
@@ -9,15 +10,31 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavbarPanelMessageComponent {
   panelOpenState: boolean = false;
-  // private subscription: Subscription;
-  currentUser: String = '';
+  currentUserId: any;
+  currentUser!: User;
+  subCurrentUser!: User;
+  private componentIsDestroyed$ = new Subject<boolean>();
 
-  constructor(private authService: AuthService){}
-
-    ngOnInit(){
-      this.currentUser = this.authService.currentUserId;
-      console.log('currentUserId ', this.currentUser);
-    }
+  
+  constructor(
+    private firestoreService: FirestoreService
+  ){
+    this.currentUserId = localStorage.getItem("currentUserId")
+    this.setCurrentUser();
+  }
+  
+  ngOnDestroy() {
+    this.componentIsDestroyed$.next(true);
+  }
+  
+  setCurrentUser() {
+    this.firestoreService.currentUser$
+    .pipe(takeUntil(this.componentIsDestroyed$))
+    .subscribe((user: User) => {
+      this.currentUser = user;
+      console.log('userData Chat: ', this.currentUser.memberInChannel);
+    } )
+  }
 
   rotateArrow() {
     const channelArrow: HTMLElement | null= document.getElementById(
