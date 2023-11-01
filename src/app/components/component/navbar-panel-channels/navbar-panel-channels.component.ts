@@ -17,7 +17,7 @@ export class NavbarPanelChannelsComponent {
   currentUserId: any;
 
   currentUser!: User;
-  memberInChannelsArray: [] = [];
+  memberInChannelsArray: Channel[] = [];
   test:any;
   // private subscription: Subscription;
   subCurrentUser!: User;
@@ -29,8 +29,8 @@ export class NavbarPanelChannelsComponent {
     this.currentUserId = localStorage.getItem("currentUserId")
     this.setCurrentUser();
     this.setMemberInChannelArray();
-    console.log('Channel memberIn:', this.memberInChannelsArray);
-    console.log('Channel memberIn:', this.memberInChannelsArray.forEach((channel: any) => {
+    // console.log('Channel memberIn:', this.memberInChannelsArray);
+    console.log('Channel memberIn:', this.memberInChannelsArray,'element of', this.memberInChannelsArray.forEach((channel: any) => {
       console.log('show element of array: ', channel.name);
       
     }));
@@ -43,7 +43,8 @@ export class NavbarPanelChannelsComponent {
   setMemberInChannelArray(){
     this.firestoreService.channelsArray$
     .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
-    .subscribe((channels: any[]) => {
+    .subscribe((channels: any) => {
+      this.memberInChannelsArray = channels;
       console.log('channal sub: ', channels);
       // this.currentUser = user;
       // this.memberInChannelsArray = channels;

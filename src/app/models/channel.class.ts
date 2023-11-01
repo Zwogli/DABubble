@@ -5,7 +5,7 @@ export class Channel {
     chatRecord: string;
     createdAt: any;
     createdBy: string;
-    member: [];
+    member: string[];
   
     constructor(data: any) {
         this.id = data.id || '';

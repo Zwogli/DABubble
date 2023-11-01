@@ -47,7 +47,8 @@ export class FirestoreService {
       channelsArrays.forEach((doc: any) => {
         this.channelsArray.push(doc.data());
       })
-      console.log('firestore read channelsArray$: ', this.channelsArray, this.channelsArray$);
+      this.channelsArraySubject.next(this.channelsArray);
+      // console.log('firestore read channelsArray$: ', this.channelsArray, this.channelsArray$);
       // console.log('firestore getChannelsFromCurrentUser: ', channelsArrays.docs);
     });
   }

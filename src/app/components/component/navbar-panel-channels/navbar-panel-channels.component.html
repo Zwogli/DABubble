@@ -30,9 +30,8 @@
 		  <div class="mat-expansion-panel__content container__elements--column">
 
 			<!-- *ngFor="let channel of memberInChannelsArray" -->
-			<div  class="fix--space-left sort__elemts--row">
-				<!-- [routerLink]="'home/' + {{ currentUser.memberInChannel }}" -->
-				<!-- <p> # {{ channel.name }} </p> -->
+			<div *ngFor="let channel of memberInChannelsArray" class="fix--space-left sort__elemts--row">
+				<p [routerLink]="'/home/'+channel.id"> # {{ channel.name }} </p>
 			  </div>
 
 			<div class="fix--space-left sort__elemts--row">
