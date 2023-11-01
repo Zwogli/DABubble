@@ -77,7 +77,7 @@ export class AuthService {
   }
 
 
-  signUp(name:string, email:string, password:string, photoUrl: string) {
+  signUp(name:string, email:string, password:string, photoUrl: any) {
     if (this.checkboxIsChecked) {
       createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {

@@ -35,7 +35,14 @@ export class ChooseAvatarComponent {
       this.choosenAvatar = url;
       console.log(this.choosenAvatar);
       this.unchoosenAvatar.nativeElement.src = `${url}`;
-
     }
+  }
+
+
+  prepareSignUp() {
+    if (this.choosenAvatar == 0) {
+      this.choosenAvatar = "../../../../assets/img/avatars/guest-avatar.png";
+    }
+    this.authService.signUp(this.authService.currentUserName, this.authService.currentUserEmail, this.authService.currentUserPassword, this.choosenAvatar);
   }
 }
