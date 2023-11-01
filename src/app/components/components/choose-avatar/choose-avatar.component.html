@@ -10,9 +10,9 @@
           <span class="sign-in__headline">Wähle deinen Avatar</span>
         </div>
 
-        <img class="img__profile-choose-avatar" #unchoosenAvatar src="../../../../assets/img/avatars/profile-choose-avatar.png">
+        <img class="img__profile-choose-avatar" #unchoosenAvatar src="../../../../assets/img/avatars/guest-avatar.png">
 
-        <span class="text__name">Frederik Beck</span>
+        <span class="text__name">{{ this.authService.currentUserName }}</span>
 
         <span class="text__choose-avatar">Aus der Liste wählen</span>
 
@@ -27,7 +27,10 @@
 
         <div class="block__upload-img">
           <span>eigenes Bild verwenden</span>
-          <button class="btn__guest-log-in">Datei hochladen</button>
+          <label class="btn__guest-log-in">
+            <input type="file" (change)="onFileChange($event)"/>
+            Datei hochladen
+        </label>
         </div>
 
 

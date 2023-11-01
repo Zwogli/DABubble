@@ -15,6 +15,8 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireStorageModule } from "@angular/fire/compat/storage";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/wrapper/navbar/navbar.component';
 import { NavbarHeaderMobileComponent } from './components/component/navbar-header-mobile/navbar-header-mobile.component';
@@ -37,16 +39,16 @@ import { DialogProfilEditComponent } from './components/component/dialog-profil-
     AppComponent,
     IntroComponent,
     MainChatComponent,
-    NavbarComponent, 
-    NavbarHeaderMobileComponent, 
-    NavbarPanelChannelsComponent, 
-    NavbarPanelMessageComponent, 
+    NavbarComponent,
+    NavbarHeaderMobileComponent,
+    NavbarPanelChannelsComponent,
+    NavbarPanelMessageComponent,
     NavbarSearchbarComponent,
     SignInComponent,
-    SignUpComponent, 
-    ChooseAvatarComponent, 
-    AppBodyComponent, 
-    MenuProfilMobileComponent, 
+    SignUpComponent,
+    ChooseAvatarComponent,
+    AppBodyComponent,
+    MenuProfilMobileComponent,
     DialogProfilComponent, DialogProfilEditComponent
   ],
 
@@ -59,6 +61,8 @@ import { DialogProfilEditComponent } from './components/component/dialog-profil-
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule,
     BrowserAnimationsModule,
     LayoutModule,
   ],

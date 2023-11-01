@@ -65,12 +65,23 @@ mat-card {
     font-weight: 400;
     font-size: 0.832rem;
   }
-
-  button {
-    padding: 6px 10px;
-  }
 }
 
 .block__btn-box {
   margin-top: 0 !important;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.btn__guest-log-in {
+  padding: 6px 10px !important;
 }
