@@ -60,12 +60,12 @@ export class AuthService {
         this.currentUser.push(user);
         localStorage.setItem('currentUserId', user.uid);
         this.firestoreService.startSubUser(this.currentUserId);
-        console.log('Auth getCurrentUser() if', user);
+        // console.log('Auth getCurrentUser() if', user);
         
       } else {
         // User is signed out
         this.currentUserId = '';
-        console.log('Auth getCurrentUser() else', user);    
+        // console.log('Auth getCurrentUser() else', user);    
       }
     });
   }

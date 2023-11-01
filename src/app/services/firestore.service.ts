@@ -12,6 +12,7 @@ import { Unsubscribe } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { Message } from '../models/message.class';
 import { User } from '../models/user.class';
+import { Channel } from '../models/channel.class';
 
 @Injectable({
   providedIn: 'root',
@@ -21,26 +22,33 @@ export class FirestoreService {
 
   singleChatRecord: Message[] = [];
   private singleChatRecordSubject = new BehaviorSubject<any>(
-    this.singleChatRecord
-  );
+    this.singleChatRecord);
   singleChatRecord$ = this.singleChatRecordSubject.asObservable();
 
   currentUser!: User;
   private currentUserSubject = new BehaviorSubject<User>(
-    this.currentUser
-  );
+    this.currentUser);
   currentUser$ = this.currentUserSubject.asObservable();
 
+  
+  channelsArray: Channel[] = [];
+  private channelsArraySubject = new BehaviorSubject<any>(
+    this.channelsArray);
+  channelsArray$ = this.channelsArraySubject.asObservable();
+    
   unsubChatRecord!: Unsubscribe;
   unsubCurrentUser!: Unsubscribe;
-  test:any; 
-  // this.test = query(collection(this.firestore, 'channels'), where('member', "in", this.currentUser.id));
-  
   constructor() {}
 
   getChannelsFromCurrentUser(){
-    return onSnapshot(query(collection(this.firestore, 'channels'), where('member', "array-contains", this.currentUser.id)), (channelsArray) => {
-      console.log('firestore getChannelsFromCurrentUser: ', channelsArray.docs);
+    return onSnapshot(query(collection(this.firestore, 'channels'), where('member', "array-contains", this.currentUser.id)), 
+    (channelsArrays) => {
+      this.channelsArray = [];
+      channelsArrays.forEach((doc: any) => {
+        this.channelsArray.push(doc.data());
+      })
+      console.log('firestore read channelsArray$: ', this.channelsArray, this.channelsArray$);
+      // console.log('firestore getChannelsFromCurrentUser: ', channelsArrays.docs);
     });
   }
 
@@ -54,7 +62,7 @@ export class FirestoreService {
         this.currentUser = doc.data();
         this.currentUserSubject.next(this.currentUser);
         this.getChannelsFromCurrentUser();
-        console.log('FirestoreService userData', doc.data());
+        // console.log('FirestoreService userData', doc.data());
     });
   };
 

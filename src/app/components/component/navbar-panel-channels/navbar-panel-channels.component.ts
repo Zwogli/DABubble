@@ -1,6 +1,7 @@
 import { ArrayType } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { Subscription, takeUntil , pipe, Subject } from 'rxjs';
+import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -16,28 +17,45 @@ export class NavbarPanelChannelsComponent {
   currentUserId: any;
 
   currentUser!: User;
-
+  memberInChannelsArray: [] = [];
+  test:any;
   // private subscription: Subscription;
   subCurrentUser!: User;
-  private componentIsDestroyed$ = new Subject<boolean>();
+  private currentUserIsDestroyed$ = new Subject<boolean>();
 
   constructor(
     private firestoreService: FirestoreService
   ){
     this.currentUserId = localStorage.getItem("currentUserId")
     this.setCurrentUser();
+    this.setMemberInChannelArray();
+    console.log('Channel memberIn:', this.memberInChannelsArray);
+    console.log('Channel memberIn:', this.memberInChannelsArray.forEach((channel: any) => {
+      console.log('show element of array: ', channel.name);
+      
+    }));
   }
   
   ngOnDestroy() {
-    this.componentIsDestroyed$.next(true);
+    this.currentUserIsDestroyed$.next(true);
+  }
+
+  setMemberInChannelArray(){
+    this.firestoreService.channelsArray$
+    .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
+    .subscribe((channels: any[]) => {
+      console.log('channal sub: ', channels);
+      // this.currentUser = user;
+      // this.memberInChannelsArray = channels;
+    } )
   }
   
   setCurrentUser() {
     this.firestoreService.currentUser$
-    .pipe(takeUntil(this.componentIsDestroyed$))
+    .pipe(takeUntil(this.currentUserIsDestroyed$))
     .subscribe((user: User) => {
       this.currentUser = user;
-      // console.log('userData Channel: ', this.currentUser.memberInChannel);
+      // console.log('userData Channel: ', this.currentUser);
     } )
   }
 

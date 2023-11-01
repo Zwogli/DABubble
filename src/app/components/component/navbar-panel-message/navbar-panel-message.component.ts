@@ -32,7 +32,7 @@ export class NavbarPanelMessageComponent {
     .pipe(takeUntil(this.componentIsDestroyed$))
     .subscribe((user: User) => {
       this.currentUser = user;
-      console.log('userData Chat: ', this.currentUser.memberInChannel);
+      // console.log('userData Chat: ', this.currentUser.memberInChannel);
     } )
   }
 
