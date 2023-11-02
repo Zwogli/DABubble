@@ -41,6 +41,15 @@ export class FirestoreService {
 // -----------------------------------------------
   constructor() {}
   // todo show Tristan:
+  // Create:
+  // async addDocGenerateId(collName:string){
+  // await addDoc( collRef(collName), {
+  //   name: "Tokyo",
+  //   country: "Japan"
+  //   });
+  // }
+  // 
+  // READ:
   // collRef(coll:string){
   //   return collection(this.firestore, coll), 
   // }
@@ -50,7 +59,30 @@ export class FirestoreService {
   // subDocRef(){
   //   return query(collection(this.docRef(coll, docId), 'messages'));
   // }
-
+  // 
+  //UPDATE:
+  // async updateDocument(coll:string, docId:string){
+  //   await updateDoc(docRef(coll, docId), {
+  //   capital: true
+  //   });
+  // }
+  // async updateArray(coll:string, docId:string){
+  //   await updateDoc(docRef(coll, docId), {
+  //       // Atomically add a new region to the "regions" array field.
+  //       // arrayName: arrayUnion("[arrayElement]")
+  //       regions: arrayUnion("greater_virginia")
+  //   });
+  // }
+  // 
+  // DELETE:
+  // async deleteArrayElement(coll:string, docId:string){
+  //   await updateDoc(docRef(coll, docId), {
+  //     // Atomically remove a region from the "regions" array field.
+  //     // arrayName: arrayRemove("[arrayElement]")
+  //     regions: arrayRemove("east_coast")
+  //   }); 
+  // }
+  
   getChannelsFromCurrentUser(){
     return onSnapshot(                                            //listen to a document, by change updates the document snapshot.
       query(                                                      //create a query against the collection.
