@@ -40,6 +40,16 @@ export class FirestoreService {
   unsubChatRecord!: Unsubscribe;
 // -----------------------------------------------
   constructor() {}
+  // todo show Tristan:
+  // collRef(coll:string){
+  //   return collection(this.firestore, coll), 
+  // }
+  // docRef(coll:string, docId:string){
+  //   return doc(this.collRef(coll), docId);
+  // }
+  // subDocRef(){
+  //   return query(collection(this.docRef(coll, docId), 'messages'));
+  // }
 
   getChannelsFromCurrentUser(){
     return onSnapshot(                                            //listen to a document, by change updates the document snapshot.
