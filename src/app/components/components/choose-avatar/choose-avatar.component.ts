@@ -1,6 +1,8 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from 'src/app/services/auth.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
+
 
 
 @Component({
@@ -8,12 +10,17 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './choose-avatar.component.html',
   styleUrls: ['./choose-avatar.component.scss'],
 })
-export class ChooseAvatarComponent {
+export class ChooseAvatarComponent implements OnInit {
   choosenAvatar:any = 0;
 
   @ViewChild('unchoosenAvatar') unchoosenAvatar!: ElementRef;
 
-  constructor(public authService: AuthService, private fireStorage: AngularFireStorage) {}
+  constructor(public authService: AuthService, private fireStorage: AngularFireStorage, public firestoreService: FirestoreService) {}
+
+
+  ngOnInit(): void {
+    this.firestoreService.getJsonOfCurrentSignUpData('id#current#sign#up#data');
+  }
 
 
   chooseAvatar(avatarNr: number) {
@@ -43,6 +50,6 @@ export class ChooseAvatarComponent {
     if (this.choosenAvatar == 0) {
       this.choosenAvatar = "../../../../assets/img/avatars/guest-avatar.png";
     }
-    this.authService.signUp(this.authService.currentUserName, this.authService.currentUserEmail, this.authService.currentUserPassword, this.choosenAvatar);
+    this.authService.signUp(this.firestoreService.currentSignUpData.name, this.firestoreService.currentSignUpData.email, this.firestoreService.currentSignUpData.name, this.choosenAvatar);
   }
 }

@@ -5,6 +5,7 @@ import {
   collection,
   query,
   setDoc,
+  addDoc,
   doc,
   where,
 } from '@angular/fire/firestore';
@@ -34,6 +35,7 @@ export class FirestoreService {
   unsubChatRecord!: Unsubscribe;
   unsubCurrentUser!: Unsubscribe;
   test:any;
+  currentSignUpData:any = [];
   // this.test = query(collection(this.firestore, 'channels'), where('member', "in", this.currentUser.id));
 
   constructor() {}
@@ -91,6 +93,35 @@ export class FirestoreService {
       onlineStatus: true,
       memberInChannel: [],
       activePrivateChats: [],
+    });
+  }
+
+
+  getCurrentSignUpDataCol() {
+    return collection(this.firestore, 'currentSignUpData');
+  }
+
+
+  getCurrentSignUpDataDoc(docId: string) {
+    return doc(collection(this.firestore, 'currentSignUpData'), docId);
+  }
+
+
+  getJsonOfCurrentSignUpData(docId: string) {
+    onSnapshot(this.getCurrentSignUpDataDoc(docId), (list) => {
+      console.log(list.data());
+      this.currentSignUpData = list.data();
+      console.log(this.currentSignUpData.name);
+    });
+  }
+
+
+  async addCurrentSignUpData(name: string, email:string, password:string) {
+    // await addDoc(this.getCurrentSignUpDataCol(), item);
+    await setDoc(doc(this.firestore, 'currentSignUpData', 'id#current#sign#up#data'), {
+      name: name,
+      email: email,
+      password: password
     });
   }
 }
