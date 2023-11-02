@@ -20,34 +20,39 @@ import { Channel } from '../models/channel.class';
 export class FirestoreService {
   firestore: Firestore = inject(Firestore);
 
-  singleChatRecord: Message[] = [];
-  private singleChatRecordSubject = new BehaviorSubject<any>(
-    this.singleChatRecord);
+// observable item
+  currentUser$ = this.currentUserSubject.asObservable();
+  channelsArray$ = this.channelsArraySubject.asObservable();
   singleChatRecord$ = this.singleChatRecordSubject.asObservable();
-
-  currentUser!: User;
+// subject item
   private currentUserSubject = new BehaviorSubject<User>(
     this.currentUser);
-  currentUser$ = this.currentUserSubject.asObservable();
-
-  
-  channelsArray: Channel[] = [];
   private channelsArraySubject = new BehaviorSubject<any>(
     this.channelsArray);
-  channelsArray$ = this.channelsArraySubject.asObservable();
-    
-  unsubChatRecord!: Unsubscribe;
+  private singleChatRecordSubject = new BehaviorSubject<any>(
+    this.singleChatRecord);
+// variable item
+  currentUser!: User;
+  channelsArray: Channel[] = [];
+  singleChatRecord: Message[] = [];
+// unsub item
   unsubCurrentUser!: Unsubscribe;
+  unsubChatRecord!: Unsubscribe;
+// -----------------------------------------------
   constructor() {}
 
   getChannelsFromCurrentUser(){
-    return onSnapshot(query(collection(this.firestore, 'channels'), where('member', "array-contains", this.currentUser.id)), 
-    (channelsArrays) => {
-      this.channelsArray = [];
-      channelsArrays.forEach((doc: any) => {
-        this.channelsArray.push(doc.data());
+    return onSnapshot(                                            //listen to a document, by change updates the document snapshot.
+      query(                                                      //create a query against the collection.
+        collection(this.firestore, 'channels'),                   //select database, collection
+        where('member', "array-contains", this.currentUser.id)),  //[path], [action], [searched element]
+    (channelsArrays) => {                                         //read array[searched element]
+      this.channelsArray = [];                                    //reset variable array
+      channelsArrays.forEach((doc: any) => {                      //read element of array
+        this.channelsArray.push(doc.data());                      //element to array
       })
-      this.channelsArraySubject.next(this.channelsArray);
+      this.channelsArraySubject.next(this.channelsArray);         //update observable
+      
       // console.log('firestore read channelsArray$: ', this.channelsArray, this.channelsArray$);
       // console.log('firestore getChannelsFromCurrentUser: ', channelsArrays.docs);
     });
