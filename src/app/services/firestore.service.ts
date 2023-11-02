@@ -85,18 +85,14 @@ export class FirestoreService {
 */
 
   getChannelsFromCurrentUser() {
-    return onSnapshot(
-      //listen to a document, by change updates the document snapshot.
-      query(
-        //create a query against the collection.
+    return onSnapshot(  //listen to a document, by change updates the document snapshot.
+      query(//create a query against the collection.
         collection(this.firestore, 'channels'), //select database, collection
         where('member', 'array-contains', this.currentUser.id)
       ), //[path], [action], [searched element]
-      (channelsArrays) => {
-        //read array[searched element]
+      (channelsArrays) => { //read array[searched element]
         this.channelsArray = []; //reset variable array
-        channelsArrays.forEach((doc: any) => {
-          //read element of array
+        channelsArrays.forEach((doc: any) => {  //read element of array
           this.channelsArray.push(doc.data()); //element to array
         });
         this.channelsArraySubject.next(this.channelsArray); //update observable

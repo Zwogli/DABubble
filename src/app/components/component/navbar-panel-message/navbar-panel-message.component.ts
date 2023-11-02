@@ -22,6 +22,15 @@ export class NavbarPanelMessageComponent {
     this.currentUserId = localStorage.getItem("currentUserId")
     this.setCurrentUser();
   }
+
+  // setUserInChatArray(){
+  //   this.firestoreService.chatsArray$
+  //   .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
+  //   .subscribe((chat: any) => {
+  //     this.userInChatsArray = chat;
+  //     console.log('channal sub: ', chat);
+  //   });
+  // }
   
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
