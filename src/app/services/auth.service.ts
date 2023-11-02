@@ -35,8 +35,6 @@ export class AuthService {
         // Signed in
         this.logInError = false;
         this.router.navigate(['home']);
-
-        // ...
       })
       .catch((error) => {
         this.logInError = true;
@@ -45,9 +43,8 @@ export class AuthService {
 
 
   guestSignIn() {
-    this.currentUserId = 'KmnG9Gk8urcE10vX3n4p0uc40mA2'; //currentUserId get's the id from guest user
+    this.signIn('guest@mail.com', 'guest_user123');
     this.router.navigate(['home']);
-    console.log('guest userid:', this.currentUserId);
   }
 
 
@@ -63,11 +60,8 @@ export class AuthService {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.currentUserId = user.uid;
-        const userId = user.uid;
-        localStorage.setItem('currentUserId', user.uid);
         this.firestoreService.startSubUser(this.currentUserId);
         console.log('Auth getCurrentUser() if', user);
-
       } else {
         // User is signed out
         this.currentUserId = '';
