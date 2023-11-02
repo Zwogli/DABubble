@@ -9,7 +9,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Unsubscribe } from '@angular/fire/auth';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../models/message.class';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
@@ -138,9 +138,11 @@ export class FirestoreService {
     );
   }
 
+
   startSubChat(docId: string) {
     this.unsubChatRecord = this.subChatRecord(docId);
   }
+
 
   async addUser(userObject: any, name: string) {
     await setDoc(doc(this.firestore, 'user', userObject.uid), {
