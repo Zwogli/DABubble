@@ -13,6 +13,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../models/message.class';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
+import { Chat } from '../models/chat.class';
 
 @Injectable({
   providedIn: 'root',
@@ -23,17 +24,18 @@ export class FirestoreService {
   // variable item to observe
   currentUser!: User;
   channelsArray: Channel[] = [];
-  chatsArray = [];
+  chatsArray: Chat[] = [];
+  // chatsBetweenArray: Chat[] = [];
   singleChatRecord: Message[] = [];
   // subject item
   private currentUserSubject = new BehaviorSubject<User>(this.currentUser);
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
-  private singleChatRecordSubject = new BehaviorSubject<any>(
-    this.singleChatRecord
-  );
+  private chatsArraySubject = new BehaviorSubject<any>(this.chatsArray);
+  private singleChatRecordSubject = new BehaviorSubject<any>(this.singleChatRecord);
   // observable item
   currentUser$ = this.currentUserSubject.asObservable();
   channelsArray$ = this.channelsArraySubject.asObservable();
+  chatsArray$ = this.chatsArraySubject.asObservable();
   singleChatRecord$ = this.singleChatRecordSubject.asObservable();
   // unsub item
   unsubCurrentUser!: Unsubscribe;
@@ -85,26 +87,24 @@ export class FirestoreService {
   }
 */
 
-/*
-getChatFromCurrentUser() {
-  return onSnapshot(  //listen to a document, by change updates the document snapshot.
-    query(//create a query against the collection.
-      collection(this.firestore, 'privateChat'), //select database, collection
-      where('chatBetween', 'array-contains', this.currentUser.id)
-    ), //[path], [action], [searched element]
-    (chatsArray) => { //read array[searched element]
-      this.chatsArray = []; //reset variable array
-      chatsArray.forEach((doc: any) => {  //read element of array
-        this.chatsArray.push(doc.data()); //element to array
-      });
-      this.chatsArraySubject.next(this.chatsArray); //update observable
+  getChatFromCurrentUser() {
+    return onSnapshot(  //listen to a document, by change updates the document snapshot.
+      query(//create a query against the collection.
+        collection(this.firestore, 'privateChat'), //select database, collection
+        where('chatBetween', 'array-contains', this.currentUser.id)
+      ), //[path], [action], [searched element]
+      (chatsArray) => { //read array[searched element]
+        this.chatsArray = []; //reset variable array
+        chatsArray.forEach((doc: any) => {  //read element of array
+          this.chatsArray.push(doc.data()); //element to array
+        });
+        this.chatsArraySubject.next(this.chatsArray); //update observable
+        
+        // console.log('firestore read chatArray: ', this.chatsArray,'chatArray$', this.chatsArray$);1
+      }
+    );
+  }
 
-      // console.log('firestore read channelsArray$: ', this.channelsArray, this.channelsArray$);
-      // console.log('firestore getChannelsFromCurrentUser: ', channelsArrays.docs);
-    }
-  );
-}
-*/
   getChannelsFromCurrentUser() {
     return onSnapshot(  //listen to a document, by change updates the document snapshot.
       query(//create a query against the collection.
@@ -119,7 +119,6 @@ getChatFromCurrentUser() {
         this.channelsArraySubject.next(this.channelsArray); //update observable
 
         // console.log('firestore read channelsArray$: ', this.channelsArray, this.channelsArray$);
-        // console.log('firestore getChannelsFromCurrentUser: ', channelsArrays.docs);
       }
     );
   }
@@ -133,6 +132,7 @@ getChatFromCurrentUser() {
       this.currentUser = doc.data();
       this.currentUserSubject.next(this.currentUser);
       this.getChannelsFromCurrentUser();
+      this.getChatFromCurrentUser();
       // console.log('FirestoreService userData', doc.data());
     });
   }
