@@ -1,37 +1,56 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-choose-avatar',
   templateUrl: './choose-avatar.component.html',
   styleUrls: ['./choose-avatar.component.scss'],
 })
-export class ChooseAvatarComponent implements OnInit {
-  choosenAvatar:any = 0;
+export class ChooseAvatarComponent implements OnInit, OnDestroy {
+  choosenAvatar: any = 0;
+  public idFromUrl: any = '';
 
   @ViewChild('unchoosenAvatar') unchoosenAvatar!: ElementRef;
 
-  constructor(public authService: AuthService, private fireStorage: AngularFireStorage, public firestoreService: FirestoreService) {}
+  constructor(
+    public authService: AuthService,
+    private fireStorage: AngularFireStorage,
+    public firestoreService: FirestoreService,
+    private Route: ActivatedRoute
+  ) {}
 
-
-  ngOnInit(): void {
-    this.firestoreService.getJsonOfCurrentSignUpData('id#current#sign#up#data');
+  async ngOnInit() {
+    await this.getIdFromUrl();
+    this.firestoreService.getJsonOfCurrentSignUpData(this.idFromUrl);
   }
 
+  ngOnDestroy(): void {
+    this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
+    console.log('deleted doc');
+  }
+
+  async getIdFromUrl() {
+    this.Route.params.subscribe((params) => {
+      this.idFromUrl = params['id'];
+    });
+  }
 
   chooseAvatar(avatarNr: number) {
     this.unchoosenAvatar.nativeElement.src = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
     this.choosenAvatar = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
     console.log(this.choosenAvatar);
-    console.log('current user data:', this.authService.currentUserName);
   }
 
-
-  async onFileChange(event:any) {
+  async onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
       console.log(file);
@@ -46,10 +65,20 @@ export class ChooseAvatarComponent implements OnInit {
   }
 
 
-  prepareSignUp() {
+  async prepareChoosenAvatar() {
     if (this.choosenAvatar == 0) {
-      this.choosenAvatar = "../../../../assets/img/avatars/guest-avatar.png";
+      this.choosenAvatar = '../../../../assets/img/avatars/guest-avatar.png';
     }
-    this.authService.signUp(this.firestoreService.currentSignUpData.name, this.firestoreService.currentSignUpData.email, this.firestoreService.currentSignUpData.name, this.choosenAvatar);
+  }
+
+  async prepareSignUp() {
+    await this.prepareChoosenAvatar();
+    await this.authService.signUp(
+      this.firestoreService.currentSignUpData.name,
+      this.firestoreService.currentSignUpData.email,
+      this.firestoreService.currentSignUpData.name,
+      this.choosenAvatar
+    );
+    this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
   }
 }

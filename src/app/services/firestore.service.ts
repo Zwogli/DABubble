@@ -6,6 +6,7 @@ import {
   query,
   setDoc,
   addDoc,
+  deleteDoc,
   doc,
   where,
 } from '@angular/fire/firestore';
@@ -36,6 +37,7 @@ export class FirestoreService {
   unsubCurrentUser!: Unsubscribe;
   test:any;
   currentSignUpData:any = [];
+  currentSignUpId:any = (125478986565 * Math.random()).toFixed(0);
   // this.test = query(collection(this.firestore, 'channels'), where('member', "in", this.currentUser.id));
 
   constructor() {}
@@ -102,26 +104,29 @@ export class FirestoreService {
   }
 
 
-  getCurrentSignUpDataDoc(docId: string) {
+  getCurrentSignUpDataDoc(docId: any) {
     return doc(collection(this.firestore, 'currentSignUpData'), docId);
   }
 
 
   getJsonOfCurrentSignUpData(docId: string) {
     onSnapshot(this.getCurrentSignUpDataDoc(docId), (list) => {
-      console.log(list.data());
       this.currentSignUpData = list.data();
-      console.log(this.currentSignUpData.name);
     });
   }
 
 
   async addCurrentSignUpData(name: string, email:string, password:string) {
-    // await addDoc(this.getCurrentSignUpDataCol(), item);
-    await setDoc(doc(this.firestore, 'currentSignUpData', 'id#current#sign#up#data'), {
+    await setDoc(doc(this.firestore, 'currentSignUpData', this.currentSignUpId), {
       name: name,
       email: email,
       password: password
     });
+  }
+
+
+  async deleteCurrentSignUpData(docId:any) {
+    await deleteDoc(this.getCurrentSignUpDataDoc(docId));
+    this.currentSignUpData = [];
   }
 }

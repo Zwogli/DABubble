@@ -19,9 +19,6 @@ export class AuthService {
   checkboxIsChecked = false;
   dataError = false;
   currentUserId: string = '';
-  currentUserName: string = '';
-  currentUserEmail: string = '';
-  currentUserPassword: string = '';
 
 
   constructor(public router: Router, public firestoreService: FirestoreService) {
@@ -48,17 +45,9 @@ export class AuthService {
   }
 
 
-  saveCurrentUserData(name: string, email: string, password: any) {
-    this.currentUserName = name;
-    this.currentUserEmail = email;
-    this.currentUserPassword = password;
-    // let signUpData = {
-    //   name: name,
-    //   email: email,
-    //   password: password
-    // }
-    this.firestoreService.addCurrentSignUpData(name, email, password);
-    this.router.navigate(['choose-avatar']);
+  async saveCurrentUserData(name: string, email: string, password: any) {
+    await this.firestoreService.addCurrentSignUpData(name, email, password);
+    this.router.navigate([`choose-avatar/${this.firestoreService.currentSignUpId}`]);
   }
 
 
@@ -77,9 +66,9 @@ export class AuthService {
   }
 
 
-  signUp(name:string, email:string, password:string, photoUrl: any) {
+  async signUp(name:string, email:string, password:string, photoUrl: any) {
     // if (this.checkboxIsChecked) {
-      createUserWithEmailAndPassword(this.auth, email, password)
+      await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;

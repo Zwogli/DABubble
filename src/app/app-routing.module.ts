@@ -10,7 +10,7 @@ import { AppBodyComponent } from './components/wrapper/app-body/app-body.compone
 const routes: Routes = [
   { path: '', component: IntroComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'choose-avatar', component: ChooseAvatarComponent },
+  { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   { path: 'home/:id', component: MainChatComponent },
   // { path: 'home', component: AppBodyComponent },
   { path: 'home', component: NavbarComponent },
