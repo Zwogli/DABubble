@@ -32,49 +32,21 @@ export class NavbarPanelMessageComponent {
   
   ngOnInit(){
     this.setCurrentUser();
-    this.setUserInChatArray();
+    this.setChatBetweenUSerData();
   }
-
-  setUserInChatArray(){
-    this.firestoreService.chatsArray$
-    .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
-    .subscribe((chat: any) => {
-      this.userInChatsArray = chat;
-      // console.log('chat sub: ', chat);
-    });
-    this.getUserIdsChatBetween();
-  }
-
-  getUserIdsChatBetween(){
-    this.chatBetweenUserIds = [];
-    this.userInChatsArray.forEach((usersChatBetween) => {
-      let chatUser = usersChatBetween.chatBetween.filter((user) => user !== this.currentUserId);
-      this.chatBetweenUserIds.push(chatUser[0]);
-    });
-    // console.log('chat chatUser ', this.chatBetweenUserIds);
-    //todo this.getUserDataChatBetween();
-  }
-// todo
-  // getUserDataChatBetween(){
-  //   this.chatBetweenUserData = [];
-  //   this.chatBetweenUserIds.forEach((userIdChatBetween) => {
-
-  //     onSnapshot(
-  //       doc(this.firestore, 'user', userIdChatBetween), 
-  //       (doc: any) => {
-  //         this.cacheChatUserData = doc.data(); 
-  //         this.chatBetweenUserData.push(this.cacheChatUserData);
-  //         console.log('test: ', this.cacheChatUserData);
-  //       });
-        
-  //       console.log('chat userIdChatBetween doc: ', this.chatBetweenUserData);
-  //       // console.log('getUserChatBetween ', userDataChatBetween);
-  //     });
-  //     console.log('chat userData: ', this.chatBetweenUserData);
-  // }
   
   ngOnDestroy() {
     this.currentUserIsDestroyed$.next(true);
+  }
+
+  setChatBetweenUSerData(){
+    this.firestoreService.chatBetweenUserData$
+    .pipe(takeUntil(this.currentUserIsDestroyed$))
+    .subscribe((chatUser: any) => {
+      this.chatBetweenUserData = chatUser;
+    } )
+    console.log('chat userDataArray$: ', this.firestoreService.chatBetweenUserData$);
+    console.log('chat userDataArray: ', this.chatBetweenUserData);
   }
   
   setCurrentUser() {
