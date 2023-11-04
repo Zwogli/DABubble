@@ -52,7 +52,6 @@ main {
 }
 
 .message__wrapper {
-    width: 100%;
     padding: 10px 16px;
     margin-top: 45px;
 }
@@ -64,7 +63,7 @@ main {
 }
 
 .message__menu {
-    background-color: var(--bg-light);
+    background-color: var(--color-blue-bg);
     transition: 125ms ease-in-out;
 
     .message__content {
@@ -103,7 +102,7 @@ main {
 
     .message__content {
         padding: 15px;
-        background-color: var(--bg-light);
+        background-color: var(--color-blue-bg);
 
         border-radius: 0 30px 30px 30px;
     }
@@ -112,8 +111,13 @@ main {
         display: flex;
         gap: 20px;
 
-        span {
+        >span {
             white-space: nowrap;
+        }
+
+        .message__footer-last-timestamp {
+            display: flex;
+            flex-direction: column;
         }
     }
 }
@@ -131,11 +135,11 @@ main {
 
     padding: 20px;
 
-    border: 1px solid var(--purple-lines);
+    border: 1px solid var(--color-blue-border);
     border-radius: 20px;
 
     &:focus-within {
-        border: 1px solid var(--purple-text);
+        border: 1px solid var(--color-blue-primary-default);
     }
 
     textarea {

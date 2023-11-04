@@ -30,10 +30,6 @@ export class NavbarPanelChannelsComponent {
     this.setCurrentUser();
     this.setMemberInChannelArray();
     // console.log('Channel memberIn:', this.memberInChannelsArray);
-    console.log('Channel memberIn:', this.memberInChannelsArray,'element of', this.memberInChannelsArray.forEach((channel: any) => {
-      console.log('show element of array: ', channel.name);
-      
-    }));
   }
   
   ngOnDestroy() {
@@ -45,7 +41,7 @@ export class NavbarPanelChannelsComponent {
     .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
     .subscribe((channels: any) => {
       this.memberInChannelsArray = channels;
-      console.log('channal sub: ', channels);
+      
       // this.currentUser = user;
       // this.memberInChannelsArray = channels;
     } )

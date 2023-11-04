@@ -7,6 +7,7 @@ import {
   setDoc,
   doc,
   where,
+  getDoc,
 } from '@angular/fire/firestore';
 import { Unsubscribe } from '@angular/fire/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -24,65 +25,39 @@ export class FirestoreService {
   currentUser!: User;
   channelsArray: Channel[] = [];
   singleChatRecord: Message[] = [];
+
   // subject item
   private currentUserSubject = new BehaviorSubject<User>(this.currentUser);
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private singleChatRecordSubject = new BehaviorSubject<any>(
     this.singleChatRecord
   );
+
   // observable item
   currentUser$ = this.currentUserSubject.asObservable();
   channelsArray$ = this.channelsArraySubject.asObservable();
   singleChatRecord$ = this.singleChatRecordSubject.asObservable();
+
   // unsub item
   unsubCurrentUser!: Unsubscribe;
   unsubChatRecord!: Unsubscribe;
-  // -----------------------------------------------
+
   constructor() {}
-  /* 
-  todo idea callback methods:
-  Create:
-  async addDocGenerateId(collName:string){
-  await addDoc( collRef(collName), {
-    name: "Tokyo",
-    country: "Japan"
-    });
+
+  ngOnDestroy() {
+    this.unsubCurrentUser();
+    this.unsubChatRecord();
   }
-  
-  READ:
-  collRef(coll:string){
-    return collection(this.firestore, coll),
+
+  async getSingleDoc(colId: string, docId: string) {
+    const docSnap = await getDoc(doc(this.firestore, colId, docId));
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log('No such document found!');
+      return;
+    }
   }
-  docRef(coll:string, docId:string){
-    return doc(this.collRef(coll), docId);
-  }
-  subDocRef(){
-    return query(collection(this.docRef(coll, docId), 'messages'));
-  }
-  
-  UPDATE:
-  async updateDocument(coll:string, docId:string){
-    await updateDoc(docRef(coll, docId), {
-    capital: true
-    });
-  }
-  async updateArray(coll:string, docId:string){
-    await updateDoc(docRef(coll, docId), {
-        // Atomically add a new region to the "regions" array field.
-        // arrayName: arrayUnion("[arrayElement]")
-        regions: arrayUnion("greater_virginia")
-    });
-  }
-  
-  DELETE:
-  async deleteArrayElement(coll:string, docId:string){
-    await updateDoc(docRef(coll, docId), {
-      // Atomically remove a region from the "regions" array field.
-      // arrayName: arrayRemove("[arrayElement]")
-      regions: arrayRemove("east_coast")
-    });
-  }
-*/
 
   getChannelsFromCurrentUser() {
     return onSnapshot(
@@ -107,16 +82,12 @@ export class FirestoreService {
     );
   }
 
-  ngOnDestroy() {
-    this.unsubCurrentUser();
-  }
-
   subCurrentUser(docId: string) {
     return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
       this.currentUser = doc.data();
       this.currentUserSubject.next(this.currentUser);
       this.getChannelsFromCurrentUser();
-      // console.log('FirestoreService userData', doc.data());
+      console.log('FirestoreService userData', doc.data());
     });
   }
 
@@ -133,16 +104,13 @@ export class FirestoreService {
           this.singleChatRecord.push(doc.data());
         });
         this.singleChatRecordSubject.next(this.singleChatRecord);
-        console.log(this.singleChatRecord);
       }
     );
   }
 
-
   startSubChat(docId: string) {
     this.unsubChatRecord = this.subChatRecord(docId);
   }
-
 
   async addUser(userObject: any, name: string) {
     await setDoc(doc(this.firestore, 'user', userObject.uid), {

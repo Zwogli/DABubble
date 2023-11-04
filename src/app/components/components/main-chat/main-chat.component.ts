@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { Channel } from 'src/app/models/channel.class';
 import { Message } from 'src/app/models/message.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -9,27 +11,45 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./main-chat.component.scss'],
 })
 export class MainChatComponent implements OnInit {
-  testChatId: string = 'yf80qNMJDA1smEm3J8aX';
+  chatRecordId!: string;
+
   private componentIsDestroyed$ = new Subject<boolean>();
 
   public chatRecord!: Message[];
   selectedMsg!: Message | null;
 
-  constructor(private fireService: FirestoreService) {}
+  constructor(
+    private fireService: FirestoreService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.loadChatRecord();
+    this.setChatRecordId();
   }
 
   ngOnDestroy() {
     this.fireService.unsubChatRecord();
+    this.componentIsDestroyed$.next(true);
+    this.componentIsDestroyed$.complete();
+  }
+
+  async setChatRecordId() {
+    const channelId = this.route.snapshot.paramMap.get('id');
+    if (channelId) {
+      await this.fireService
+        .getSingleDoc('channels', channelId)
+        .then((doc: any) => {
+          this.chatRecordId = doc.chatRecord;
+          this.loadChatRecord();
+        });
+    }
   }
 
   loadChatRecord() {
-    this.fireService.startSubChat(this.testChatId);
+    this.fireService.startSubChat(this.chatRecordId);
     this.fireService.singleChatRecord$
       .pipe(takeUntil(this.componentIsDestroyed$))
-      .subscribe((chat: any[]) => {
+      .subscribe((chat: Message[]) => {
         this.chatRecord = chat;
         console.log(chat);
       });

@@ -40,15 +40,21 @@
           {{ message.message }}
         </p>
 
-        <div *ngIf="message.thread.id"  class="message__footer">
-          <span (click)="openThread(message, $event)" class="message__footer-count"
+        <div *ngIf="message.thread.id" class="message__footer">
+          <span
+            (click)="openThread(message, $event)"
+            class="message__footer-count"
             >{{ message.thread.length }} Antworten</span
           >
-          <span class="message__footer-last-timestamp"
-            >Letzte Antwort
-            {{ message.thread.lastAnswer.toDate() | date : "EEEE hh:mm" }}
-            Uhr</span
-          >
+          <div class="message__footer-last-timestamp">
+            <span>Letzte Antwort</span>
+            <span>
+              {{
+                message.thread.lastAnswer.toDate() | date : "EEEE hh:mm"
+              }}
+              Uhr</span
+            >
+          </div>
         </div>
       </div>
     </div>
