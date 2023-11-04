@@ -99,6 +99,8 @@ export class FirestoreService {
   }
 
 
+  //The following functions gets the current sign up data to use in choose-avater.component
+
   getCurrentSignUpDataCol() {
     return collection(this.firestore, 'currentSignUpData');
   }

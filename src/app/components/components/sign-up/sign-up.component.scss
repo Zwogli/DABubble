@@ -1,5 +1,10 @@
 @import "../sign-in/sign-in.component.scss";
 
+:host {
+  height: 100%;
+  background-color: var(--color-blue-bg);
+}
+
 .block__sign-up {
   width: 100%;
   height: 100vh;
@@ -85,7 +90,7 @@ mat-card {
 .block__input-checkbox {
   display: flex;
   align-items: center;
-  justify-content: center;
+  margin-left: 37px;
   width: 100%;
   font-size: 0.722rem;
   margin-bottom: 13px;

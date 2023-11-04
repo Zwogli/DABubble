@@ -1,3 +1,8 @@
+:host {
+  height: 100%;
+  display: block;
+}
+
 //intro animation
 
 .block__intro {
@@ -24,6 +29,11 @@
   display: flex;
   align-items: center;
   position: relative;
+  justify-content: center;
+}
+
+.width-unset {
+  width: unset !important;
 }
 
 .img--move-left {
@@ -42,8 +52,9 @@
 
 .hide-box {
   height: 72px;
-  width: 128px;
+  width: 230px;
   position: absolute;
+  left: -102px;
   z-index: 2;
   background-color: #555CEC;
 }

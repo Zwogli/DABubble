@@ -16,7 +16,6 @@ export class AuthService {
   auth = getAuth();
   signUpError = false;
   public logInError = false;
-  checkboxIsChecked = false;
   dataError = false;
   currentUserId: string = '';
 
@@ -67,7 +66,6 @@ export class AuthService {
 
 
   async signUp(name:string, email:string, password:string, photoUrl: any) {
-    // if (this.checkboxIsChecked) {
       await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         // Signed up
@@ -81,9 +79,5 @@ export class AuthService {
         this.signUpError = true;
         console.log(error);
       });
-    // } else {
-    //   this.dataError = true;
-    //   console.log('not checked problem');
-    // }
   }
 }

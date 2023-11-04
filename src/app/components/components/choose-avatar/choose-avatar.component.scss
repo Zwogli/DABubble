@@ -1,14 +1,25 @@
 @import "../sign-in/sign-in.component.scss";
 @import "../sign-up/sign-up.component.scss";
 
+:host {
+  height: 100%;
+  background-color: var(--color-blue-bg);
+}
+
+.block__sign-up {
+  height: 100% !important;
+}
+
 mat-card {
-  height: 555px !important;
+  height: 533px !important;
+  padding: 15px !important;
 }
 
 .sign-in__headline {
   width: 80% !important;
   text-align: center;
   line-height: 120%;
+  font-size: 1.444rem !important;
 }
 
 .block__icon-arrow-back {
@@ -24,7 +35,7 @@ mat-card {
 
 .text__name {
   margin-bottom: 22px;
-  font-size: 1.778rem;
+  font-size: 1.444rem;
   font-weight: 700;
 }
 

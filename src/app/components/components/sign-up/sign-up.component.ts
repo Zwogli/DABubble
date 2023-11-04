@@ -24,10 +24,8 @@ export class SignUpComponent {
 
   getCheckboxValue() {
     if (!this.checkboxForm?.value) {
-      this.authService.checkboxIsChecked = true;
       this.authService.dataError = false;
     } else {
-      this.authService.checkboxIsChecked = false;
       this.authService.dataError = true;
     }
   }
