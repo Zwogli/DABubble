@@ -114,6 +114,7 @@ export class FirestoreService {
   getJsonOfCurrentSignUpData(docId: string) {
     onSnapshot(this.getCurrentSignUpDataDoc(docId), (list) => {
       this.currentSignUpData = list.data();
+      console.log(this.currentSignUpData);
     });
   }
 

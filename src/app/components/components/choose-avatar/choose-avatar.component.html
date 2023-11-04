@@ -43,6 +43,12 @@
         </div>
 
 
+        <div class="block__error" *ngIf="this.authService.errorAlreadyExist">
+          *Die zuvor gewählte E-Mail Adresse existiert bereits. Bitte kehren Sie zur vorherigen Seite zurück und wählen eine andere E-Mail
+          Adresse oder nutzen die Log-in Daten der bereits registrierten E-Mail Adresse.
+        </div>
+
+
     </mat-card-content>
   </mat-card>
 </div>

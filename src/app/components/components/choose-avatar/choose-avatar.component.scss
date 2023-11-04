@@ -29,7 +29,7 @@ mat-card {
 .img__profile-choose-avatar {
   margin: 24px 0 32px 0;
   width: 120px;
-  height: 120px;
+  height: 120px !important;
   border-radius: 100%;
 }
 
@@ -95,4 +95,18 @@ input[type="file"] {
 
 .btn__guest-log-in {
   padding: 6px 10px !important;
+}
+
+.block__error {
+  font-size: 0.667rem !important;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  top: unset !important;
+  left: unset !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  padding: 10px 20px;
+  width: calc(100% - 40px);
+  background-color: var(--color-blue-bg);
+  min-height: 60px;
 }

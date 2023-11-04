@@ -15,8 +15,10 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class AuthService {
   auth = getAuth();
   signUpError = false;
+  signUpSuccessfully = false;
   public logInError = false;
   dataError = false;
+  errorAlreadyExist = false;
   currentUserId: string = '';
 
 
@@ -72,12 +74,19 @@ export class AuthService {
         const user = userCredential.user;
         this.signUpError = false;
         this.dataError = false;
+        this.signUpSuccessfully = true;
+        this.errorAlreadyExist = false;
         this.firestoreService.addUser(user, name, photoUrl);
         this.router.navigate(['home']);
       })
       .catch((error) => {
+        if (error.code === 'auth/email-already-in-use' || error.code === 'auth/weak-password') {
+          this.errorAlreadyExist = true;
+          console.log('email existiert bereits', this.errorAlreadyExist);
+        }
         this.signUpError = true;
-        console.log(error);
+        this.signUpSuccessfully = false;
+        console.log(error.code);
       });
   }
 }
