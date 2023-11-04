@@ -46,8 +46,11 @@
     bottom: 0;
     right: 0;
     z-index: 1;
-    &--color {
+    &--color-false {
       background-color: var(--color-grey-primary-disable);
+    }
+    &--color-true {
+      background-color: var(--color-green);
     }
   }
 }

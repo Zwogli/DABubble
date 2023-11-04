@@ -19,7 +19,7 @@ export class NavbarPanelMessageComponent {
   private currentUserIsDestroyed$ = new Subject<boolean>();
   userInChatsArray: Chat[] = [];
   chatBetweenUserIds: string[] = [];
-  chatBetweenUserData: User[] = [];
+  chatUserData: User[] = [];
 
   cacheChatUserData!: User;
 
@@ -32,21 +32,21 @@ export class NavbarPanelMessageComponent {
   
   ngOnInit(){
     this.setCurrentUser();
-    this.setChatBetweenUSerData();
+    this.setChatUserData();
   }
   
   ngOnDestroy() {
     this.currentUserIsDestroyed$.next(true);
   }
 
-  setChatBetweenUSerData(){
-    this.firestoreService.chatBetweenUserData$
-    .pipe(takeUntil(this.currentUserIsDestroyed$))
-    .subscribe((chatUser: any) => {
-      this.chatBetweenUserData = chatUser;
-    } )
-    console.log('chat userDataArray$: ', this.firestoreService.chatBetweenUserData$);
-    console.log('chat userDataArray: ', this.chatBetweenUserData);
+  setChatUserData(){
+    this.chatUserData = this.firestoreService.chatUserData;
+    // .pipe(takeUntil(this.currentUserIsDestroyed$))
+    // .subscribe((chatUser: []) => {
+    //   this.chatUserData = chatUser;
+    // } )
+    // console.log('chat firestore Array: ', this.firestoreService.chatUserData);
+    // console.log('chat userDataArray: ', this.chatUserData);
   }
   
   setCurrentUser() {
