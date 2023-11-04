@@ -18,49 +18,64 @@
 </div>
 
 <main>
-  <div
-    *ngFor="let message of chatRecord"
-    class="message__wrapper"
-    [ngClass]="{ message__menu: message === selectedMsg }"
+  <section
+    #chatContainer
+    [scrollTop]="chatContainer.scrollHeight"
+    class="chat__container"
   >
-    <div class="message" (click)="toggleMsgMenu(message)">
-      <div class="message__avatar-container">
-        <img src="../../../../assets/img/avatars/avatar_male_one.svg" alt="" />
-      </div>
-
-      <div class="message__content-container">
-        <div class="message__header">
-          <span class="message__header-name">{{ message.sentByName }}</span>
-          <span class="message__header-time"
-            >{{ message.sentAt.toDate() | date : "shortTime" }} Uhr</span
-          >
+    <div
+      *ngFor="let message of chatRecord"
+      class="message__wrapper"
+      [ngClass]="{ message__menu: message === selectedMsg }"
+    >
+      <div
+        class="message"
+        [ngClass]="{ message__self: message.sentById === currentUser.id }"
+        (click)="toggleMsgMenu(message)"
+      >
+        <div class="message__avatar-container">
+          <img
+            src="../../../../assets/img/avatars/avatar_male_one.svg"
+            alt=""
+          />
         </div>
 
-        <p class="message__content">
-          {{ message.message }}
-        </p>
-
-        <div *ngIf="message.thread.id" class="message__footer">
-          <span
-            (click)="openThread(message, $event)"
-            class="message__footer-count"
-            >{{ message.thread.length }} Antworten</span
-          >
-          <div class="message__footer-last-timestamp">
-            <span>Letzte Antwort</span>
-            <span>
-              {{
-                message.thread.lastAnswer.toDate() | date : "EEEE hh:mm"
-              }}
-              Uhr</span
+        <div class="message__content-container">
+          <div class="message__header">
+            <span class="message__header-name">{{ message.sentByName }}</span>
+            <span *ngIf="message.sentAt" class="message__header-time"
+              >{{ message.sentAt.toDate() | date : "shortTime" }} Uhr</span
             >
+          </div>
+
+          <p class="message__content">
+            {{ message.message }}
+          </p>
+
+          <div *ngIf="message.thread.id" class="message__footer">
+            <span
+              (click)="openThread(message, $event)"
+              class="message__footer-count"
+              >{{ message.thread.length }} Antworten</span
+            >
+            <div class="message__footer-last-timestamp">
+              <span>Letzte Antwort</span>
+              <span>
+                {{ message.thread.lastAnswer.toDate() | date : "EEEE hh:mm" }}
+                Uhr</span
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
   <div class="message__input">
-    <textarea [(ngModel)]="msgContent" type="text" placeholder="Nachricht an #Placeholder"></textarea>
+    <textarea
+      [(ngModel)]="msgContent"
+      type="text"
+      placeholder="Nachricht an #Placeholder"
+    ></textarea>
 
     <div class="message-input__btn-container">
       <div class="btn-container__extra-btn-wrapper">
@@ -79,14 +94,16 @@
           >
         </button>
         <button mat-icon-button aria-label="Icon button to link another user">
-          <mat-icon fontSet="material-icons-outlined"
-            >alternate_email</mat-icon
-          >
+          <mat-icon fontSet="material-icons-outlined">alternate_email</mat-icon>
         </button>
       </div>
 
       <div>
-        <button (click)="sendMessage()" mat-icon-button aria-label="Icon button to send the message">
+        <button
+          (click)="sendMessage()"
+          mat-icon-button
+          aria-label="Icon button to send the message"
+        >
           <mat-icon fontSet="material-icons-outlined">send</mat-icon>
         </button>
       </div>

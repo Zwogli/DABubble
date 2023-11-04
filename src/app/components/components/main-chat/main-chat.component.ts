@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { Message } from 'src/app/models/message.class';
+import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -11,21 +12,28 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./main-chat.component.scss'],
 })
 export class MainChatComponent implements OnInit {
-  chatRecordId!: string;
-  public msgContent!: string;
-
   private componentIsDestroyed$ = new Subject<boolean>();
-
+  public currentUser: User;
+  chatRecordId!: string;
   public chatRecord!: Message[];
   selectedMsg!: Message | null;
+  public msgContent!: string;
 
   constructor(
     private fireService: FirestoreService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private changeDetector: ChangeDetectorRef
+  ) {
+    this.currentUser = this.fireService.currentUser;
+  }
 
   ngOnInit() {
     this.setChatRecordId();
+  }
+
+  ngAfterViewChecked() {
+    // Prevents initial scroll-state on chat div to throw err
+    this.changeDetector.detectChanges();
   }
 
   ngOnDestroy() {
@@ -52,7 +60,7 @@ export class MainChatComponent implements OnInit {
       .pipe(takeUntil(this.componentIsDestroyed$))
       .subscribe((chat: Message[]) => {
         this.chatRecord = chat;
-        console.log(chat);
+        console.log('Messages recieved from service. ', chat);
       });
   }
 
