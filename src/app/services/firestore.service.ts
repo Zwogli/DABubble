@@ -8,6 +8,9 @@ import {
   doc,
   where,
   getDoc,
+  addDoc,
+  serverTimestamp,
+  orderBy,
 } from '@angular/fire/firestore';
 import { Unsubscribe } from '@angular/fire/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -97,7 +100,10 @@ export class FirestoreService {
 
   subChatRecord(docId: string) {
     return onSnapshot(
-      query(collection(this.firestore, 'chatRecords', docId, 'messages')),
+      query(
+        collection(this.firestore, 'chatRecords', docId, 'messages'),
+        orderBy('sentAt')
+      ),
       (docs: any) => {
         this.singleChatRecord = [];
         docs.forEach((doc: any) => {
@@ -107,6 +113,16 @@ export class FirestoreService {
       }
     );
   }
+
+  async addMessage(docId: string, data: Message) {
+    const newMsgRef = doc(
+      collection(this.firestore, 'chatRecords', docId, 'messages')
+    );
+
+    await setDoc(newMsgRef, this.getCleanJson(data, newMsgRef));    
+  }
+
+  getChatRecordRef() {}
 
   startSubChat(docId: string) {
     this.unsubChatRecord = this.subChatRecord(docId);
@@ -122,5 +138,18 @@ export class FirestoreService {
       memberInChannel: [],
       activePrivateChats: [],
     });
+  }
+
+  getCleanJson(data: Message, doc: any): {} {
+    return {
+      id: doc.id,
+      message: data.message,
+      sentById: data.sentById,
+      sentByName: data.sentByName,
+      sentByPhotoUrl: data.sentByPhotoUrl,
+      sentAt: serverTimestamp(),
+      thread: data.thread,
+      reactedBy: data.reactedBy,
+    };
   }
 }

@@ -58,38 +58,37 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="message__input">
+    <textarea [(ngModel)]="msgContent" type="text" placeholder="Nachricht an #Placeholder"></textarea>
 
-    <div class="message__input">
-      <textarea type="text" placeholder="Nachricht an #Placeholder"></textarea>
+    <div class="message-input__btn-container">
+      <div class="btn-container__extra-btn-wrapper">
+        <button
+          mat-icon-button
+          aria-label="Icon button to add data files to the message"
+        >
+          <mat-icon fontSet="material-icons-outlined">add</mat-icon>
+        </button>
 
-      <div class="message-input__btn-container">
-        <div class="btn-container__extra-btn-wrapper">
-          <button
-            mat-icon-button
-            aria-label="Icon button to add data files to the message"
+        <mat-divider [vertical]="true"></mat-divider>
+
+        <button mat-icon-button aria-label="Icon button to select emotes">
+          <mat-icon fontSet="material-icons-outlined"
+            >sentiment_satisfied</mat-icon
           >
-            <mat-icon fontSet="material-icons-outlined">add</mat-icon>
-          </button>
+        </button>
+        <button mat-icon-button aria-label="Icon button to link another user">
+          <mat-icon fontSet="material-icons-outlined"
+            >alternate_email</mat-icon
+          >
+        </button>
+      </div>
 
-          <mat-divider [vertical]="true"></mat-divider>
-
-          <button mat-icon-button aria-label="Icon button to select emotes">
-            <mat-icon fontSet="material-icons-outlined"
-              >sentiment_satisfied</mat-icon
-            >
-          </button>
-          <button mat-icon-button aria-label="Icon button to link another user">
-            <mat-icon fontSet="material-icons-outlined"
-              >alternate_email</mat-icon
-            >
-          </button>
-        </div>
-
-        <div>
-          <button mat-icon-button aria-label="Icon button to send the message">
-            <mat-icon fontSet="material-icons-outlined">send</mat-icon>
-          </button>
-        </div>
+      <div>
+        <button (click)="sendMessage()" mat-icon-button aria-label="Icon button to send the message">
+          <mat-icon fontSet="material-icons-outlined">send</mat-icon>
+        </button>
       </div>
     </div>
   </div>

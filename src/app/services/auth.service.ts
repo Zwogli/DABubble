@@ -22,7 +22,7 @@ export class AuthService {
 
 
   constructor(public router: Router, public firestoreService: FirestoreService) {
-    
+    this.getCurrentUser();
   }
 
 
@@ -32,7 +32,6 @@ export class AuthService {
         // Signed in
         this.logInError = false;
         this.router.navigate(['home']);
-        this.getCurrentUser();
         // ...
       })
       .catch((error) => {

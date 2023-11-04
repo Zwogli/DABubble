@@ -12,6 +12,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class MainChatComponent implements OnInit {
   chatRecordId!: string;
+  public msgContent!: string;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
@@ -53,6 +54,26 @@ export class MainChatComponent implements OnInit {
         this.chatRecord = chat;
         console.log(chat);
       });
+  }
+
+  sendMessage() {
+    const data = new Message(this.setMsgData());
+    this.fireService.addMessage(this.chatRecordId, data);
+    this.msgContent = '';
+
+    console.log(this.msgContent);
+    console.log('msg send');
+  }
+
+  setMsgData() {
+    const user = this.fireService.currentUser;
+
+    return {
+      message: this.msgContent,
+      sentById: user.id,
+      sentByName: user.name,
+      sentByPhotoUrl: user.photoUrl,
+    };
   }
 
   openThread(msg: Message, event: any) {
