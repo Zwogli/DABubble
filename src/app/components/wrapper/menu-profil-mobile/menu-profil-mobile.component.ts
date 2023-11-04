@@ -23,10 +23,11 @@ export class MenuProfilMobileComponent {
 
   openMenu(){
     this.navbarService.toggleMenu();
+    this.navbarService.menuSlideDown();
   }
 
   closeMenu(){
-    this.navbarService.closeMenu();
+    this.navbarService.menuSlideDown();
   }
 
   openDialogProfil(){

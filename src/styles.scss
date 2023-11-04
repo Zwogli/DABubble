@@ -62,3 +62,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 button {
   font-family: var(--font-selection);
 }
+app-navbar{
+  position: relative;
+  display: block;
+  overflow-y: hidden;
+  width: 100dvw;
+  height: 100dvh;
+}

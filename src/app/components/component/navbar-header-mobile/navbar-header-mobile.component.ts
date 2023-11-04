@@ -13,6 +13,6 @@ export class NavbarHeaderMobileComponent {
   }
 
   toggleMenu(){
-    this.navbarService.toggleMenu();
+    this.navbarService.menuSlideUp();
   }
 }
