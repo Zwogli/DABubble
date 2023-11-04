@@ -29,7 +29,6 @@ import { SignInComponent } from './components/components/sign-in/sign-in.compone
 import { MainChatComponent } from './components/components/main-chat/main-chat.component';
 import { SignUpComponent } from './components/components/sign-up/sign-up.component';
 import { ChooseAvatarComponent } from './components/components/choose-avatar/choose-avatar.component';
-import { AppBodyComponent } from './components/wrapper/app-body/app-body.component';
 import { DialogProfilEditComponent } from './components/component/dialog-profil-edit/dialog-profil-edit.component';
 
 @NgModule({
@@ -45,7 +44,6 @@ import { DialogProfilEditComponent } from './components/component/dialog-profil-
     SignInComponent,
     SignUpComponent, 
     ChooseAvatarComponent, 
-    AppBodyComponent, 
     MenuProfilMobileComponent, 
     DialogProfilComponent, DialogProfilEditComponent
   ],
