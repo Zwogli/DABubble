@@ -52,6 +52,19 @@
             Uhr</span
           >
         </div>
+
+        <div *ngIf="selectedMsg == message" class="message__reaction-menu">
+          <button (click)="openEmote($event)" mat-icon-button>
+            <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon fontSet="material-icons-outlined">comment</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+
       </div>
     </div>
   </div>

@@ -49,4 +49,9 @@ export class MainChatComponent implements OnInit {
       this.selectedMsg = msg;
     }
   }
+
+  openEmote(event: any) {
+    event.stopPropagation();
+    console.log('Clicked Emote-Btn');
+  }
 }
