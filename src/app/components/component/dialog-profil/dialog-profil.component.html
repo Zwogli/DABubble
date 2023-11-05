@@ -21,7 +21,7 @@
     
         <div class="dialog__content--status">
             <div class="container__status">
-                <span class="onlinestatus onlinestatus--color-{{ currentUser.onlineStatus }}"></span>
+                <span class="onlinestatus onlinestatus--color-{{ onlineStatus }}"></span>
             </div>
             <span *ngIf="onlineStatus"> Online </span>
             <span *ngIf="onlineStatus === false"> Offline </span>
