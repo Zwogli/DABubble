@@ -26,11 +26,11 @@ export class MainChatComponent implements OnInit {
   ) {
     this.currentUser = this.fireService.currentUser;
   }
-
+  
   ngOnInit() {
     this.setChatRecordId();
   }
-
+  
   ngAfterViewChecked() {
     // Prevents initial scroll-state on chat div to throw err
     this.changeDetector.detectChanges();
@@ -68,14 +68,10 @@ export class MainChatComponent implements OnInit {
     const data = new Message(this.setMsgData());
     this.fireService.addMessage(this.chatRecordId, data);
     this.msgContent = '';
-
-    console.log(this.msgContent);
-    console.log('msg send');
   }
 
   setMsgData() {
     const user = this.fireService.currentUser;
-
     return {
       message: this.msgContent,
       sentById: user.id,

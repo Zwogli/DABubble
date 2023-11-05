@@ -119,7 +119,7 @@ export class FirestoreService {
       collection(this.firestore, 'chatRecords', docId, 'messages')
     );
 
-    await setDoc(newMsgRef, this.getCleanJson(data, newMsgRef));    
+    await setDoc(newMsgRef, this.getCleanJson(data, newMsgRef));
   }
 
   getChatRecordRef() {}
