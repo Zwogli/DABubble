@@ -76,8 +76,11 @@ header{
     width: 10px;
     border: 2px solid #ffffff;
     border-radius: 100%;
-    &--color {
+    &--color-false {
       background-color: var(--color-grey-primary-disable);
+    }
+    &--color-true {
+      background-color: var(--color-green);
     }
 }
 .container__email{
