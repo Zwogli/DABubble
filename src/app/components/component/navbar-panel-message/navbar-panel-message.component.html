@@ -28,12 +28,15 @@
 			*ngFor fill drop down box with following <div>
 		-->
 		<div *ngFor="let user of chatUserData" class="fix--space-left sort__elemts--row">
-			<div [routerLink]="'/home/'+user.id" class="d-flex">
+			<div [routerLink]="'/home/'+user.id" class="container__Elemets--row">
+				
 				<div class="user__container--avatar">
 					<img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
 					<span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
 				</div>
+
 				<p>{{ user.name}}</p>
+
 			</div>
 		</div>
 
