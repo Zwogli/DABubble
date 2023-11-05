@@ -21,7 +21,7 @@
       class="message__wrapper"
       [ngClass]="{ message__menuOpened : message === selectedMsg }"
     >
-    <div class="message__menu">
+    <div *ngIf="selectedMsg === message" class="message__menu">
       <button mat-icon-button aria-label="Icon button with a emoji add icon">
         <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
       </button>
