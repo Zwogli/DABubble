@@ -40,13 +40,19 @@ export class NavbarPanelMessageComponent {
   }
 
   setChatUserData(){
-    this.chatUserData = this.firestoreService.chatUserData;
-    // .pipe(takeUntil(this.currentUserIsDestroyed$))
-    // .subscribe((chatUser: []) => {
-    //   this.chatUserData = chatUser;
-    // } )
-    // console.log('chat firestore Array: ', this.firestoreService.chatUserData);
-    // console.log('chat userDataArray: ', this.chatUserData);
+    /* version chatGpt
+     this.chatUserData = this.firestoreService.chatUserData;
+    */
+
+    this.firestoreService.chatUserData$
+    .pipe(takeUntil(this.currentUserIsDestroyed$))
+    .subscribe((chatUser: any) => {
+      this.chatUserData = chatUser;
+    } )
+    console.log('chat Array chatUserData: ', this.chatUserData, this.chatUserData.forEach((userData) =>{
+      console.log('UserData: ', userData.name);
+      
+    }));
   }
   
   setCurrentUser() {

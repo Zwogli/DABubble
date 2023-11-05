@@ -138,40 +138,41 @@ export class FirestoreService {
 
   async getUserDataFromChat(){
     this.chatUserData = [];
-    try {
-      for (const chatBetweenUserId of this.chatFilteredUserIds) {
-        const docRef = doc(this.firestore, 'user', chatBetweenUserId);
-        const docSnapshot = await getDoc(docRef);
-  
-        if (docSnapshot.exists()) {
-          const userData: any = docSnapshot.data();
-  
-          // Check if the userData is not already in chatUserData
-          if (!this.chatUserData.some((item) => item.id === userData['id'])) {
-            this.chatUserData.push(userData);
-          }
-        } else {
-          console.log('Document does not exist for user ID:', chatBetweenUserId);
-        }
-      }
-  
-      console.log('Firestore chatBetweenUserData: ', this.chatUserData);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
+    /*version chatgpt
+      try {
+        for (const chatBetweenUserId of this.chatFilteredUserIds) {
+          const docRef = doc(this.firestore, 'user', chatBetweenUserId);
+          const docSnapshot = await getDoc(docRef);
 
-    /*
-    !this.chatFilteredUserIds.forEach((chatBetweenUserId) =>{
-    !  onSnapshot(
-    !    doc(this.firestore, 'user', chatBetweenUserId), 
-    !      (doc: any) => { 
-    !        console.log('firestore chat doc ', doc.data());
-    !        
-    !        this.chatUserData.push(doc.data());
-    !      }
-    !  );
-    !});
+          if (docSnapshot.exists()) {
+            const userData: any = docSnapshot.data();
+
+            // Check if the userData is not already in chatUserData
+            if (!this.chatUserData.some((item) => item.id === userData['id'])) {
+              this.chatUserData.push(userData);
+            }
+          } else {
+            console.log('Document does not exist for user ID:', chatBetweenUserId);
+          }
+        }
+
+        console.log('Firestore chatBetweenUserData: ', this.chatUserData);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
     */
+
+    this.chatFilteredUserIds.forEach((chatBetweenUserId) =>{
+      onSnapshot(
+        doc(this.firestore, 'user', chatBetweenUserId), 
+          (doc: any) => { 
+            console.log('firestore chat doc ', doc.data());
+            
+            this.chatUserData.push(doc.data());
+          }
+      );
+    });
+    this.chatUserDataSubject.next(this.chatUserData);
   }
 
   getChannelsFromCurrentUser() {
