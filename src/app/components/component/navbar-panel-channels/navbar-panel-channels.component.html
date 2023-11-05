@@ -28,16 +28,23 @@
 		  </mat-expansion-panel-header>
 	  
 		  <div class="mat-expansion-panel__content container__elements--column">
+				
+				<article>
+					<!-- 
+						elements for expansion-panel
+					-->
+					<div *ngFor="let channel of memberInChannelsArray" class="fix--space-left sort__elemts--row">
+						<p [routerLink]="'/home/'+channel.id"> # {{ channel.name }} </p>
+					</div>
+					
+					<!-- 
+						add channel element
+					-->				
+					<div class="fix--space-left sort__elemts--row">
+						<span class="material-icons-outlined element--blue"> add_circle </span>
+						<p class="element--blue">Add Channel</p>
+					</div>
+				</article>
 
-			<!-- *ngFor="let channel of memberInChannelsArray" -->
-			
-			<div *ngFor="let channel of memberInChannelsArray" class="fix--space-left sort__elemts--row">
-				<p [routerLink]="'/home/'+channel.id"> # {{ channel.name }} </p>
-			  </div>
-
-			<div class="fix--space-left sort__elemts--row">
-			  <span class="material-icons-outlined element--blue"> add_circle </span>
-			  <p class="element--blue">Add Channel</p>
-			</div>
 		  </div>
 </mat-expansion-panel>

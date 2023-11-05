@@ -14,16 +14,16 @@ main{
     bottom: 2rem;
     z-index: 5;
   }
-  article{
-    height: 85%;
-    overflow-y: auto;
-  }
-  .flippedReturn{
-    direction: ltr;
-  }
-  .flipped{
-    direction: rtl;
-}
+//   article{
+//     height: 85%;
+//     overflow-y: auto;
+//   }
+//   .flippedReturn{
+//     direction: ltr;
+//   }
+//   .flipped{
+//     direction: rtl;
+// }
 
 app-menu-profil-mobile{
   overflow-y: hidden;
