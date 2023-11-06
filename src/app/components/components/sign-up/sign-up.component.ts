@@ -15,7 +15,7 @@ export class SignUpComponent {
       Validators.pattern('^[a-zA-ZöÖüÜäÄß -]+$'),
     ]),
     emailForm: new FormControl('', [Validators.required, Validators.email, Validators.pattern("^[a-zA-Z0-9._*/+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$")]),
-    passwordForm: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/\d/)]),
+    passwordForm: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[0-9])(?=.*[A-Z]).*$/)]),
     checkboxForm: new FormControl(),
   });
 

@@ -70,7 +70,6 @@ export class AuthService {
   async signUp(name:string, email:string, password:string, photoUrl: any) {
       await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-        // Signed up
         const user = userCredential.user;
         this.signUpError = false;
         this.dataError = false;
@@ -80,7 +79,7 @@ export class AuthService {
         this.router.navigate(['home']);
       })
       .catch((error) => {
-        if (error.code === 'auth/email-already-in-use' || error.code === 'auth/weak-password') {
+        if (error.code === 'auth/email-already-in-use') {
           this.errorAlreadyExist = true;
           console.log('email existiert bereits', this.errorAlreadyExist);
         }

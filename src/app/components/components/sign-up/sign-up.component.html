@@ -35,10 +35,10 @@
           <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="passwordForm?.dirty || passwordForm?.touched">lock</mat-icon>
           <input formControlName="passwordForm" type="password" placeholder="Passwort" #userPassword>
         </div>
-        <div class="block__alert-password" *ngIf="passwordForm?.invalid && (passwordForm?.touched)">
+        <div class="block__alert-password" *ngIf="passwordForm?.invalid && (passwordForm?.dirty || passwordForm?.touched)">
           <div *ngIf="passwordForm?.errors?.['required']">*Bitte geben Sie ein Passwort ein.</div>
           <div *ngIf="passwordForm?.errors?.['minlength']">*Bitte verwenden Sie mindestens 8 Zeichen.</div>
-          <div *ngIf="passwordForm?.errors?.['pattern'] && !passwordForm?.errors?.['minlength']">*Das Passwort muss mindestens eine Zahl enthalten.</div>
+          <div *ngIf="passwordForm?.errors?.['pattern'] && !passwordForm?.errors?.['minlength']">*Mindestens eine Zahl und ein Großbuchstaben.</div>
         </div>
 
         <div class="block__input-checkbox">
