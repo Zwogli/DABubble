@@ -44,8 +44,13 @@
 
 
         <div class="block__error" *ngIf="this.authService.errorAlreadyExist">
-          *Die zuvor gewählte E-Mail Adresse existiert bereits. Bitte kehren Sie zur vorherigen Seite zurück und wählen eine andere E-Mail
-          Adresse oder nutzen die Log-in Daten der bereits registrierten E-Mail Adresse.
+          *Die zuvor gewählte E-Mail Adresse existiert bereits. Bitte kehre zur vorherigen Seite zurück und wähle eine andere E-Mail
+          Adresse oder nutze die Log-in Daten der bereits registrierten E-Mail Adresse.
+        </div>
+
+        <div class="block__error" *ngIf="this.authService.errorUnexpected">
+          *Ein unerwarteter Fehler ist aufgetreten. Bitte
+          kehre zur vorherigen Seite zurück und führe den Registrierungsprozess noch einmal aus.
         </div>
 
 

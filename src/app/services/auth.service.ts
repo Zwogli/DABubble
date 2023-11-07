@@ -19,6 +19,7 @@ export class AuthService {
   public logInError = false;
   dataError = false;
   errorAlreadyExist = false;
+  errorUnexpected = false;
   currentUserId: string = '';
 
 
@@ -74,7 +75,6 @@ export class AuthService {
         this.signUpError = false;
         this.dataError = false;
         this.signUpSuccessfully = true;
-        this.errorAlreadyExist = false;
         this.firestoreService.addUser(user, name, photoUrl);
         this.router.navigate(['home']);
       })
@@ -82,6 +82,8 @@ export class AuthService {
         if (error.code === 'auth/email-already-in-use') {
           this.errorAlreadyExist = true;
           console.log('email existiert bereits', this.errorAlreadyExist);
+        } else {
+          this.errorUnexpected = true;
         }
         this.signUpError = true;
         this.signUpSuccessfully = false;

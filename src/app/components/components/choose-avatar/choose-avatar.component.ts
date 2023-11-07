@@ -36,6 +36,7 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
     this.authService.errorAlreadyExist = false;
+    this.authService.errorUnexpected = false;
     this.authService.signUpError = false;
     console.log('deleted doc');
   }
@@ -78,7 +79,7 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
     await this.authService.signUp(
       this.firestoreService.currentSignUpData.name,
       this.firestoreService.currentSignUpData.email,
-      this.firestoreService.currentSignUpData.name,
+      this.firestoreService.currentSignUpData.password,
       this.choosenAvatar
     );
     if (this.authService.signUpSuccessfully) {
