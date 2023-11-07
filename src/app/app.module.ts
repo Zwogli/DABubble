@@ -33,6 +33,7 @@ import { SignUpComponent } from './components/components/sign-up/sign-up.compone
 import { ChooseAvatarComponent } from './components/components/choose-avatar/choose-avatar.component';
 import { AppBodyComponent } from './components/wrapper/app-body/app-body.component';
 import { DialogProfilEditComponent } from './components/component/dialog-profil-edit/dialog-profil-edit.component';
+import { ForgotPasswordComponent } from './components/components/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { DialogProfilEditComponent } from './components/component/dialog-profil-
     ChooseAvatarComponent,
     AppBodyComponent,
     MenuProfilMobileComponent,
-    DialogProfilComponent, DialogProfilEditComponent
+    DialogProfilComponent, DialogProfilEditComponent, ForgotPasswordComponent
   ],
 
   imports: [
