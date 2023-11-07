@@ -4,15 +4,18 @@
 :host {
   height: 100%;
   background-color: var(--color-blue-bg);
+  overflow: hidden;
 }
 
 .block__sign-up {
   height: 100% !important;
+  position: relative;
 }
 
 mat-card {
   height: 533px !important;
   padding: 15px !important;
+  position: unset;
 }
 
 .sign-in__headline {
@@ -109,4 +112,40 @@ input[type="file"] {
   width: calc(100% - 40px);
   background-color: var(--color-blue-bg);
   min-height: 60px;
+}
+
+.block__sign-up-successfull {
+  position: absolute;
+  color: white;
+  background-color: var(--color-blue-primary-default);
+  bottom: 5px;
+  right: 16px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-top-left-radius: 20px;
+  font-size: 1rem;
+  padding: 10px;
+  transform: translateX(2000px);
+}
+
+.block__sign-up-successfull--move-left {
+  animation: MoveLeft 1500ms ease-in-out forwards;
+}
+
+@keyframes MoveLeft {
+  0% {
+    transform: translateX(2000px);
+  }
+  25% {
+    transform: translateX(1500px);
+  }
+  50% {
+    transform: translateX(1000px);
+  }
+  75% {
+    transform: translateX(500px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
 }

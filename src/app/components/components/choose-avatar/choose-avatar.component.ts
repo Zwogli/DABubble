@@ -38,6 +38,7 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
     this.authService.errorAlreadyExist = false;
     this.authService.errorUnexpected = false;
     this.authService.signUpError = false;
+    this,this.authService.signUpSuccessfully = false;
     console.log('deleted doc');
   }
 
@@ -82,8 +83,11 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
       this.firestoreService.currentSignUpData.password,
       this.choosenAvatar
     );
-    if (this.authService.signUpSuccessfully) {
-      this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
-    }
+    setTimeout(() => {
+      if (this.authService.signUpSuccessfully) {
+        this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
+      }
+    },3500)
+
   }
 }

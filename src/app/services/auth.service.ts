@@ -71,12 +71,15 @@ export class AuthService {
   async signUp(name:string, email:string, password:string, photoUrl: any) {
       await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        this.signUpError = false;
-        this.dataError = false;
         this.signUpSuccessfully = true;
-        this.firestoreService.addUser(user, name, photoUrl);
-        this.router.navigate(['home']);
+        setTimeout(() => {
+          const user = userCredential.user;
+          this.signUpError = false;
+          this.dataError = false;
+          this.firestoreService.addUser(user, name, photoUrl);
+          this.router.navigate(['home']);
+        }, 3500)
+
       })
       .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {

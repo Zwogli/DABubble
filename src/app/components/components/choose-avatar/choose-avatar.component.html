@@ -38,6 +38,7 @@
           <button
           class="btn__log-in"
           (click)="prepareSignUp()"
+          [disabled]="this.authService.signUpSuccessfully"
           >Weiter
           </button>
         </div>
@@ -51,6 +52,10 @@
         <div class="block__error" *ngIf="this.authService.errorUnexpected">
           *Ein unerwarteter Fehler ist aufgetreten. Bitte
           kehre zur vorherigen Seite zurück und führe den Registrierungsprozess noch einmal aus.
+        </div>
+
+        <div class="block__sign-up-successfull" [class.block__sign-up-successfull--move-left]="this.authService.signUpSuccessfully">
+          Konto erfolgreich erstellt!
         </div>
 
 
