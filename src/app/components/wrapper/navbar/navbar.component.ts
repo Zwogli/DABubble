@@ -21,7 +21,7 @@ export class NavbarComponent {
   }
   
   closeMenu(){
-    this.navbarService.closeMenu();
+    this.navbarService.menuSlideDown();
   }
 
 }

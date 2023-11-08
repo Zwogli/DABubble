@@ -1,8 +1,7 @@
-import { ArrayType } from '@angular/compiler';
 import { Component } from '@angular/core';
-import { Subscription, takeUntil , pipe, Subject } from 'rxjs';
+import { takeUntil ,  Subject } from 'rxjs';
+import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
-import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -14,30 +13,42 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class NavbarPanelChannelsComponent {
   panelOpenState: boolean = false;
   currentUserId: any;
-
   currentUser!: User;
-
-  // private subscription: Subscription;
   subCurrentUser!: User;
-  private componentIsDestroyed$ = new Subject<boolean>();
+  private currentUserIsDestroyed$ = new Subject<boolean>();
+  memberInChannelsArray: Channel[] = [];
+
 
   constructor(
     private firestoreService: FirestoreService
   ){
     this.currentUserId = localStorage.getItem("currentUserId")
+  }
+
+  ngOnInit(){
     this.setCurrentUser();
+    this.setMemberInChannelArray();
   }
   
+  setMemberInChannelArray(){
+    this.firestoreService.channelsArray$
+    .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
+    .subscribe((channel: any) => {
+      this.memberInChannelsArray = channel;
+    });
+    console.log('channalArray: ', this.memberInChannelsArray);
+  }
+
   ngOnDestroy() {
-    this.componentIsDestroyed$.next(true);
+    this.currentUserIsDestroyed$.next(true);
   }
   
   setCurrentUser() {
     this.firestoreService.currentUser$
-    .pipe(takeUntil(this.componentIsDestroyed$))
+    .pipe(takeUntil(this.currentUserIsDestroyed$))
     .subscribe((user: User) => {
       this.currentUser = user;
-      // console.log('userData Channel: ', this.currentUser.memberInChannel);
+      // console.log('userData Channel: ', this.currentUser);
     } )
   }
 

@@ -14,7 +14,6 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   { path: 'home/:id', component: MainChatComponent },
-  // { path: 'home', component: AppBodyComponent },
   { path: 'home', component: NavbarComponent },
 ];
 

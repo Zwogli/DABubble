@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
 import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -9,30 +11,56 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./navbar-panel-message.component.scss']
 })
 export class NavbarPanelMessageComponent {
+  firestore: Firestore = inject(Firestore);
   panelOpenState: boolean = false;
   currentUserId: any;
   currentUser!: User;
   subCurrentUser!: User;
-  private componentIsDestroyed$ = new Subject<boolean>();
+  private currentUserIsDestroyed$ = new Subject<boolean>();
+  userInChatsArray: Chat[] = [];
+  chatBetweenUserIds: string[] = [];
+  chatUserData: User[] = [];
+
+  cacheChatUserData!: User;
 
   
   constructor(
     private firestoreService: FirestoreService
   ){
     this.currentUserId = localStorage.getItem("currentUserId")
+  }
+  
+  ngOnInit(){
     this.setCurrentUser();
+    this.setChatUserData();
   }
   
   ngOnDestroy() {
-    this.componentIsDestroyed$.next(true);
+    this.currentUserIsDestroyed$.next(true);
+  }
+
+  setChatUserData(){
+    /* version chatGpt
+     this.chatUserData = this.firestoreService.chatUserData;
+    */
+
+    this.firestoreService.chatUserData$
+    .pipe(takeUntil(this.currentUserIsDestroyed$))
+    .subscribe((chatUser: any) => {
+      this.chatUserData = chatUser;
+    } )
+    console.log('chat Array chatUserData: ', this.chatUserData, this.chatUserData.forEach((userData) =>{
+      console.log('UserData: ', userData.name);
+      
+    }));
   }
   
   setCurrentUser() {
     this.firestoreService.currentUser$
-    .pipe(takeUntil(this.componentIsDestroyed$))
+    .pipe(takeUntil(this.currentUserIsDestroyed$))
     .subscribe((user: User) => {
       this.currentUser = user;
-      console.log('userData Chat: ', this.currentUser.memberInChannel);
+      // console.log('userData Chat: ', this.currentUser.memberInChannel);
     } )
   }
 

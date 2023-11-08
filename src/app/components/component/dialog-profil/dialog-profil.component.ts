@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MenuProfilMobileComponent } from '../../wrapper/menu-profil-mobile/menu-profil-mobile.component';
 import { DialogProfilEditComponent } from '../dialog-profil-edit/dialog-profil-edit.component';
+import { User } from 'src/app/models/user.class';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-dialog-profil',
@@ -9,9 +12,33 @@ import { DialogProfilEditComponent } from '../dialog-profil-edit/dialog-profil-e
   styleUrls: ['./dialog-profil.component.scss']
 })
 export class DialogProfilComponent {
-  constructor(public dialogRef: MatDialogRef<MenuProfilMobileComponent>,
+  currentUser!: User;
+  onlineStatus: boolean = false;
+  private currentUserIsDestroyed$ = new Subject<boolean>();
+
+  constructor(
+    public dialogRef: MatDialogRef<MenuProfilMobileComponent>,
     public dialog: MatDialog,
+    private firestoreService: FirestoreService,
     ){}
+
+  ngOnInit(){
+    this.setCurrentUser();
+  }
+
+  ngOnDestroy() {
+    this.currentUserIsDestroyed$.next(true);
+  }
+  
+  setCurrentUser() {
+    this.firestoreService.currentUser$
+    .pipe(takeUntil(this.currentUserIsDestroyed$))
+    .subscribe((user: User) => {
+      this.currentUser = user;
+      this.onlineStatus = user.onlineStatus;
+      // console.log('userData Channel: ', this.currentUser);
+    } )
+  }
     
   onNoClick(): void {
     this.dialogRef.close();
