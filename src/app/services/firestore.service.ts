@@ -53,54 +53,9 @@ export class FirestoreService {
 
   unsubChatRecord!: Unsubscribe;
   unsubChatUser!: Unsubscribe;
-  // this.test = query(collection(this.firestore, 'channels'), where('member', "in", this.currentUser.id));
-
 
   constructor() {}
-  /* 
-  todo idea callback methods:
-  Create:
-  async addDocGenerateId(collName:string){
-  await addDoc( collRef(collName), {
-    name: "Tokyo",
-    country: "Japan"
-    });
-  }
-  
-  READ:
-  collRef(coll:string){
-    return collection(this.firestore, coll),
-  }
-  docRef(coll:string, docId:string){
-    return doc(this.collRef(coll), docId);
-  }
-  subDocRef(){
-    return query(collection(this.docRef(coll, docId), 'messages'));
-  }
-  
-  UPDATE:
-  async updateDocument(coll:string, docId:string){
-    await updateDoc(docRef(coll, docId), {
-    capital: true
-    });
-  }
-  async updateArray(coll:string, docId:string){
-    await updateDoc(docRef(coll, docId), {
-        // Atomically add a new region to the "regions" array field.
-        // arrayName: arrayUnion("[arrayElement]")
-        regions: arrayUnion("greater_virginia")
-    });
-  }
-  
-  DELETE:
-  async deleteArrayElement(coll:string, docId:string){
-    await updateDoc(docRef(coll, docId), {
-      // Atomically remove a region from the "regions" array field.
-      // arrayName: arrayRemove("[arrayElement]")
-      regions: arrayRemove("east_coast")
-    });
-  }
-  */
+ 
  subCurrentUser(docId: string) {
    return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
      this.currentUser = doc.data();
