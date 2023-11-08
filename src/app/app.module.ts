@@ -47,7 +47,6 @@ import { ForgotPasswordComponent } from './components/components/forgot-password
     SignInComponent,
     SignUpComponent,
     ChooseAvatarComponent,
-    AppBodyComponent,
     MenuProfilMobileComponent,
     DialogProfilComponent, DialogProfilEditComponent, ForgotPasswordComponent
   ],
