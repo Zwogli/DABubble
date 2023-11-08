@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MenuProfilMobileComponent } from '../../wrapper/menu-profil-mobile/menu-profil-mobile.component';
+import { MenuProfilMobileComponent } from '../../../general/sidenav/menu-profil-mobile/menu-profil-mobile.component';
 import { DialogProfilEditComponent } from '../dialog-profil-edit/dialog-profil-edit.component';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -9,7 +9,7 @@ import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-dialog-profil',
   templateUrl: './dialog-profil.component.html',
-  styleUrls: ['./dialog-profil.component.scss']
+  styleUrls: ['./dialog-profil.component.scss'],
 })
 export class DialogProfilComponent {
   currentUser!: User;
@@ -19,32 +19,32 @@ export class DialogProfilComponent {
   constructor(
     public dialogRef: MatDialogRef<MenuProfilMobileComponent>,
     public dialog: MatDialog,
-    private firestoreService: FirestoreService,
-    ){}
+    private firestoreService: FirestoreService
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.setCurrentUser();
   }
 
   ngOnDestroy() {
     this.currentUserIsDestroyed$.next(true);
   }
-  
+
   setCurrentUser() {
     this.firestoreService.currentUser$
-    .pipe(takeUntil(this.currentUserIsDestroyed$))
-    .subscribe((user: User) => {
-      this.currentUser = user;
-      this.onlineStatus = user.onlineStatus;
-      // console.log('userData Channel: ', this.currentUser);
-    } )
+      .pipe(takeUntil(this.currentUserIsDestroyed$))
+      .subscribe((user: User) => {
+        this.currentUser = user;
+        this.onlineStatus = user.onlineStatus;
+        // console.log('userData Channel: ', this.currentUser);
+      });
   }
-    
+
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  openDialogProfilEdit(){
+  openDialogProfilEdit() {
     this.dialog.open(DialogProfilEditComponent);
     this.onNoClick();
   }
