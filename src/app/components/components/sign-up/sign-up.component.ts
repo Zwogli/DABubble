@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,20 +15,42 @@ export class SignUpComponent {
       Validators.required,
       Validators.pattern('^[a-zA-ZöÖüÜäÄß -]+$'),
     ]),
-    emailForm: new FormControl('', [Validators.required, Validators.email, Validators.pattern("^[a-zA-Z0-9._*/+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$")]),
-    passwordForm: new FormControl('', [Validators.required, Validators.minLength(8),]),
+    emailForm: new FormControl('', [
+      Validators.required,
+      Validators.email,
+      Validators.pattern('^[a-zA-Z0-9._*/+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'),
+    ]),
+    passwordForm: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.pattern(/^(?=.*[0-9])(?=.*[A-Z]).*$/),
+      Validators.required,
+      this.requireUniqueCharacters(4),
+      Validators.required,
+    ]),
     checkboxForm: new FormControl(),
   });
 
   constructor(public authService: AuthService) {}
 
 
+  requireUniqueCharacters(minCount: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value) {
+        const uniqueCharacters = new Set(control.value);
+        if (uniqueCharacters.size < minCount) {
+          return { requireUniqueCharacters: true };
+        }
+      }
+      return null;
+    };
+  }
+
+
   getCheckboxValue() {
     if (!this.checkboxForm?.value) {
-      this.authService.checkboxIsChecked = true;
       this.authService.dataError = false;
     } else {
-      this.authService.checkboxIsChecked = false;
       this.authService.dataError = true;
     }
   }

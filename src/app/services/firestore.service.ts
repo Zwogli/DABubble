@@ -5,6 +5,8 @@ import {
   collection,
   query,
   setDoc,
+  addDoc,
+  deleteDoc,
   doc,
   where,
   getDoc,
@@ -44,9 +46,16 @@ export class FirestoreService {
   singleChatRecord$ = this.singleChatRecordSubject.asObservable();
   // unsub item
   unsubCurrentUser!: Unsubscribe;
+
+  test:any;
+  currentSignUpData:any = [];
+  currentSignUpId:any = (125478986565 * Math.random()).toFixed(0);
+
   unsubChatRecord!: Unsubscribe;
   unsubChatUser!: Unsubscribe;
-  // -----------------------------------------------
+  // this.test = query(collection(this.firestore, 'channels'), where('member', "in", this.currentUser.id));
+
+
   constructor() {}
   /* 
   todo idea callback methods:
@@ -218,15 +227,50 @@ export class FirestoreService {
   }
 
 
-  async addUser(userObject: any, name: string) {
+  async addUser(userObject: any, name: string, photoUrl:string) {
     await setDoc(doc(this.firestore, 'user', userObject.uid), {
       name: name,
       email: userObject.email,
       id: userObject.uid,
-      photoUrl: '',
+      photoUrl: photoUrl,
       onlineStatus: true,
       memberInChannel: [],
       activePrivateChats: [],
     });
+  }
+
+
+  //The following functions gets the current sign up data to use in choose-avater.component
+
+  getCurrentSignUpDataCol() {
+    return collection(this.firestore, 'currentSignUpData');
+  }
+
+
+  getCurrentSignUpDataDoc(docId: any) {
+    return doc(collection(this.firestore, 'currentSignUpData'), docId);
+  }
+
+
+  getJsonOfCurrentSignUpData(docId: string) {
+    onSnapshot(this.getCurrentSignUpDataDoc(docId), (list) => {
+      this.currentSignUpData = list.data();
+      console.log(this.currentSignUpData);
+    });
+  }
+
+
+  async addCurrentSignUpData(name: string, email:string, password:string) {
+    await setDoc(doc(this.firestore, 'currentSignUpData', this.currentSignUpId), {
+      name: name,
+      email: email,
+      password: password
+    });
+  }
+
+
+  async deleteCurrentSignUpData(docId:any) {
+    await deleteDoc(this.getCurrentSignUpDataDoc(docId));
+    this.currentSignUpData = [];
   }
 }

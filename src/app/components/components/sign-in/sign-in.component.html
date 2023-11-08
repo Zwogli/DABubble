@@ -8,8 +8,10 @@
         <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="emailForm?.dirty || emailForm?.touched">mail</mat-icon>
         <input formControlName="emailForm" type="email" placeholder="beispielname@email.com" #userEmail>
       </div>
-      <div class="block__alert-email" *ngIf="emailForm?.invalid && (emailForm?.dirty || emailForm?.touched)">
-        <div *ngIf="emailForm?.errors?.['required']">*Bitte geben Sie eine E-Mail-Adresse ein.</div>
+      <div class="block__alert-email" *ngIf="emailForm?.invalid && (emailForm?.touched)">
+        <div *ngIf="emailForm?.errors?.['required']">*Bitte gib eine E-Mail-Adresse ein.</div>
+        <div *ngIf="emailForm?.errors?.['email']">*Diese E-Mail-Adresse ist leider ungültig.</div>
+        <div *ngIf="emailForm?.errors?.['pattern']">*E-Mail-Adresse enthält ungültige Zeichen.</div>
       </div>
 
       <div class="block__input">
@@ -17,10 +19,10 @@
         <input formControlName="passwordForm" type="password" placeholder="Passwort" #userPassword>
       </div>
       <div class="block__alert-password" *ngIf="passwordForm?.invalid && (passwordForm?.dirty || passwordForm?.touched)">
-        <div *ngIf="passwordForm?.errors?.['required']">*Bitte geben Sie ein Passwort ein.</div>
+        <div *ngIf="passwordForm?.errors?.['required']">*Bitte gib ein Passwort ein.</div>
       </div>
 
-      <span class="sign-in__forgot-password">Passwort vergessen?</span>
+      <span class="sign-in__forgot-password" routerLink="/forgot-password">Passwort vergessen?</span>
       <div class="block__btn-box">
         <button
         class="btn__log-in"

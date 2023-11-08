@@ -10,32 +10,52 @@
           <span class="sign-in__headline">Wähle deinen Avatar</span>
         </div>
 
-        <img class="img__profile-choose-avatar" src="../../../../assets/img/avatars/profile-choose-avatar.png">
+        <img class="img__profile-choose-avatar" #unchoosenAvatar src="../../../../assets/img/avatars/guest-avatar.png">
 
-        <span class="text__name">Frederik Beck</span>
+        <span class="text__name">{{ this.firestoreService.currentSignUpData.name }}</span>
 
         <span class="text__choose-avatar">Aus der Liste wählen</span>
 
         <div class="block__img-box">
-          <img src="../../../../assets/img/avatars/avatar1.png">
-          <img src="../../../../assets/img/avatars/avatar2.png">
-          <img src="../../../../assets/img/avatars/avatar3.png">
-          <img src="../../../../assets/img/avatars/avatar4.png">
-          <img src="../../../../assets/img/avatars/avatar5.png">
-          <img src="../../../../assets/img/avatars/avatar6.png">
+          <img (click)="chooseAvatar(1)" src="../../../../assets/img/avatars/avatar1.png">
+          <img (click)="chooseAvatar(2)" src="../../../../assets/img/avatars/avatar2.png">
+          <img (click)="chooseAvatar(3)" src="../../../../assets/img/avatars/avatar3.png">
+          <img (click)="chooseAvatar(4)" src="../../../../assets/img/avatars/avatar4.png">
+          <img (click)="chooseAvatar(5)" src="../../../../assets/img/avatars/avatar5.png">
+          <img (click)="chooseAvatar(6)" src="../../../../assets/img/avatars/avatar6.png">
         </div>
 
         <div class="block__upload-img">
           <span>eigenes Bild verwenden</span>
-          <button class="btn__guest-log-in">Datei hochladen</button>
+          <label class="btn__guest-log-in">
+            <input type="file" (change)="onFileChange($event)"/>
+            Datei hochladen
+        </label>
         </div>
 
 
         <div class="block__btn-box">
           <button
           class="btn__log-in"
+          (click)="prepareSignUp()"
+          [disabled]="this.authService.signUpSuccessfully"
           >Weiter
           </button>
+        </div>
+
+
+        <div class="block__error" *ngIf="this.authService.errorAlreadyExist">
+          *Die zuvor gewählte E-Mail Adresse existiert bereits. Bitte kehre zur vorherigen Seite zurück und wähle eine andere E-Mail
+          Adresse oder nutze die Log-in Daten der bereits registrierten E-Mail Adresse.
+        </div>
+
+        <div class="block__error" *ngIf="this.authService.errorUnexpected">
+          *Ein unerwarteter Fehler ist aufgetreten. Bitte
+          kehre zur vorherigen Seite zurück und führe den Registrierungsprozess noch einmal aus.
+        </div>
+
+        <div class="block__sign-up-successfull" [class.block__sign-up-successfull--move-left]="this.authService.signUpSuccessfully">
+          Konto erfolgreich erstellt!
         </div>
 
 

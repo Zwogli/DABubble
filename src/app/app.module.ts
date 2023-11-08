@@ -15,6 +15,8 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireStorageModule } from "@angular/fire/compat/storage";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/wrapper/navbar/navbar.component';
 import { NavbarHeaderMobileComponent } from './components/component/navbar-header-mobile/navbar-header-mobile.component';
@@ -30,22 +32,24 @@ import { MainChatComponent } from './components/components/main-chat/main-chat.c
 import { SignUpComponent } from './components/components/sign-up/sign-up.component';
 import { ChooseAvatarComponent } from './components/components/choose-avatar/choose-avatar.component';
 import { DialogProfilEditComponent } from './components/component/dialog-profil-edit/dialog-profil-edit.component';
+import { ForgotPasswordComponent } from './components/components/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IntroComponent,
     MainChatComponent,
-    NavbarComponent, 
-    NavbarHeaderMobileComponent, 
-    NavbarPanelChannelsComponent, 
-    NavbarPanelMessageComponent, 
+    NavbarComponent,
+    NavbarHeaderMobileComponent,
+    NavbarPanelChannelsComponent,
+    NavbarPanelMessageComponent,
     NavbarSearchbarComponent,
     SignInComponent,
-    SignUpComponent, 
-    ChooseAvatarComponent, 
-    MenuProfilMobileComponent, 
-    DialogProfilComponent, DialogProfilEditComponent
+    SignUpComponent,
+    ChooseAvatarComponent,
+    AppBodyComponent,
+    MenuProfilMobileComponent,
+    DialogProfilComponent, DialogProfilEditComponent, ForgotPasswordComponent
   ],
 
   imports: [
@@ -57,6 +61,8 @@ import { DialogProfilEditComponent } from './components/component/dialog-profil-
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule,
     BrowserAnimationsModule,
     LayoutModule,
   ],

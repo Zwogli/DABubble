@@ -1,14 +1,28 @@
 @import "../sign-in/sign-in.component.scss";
 @import "../sign-up/sign-up.component.scss";
 
+:host {
+  height: 100%;
+  background-color: var(--color-blue-bg);
+  overflow: hidden;
+}
+
+.block__sign-up {
+  height: 100% !important;
+  position: relative;
+}
+
 mat-card {
-  height: 555px !important;
+  height: 533px !important;
+  padding: 15px !important;
+  position: unset;
 }
 
 .sign-in__headline {
   width: 80% !important;
   text-align: center;
   line-height: 120%;
+  font-size: 1.444rem !important;
 }
 
 .block__icon-arrow-back {
@@ -17,11 +31,14 @@ mat-card {
 
 .img__profile-choose-avatar {
   margin: 24px 0 32px 0;
+  width: 120px;
+  height: 120px !important;
+  border-radius: 100%;
 }
 
 .text__name {
   margin-bottom: 22px;
-  font-size: 1.778rem;
+  font-size: 1.444rem;
   font-weight: 700;
 }
 
@@ -62,12 +79,73 @@ mat-card {
     font-weight: 400;
     font-size: 0.832rem;
   }
-
-  button {
-    padding: 6px 10px;
-  }
 }
 
 .block__btn-box {
   margin-top: 0 !important;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.btn__guest-log-in {
+  padding: 6px 10px !important;
+}
+
+.block__error {
+  font-size: 0.667rem !important;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  top: unset !important;
+  left: unset !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  padding: 10px 20px;
+  width: calc(100% - 40px);
+  background-color: var(--color-blue-bg);
+  min-height: 60px;
+}
+
+.block__sign-up-successfull {
+  position: absolute;
+  color: white;
+  background-color: var(--color-blue-primary-default);
+  bottom: 5px;
+  right: 16px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-top-left-radius: 20px;
+  font-size: 1rem;
+  padding: 10px;
+  transform: translateX(2000px);
+}
+
+.block__sign-up-successfull--move-left {
+  animation: MoveLeft 1500ms ease-in-out forwards;
+}
+
+@keyframes MoveLeft {
+  0% {
+    transform: translateX(2000px);
+  }
+  25% {
+    transform: translateX(1500px);
+  }
+  50% {
+    transform: translateX(1000px);
+  }
+  75% {
+    transform: translateX(500px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
 }
