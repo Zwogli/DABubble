@@ -47,7 +47,6 @@ export class FirestoreService {
   // unsub item
   unsubCurrentUser!: Unsubscribe;
 
-  test:any;
   currentSignUpData:any = [];
   currentSignUpId:any = (125478986565 * Math.random()).toFixed(0);
 
@@ -62,7 +61,6 @@ export class FirestoreService {
      this.currentUserSubject.next(this.currentUser);
      this.getChannelsFromCurrentUser();
      this.getChatFromCurrentUser();
-     // console.log('FirestoreService userData', doc.data());
    });
  }
  
@@ -83,7 +81,6 @@ export class FirestoreService {
         this.chatsArray.push(doc.data()); //element to array
       });
       this.chatsArraySubject.next(this.chatsArray); //update observable
-      // console.log('firestore read chatArray: ', this.chatsArray,'chatArray$', this.chatsArray$);1
       this.getUserIdsFromChat();
     }
     );
@@ -96,36 +93,11 @@ export class FirestoreService {
         (filterChatUserIds: string) => filterChatUserIds !== this.currentUser.id);
       this.chatFilteredUserIds.push(filteredUserId[0]);
     })
-    // console.log('firestore chatUserIdArray: ', this.chatFilteredUserIds);
     this.getUserDataFromChat();
   }
 
   async getUserDataFromChat(){
     this.chatUserData = [];
-    /*version chatgpt
-      try {
-        for (const chatBetweenUserId of this.chatFilteredUserIds) {
-          const docRef = doc(this.firestore, 'user', chatBetweenUserId);
-          const docSnapshot = await getDoc(docRef);
-
-          if (docSnapshot.exists()) {
-            const userData: any = docSnapshot.data();
-
-            // Check if the userData is not already in chatUserData
-            if (!this.chatUserData.some((item) => item.id === userData['id'])) {
-              this.chatUserData.push(userData);
-            }
-          } else {
-            console.log('Document does not exist for user ID:', chatBetweenUserId);
-          }
-        }
-
-        console.log('Firestore chatBetweenUserData: ', this.chatUserData);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    */
-
     this.chatFilteredUserIds.forEach((chatBetweenUserId) =>{
       onSnapshot(
         doc(this.firestore, 'user', chatBetweenUserId), 
@@ -151,8 +123,6 @@ export class FirestoreService {
           this.channelsArray.push(doc.data()); //element to array
         });
         this.channelsArraySubject.next(this.channelsArray); //update observable
-
-        // console.log('firestore read channelsArray: ', this.channelsArray, this.channelsArray$);
       }
     );
   }

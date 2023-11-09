@@ -40,10 +40,6 @@ export class NavbarPanelMessageComponent {
   }
 
   setChatUserData(){
-    /* version chatGpt
-     this.chatUserData = this.firestoreService.chatUserData;
-    */
-
     this.firestoreService.chatUserData$
     .pipe(takeUntil(this.currentUserIsDestroyed$))
     .subscribe((chatUser: any) => {
@@ -60,7 +56,6 @@ export class NavbarPanelMessageComponent {
     .pipe(takeUntil(this.currentUserIsDestroyed$))
     .subscribe((user: User) => {
       this.currentUser = user;
-      // console.log('userData Chat: ', this.currentUser.memberInChannel);
     } )
   }
 

@@ -48,7 +48,6 @@ export class NavbarPanelChannelsComponent {
     .pipe(takeUntil(this.currentUserIsDestroyed$))
     .subscribe((user: User) => {
       this.currentUser = user;
-      // console.log('userData Channel: ', this.currentUser);
     } )
   }
 
