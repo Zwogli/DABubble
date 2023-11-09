@@ -2,7 +2,7 @@
 
     <header>
         <h2> 
-            <span> Profil </span>  
+            <span> Edit your Profil </span>  
             <span (click)="onNoClick()" class="material-icons-outlined"> close </span>
         </h2>
     </header>
@@ -11,19 +11,33 @@
         <img class="dialog__img--style" src="assets/img/avatar_female-v1.png" alt="profil-avatar">
     </div>
     
-    <div class="dialog__content">
-    
-        <div class="dialog__content--header">
-            <h1> User Name </h1>
-        </div>
-    
-    
-        <div class="dialog__content--email">
-            <span class="material-icons-outlined"> email </span>
-            <div class="container__email">
-                <span class="container__email--headline"> E-Mail-Address </span>
-                <span class="container__email--data"> user&#64;email.test </span>
+    <form action="">
+
+        <div class="dialog__content">
+
+            <div class="dialog__content--name">
+                <div class="dialog__content--name-headline">
+                    <span class="material-icons-outlined"> account_circle </span>
+                    <span class="dialog__content--name-headline-txt"> Full name </span>
+                </div>
+
+                <input type="text" placeholder="user.name">
+            </div>
+        
+        
+            <div class="dialog__content--email">
+                <div class="dialog__content--email-headline">
+                    <span class="material-icons-outlined"> email </span>
+                    <span class="dialog__content--email-headline-txt"> E-Mail-Address </span>
+                </div>
+
+                <input type="email" placeholder="user.email">
+            </div>
+
+            <div class="dialog__btn">
+                <button class="dialog__btn--cancel"> Cancel </button>
+                <button class="dialog__btn--save"> Save </button>
             </div>
         </div>
-    </div>
+    </form>
 </main>
