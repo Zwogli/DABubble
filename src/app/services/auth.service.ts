@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -56,12 +57,10 @@ export class AuthService {
       if (user) {
         this.currentUserId = user.uid;
         this.firestoreService.startSubUser(this.currentUserId);
-         console.log('Auth getCurrentUser() if', user);
 
       } else {
         // User is signed out
         this.currentUserId = '';
-         console.log('Auth getCurrentUser() else', user);
       }
     });
   }
@@ -73,7 +72,7 @@ export class AuthService {
         this.executeSignUp(userCredential, name, photoUrl);
       })
       .catch((error) => {
-        this.failedSignUp(error);
+        this.failedSignUp();
       });
   }
 
@@ -90,11 +89,27 @@ export class AuthService {
   }
 
 
-  failedSignUp(error:any) {
+  failedSignUp() {
     this.errorUnexpected = true;
     this.signUpError = true;
     this.signUpSuccessfully = false;
-    console.log(error.code);
+  }
+
+
+  forgotPassword(email:string,) {
+    const test = 'testVARIABLE';
+    const actionCodeSettings = {
+      url: `http://localhost:4200/sign-up-test{{test}}`,
+    };
+
+
+    sendPasswordResetEmail(this.auth, email, actionCodeSettings)
+    .then(() => {
+      console.log('EMAIL WAS SEND', email)
+    })
+    .catch((error) => {
+      console.log('FEHLER', error.code)
+    })
   }
 }
 
