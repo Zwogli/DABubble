@@ -2,7 +2,7 @@ main{
     padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 header{
     h2{
@@ -50,7 +50,7 @@ header{
         }
     }
     &--status{
-        margin-top: .5rem;
+        margin-top: 1rem;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -61,7 +61,7 @@ header{
         }
     }
     &--email{
-        margin-top: 1rem;
+        margin-top: 1.5rem;
         display: flex;
         gap: 1rem;          
     }
@@ -86,7 +86,7 @@ header{
 .container__email{
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    gap: 1rem;
     &--headline{
         font-weight: 700;
         font-size: 1.1rem;
