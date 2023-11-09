@@ -12,7 +12,7 @@
         <img class="dialog__img--style" src="{{ currentUser.photoUrl }}" alt="profil-avatar">
     </div>
     
-    <form action="">
+    <form action="" [formGroup]="updateUserForm">
 
         <div class="dialog__content">
 
@@ -22,7 +22,12 @@
                     <span class="dialog__content--name-headline-txt"> Full name </span>
                 </div>
 
-                <input formControlName="nameForm" #userName type="text" placeholder="{{ currentUser.name }}">
+                <input 
+                    #userName 
+                    formControlName="nameForm" 
+                    type="text" 
+                    placeholder="{{ currentUser.name }}"
+                >
             </div>
         
         
@@ -32,7 +37,12 @@
                     <span class="dialog__content--email-headline-txt"> E-Mail-Address </span>
                 </div>
 
-                <input formControlName="emailForm" #userEmail type="email" placeholder="{{ currentUser.email }}">
+                <input 
+                    #userEmail 
+                    formControlName="emailForm" 
+                    type="email" 
+                    placeholder="{{ currentUser.email }}"
+                >
             </div>
 
             <div class="dialog__btn">

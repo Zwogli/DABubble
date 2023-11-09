@@ -171,10 +171,6 @@ export class FirestoreService {
       name: userName,
       email: userEmail,
     })
-    console.log('firestore schow user ', onSnapshot(doc(this.firestore, 'user', userId), (doc: any) => {
-      this.currentUser = doc.data();
-    }));
-    
   }
 
 
