@@ -5,7 +5,7 @@ registerLocaleData(localeDE, 'de');
 
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {LayoutModule} from '@angular/cdk/layout';
+import { LayoutModule } from '@angular/cdk/layout';
 
 import { MaterialModule } from './custom_modules/material.module';
 
@@ -24,14 +24,14 @@ import { NavbarPanelChannelsComponent } from './components/component/navbar-pane
 import { NavbarPanelMessageComponent } from './components/component/navbar-panel-message/navbar-panel-message.component';
 import { NavbarSearchbarComponent } from './components/component/navbar-searchbar/navbar-searchbar.component';
 import { MenuProfilMobileComponent } from './components/wrapper/menu-profil-mobile/menu-profil-mobile.component';
-import { DialogProfilComponent } from './components/component/dialog-profil/dialog-profil.component';
+import { DialogProfilComponent } from './components/reusable/dialog-profil/dialog-profil.component';
 import { IntroComponent } from './components/components/intro/intro.component';
 import { SignInComponent } from './components/components/sign-in/sign-in.component';
 
 import { MainChatComponent } from './components/components/main-chat/main-chat.component';
 import { SignUpComponent } from './components/components/sign-up/sign-up.component';
 import { ChooseAvatarComponent } from './components/components/choose-avatar/choose-avatar.component';
-import { DialogProfilEditComponent } from './components/component/dialog-profil-edit/dialog-profil-edit.component';
+import { DialogProfilEditComponent } from './components/reusable/dialog-profil-edit/dialog-profil-edit.component';
 import { ForgotPasswordComponent } from './components/components/forgot-password/forgot-password.component';
 
 @NgModule({
@@ -47,7 +47,6 @@ import { ForgotPasswordComponent } from './components/components/forgot-password
     SignInComponent,
     SignUpComponent,
     ChooseAvatarComponent,
-    AppBodyComponent,
     MenuProfilMobileComponent,
     DialogProfilComponent, DialogProfilEditComponent, ForgotPasswordComponent
   ],

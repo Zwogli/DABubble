@@ -5,7 +5,7 @@ import { MainChatComponent } from './components/components/main-chat/main-chat.c
 import { SignUpComponent } from './components/components/sign-up/sign-up.component';
 import { ChooseAvatarComponent } from './components/components/choose-avatar/choose-avatar.component';
 import { NavbarComponent } from './components/wrapper/navbar/navbar.component';
-import { AppBodyComponent } from './components/wrapper/app-body/app-body.component';
+//import { AppBodyComponent } from './components/wrapper/app-body/app-body.component';
 import { ForgotPasswordComponent } from './components/components/forgot-password/forgot-password.component';
 
 const routes: Routes = [
