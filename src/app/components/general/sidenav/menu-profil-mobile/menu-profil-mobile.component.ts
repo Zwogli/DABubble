@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NavbarService } from 'src/app/services/navbar.service';
 import { DialogProfilComponent } from '../../../reusable/dialogs/dialog-profil/dialog-profil.component';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-profil-mobile',
@@ -14,7 +15,11 @@ export class MenuProfilMobileComponent {
   showMainChat: boolean = false;
   private subscription: Subscription;
 
-  constructor(private navbarService: NavbarService, public dialog: MatDialog) {
+  constructor(
+    private router: Router,
+    private navbarService: NavbarService, 
+    public dialog: MatDialog,
+    ) {
     this.subscription = this.navbarService.showMenu$.subscribe((visible) => {
       this.showMenu = visible;
     });
@@ -31,5 +36,10 @@ export class MenuProfilMobileComponent {
 
   openDialogProfil() {
     this.dialog.open(DialogProfilComponent);
+  }
+
+  logout(){
+    this.navbarService.toggleMenu();
+    this.router.navigateByUrl('');
   }
 }
