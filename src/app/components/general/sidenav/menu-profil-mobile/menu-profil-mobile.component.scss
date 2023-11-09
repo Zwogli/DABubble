@@ -68,12 +68,12 @@ animation
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 .slide--up{
   bottom: 0;
-  animation: 1s slide-up;
+  animation: .5s slide-up;
 }
 .slide--down{
   bottom: 0;
   transform: translateY(300px);
-  animation: 1s slide-down;
+  animation: .5s slide-down;
 }
 
 @keyframes slide-up{

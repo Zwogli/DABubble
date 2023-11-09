@@ -26,7 +26,7 @@ export class NavbarService {
 
     setTimeout(() => {
       this.toggleMenu();
-    }, 1000);
+    }, 500);
 
     menu?.classList.add('slide--up');
   }
