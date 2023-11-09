@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 
 @Component({
@@ -31,7 +32,7 @@ export class SignUpComponent {
     checkboxForm: new FormControl(),
   });
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, public firestoreService: FirestoreService) {}
 
 
   requireUniqueCharacters(minCount: number): ValidatorFn {

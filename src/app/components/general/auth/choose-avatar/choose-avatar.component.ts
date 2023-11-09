@@ -35,7 +35,6 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
-    this.authService.errorAlreadyExist = false;
     this.authService.errorUnexpected = false;
     this.authService.signUpError = false;
     this,this.authService.signUpSuccessfully = false;

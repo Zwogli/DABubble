@@ -17,7 +17,6 @@ export class AuthService {
   signUpSuccessfully = false;
   public logInError = false;
   dataError = false;
-  errorAlreadyExist = false;
   errorUnexpected = false;
   currentUserId: string = '';
 
@@ -45,12 +44,12 @@ export class AuthService {
     this.router.navigate(['home']);
   }
 
+
   async saveCurrentUserData(name: string, email: string, password: any) {
     await this.firestoreService.addCurrentSignUpData(name, email, password);
-    this.router.navigate([
-      `choose-avatar/${this.firestoreService.currentSignUpId}`,
-    ]);
+    this.router.navigate([`choose-avatar/${this.firestoreService.currentSignUpId}`]);
   }
+
 
   getCurrentUser() {
     onAuthStateChanged(this.auth, (user) => {
@@ -92,12 +91,7 @@ export class AuthService {
 
 
   failedSignUp(error:any) {
-    if (error.code === 'auth/email-already-in-use') {
-      this.errorAlreadyExist = true;
-      console.log('email existiert bereits', this.errorAlreadyExist);
-    } else {
-      this.errorUnexpected = true;
-    }
+    this.errorUnexpected = true;
     this.signUpError = true;
     this.signUpSuccessfully = false;
     console.log(error.code);
