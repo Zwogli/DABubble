@@ -37,7 +37,9 @@ export class FirestoreService {
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private chatsArraySubject = new BehaviorSubject<any>(this.chatsArray);
   private chatUserDataSubject = new BehaviorSubject<any>(this.chatUserData);
-  private singleChatRecordSubject = new BehaviorSubject<any>(this.singleChatRecord);
+  private singleChatRecordSubject = new BehaviorSubject<any>(
+    this.singleChatRecord
+  );
   // observable item
   currentUser$ = this.currentUserSubject.asObservable();
   channelsArray$ = this.channelsArraySubject.asObservable();
@@ -68,12 +70,15 @@ export class FirestoreService {
    this.unsubCurrentUser = this.subCurrentUser(docId);
  }
  
+
   getChatFromCurrentUser() {
-    return onSnapshot(  //listen to a document, by change updates the document snapshot.
-    query(//create a query against the collection.
-      collection(this.firestore, 'privateChat'), //select database, collection
-      where('chatBetween', 'array-contains', this.currentUser.id)
-    ), //[path], [action], [searched element]
+    return onSnapshot(
+      //listen to a document, by change updates the document snapshot.
+      query(
+        //create a query against the collection.
+        collection(this.firestore, 'privateChat'), //select database, collection
+        where('chatBetween', 'array-contains', this.currentUser.id)
+      ), //[path], [action], [searched element]
 
     (chatsArray) => { //read array[searched element]
       this.chatsArray = []; //reset variable array
@@ -86,17 +91,19 @@ export class FirestoreService {
     );
   }
 
-  getUserIdsFromChat(){
+  getUserIdsFromChat() {
     this.chatFilteredUserIds = [];
     this.chatsArray.forEach((chatBetweenUserIds) => {
       let filteredUserId = chatBetweenUserIds.chatBetween.filter(
-        (filterChatUserIds: string) => filterChatUserIds !== this.currentUser.id);
+        (filterChatUserIds: string) => filterChatUserIds !== this.currentUser.id
+      );
       this.chatFilteredUserIds.push(filteredUserId[0]);
     })
+
     this.getUserDataFromChat();
   }
 
-  async getUserDataFromChat(){
+  async getUserDataFromChat() {
     this.chatUserData = [];
     this.chatFilteredUserIds.forEach((chatBetweenUserId) =>{
       onSnapshot(
@@ -112,14 +119,18 @@ export class FirestoreService {
   }
 
   getChannelsFromCurrentUser() {
-    return onSnapshot(  //listen to a document, by change updates the document snapshot.
-      query(//create a query against the collection.
+    return onSnapshot(
+      //listen to a document, by change updates the document snapshot.
+      query(
+        //create a query against the collection.
         collection(this.firestore, 'channels'), //select database, collection
         where('member', 'array-contains', this.currentUser.id)
       ), //[path], [action], [searched element]
-      (channelsArrays) => { //read array[searched element]
+      (channelsArrays) => {
+        //read array[searched element]
         this.channelsArray = []; //reset variable array
-        channelsArrays.forEach((doc: any) => {  //read element of array
+        channelsArrays.forEach((doc: any) => {
+          //read element of array
           this.channelsArray.push(doc.data()); //element to array
         });
         this.channelsArraySubject.next(this.channelsArray); //update observable
@@ -130,7 +141,6 @@ export class FirestoreService {
   ngOnDestroy() {
     this.unsubCurrentUser();
   }
-
 
   subChatRecord(docId: string) {
     return onSnapshot(
@@ -146,13 +156,11 @@ export class FirestoreService {
     );
   }
 
-
   startSubChat(docId: string) {
     this.unsubChatRecord = this.subChatRecord(docId);
   }
 
-
-  async addUser(userObject: any, name: string, photoUrl:string) {
+  async addUser(userObject: any, name: string, photoUrl: string) {
     await setDoc(doc(this.firestore, 'user', userObject.uid), {
       name: name,
       email: userObject.email,
@@ -164,18 +172,15 @@ export class FirestoreService {
     });
   }
 
-
   //The following functions gets the current sign up data to use in choose-avater.component
 
   getCurrentSignUpDataCol() {
     return collection(this.firestore, 'currentSignUpData');
   }
 
-
   getCurrentSignUpDataDoc(docId: any) {
     return doc(collection(this.firestore, 'currentSignUpData'), docId);
   }
-
 
   getJsonOfCurrentSignUpData(docId: string) {
     onSnapshot(this.getCurrentSignUpDataDoc(docId), (list) => {
@@ -184,17 +189,18 @@ export class FirestoreService {
     });
   }
 
-
-  async addCurrentSignUpData(name: string, email:string, password:string) {
-    await setDoc(doc(this.firestore, 'currentSignUpData', this.currentSignUpId), {
-      name: name,
-      email: email,
-      password: password
-    });
+  async addCurrentSignUpData(name: string, email: string, password: string) {
+    await setDoc(
+      doc(this.firestore, 'currentSignUpData', this.currentSignUpId),
+      {
+        name: name,
+        email: email,
+        password: password,
+      }
+    );
   }
 
-
-  async deleteCurrentSignUpData(docId:any) {
+  async deleteCurrentSignUpData(docId: any) {
     await deleteDoc(this.getCurrentSignUpDataDoc(docId));
     this.currentSignUpData = [];
   }

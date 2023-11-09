@@ -7,6 +7,7 @@ import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/c
 import { NavbarComponent } from './components/general/sidenav/navbar/navbar.component';
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
 
+
 const routes: Routes = [
   { path: '', component: IntroComponent },
   { path: 'sign-up', component: SignUpComponent },
