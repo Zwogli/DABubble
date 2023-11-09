@@ -3,12 +3,13 @@
     <header>
         <h2> 
             <span> Edit your Profil </span>  
-            <span (click)="onNoClick()" class="material-icons-outlined"> close </span>
+            <span (click)="onNoClick()" class="material-icons-outlined close__element"> close </span>
         </h2>
     </header>
     
     <div class="dialog__img">
-        <img class="dialog__img--style" src="assets/img/avatar_female-v1.png" alt="profil-avatar">
+        <!-- <img class="dialog__img--style" src="assets/img/avatar_female-v1.png" alt="profil-avatar"> -->
+        <img class="dialog__img--style" src="{{ currentUser.photoUrl }}" alt="profil-avatar">
     </div>
     
     <form action="">
@@ -21,7 +22,7 @@
                     <span class="dialog__content--name-headline-txt"> Full name </span>
                 </div>
 
-                <input type="text" placeholder="user.name">
+                <input type="text" placeholder="{{ currentUser.name }}">
             </div>
         
         
@@ -31,11 +32,11 @@
                     <span class="dialog__content--email-headline-txt"> E-Mail-Address </span>
                 </div>
 
-                <input type="email" placeholder="user.email">
+                <input type="email" placeholder="{{ currentUser.email }}">
             </div>
 
             <div class="dialog__btn">
-                <button class="dialog__btn--cancel"> Cancel </button>
+                <button (click)="onNoClick()" class="dialog__btn--cancel"> Cancel </button>
                 <button class="dialog__btn--save"> Save </button>
             </div>
         </div>

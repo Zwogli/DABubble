@@ -28,6 +28,7 @@ button{
     padding: 12px 25px;
     border-radius: 50px;
     font-size: 1rem;
+    cursor: pointer;
 }
 .dialog__img{
     display: flex;
@@ -96,4 +97,8 @@ button{
             border-color: var(--color-blue-primary-default);
         }
     }
+}
+
+.close__element{
+    cursor: pointer;
 }

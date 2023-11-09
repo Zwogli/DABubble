@@ -36,7 +36,6 @@ export class DialogProfilComponent {
       .subscribe((user: User) => {
         this.currentUser = user;
         this.onlineStatus = user.onlineStatus;
-        // console.log('userData Channel: ', this.currentUser);
       });
   }
 
