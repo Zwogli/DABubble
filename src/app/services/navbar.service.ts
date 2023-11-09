@@ -12,8 +12,15 @@ export class NavbarService {
 
   constructor() { }
 
-  closeMenu(){
-     let menu: HTMLElement | null = document.getElementById('menu');
+  menuSlideUp(){
+    let menu: HTMLElement | null = document.getElementById('menu');
+    menu?.classList.remove('slide--down');
+    menu?.classList.add('slide--up');
+    this.toggleMenu();
+  }
+
+  menuSlideDown(){
+    let menu: HTMLElement | null = document.getElementById('menu');
     menu?.classList.remove('slide--up');
     menu?.classList.add('slide--down');
 

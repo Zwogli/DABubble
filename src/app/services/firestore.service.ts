@@ -5,6 +5,7 @@ import {
   collection,
   query,
   setDoc,
+  deleteDoc,
   doc,
   where,
   getDoc,
@@ -17,21 +18,28 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../models/message.class';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
+import { Chat } from '../models/chat.class';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirestoreService {
   firestore: Firestore = inject(Firestore);
+  chatFilteredUserIds: string[] = [];
 
   // variable item to observe
   currentUser!: User;
   channelsArray: Channel[] = [];
+  chatsArray: Chat[] = [];
+  chatUserData: User[] = [];
+
   singleChatRecord: Message[] = [];
 
   // subject item
   private currentUserSubject = new BehaviorSubject<User>(this.currentUser);
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
+  private chatsArraySubject = new BehaviorSubject<any>(this.chatsArray);
+  private chatUserDataSubject = new BehaviorSubject<any>(this.chatUserData);
   private singleChatRecordSubject = new BehaviorSubject<any>(
     this.singleChatRecord
   );
@@ -39,11 +47,18 @@ export class FirestoreService {
   // observable item
   currentUser$ = this.currentUserSubject.asObservable();
   channelsArray$ = this.channelsArraySubject.asObservable();
+  chatsArray$ = this.chatsArraySubject.asObservable();
+  chatUserData$ = this.chatUserDataSubject.asObservable();
   singleChatRecord$ = this.singleChatRecordSubject.asObservable();
 
   // unsub item
   unsubCurrentUser!: Unsubscribe;
+
+  currentSignUpData:any = [];
+  currentSignUpId:any = (125478986565 * Math.random()).toFixed(0);
+
   unsubChatRecord!: Unsubscribe;
+  unsubChatUser!: Unsubscribe;
 
   constructor() {}
 
@@ -60,6 +75,67 @@ export class FirestoreService {
       console.log('No such document found!');
       return;
     }
+  }
+ 
+ subCurrentUser(docId: string) {
+   return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
+     this.currentUser = doc.data();
+     this.currentUserSubject.next(this.currentUser);
+     this.getChannelsFromCurrentUser();
+     this.getChatFromCurrentUser();
+   });
+ }
+ 
+ startSubUser(docId: string) {
+   this.unsubCurrentUser = this.subCurrentUser(docId);
+ }
+ 
+
+  getChatFromCurrentUser() {
+    return onSnapshot(
+      //listen to a document, by change updates the document snapshot.
+      query(
+        //create a query against the collection.
+        collection(this.firestore, 'privateChat'), //select database, collection
+        where('chatBetween', 'array-contains', this.currentUser.id)
+      ), //[path], [action], [searched element]
+
+    (chatsArray) => { //read array[searched element]
+      this.chatsArray = []; //reset variable array
+      chatsArray.forEach((doc: any) => {  //read element of array
+        this.chatsArray.push(doc.data()); //element to array
+      });
+      this.chatsArraySubject.next(this.chatsArray); //update observable
+      this.getUserIdsFromChat();
+    }
+    );
+  }
+
+  getUserIdsFromChat() {
+    this.chatFilteredUserIds = [];
+    this.chatsArray.forEach((chatBetweenUserIds) => {
+      let filteredUserId = chatBetweenUserIds.chatBetween.filter(
+        (filterChatUserIds: string) => filterChatUserIds !== this.currentUser.id
+      );
+      this.chatFilteredUserIds.push(filteredUserId[0]);
+    })
+
+    this.getUserDataFromChat();
+  }
+
+  async getUserDataFromChat() {
+    this.chatUserData = [];
+    this.chatFilteredUserIds.forEach((chatBetweenUserId) =>{
+      onSnapshot(
+        doc(this.firestore, 'user', chatBetweenUserId), 
+          (doc: any) => { 
+            console.log('firestore chat doc ', doc.data());
+            
+            this.chatUserData.push(doc.data());
+          }
+      );
+    });
+    this.chatUserDataSubject.next(this.chatUserData);
   }
 
   getChannelsFromCurrentUser() {
@@ -78,25 +154,15 @@ export class FirestoreService {
           this.channelsArray.push(doc.data()); //element to array
         });
         this.channelsArraySubject.next(this.channelsArray); //update observable
-
-        // console.log('firestore read channelsArray$: ', this.channelsArray, this.channelsArray$);
-        // console.log('firestore getChannelsFromCurrentUser: ', channelsArrays.docs);
       }
     );
   }
 
-  subCurrentUser(docId: string) {
-    return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
-      this.currentUser = doc.data();
-      this.currentUserSubject.next(this.currentUser);
-      this.getChannelsFromCurrentUser();
-      console.log('FirestoreService userData', doc.data());
-    });
-  }
 
-  startSubUser(docId: string) {
-    this.unsubCurrentUser = this.subCurrentUser(docId);
-  }
+
+
+
+ 
 
   subChatRecord(docId: string) {
     return onSnapshot(
@@ -128,12 +194,12 @@ export class FirestoreService {
     this.unsubChatRecord = this.subChatRecord(docId);
   }
 
-  async addUser(userObject: any, name: string) {
+  async addUser(userObject: any, name: string, photoUrl: string) {
     await setDoc(doc(this.firestore, 'user', userObject.uid), {
       name: name,
       email: userObject.email,
       id: userObject.uid,
-      photoUrl: '',
+      photoUrl: photoUrl,
       onlineStatus: true,
       memberInChannel: [],
       activePrivateChats: [],
@@ -151,5 +217,38 @@ export class FirestoreService {
       thread: data.thread,
       reactedBy: data.reactedBy,
     };
+  }
+
+  //The following functions gets the current sign up data to use in choose-avater.component
+
+  getCurrentSignUpDataCol() {
+    return collection(this.firestore, 'currentSignUpData');
+  }
+
+  getCurrentSignUpDataDoc(docId: any) {
+    return doc(collection(this.firestore, 'currentSignUpData'), docId);
+  }
+
+  getJsonOfCurrentSignUpData(docId: string) {
+    onSnapshot(this.getCurrentSignUpDataDoc(docId), (list) => {
+      this.currentSignUpData = list.data();
+      console.log(this.currentSignUpData);
+    });
+  }
+
+  async addCurrentSignUpData(name: string, email: string, password: string) {
+    await setDoc(
+      doc(this.firestore, 'currentSignUpData', this.currentSignUpId),
+      {
+        name: name,
+        email: email,
+        password: password,
+      }
+    );
+  }
+
+  async deleteCurrentSignUpData(docId: any) {
+    await deleteDoc(this.getCurrentSignUpDataDoc(docId));
+    this.currentSignUpData = [];
   }
 }

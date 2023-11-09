@@ -1,0 +1,45 @@
+<mat-expansion-panel
+    hideToggle
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title (click)="rotateArrow()">
+
+		<div class="panel__titel--left">
+			<span
+			  id="directMessage--arrow_drop_down"
+			  class="material-icons-outlined rotate"
+			>
+			  arrow_drop_down
+			</span>
+			<div class="container__element--center">
+			  <span class="material-icons-outlined"> account_circle </span>
+			  <span class="panel__header--titel">Direct message</span>
+			</div>
+		</div>
+
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="mat-expansion-panel__content container__elements--column">
+			<!-- <article> -->
+				<!-- 
+					elements for expansion-panel
+				-->
+				<div *ngFor="let user of chatUserData" class="fix--space-left sort__elemts--row">
+					<div [routerLink]="'/home/'+user.id" class="container__Elemets--row">
+
+						<div class="user__container--avatar">
+							<img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
+							<span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
+						</div>
+
+						<p>{{ user.name}}</p>
+
+					</div>
+				</div>
+			<!-- </article> -->
+
+    </div>
+  </mat-expansion-panel>
