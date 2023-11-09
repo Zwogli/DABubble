@@ -10,6 +10,7 @@ import {
   doc,
   where,
   getDoc,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { Unsubscribe } from '@angular/fire/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -162,6 +163,18 @@ export class FirestoreService {
       memberInChannel: [],
       activePrivateChats: [],
     });
+  }
+
+
+  async updateCurrentUserData(userId:string, userName: string, userEmail:string){
+    await updateDoc(doc(this.firestore, 'user', userId), {
+      name: userName,
+      email: userEmail,
+    })
+    console.log('firestore schow user ', onSnapshot(doc(this.firestore, 'user', userId), (doc: any) => {
+      this.currentUser = doc.data();
+    }));
+    
   }
 
 

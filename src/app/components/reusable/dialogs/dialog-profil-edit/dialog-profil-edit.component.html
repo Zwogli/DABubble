@@ -22,7 +22,7 @@
                     <span class="dialog__content--name-headline-txt"> Full name </span>
                 </div>
 
-                <input type="text" placeholder="{{ currentUser.name }}">
+                <input formControlName="nameForm" #userName type="text" placeholder="{{ currentUser.name }}">
             </div>
         
         
@@ -32,12 +32,20 @@
                     <span class="dialog__content--email-headline-txt"> E-Mail-Address </span>
                 </div>
 
-                <input type="email" placeholder="{{ currentUser.email }}">
+                <input formControlName="emailForm" #userEmail type="email" placeholder="{{ currentUser.email }}">
             </div>
 
             <div class="dialog__btn">
-                <button (click)="onNoClick()" class="dialog__btn--cancel"> Cancel </button>
-                <button class="dialog__btn--save"> Save </button>
+                <button
+                    (click)="onNoClick()" 
+                    class="dialog__btn--cancel"> 
+                    Cancel 
+                </button>
+                <button 
+                    class="dialog__btn--save"
+                    (click)="updateCurrentUserData(userName.value, userEmail.value)"> 
+                    Save 
+                </button>
             </div>
         </div>
     </form>

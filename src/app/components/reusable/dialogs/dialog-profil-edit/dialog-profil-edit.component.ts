@@ -4,6 +4,7 @@ import { MenuProfilMobileComponent } from '../../../general/sidenav/menu-profil-
 import { User } from 'src/app/models/user.class';
 import { Subject, takeUntil } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog-profil-edit',
@@ -13,6 +14,17 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class DialogProfilEditComponent {
   currentUser!: User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
+  updateUserForm = new FormGroup({
+    nameForm: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-zA-ZöÖüÜäÄß -]+$'),
+    ]),
+    emailForm: new FormControl('', [
+      Validators.required,
+      Validators.email,
+      Validators.pattern('^[a-zA-Z0-9._*/+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'),
+    ]),
+  })
 
   constructor(
     public dialogRef: MatDialogRef<MenuProfilMobileComponent>,
@@ -33,8 +45,23 @@ export class DialogProfilEditComponent {
           this.currentUser = user;
         });
     }
-    
-  onNoClick() {
-    this.dialogRef.close();
+
+    async updateCurrentUserData(userName: string, userEmail:string){
+      await this.firestoreService.updateCurrentUserData(this.currentUser.id, userName, userEmail);
+      this.dialogRef.close();
+    }
+
+  /** Get the input field from the form group to use form control */
+  get nameForm() {
+    return this.updateUserForm.get('nameForm');
   }
+
+  get emailForm() {
+    return this.updateUserForm.get('emailForm');
+  }
+  /** */
+    
+    onNoClick() {
+      this.dialogRef.close();
+    }
 }
