@@ -180,8 +180,10 @@ export class FirestoreService {
         this.existingEmail = existingEmail.docs.length;
         if (existingEmail.docs.length == 1) {
           this.emailAlreadyExist = true;
+          console.log('EXIST');
         } else {
           this.emailAlreadyExist = false;
+          console.log('DOESNT EXIST');
         }
       }
     );

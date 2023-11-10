@@ -16,6 +16,7 @@ export class AuthService {
   auth = getAuth();
   signUpError = false;
   signUpSuccessfully = false;
+  emailSended = false;
   public logInError = false;
   dataError = false;
   errorUnexpected = false;
@@ -96,19 +97,24 @@ export class AuthService {
   }
 
 
-  forgotPassword(email:string,) {
+  async forgotPassword(email:string,) {
     const test = 'testVARIABLE';
     const actionCodeSettings = {
       url: `http://localhost:4200/sign-up-test{{test}}`,
     };
 
 
-    sendPasswordResetEmail(this.auth, email, actionCodeSettings)
+    sendPasswordResetEmail(this.auth, email)
     .then(() => {
-      console.log('EMAIL WAS SEND', email)
+      console.log('EMAIL WAS SEND', email);
+      this.emailSended = true;
+      this.firestoreService.emailAlreadyExist = false;
+      setTimeout(() => {
+        this.emailSended = false;
+      }, 4000)
     })
     .catch((error) => {
-      console.log('FEHLER', error.code)
+      console.log('FEHLER', error.code);
     })
   }
 }

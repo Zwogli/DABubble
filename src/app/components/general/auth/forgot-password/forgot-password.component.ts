@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent {
+  @ViewChild('email') email!: ElementRef;
 
-  constructor(public authService: AuthService) {}
-
+  constructor(public authService: AuthService, public firestoreService: FirestoreService) {}
 
   forgotPasswordForm = new FormGroup({
     emailForm: new FormControl('', [
@@ -22,12 +22,17 @@ export class ForgotPasswordComponent {
     ]),
   });
 
-
   /**
    * Get the email input field from the form group to use form control
    *
    */
   get emailForm() {
     return this.forgotPasswordForm.get('emailForm');
+  }
+
+  async forgotPassword(email: string) {
+    await this.authService.forgotPassword(email);
+    this.forgotPasswordForm.reset();
+    this.email.nativeElement = '';
   }
 }
