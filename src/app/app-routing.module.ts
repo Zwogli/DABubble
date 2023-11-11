@@ -9,13 +9,14 @@ import { ForgotPasswordComponent } from './components/general/auth/forgot-passwo
 import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
 
 const routes: Routes = [
-  { path: '', component: IntroComponent },
-  { path: 'sign-up', component: SignUpComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
-  { path: 'home', component: NavbarComponent },
-  { path: 'home/addChannel', component: CreateChannelComponent },
-  { path: 'home/:id', component: MainChatComponent },
+  // { path: '', component: IntroComponent },
+  // { path: 'sign-up', component: SignUpComponent },
+  // { path: 'forgot-password', component: ForgotPasswordComponent },
+  // { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
+  // { path: 'home', component: NavbarComponent },
+  // { path: 'home/:id', component: MainChatComponent },
+  // { path: 'home/addChannel', component: CreateChannelComponent },
+  { path: '', component: CreateChannelComponent },
 ];
 
 @NgModule({
