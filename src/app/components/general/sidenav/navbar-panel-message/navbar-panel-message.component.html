@@ -23,33 +23,28 @@
     </mat-expansion-panel-header>
 
     <div class="mat-expansion-panel__content container__elements--column">
-			<!-- <article> -->
-				<div [routerLink]="'/home/'+currentUser.id" class="container__Elemets--row">
 
-					<div class="user__container--avatar">
-						<img class="avatar-small" src="{{ currentUser.photoUrl}}" alt="avatar">
-						<span class="onlinestatus onlinestatus--color-{{ currentUser.onlineStatus }}"></span>
-					</div>
+	<!-- 
+		elements for expansion-panel
+	-->
+		<div *ngFor="let user of chatUserData" class="fix--space-left sort__elemts--row">
+			<div [routerLink]="'/home/'+user.id" class="container__Elemets--row">
 
-					<p>{{ currentUser.name}} (You)</p>
-
+				<div class="user__container--avatar">
+					<img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
+					<span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
 				</div>
-				<!-- 
-					elements for expansion-panel
-				-->
-				<div *ngFor="let user of chatUserData" class="fix--space-left sort__elemts--row">
-					<div [routerLink]="'/home/'+user.id" class="container__Elemets--row">
 
-						<div class="user__container--avatar">
-							<img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
-							<span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
-						</div>
+				<p>{{ user.name}}
+				<span *ngIf="user.id == currentUser.id">(You)</span>
+				</p>
+			</div>
+		</div>
 
-						<p>{{ user.name}}</p>
-
-					</div>
-				</div>
-			<!-- </article> -->
+		<div class="fix--space-left sort__elemts--row">
+			<span class="material-icons-outlined"> person_add </span>
+			<p> New Chat </p>
+		</div>
 
     </div>
   </mat-expansion-panel>

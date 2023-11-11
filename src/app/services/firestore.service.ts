@@ -89,6 +89,7 @@ export class FirestoreService {
 
   getUserIdsFromChat(){
     this.chatFilteredUserIds = [];
+    this.chatFilteredUserIds.push(this.currentUser.id)
     this.chatsArray.forEach((chatBetweenUserIds) => {
       let filteredUserId = chatBetweenUserIds.chatBetween.filter(
         (filterChatUserIds: string) => filterChatUserIds !== this.currentUser.id);
