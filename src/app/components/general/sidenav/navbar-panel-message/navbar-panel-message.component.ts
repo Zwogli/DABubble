@@ -27,7 +27,7 @@ export class NavbarPanelMessageComponent {
   constructor(
     private firestoreService: FirestoreService
   ){
-    this.currentUserId = localStorage.getItem("currentUserId")
+    this.currentUser = this.firestoreService.currentUser;
   }
   
   ngOnInit(){
