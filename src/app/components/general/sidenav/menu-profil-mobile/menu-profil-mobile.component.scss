@@ -1,4 +1,4 @@
-.overlay{
+.overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -7,7 +7,7 @@
   background-color: var(--color-grey-primary-overlay);
   z-index: 5;
 }
-.mobile__menu{
+.mobile__menu {
   width: calc(100dvw - 52px);
   max-height: 300px;
   padding: 30px 26px 30px 26px;
@@ -20,12 +20,14 @@
   z-index: 5;
   filter: drop-shadow(0px -5px 3px var(--color-black-shadow));
 }
-
-.orientation{
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+style menu
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.orientation {
   height: 25px;
   display: flex;
   justify-content: center;
-  div{
+  div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,7 +41,7 @@
   }
 }
 
-button{
+.btn__select {
   padding: 10px 45px 10px 1rem;
   background-color: unset;
   border: unset;
@@ -47,48 +49,95 @@ button{
   display: flex;
   align-items: center;
   gap: 1rem;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
-  &:active, &:focus{
+  &:active,
+  &:focus {
     color: var(--color-blue-secondary-hover);
     background-color: var(--color-blue-bg);
     border-radius: 100px;
   }
-  .material-icons-outlined{
+  .material-icons-outlined {
     font-size: 30px;
   }
-  .button__txt{
+  .button__txt {
     font-size: 1.1rem;
     font-weight: 600;
   }
 }
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+style new chat
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.container__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 1rem;
+  input {
+    padding: 15px 20px;
+    margin-bottom: 0.25rem;
+    width: calc(100% - 2px - 40px);
+    border: 1px solid var(--color-blue-border);
+    border-radius: 30px;
+    &:focus {
+      outline: none;
+      border-color: var(--color-blue-primary-default);
+    }
+  }
+  button {
+    width: fit-content;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: var(--color-white);
+    background-color: var(--color-blue-primary-default);
+    border: 1px solid var(--color-blue-primary-default);
+    &:hover {
+      background-color: var(--color-blue-primary-hover);
+      border-color: var(--color-blue-primary-hover);
+    }
+    &:active {
+      background-color: var(--color-blue-primary-default);
+      border-color: var(--color-blue-primary-default);
+    }
+  }
+}
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 animation
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-.slide--up{
+.slide--up {
   bottom: 0;
-  animation: .5s slide-up;
+  animation: 0.5s slide-up;
 }
-.slide--down{
+.slide--down {
   bottom: 0;
   transform: translateY(300px);
-  animation: .5s slide-down;
+  animation: 0.5s slide-down;
 }
 
-@keyframes slide-up{
-  0%{
+@keyframes slide-up {
+  0% {
     transform: translateY(300px);
   }
-  100%{
+  100% {
     transform: translateY(0px);
   }
 }
-@keyframes slide-down{
-  0%{
+@keyframes slide-down {
+  0% {
     transform: translateY(0px);
   }
-  100%{
+  100% {
     transform: translateY(300px);
   }
 }

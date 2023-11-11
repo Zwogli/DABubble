@@ -1,5 +1,6 @@
 <div *ngIf="showMenu" (click)="closeMenu()" class="overlay"></div>
 
+
 <div id="menu" class="mobile__menu">
     <div (click)="closeMenu()" class="orientation">
         <div>
@@ -7,16 +8,17 @@
         </div>
     </div>
 
-    <button (click)="openDialogProfil()">
+    <button (click)="openDialogProfil()" class="btn__select">
         <span class="material-icons-outlined"> account_circle </span>
         <span class="button__txt"> Profil </span>
     </button>
 
-    <button (click)="logout()">
+    <button (click)="logout()" class="btn__select">
         <span class="material-icons-outlined"> logout </span>
         <span class="button__txt"> Log out </span>
     </button>
 </div>
+
 
 <div id="menuNewChat" class="mobile__menu">
     <div (click)="closeMenu()" class="orientation">
@@ -25,8 +27,13 @@
         </div>
     </div>
 
+    <div class="container__header">
+        <span>Add User</span>
+        <span (click)="closeMenu()" class="material-icons-outlined close__element"> close </span>
+    </div>
+
     <form class="example-form">
-        <input type="text" placeholder="Enter name">
+        <input type="text" placeholder="Search user">
 
         <button
         class="btn__log-in"
