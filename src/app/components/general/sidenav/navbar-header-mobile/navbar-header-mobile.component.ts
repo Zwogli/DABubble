@@ -36,7 +36,7 @@ export class NavbarHeaderMobileComponent {
     } )
   }
 
-  toggleMenu(){
-    this.navbarService.menuSlideUp();
+  openMenu(){
+    this.navbarService.menuSlideUp('menu');
   }
 }

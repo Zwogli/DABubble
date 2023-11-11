@@ -25,11 +25,6 @@ export class MenuProfilMobileComponent {
     });
   }
 
-  openMenu() {
-    this.navbarService.toggleMenu();
-    this.navbarService.menuSlideDown();
-  }
-
   closeMenu() {
     this.navbarService.menuSlideDown();
   }
@@ -39,7 +34,7 @@ export class MenuProfilMobileComponent {
   }
 
   logout(){
-    this.navbarService.toggleMenu();
+    this.navbarService.toggleOverlay();
     this.router.navigateByUrl('');
   }
 }

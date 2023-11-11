@@ -1,6 +1,6 @@
 <div *ngIf="showMenu" (click)="closeMenu()" class="overlay"></div>
 
-<main id="menu" class="">
+<div id="menu" class="mobile__menu">
     <div (click)="closeMenu()" class="orientation">
         <div>
             <span></span>
@@ -16,4 +16,23 @@
         <span class="material-icons-outlined"> logout </span>
         <span class="button__txt"> Log out </span>
     </button>
-</main>
+</div>
+
+<div id="menuNewChat" class="mobile__menu">
+    <div (click)="closeMenu()" class="orientation">
+        <div>
+            <span></span>
+        </div>
+    </div>
+
+    <form class="example-form">
+        <input type="text" placeholder="Enter name">
+
+        <button
+        class="btn__log-in"
+        >
+            Add
+        </button>
+    </form>
+
+</div>

@@ -4,6 +4,7 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-navbar-panel-message',
@@ -25,7 +26,8 @@ export class NavbarPanelMessageComponent {
 
   
   constructor(
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private navbarService: NavbarService,
   ){
     this.currentUser = this.firestoreService.currentUser;
   }
@@ -57,6 +59,10 @@ export class NavbarPanelMessageComponent {
     .subscribe((user: User) => {
       this.currentUser = user;
     } )
+  }
+
+  toggleNewChat(){
+    this.navbarService.menuSlideUp('menuNewChat');
   }
 
   rotateArrow() {
