@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-create-channel',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class CreateChannelComponent {
 
+  constructor(private navbarService: NavbarService){}
+
+  openMenu(){
+    this.navbarService.menuSlideUp('menuCreateChannel');
+  }
 }

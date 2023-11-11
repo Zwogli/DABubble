@@ -76,13 +76,13 @@ style new chat
   font-size: 1.4rem;
   font-weight: 700;
 }
-form {
+.search-user-form{
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
   gap: 1rem;
-  input {
+  input[type=text] {
     padding: 15px 20px;
     margin-bottom: 0.25rem;
     width: calc(100% - 2px - 40px);
@@ -110,6 +110,20 @@ form {
       background-color: var(--color-blue-primary-default);
       border-color: var(--color-blue-primary-default);
     }
+  }
+}
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+style new channel(slect User menu)
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.container__elements{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.radio-form{
+  input[type=radio]{
+    display: flex;
+    justify-content: flex-start;
   }
 }
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
