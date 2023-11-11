@@ -24,6 +24,16 @@
 
     <div class="mat-expansion-panel__content container__elements--column">
 			<!-- <article> -->
+				<div [routerLink]="'/home/'+currentUser.id" class="container__Elemets--row">
+
+					<div class="user__container--avatar">
+						<img class="avatar-small" src="{{ currentUser.photoUrl}}" alt="avatar">
+						<span class="onlinestatus onlinestatus--color-{{ currentUser.onlineStatus }}"></span>
+					</div>
+
+					<p>{{ currentUser.name}} (You)</p>
+
+				</div>
 				<!-- 
 					elements for expansion-panel
 				-->
