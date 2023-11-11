@@ -14,10 +14,11 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class MainChatComponent implements OnInit {
   private componentIsDestroyed$ = new Subject<boolean>();
   public currentUser: User;
-  chatRecordId!: string;
+  public currentChannel!: Channel;
   public chatRecord!: Message[];
-  selectedMsg!: Message | null;
+  public selectedMsg!: Message | null;
   public msgContent!: string;
+  public today: Date = new Date();
 
   constructor(
     private fireService: FirestoreService,
@@ -26,11 +27,11 @@ export class MainChatComponent implements OnInit {
   ) {
     this.currentUser = this.fireService.currentUser;
   }
-  
+
   ngOnInit() {
     this.setChatRecordId();
   }
-  
+
   ngAfterViewChecked() {
     // Prevents initial scroll-state on chat div to throw err
     this.changeDetector.detectChanges();
@@ -48,14 +49,14 @@ export class MainChatComponent implements OnInit {
       await this.fireService
         .getSingleDoc('channels', channelId)
         .then((doc: any) => {
-          this.chatRecordId = doc.chatRecord;
+          this.currentChannel = doc;
           this.loadChatRecord();
         });
     }
   }
 
   loadChatRecord() {
-    this.fireService.startSubChat(this.chatRecordId);
+    this.fireService.startSubChat(this.currentChannel.chatRecord);
     this.fireService.singleChatRecord$
       .pipe(takeUntil(this.componentIsDestroyed$))
       .subscribe((chat: Message[]) => {
@@ -66,7 +67,7 @@ export class MainChatComponent implements OnInit {
 
   sendMessage() {
     const data = new Message(this.setMsgData());
-    this.fireService.addMessage(this.chatRecordId, data);
+    this.fireService.addMessage(this.currentChannel.chatRecord, data);
     this.msgContent = '';
   }
 
@@ -92,6 +93,23 @@ export class MainChatComponent implements OnInit {
       this.selectedMsg = null;
     } else {
       this.selectedMsg = msg;
+    }
+  }
+
+  /**
+   * This function validates wether or not the current message is the first
+   * one of the day. Returns boolean to render the given Date-Pill to the template
+   *
+   * @param msg - current message from ngFor Loop
+   * @param i - current index of message from ngFor Loop
+   */
+  isFirstMsgOfDay(msg: Message, i: number): boolean {
+    if (i > 0) {
+      const currentMsgDate = msg.sentAt.toDate().toDateString();
+      const prevMsgDate = this.chatRecord[i - 1].sentAt.toDate().toDateString();
+      return currentMsgDate != prevMsgDate;
+    } else {
+      return false;
     }
   }
 }
