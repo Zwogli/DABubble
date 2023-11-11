@@ -19,11 +19,11 @@ export class DialogProfilEditComponent {
   private currentUserIsDestroyed$ = new Subject<boolean>();
   updateUserForm = new FormGroup({
     nameForm: new FormControl('', [
-      Validators.required,
+      // Validators.required,
       Validators.pattern('^[a-zA-ZöÖüÜäÄß -]+$'),
     ]),
     emailForm: new FormControl('', [
-      Validators.required,
+      // Validators.required,
       Validators.email,
       Validators.pattern('^[a-zA-Z0-9._*/+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'),
     ]),
@@ -50,7 +50,6 @@ export class DialogProfilEditComponent {
     }
 
     async updateCurrentUserData(userName: string, userEmail:string){
-      debugger
       this.checkInputUserName(userName);
       this.checkInputUserEmail(userEmail);
       await this.firestoreService.updateCurrentUserData(this.currentUser.id, this.userName, this.userEmail);

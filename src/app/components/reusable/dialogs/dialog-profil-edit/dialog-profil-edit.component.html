@@ -8,12 +8,10 @@
     </header>
     
     <div class="dialog__img">
-        <!-- <img class="dialog__img--style" src="assets/img/avatar_female-v1.png" alt="profil-avatar"> -->
         <img class="dialog__img--style" src="{{ currentUser.photoUrl }}" alt="profil-avatar">
     </div>
     
     <form action="" [formGroup]="updateUserForm">
-
         <div class="dialog__content">
 
             <div class="dialog__content--name">
@@ -22,12 +20,18 @@
                     <span class="dialog__content--name-headline-txt"> Full name </span>
                 </div>
 
-                <input 
-                    #userName 
-                    formControlName="nameForm" 
-                    type="text" 
-                    placeholder="{{ currentUser.name }}"
-                >
+                <div class="dialog__content--input">
+                    <input 
+                        #userName 
+                        formControlName="nameForm" 
+                        type="text" 
+                        placeholder="{{ currentUser.name }}"
+                    >
+                    <label for="userName" class="block__alert" *ngIf="nameForm?.invalid && (nameForm?.dirty || nameForm?.touched)">
+                        <!-- <div *ngIf="nameForm?.errors?.['required']">*Bitte gib einen Vor- und Nachnamen ein.</div> -->
+                        <div *ngIf="nameForm?.errors?.['pattern']">*Bitte verwende nur Buchstaben.</div>
+                    </label>
+                </div>
             </div>
         
         
@@ -37,13 +41,22 @@
                     <span class="dialog__content--email-headline-txt"> E-Mail-Address </span>
                 </div>
 
-                <input 
-                    #userEmail 
-                    formControlName="emailForm" 
-                    type="email" 
-                    placeholder="{{ currentUser.email }}"
-                >
+                <div class="dialog__content--input">
+                    <input 
+                        #userEmail 
+                        formControlName="emailForm" 
+                        type="email" 
+                        placeholder="{{ currentUser.email }}"
+                    >
+                    <div class="block__alert" *ngIf="emailForm?.invalid && emailForm?.touched">
+                        <!-- <div *ngIf="emailForm?.errors?.['required']">*Bitte gib eine E-Mail-Adresse ein.</div> -->
+                        <div *ngIf="emailForm?.errors?.['email']">*Diese E-Mail-Adresse ist leider ungültig.</div>
+                        <div *ngIf="emailForm?.errors?.['pattern']">*E-Mail-Adresse enthält ungültige Zeichen.</div>
+                    </div>
+
+                </div>
             </div>
+
 
             <div class="dialog__btn">
                 <button
@@ -53,6 +66,8 @@
                 </button>
                 <button 
                     class="dialog__btn--save"
+                    [disabled]="updateUserForm.invalid"
+                    [class.btn-disabled]="updateUserForm.invalid"
                     (click)="updateCurrentUserData(userName.value, userEmail.value)"> 
                     Save 
                 </button>
