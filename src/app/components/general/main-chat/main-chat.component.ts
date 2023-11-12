@@ -17,7 +17,6 @@ export class MainChatComponent implements OnInit {
   public currentChannel!: Channel;
   public chatRecord!: Message[];
   public selectedMsg!: Message | null;
-  public msgContent!: string;
   public today: Date = new Date();
 
   constructor(
@@ -65,21 +64,9 @@ export class MainChatComponent implements OnInit {
       });
   }
 
-  sendMessage() {
-    const data = new Message(this.setMsgData());
-    this.fireService.addMessage(this.currentChannel.chatRecord, data);
-    this.msgContent = '';
-  }
 
-  setMsgData() {
-    const user = this.fireService.currentUser;
-    return {
-      message: this.msgContent,
-      sentById: user.id,
-      sentByName: user.name,
-      sentByPhotoUrl: user.photoUrl,
-    };
-  }
+
+
 
   openThread(msg: Message, event: any) {
     if (msg != this.selectedMsg) {
