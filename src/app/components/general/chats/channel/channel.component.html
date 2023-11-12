@@ -21,8 +21,9 @@
       class="message__wrapper"
       [ngClass]="{ message__menuOpened: message === selectedMsg }"
     >
+      <!-- ========== Date Pill ========== -->
       <div
-        *ngIf="isFirstMsgOfDay(message, i) || i == 0"
+        *ngIf="message.sentAt && (isFirstMsgOfDay(message, i) || i == 0)"
         class="chat__date-pill"
       >
         <div class="date-pill__line"></div>
@@ -45,11 +46,17 @@
         <div class="date-pill__line"></div>
       </div>
 
+      <!-- ========== Onclick/ onhover Menu ========== -->
       <div *ngIf="selectedMsg === message" class="message__menu">
         <button mat-icon-button aria-label="Icon button with a emoji add icon">
           <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
         </button>
-        <button mat-icon-button aria-label="Icon button with a chat bubble">
+        <button
+          (click)="startThread(message)"
+          
+          mat-icon-button
+          aria-label="Icon button with a chat bubble"
+        >
           <mat-icon fontSet="material-icons-outlined">comment</mat-icon>
         </button>
         <button
@@ -59,6 +66,8 @@
           <mat-icon fontSet="material-icons-outlined">more_vert</mat-icon>
         </button>
       </div>
+
+      <!-- ========== Message itself ========== -->
       <div
         class="message"
         [ngClass]="{ message__self: message.sentById === currentUser.id }"
@@ -98,5 +107,8 @@
       </div>
     </div>
   </section>
- <app-message-input [currentChannel]="currentChannel"></app-message-input>
+  <app-message-input
+    *ngIf="currentChannel"
+    [currentChatId]="currentChannel.chatRecord"
+  ></app-message-input>
 </main>

@@ -158,12 +158,6 @@ export class FirestoreService {
     );
   }
 
-
-
-
-
- 
-
   subChatRecord(docId: string) {
     return onSnapshot(
       query(

@@ -10,13 +10,13 @@ import { Channel } from 'src/app/models/channel.class';
 })
 export class MessageInputComponent {
   public msgPayload!: string;
-  @Input() currentChannel!: Channel;
+  @Input() currentChatId!: string;
 
   constructor(private fireService: FirestoreService) {}
 
   sendMessage() {
     const data = new Message(this.setMsgData());
-    this.fireService.addMessage(this.currentChannel.chatRecord, data);
+    this.fireService.addMessage(this.currentChatId, data);
     this.msgPayload = '';
   }
 

@@ -1,17 +1,18 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
+import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
-  selector: 'app-main-chat',
-  templateUrl: './main-chat.component.html',
-  styleUrls: ['./main-chat.component.scss'],
+  selector: 'app-channel',
+  templateUrl: './channel.component.html',
+  styleUrls: ['./channel.component.scss'],
 })
-export class MainChatComponent implements OnInit {
+export class ChannelComponent implements OnInit {
   private componentIsDestroyed$ = new Subject<boolean>();
   public currentUser: User;
   public currentChannel!: Channel;
@@ -21,7 +22,9 @@ export class MainChatComponent implements OnInit {
 
   constructor(
     private fireService: FirestoreService,
+    private chatService: ChatService,
     private route: ActivatedRoute,
+    private router: Router,
     private changeDetector: ChangeDetectorRef
   ) {
     this.currentUser = this.fireService.currentUser;
@@ -43,7 +46,7 @@ export class MainChatComponent implements OnInit {
   }
 
   async setChatRecordId() {
-    const channelId = this.route.snapshot.paramMap.get('id');
+    const channelId = this.route.snapshot.paramMap.get('channelId');
     if (channelId) {
       await this.fireService
         .getSingleDoc('channels', channelId)
@@ -64,9 +67,10 @@ export class MainChatComponent implements OnInit {
       });
   }
 
-
-
-
+  startThread(msg: Message) {
+    this.chatService.setLeadingMsg(msg);
+    this.router.navigate(['/thread/', msg.id, this.currentChannel.id]);
+  }
 
   openThread(msg: Message, event: any) {
     if (msg != this.selectedMsg) {

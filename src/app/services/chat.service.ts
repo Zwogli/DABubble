@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Message } from '../models/message.class';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatService {
+  public leadingThreadMsg!: Message;
 
-  constructor() { }
+  constructor() {}
+
+  setLeadingMsg(msg: Message) {
+    this.leadingThreadMsg = msg;
+  }
 }
