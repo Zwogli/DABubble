@@ -10,7 +10,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 @Component({
   selector: 'app-channel',
   templateUrl: './channel.component.html',
-  styleUrls: ['./channel.component.scss'],
+  styleUrls: ['./channel.component.scss', '../../../../style/chat.scss'],
 })
 export class ChannelComponent implements OnInit {
   private componentIsDestroyed$ = new Subject<boolean>();

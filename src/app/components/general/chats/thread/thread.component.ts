@@ -8,7 +8,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 @Component({
   selector: 'app-thread',
   templateUrl: './thread.component.html',
-  styleUrls: ['./thread.component.scss'],
+  styleUrls: ['./thread.component.scss', '../../../../style/chat.scss'],
 })
 export class ThreadComponent implements OnInit {
   public currentThreadId!: string;

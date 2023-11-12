@@ -158,6 +158,10 @@ export class FirestoreService {
     );
   }
 
+  startSubChat(docId: string) {
+    this.unsubChatRecord = this.subChatRecord(docId);
+  }
+
   subChatRecord(docId: string) {
     return onSnapshot(
       query(
@@ -180,12 +184,6 @@ export class FirestoreService {
     );
 
     await setDoc(newMsgRef, this.getCleanJson(data, newMsgRef));
-  }
-
-  getChatRecordRef() {}
-
-  startSubChat(docId: string) {
-    this.unsubChatRecord = this.subChatRecord(docId);
   }
 
   async addUser(userObject: any, name: string, photoUrl: string) {
