@@ -25,6 +25,20 @@ export class MenuProfilMobileComponent {
     });
   }
 
+  addUserRadio(){
+    let radio = document.querySelector('input[name="addOption"]:checked');
+    if(radio != null){
+      if(radio.id == 'radioAllUser'){
+        console.log('Add all User to Channel');
+      }else if(radio.id == 'radioSingleUser'){
+        console.log('Add single User to Channel');
+      }
+    }else{
+      console.log('You have not selected anything');
+      
+    }
+  }
+
   closeMenu() {
     this.navbarService.menuSlideDown();
   }

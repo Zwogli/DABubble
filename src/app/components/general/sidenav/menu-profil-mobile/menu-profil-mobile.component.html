@@ -57,19 +57,30 @@
     <form class="radio-form">
 
         <div class="container__elements">
-            <input id="allUser" type="radio">
-            <label for="allUser">Add all members of 
+            <input 
+            id="radioAllUser" 
+            name="addOption"
+            type="radio"
+            value="all"
+            >
+            <label for="radioAllUser">Add all members of 
                 <span>OfficeTeam</span>
             </label>
         </div>
 
         <div class="container__elements">
-            <input id="selectUser" type="radio">
-            <label for="selectUser">Add certain people</label>
+            <input 
+            id="radioSingleUser"
+            name="addOption" 
+            type="radio"
+            value="single"
+            >
+            <label for="radioUser">Add certain people</label>
         </div>
 
         <div class="container__btn--right">
             <button
+            (click)="addUserRadio()"
             class="btn__log-in"
             >
                 Create
