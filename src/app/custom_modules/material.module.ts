@@ -10,7 +10,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDividerModule} from '@angular/material/divider';
 
 const MaterialComponents = [
-  
+
   MatButtonModule,
   MatDialogModule,
   MatCardModule,

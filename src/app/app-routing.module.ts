@@ -8,6 +8,7 @@ import { NavbarComponent } from './components/general/sidenav/navbar/navbar.comp
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
 import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
 
+
 const routes: Routes = [
   { path: '', component: IntroComponent },
   { path: 'sign-up', component: SignUpComponent },

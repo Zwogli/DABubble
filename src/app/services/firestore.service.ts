@@ -40,7 +40,9 @@ export class FirestoreService {
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private chatsArraySubject = new BehaviorSubject<any>(this.chatsArray);
   private chatUserDataSubject = new BehaviorSubject<any>(this.chatUserData);
-  private singleChatRecordSubject = new BehaviorSubject<any>(this.singleChatRecord);
+  private singleChatRecordSubject = new BehaviorSubject<any>(
+    this.singleChatRecord
+  );
   // observable item
   currentUser$ = this.currentUserSubject.asObservable();
   channelsArray$ = this.channelsArraySubject.asObservable();
@@ -91,7 +93,7 @@ export class FirestoreService {
     });
   }
 
-  getUserIdsFromChat(){
+  getUserIdsFromChat() {
     this.chatFilteredUserIds = [];
     this.chatFilteredUserIds.push(this.currentUser.id)
     this.chatsArray.forEach((chatBetweenUserIds) => {
@@ -100,8 +102,8 @@ export class FirestoreService {
         this.chatFilteredUserIds.push(filteredUserId[0]);
      }
     })
+
     this.getUserDataFromChat();
-    this.chatsArraySubject.next(this.chatsArray);
   }
 
   filterUserId(chatBetweenUserIds:Chat){
@@ -129,9 +131,11 @@ export class FirestoreService {
         collection(this.firestore, 'channels'), //select database, collection
         where('member', 'array-contains', userId)
       ), //[path], [action], [searched element]
-      (channelsArrays) => { //read array[searched element]
+      (channelsArrays) => {
+        //read array[searched element]
         this.channelsArray = []; //reset variable array
-        channelsArrays.forEach((doc: any) => {  //read element of array
+        channelsArrays.forEach((doc: any) => {
+          //read element of array
           this.channelsArray.push(doc.data()); //element to array
         });
         this.channelsArraySubject.next(this.channelsArray); //update observable
@@ -142,7 +146,6 @@ export class FirestoreService {
   ngOnDestroy() {
     this.unsubCurrentUser();
   }
-
 
   subChatRecord(docId: string) {
     return onSnapshot(
@@ -158,13 +161,11 @@ export class FirestoreService {
     );
   }
 
-
   startSubChat(docId: string) {
     this.unsubChatRecord = this.subChatRecord(docId);
   }
 
-
-  async addUser(userObject: any, name: string, photoUrl:string) {
+  async addUser(userObject: any, name: string, photoUrl: string) {
     await setDoc(doc(this.firestore, 'user', userObject.uid), {
       name: name,
       email: userObject.email,
@@ -191,11 +192,9 @@ export class FirestoreService {
     return collection(this.firestore, 'currentSignUpData');
   }
 
-
   getCurrentSignUpDataDoc(docId: any) {
     return doc(collection(this.firestore, 'currentSignUpData'), docId);
   }
-
 
   getJsonOfCurrentSignUpData(docId: string) {
     onSnapshot(this.getCurrentSignUpDataDoc(docId), (list) => {
@@ -204,17 +203,18 @@ export class FirestoreService {
     });
   }
 
-
-  async addCurrentSignUpData(name: string, email:string, password:string) {
-    await setDoc(doc(this.firestore, 'currentSignUpData', this.currentSignUpId), {
-      name: name,
-      email: email,
-      password: password
-    });
+  async addCurrentSignUpData(name: string, email: string, password: string) {
+    await setDoc(
+      doc(this.firestore, 'currentSignUpData', this.currentSignUpId),
+      {
+        name: name,
+        email: email,
+        password: password,
+      }
+    );
   }
 
-
-  async deleteCurrentSignUpData(docId:any) {
+  async deleteCurrentSignUpData(docId: any) {
     await deleteDoc(this.getCurrentSignUpDataDoc(docId));
     this.currentSignUpData = [];
   }
