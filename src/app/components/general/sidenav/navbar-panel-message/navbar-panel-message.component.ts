@@ -21,6 +21,7 @@ export class NavbarPanelMessageComponent {
   userInChatsArray: Chat[] = [];
   chatBetweenUserIds: string[] = [];
   chatUserData: User[] = [];
+  chatsArray!:Chat[];
 
   cacheChatUserData!: User;
 
@@ -29,16 +30,26 @@ export class NavbarPanelMessageComponent {
     private firestoreService: FirestoreService,
     private navbarService: NavbarService,
   ){
-    this.currentUser = this.firestoreService.currentUser;
+    this.currentUser = this.firestoreService.currentUser;    
   }
   
   ngOnInit(){
     this.setCurrentUser();
+    this.setChatArray();
     this.setChatUserData();
   }
   
   ngOnDestroy() {
     this.currentUserIsDestroyed$.next(true);
+  }
+
+  setChatArray(){
+    this.firestoreService.chatsArray$
+    .pipe(takeUntil(this.currentUserIsDestroyed$))
+    .subscribe((chatsArray: any) => {
+      this.chatsArray = chatsArray;
+    });
+    console.log(this.chatsArray);
   }
 
   setChatUserData(){

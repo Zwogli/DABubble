@@ -27,8 +27,8 @@
 	<!-- 
 		elements for expansion-panel
 	-->
-		<div *ngFor="let user of chatUserData" class="fix--space-left sort__elemts--row">
-			<div [routerLink]="'/home/'+user.id" class="container__Elemets--row">
+		<div *ngFor="let user of chatUserData; let i=index" class="fix--space-left sort__elemts--row">
+			<div [routerLink]="'/home/' + chatsArray[i].id" class="container__Elemets--row">
 
 				<div class="user__container--avatar">
 					<img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">

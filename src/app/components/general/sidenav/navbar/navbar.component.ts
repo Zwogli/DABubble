@@ -30,7 +30,8 @@ export class NavbarComponent {
 
   ngOnInit(){
     this.currentUserId = localStorage.getItem('uId');
-    this.firestoreService.startSubUser(this.currentUserId);
+    this.firestoreService.getChannelsFromCurrentUser(this.currentUserId);
+    this.firestoreService.getChatsFromCurrentUser(this.currentUserId);
   }
   
   closeMenu(){
