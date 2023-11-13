@@ -1,3 +1,5 @@
+@import '../../../../style/variable.scss';
+
 app-menu-profil-mobile{
     overflow-y: hidden;
   }
@@ -18,6 +20,9 @@ header{
     align-items: center;
     font-size: 1.4rem;
     font-weight: 700;
+    .close__element{
+      cursor: pointer;
+    }
 }
 .description{
     margin-top: 1rem;
@@ -37,49 +42,21 @@ form{
         display: flex;
         justify-content: flex-end;
         button {
-            width: fit-content;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1rem;
-            cursor: pointer;
-            color: var(--color-white);
-            background-color: var(--color-blue-primary-default);
-            border: 1px solid var(--color-blue-primary-default);
-            &:hover {
-              background-color: var(--color-blue-primary-hover);
-              border-color: var(--color-blue-primary-hover);
-            }
-            &:active {
-              background-color: var(--color-blue-primary-default);
-              border-color: var(--color-blue-primary-default);
-            }
+          @include btn_primary;
           }
     }
 }
 input{
-    margin-top: 1rem;
-    padding: 15px 20px;
-    margin-bottom: 0.25rem;
-    width: calc(100% - 2px - 40px);
-    border: 1px solid var(--color-blue-border);
-    border-radius: 30px;
-    &:focus{
-        outline: none;
-        border-color: var(--color-blue-primary-default);
-    }
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  @include input_text;
 }
 .sub-headline{
     font-weight: 700;
 }
 .btn-disabled {
-    background-color: var(--color-grey-primary-disable);
-    cursor: not-allowed;
-  
-    &:hover {
-      background-color: var(--color-grey-primary-disable);
-      cursor: not-allowed;
-    }
-  }
+  @include btn-disabled;
+}
 
 .block__alert {
   color: var(--color-purple-error);

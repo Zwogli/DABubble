@@ -1,0 +1,59 @@
+@mixin btn{
+    width: fit-content;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+@mixin btn_primary{
+    @include btn;
+    color: var(--color-white);
+    background-color: var(--color-blue-primary-default);
+    border: 1px solid var(--color-blue-primary-default);
+    &:hover {
+      background-color: var(--color-blue-primary-hover);
+      border-color: var(--color-blue-primary-hover);
+    }
+    &:active {
+      background-color: var(--color-blue-primary-default);
+      border-color: var(--color-blue-primary-default);
+    }
+}
+
+@mixin btn_secondary{
+    @include btn;
+    color: var(--color-blue-primary-default);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-blue-primary-hover);
+        &:hover{
+            color: var(--color-white);
+            background-color: var(--color-blue-secondary-hover);
+            border-color: var(--color-blue-secondary-hover);
+        }
+        &:active{
+            color: var(--color-white);
+            background-color: var(--color-blue-primary-default);
+            border-color: var(--color-blue-primary-default);
+        }
+}
+
+@mixin btn-disabled {
+    background-color: var(--color-grey-primary-disable);
+    cursor: not-allowed;
+    &:hover {
+      background-color: var(--color-grey-primary-disable);
+      cursor: not-allowed;
+    }
+}
+
+@mixin input_text{
+    padding: 15px 20px;
+    width: calc(100% - 2px - 40px);
+    border: 1px solid var(--color-blue-border);
+    border-radius: 30px;
+    &:focus{
+        outline: none;
+        border-color: var(--color-blue-primary-default);
+    }
+}

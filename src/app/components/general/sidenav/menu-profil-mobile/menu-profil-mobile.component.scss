@@ -1,3 +1,5 @@
+@import '../../../../style/variable.scss';
+
 .overlay {
   position: absolute;
   top: 0;
@@ -20,8 +22,12 @@
   z-index: 5;
   filter: drop-shadow(0px -5px 3px var(--color-black-shadow));
 }
+
+.close__element{
+  cursor: pointer;
+}
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-style menu
+menu-profil
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 .orientation {
   height: 25px;
@@ -67,7 +73,7 @@ style menu
   }
 }
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-style new chat
+menu-newChat
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 .container__header {
   display: flex;
@@ -83,47 +89,47 @@ style new chat
   align-items: flex-end;
   gap: 1rem;
   input[type=text] {
-    padding: 15px 20px;
     margin-bottom: 0.25rem;
-    width: calc(100% - 2px - 40px);
-    border: 1px solid var(--color-blue-border);
-    border-radius: 30px;
-    &:focus {
-      outline: none;
-      border-color: var(--color-blue-primary-default);
-    }
+    @include input_text;
   }
   button {
-    width: fit-content;
-    padding: 12px 25px;
-    border-radius: 50px;
-    font-size: 1rem;
-    cursor: pointer;
-    color: var(--color-white);
-    background-color: var(--color-blue-primary-default);
-    border: 1px solid var(--color-blue-primary-default);
-    &:hover {
-      background-color: var(--color-blue-primary-hover);
-      border-color: var(--color-blue-primary-hover);
-    }
-    &:active {
-      background-color: var(--color-blue-primary-default);
-      border-color: var(--color-blue-primary-default);
-    }
+    @include btn_primary;
   }
 }
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-style new channel(slect User menu)
+new channel -> menu-slectUser
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 .container__elements{
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  label{
+    text-align: start;
+    span{
+      color: var(--color-blue-secondary-hover);
+    }
+  }
 }
 .radio-form{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
   input[type=radio]{
     display: flex;
     justify-content: flex-start;
+  }
+
+  .container__btn--right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    button {
+      @include btn_primary;
+    }
   }
 }
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

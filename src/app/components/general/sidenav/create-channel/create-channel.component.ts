@@ -13,4 +13,5 @@ export class CreateChannelComponent {
   openMenu(){
     this.navbarService.menuSlideUp('menuCreateChannel');
   }
+
 }

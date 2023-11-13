@@ -1,3 +1,5 @@
+@import '../../../../style/variable.scss';
+
 main{
     max-height: calc(90dvh - 2rem);
     overflow-y: auto;
@@ -18,22 +20,10 @@ header{
     }
 }
 input{
-    padding: 15px 20px;
     margin-bottom: 0.25rem;
-    width: calc(100% - 2px - 40px);
-    border: 1px solid var(--color-blue-border);
-    border-radius: 30px;
-    &:focus{
-        outline: none;
-        border-color: var(--color-blue-primary-default);
-    }
+    @include input_text;
 }
-button{
-    padding: 12px 25px;
-    border-radius: 50px;
-    font-size: 1rem;
-    cursor: pointer;
-}
+
 .dialog__img{
     display: flex;
     justify-content: center;
@@ -81,32 +71,10 @@ button{
     gap: 1rem;
 
     &--cancel{
-        color: var(--color-blue-primary-default);
-        background-color: var(--color-white);
-        border: 1px solid var(--color-blue-primary-hover);
-        &:hover{
-            color: var(--color-white);
-            background-color: var(--color-blue-secondary-hover);
-            border-color: var(--color-blue-secondary-hover);
-        }
-        &:active{
-            color: var(--color-white);
-            background-color: var(--color-blue-primary-default);
-            border-color: var(--color-blue-primary-default);
-        }
+        @include btn_secondary;
     }
     &--save{
-        color: var(--color-white);
-        background-color: var(--color-blue-primary-default);
-        border: 1px solid var(--color-blue-primary-default);
-        &:hover{
-            background-color: var(--color-blue-primary-hover);
-            border-color: var(--color-blue-primary-hover);
-        }
-        &:active{
-            background-color: var(--color-blue-primary-default);
-            border-color: var(--color-blue-primary-default);
-        }
+        @include btn_primary;
     }
 }
 

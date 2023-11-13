@@ -14,9 +14,8 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   { path: 'home', component: NavbarComponent },
-  { path: 'home/:id', component: MainChatComponent },
   { path: 'home/addChannel', component: CreateChannelComponent },
-  // { path: '', component: CreateChannelComponent }, //work rout
+  { path: 'home/:id', component: MainChatComponent },
 ];
 
 @NgModule({
