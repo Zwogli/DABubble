@@ -49,7 +49,6 @@ export class NavbarPanelMessageComponent {
     .subscribe((chatsArray: any) => {
       this.chatsArray = chatsArray;
     });
-    console.log(this.chatsArray);
   }
 
   setChatUserData(){
