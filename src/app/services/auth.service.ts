@@ -98,12 +98,6 @@ export class AuthService {
 
 
   async forgotPassword(email:string,) {
-    const test = 'testVARIABLE';
-    const actionCodeSettings = {
-      url: `http://localhost:4200/sign-up-test{{test}}`,
-    };
-
-
     sendPasswordResetEmail(this.auth, email)
     .then(() => {
       console.log('EMAIL WAS SEND', email);

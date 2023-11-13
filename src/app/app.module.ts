@@ -33,6 +33,7 @@ import { SignUpComponent } from './components/general/auth/sign-up/sign-up.compo
 import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/choose-avatar.component';
 import { DialogProfilEditComponent } from './components/reusable/dialogs/dialog-profil-edit/dialog-profil-edit.component';
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ForgotPasswordComponent } from './components/general/auth/forgot-passwo
     DialogProfilComponent,
     DialogProfilEditComponent,
     ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
 
   imports: [
