@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
+import { User } from 'src/app/models/user.class';
+import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
@@ -12,12 +15,22 @@ export class NavbarComponent {
   showMenu: boolean = false;
   showMainChat: boolean = false;
   private subscription: Subscription;
+  currentUserId:any;
   
-  constructor(private navbarService: NavbarService, public dialog: MatDialog){
-    this.subscription = this.navbarService.showMenu$.subscribe(
-      visible => {
-        this.showMenu = visible;
-      })
+  constructor(
+    private navbarService: NavbarService, 
+    public dialog: MatDialog,
+    private firestoreService: FirestoreService,
+    ){
+      this.subscription = this.navbarService.showMenu$.subscribe(
+        visible => {
+          this.showMenu = visible;
+        });
+  }
+
+  ngOnInit(){
+    this.currentUserId = localStorage.getItem('uId');
+    this.firestoreService.startSubUser(this.currentUserId);
   }
   
   closeMenu(){

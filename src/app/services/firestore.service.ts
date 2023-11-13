@@ -31,6 +31,7 @@ export class FirestoreService {
   channelsArray: Channel[] = [];
   chatsArray: Chat[] = [];
   chatUserData: User[] = [];
+  privateChats!: [{}]; 
 
   singleChatRecord: Message[] = [];
   // subject item
@@ -104,13 +105,22 @@ export class FirestoreService {
       onSnapshot(
         doc(this.firestore, 'user', chatBetweenUserId), 
           (doc: any) => { 
-            console.log('firestore chat doc ', doc.data());
-            
             this.chatUserData.push(doc.data());
           }
       );
     });
     this.chatUserDataSubject.next(this.chatUserData);
+    this.createPrivateChatObject();
+  }
+
+  createPrivateChatObject(){
+    // let chatArray = JSON.stringify(this.chatsArray);
+    // let chatUserData = JSON.stringify(this.chatUserData);
+    // let chatArray = this.chatsArray;
+    // let chatUserData = this.chatUserData;
+    
+    // this.privateChats.push(chatArray)
+    console.log('Firestore chatArray', this.chatsArray,'chatUser', this.chatUserData);
   }
 
   getChannelsFromCurrentUser() {

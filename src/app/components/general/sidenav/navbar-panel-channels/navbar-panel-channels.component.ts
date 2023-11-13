@@ -25,7 +25,6 @@ export class NavbarPanelChannelsComponent {
   constructor(
     private firestoreService: FirestoreService
   ){
-    // this.unsubCurrentUser = this.firestoreService.unsubCurrentUser;
     this.currentUser = this.firestoreService.currentUser;
   }
 
@@ -40,7 +39,6 @@ export class NavbarPanelChannelsComponent {
     .subscribe((channel: any) => {
       this.memberInChannelsArray = channel;
     });
-    console.log('channalArray: ', this.memberInChannelsArray);
   }
 
   ngOnDestroy() {

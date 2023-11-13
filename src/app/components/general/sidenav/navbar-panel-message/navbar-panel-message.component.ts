@@ -47,10 +47,6 @@ export class NavbarPanelMessageComponent {
     .subscribe((chatUser: any) => {
       this.chatUserData = chatUser;
     } )
-    console.log('chat Array chatUserData: ', this.chatUserData, this.chatUserData.forEach((userData) =>{
-      console.log('UserData: ', userData.name);
-      
-    }));
   }
   
   setCurrentUser() {
