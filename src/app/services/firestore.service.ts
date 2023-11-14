@@ -64,8 +64,8 @@ export class FirestoreService {
    return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
      this.currentUser = doc.data();
      this.currentUserSubject.next(this.currentUser);
-    //  this.getChannelsFromCurrentUser();
-    //  this.getChatsFromCurrentUser();
+     this.getChannelsFromCurrentUser();
+     this.getChatsFromCurrentUser();
    });
  }
  
@@ -73,11 +73,11 @@ export class FirestoreService {
    this.unsubCurrentUser = this.subCurrentUser(docId);
  }
  
-  getChatsFromCurrentUser(userId:string) {
+  getChatsFromCurrentUser() {
     return onSnapshot(  //listen to a document, by change updates the document snapshot.
     query(//create a query against the collection.
       collection(this.firestore, 'privateChat'), //select database, collection
-      where('chatBetween', 'array-contains', userId)), //[path], [action], [searched element]
+      where('chatBetween', 'array-contains', this.currentUser.id)), //[path], [action], [searched element]
     (chatsArray) => { //read array[searched element]
       this.renderChatsArray(chatsArray)
       this.chatsArraySubject.next(this.chatsArray); //update observable
@@ -125,11 +125,11 @@ export class FirestoreService {
     this.chatUserDataSubject.next(this.chatUserData);
   }
 
-  getChannelsFromCurrentUser(userId:string) {
+  getChannelsFromCurrentUser() {
     return onSnapshot(  //listen to a document, by change updates the document snapshot.
       query(//create a query against the collection.
         collection(this.firestore, 'channels'), //select database, collection
-        where('member', 'array-contains', userId)
+        where('member', 'array-contains', this.currentUser.id)
       ), //[path], [action], [searched element]
       (channelsArrays) => {
         //read array[searched element]
