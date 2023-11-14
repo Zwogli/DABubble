@@ -13,7 +13,6 @@ import { NavbarService } from 'src/app/services/navbar.service';
 })
 
 export class NavbarHeaderMobileComponent {
-  currentUserId:any;
   currentUser!: User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
 
@@ -23,8 +22,7 @@ export class NavbarHeaderMobileComponent {
     ) {
     }
     
-    async ngOnInit(){
-      this.currentUserId = localStorage.getItem('uId');
+  ngOnInit(){
       this.setCurrentUser();
   }
 
@@ -38,6 +36,8 @@ export class NavbarHeaderMobileComponent {
     .subscribe((user: User) => {
       this.currentUser = user;
     } )
+    console.log('header ', this.currentUser);
+    
   }
 
   openMenu(){

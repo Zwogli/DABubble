@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, Subscription, of, takeUntil } from 'rxjs';
 import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
