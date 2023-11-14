@@ -40,6 +40,8 @@
   </mat-card-content>
 </mat-card>
 
+<button (click)="this.authService.googleSignIn()">Google Log-in</button>
+
 <div class="block__create-account">
   <span>Neu bei DABubble?</span>
   <button routerLink="/sign-up">Konto erstellen</button>

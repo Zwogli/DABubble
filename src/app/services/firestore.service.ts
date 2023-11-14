@@ -160,11 +160,11 @@ export class FirestoreService {
     this.unsubChatRecord = this.subChatRecord(docId);
   }
 
-  async addUser(userObject: any, name: string, photoUrl: string) {
-    await setDoc(doc(this.firestore, 'user', userObject.uid), {
+  async addUser(userObject: any, name: any, photoUrl: any) {
+    await setDoc(doc(this.firestore, 'user', userObject?.uid), {
       name: name,
-      email: userObject.email,
-      id: userObject.uid,
+      email: userObject?.email,
+      id: userObject?.uid,
       photoUrl: photoUrl,
       onlineStatus: true,
       memberInChannel: [],

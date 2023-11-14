@@ -8,6 +8,9 @@ import {
 } from 'firebase/auth';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { GoogleAuthProvider } from '@angular/fire/auth';
+
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +20,7 @@ export class AuthService {
   signUpError = false;
   signUpSuccessfully = false;
   emailSended = false;
+  sendMailError = false;
   public logInError = false;
   dataError = false;
   errorUnexpected = false;
@@ -24,7 +28,8 @@ export class AuthService {
 
   constructor(
     public router: Router,
-    public firestoreService: FirestoreService
+    public firestoreService: FirestoreService,
+    public afAuth: AngularFireAuth
   ) {
     this.getCurrentUser();
   }
@@ -41,9 +46,25 @@ export class AuthService {
       });
   }
 
+
   guestSignIn() {
     this.signIn('guest@mail.com', 'guest_user123');
     this.router.navigate(['home']);
+  }
+
+
+  googleSignIn() {
+    this.afAuth.signInWithPopup(new GoogleAuthProvider())
+    .then((userCredential) => {
+      const user = userCredential.user;
+      this.firestoreService.addUser(user, user?.displayName, user?.photoURL);
+      this.router.navigate(['home']);
+      console.log('SUCCESSFULL GOOGLE LOG-IN');
+      console.log(user);
+      console.log(user?.displayName);
+      console.log(user?.uid);
+      console.log(user?.photoURL);
+    });
   }
 
 
@@ -78,7 +99,7 @@ export class AuthService {
   }
 
 
-  executeSignUp(userCredential: any, name: string, photoUrl: any) {
+  executeSignUp(userCredential: any, name: any, photoUrl: any) {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
@@ -100,7 +121,6 @@ export class AuthService {
   async forgotPassword(email:string,) {
     sendPasswordResetEmail(this.auth, email)
     .then(() => {
-      console.log('EMAIL WAS SEND', email);
       this.emailSended = true;
       this.firestoreService.emailAlreadyExist = false;
       setTimeout(() => {
@@ -108,7 +128,7 @@ export class AuthService {
       }, 4000)
     })
     .catch((error) => {
-      console.log('FEHLER', error.code);
+      this.sendMailError = true;
     })
   }
 }

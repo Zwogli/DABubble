@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,10 +9,16 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss'],
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnDestroy {
   @ViewChild('email') email!: ElementRef;
 
   constructor(public authService: AuthService, public firestoreService: FirestoreService) {}
+
+
+  ngOnDestroy(): void {
+    this.authService.sendMailError = false;
+  }
+
 
   forgotPasswordForm = new FormGroup({
     emailForm: new FormControl('', [

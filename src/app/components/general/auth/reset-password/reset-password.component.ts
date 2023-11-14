@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { confirmPasswordReset } from '@angular/fire/auth';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnDestroy {
   passwordsSimilar = false;
   oobCode!: string;
   newPassword!: string;
@@ -19,6 +19,11 @@ export class ResetPasswordComponent {
 
   constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router) {
     this.oobCode = this.route.snapshot.queryParams['oobCode'] || null;
+  }
+
+
+  ngOnDestroy(): void {
+    this.unexpectedError = false;
   }
 
 
