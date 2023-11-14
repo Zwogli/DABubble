@@ -3,12 +3,11 @@
     <header>
         <h2> 
             <span> Profil </span>  
-            <span (click)="onNoClick()" class="material-icons-outlined"> close </span>
+            <span (click)="onNoClick()" class="material-icons-outlined close__element"> close </span>
         </h2>
     </header>
     
     <div class="dialog__img">
-        <!-- <img class="dialog__img--style" src="assets/img/avatar_female-v1.png" alt="profil-avatar"> -->
         <img class="dialog__img--style" src="{{ currentUser.photoUrl }}" alt="profil-avatar">
     </div>
     

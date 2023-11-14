@@ -24,14 +24,14 @@ import { NavbarPanelChannelsComponent } from './components/general/sidenav/navba
 import { NavbarPanelMessageComponent } from './components/general/sidenav/navbar-panel-message/navbar-panel-message.component';
 import { NavbarSearchbarComponent } from './components/general/sidenav/navbar-searchbar/navbar-searchbar.component';
 import { MenuProfilMobileComponent } from './components/general/sidenav/menu-profil-mobile/menu-profil-mobile.component';
-import { DialogProfilComponent } from './components/reusable/dialogs/dialog-profil/dialog-profil.component';
+import { DialogProfilComponent } from './components/reusable/dialog-profil/dialog-profil.component';
 import { IntroComponent } from './components/general/auth/intro/intro.component';
 import { SignInComponent } from './components/general/auth/sign-in/sign-in.component';
 
 import { MainChatComponent } from './components/general/main-chat/main-chat.component';
 import { SignUpComponent } from './components/general/auth/sign-up/sign-up.component';
 import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/choose-avatar.component';
-import { DialogProfilEditComponent } from './components/reusable/dialogs/dialog-profil-edit/dialog-profil-edit.component';
+import { DialogProfilEditComponent } from './components/reusable/dialog-profil-edit/dialog-profil-edit.component';
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
 import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
 

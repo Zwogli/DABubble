@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavbarService } from 'src/app/services/navbar.service';
-import { DialogProfilComponent } from '../../../reusable/dialogs/dialog-profil/dialog-profil.component';
+import { DialogProfilComponent } from '../../../reusable/dialog-profil/dialog-profil.component';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
