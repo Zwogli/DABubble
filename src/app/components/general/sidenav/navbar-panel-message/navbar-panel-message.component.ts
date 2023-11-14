@@ -30,10 +30,10 @@ export class NavbarPanelMessageComponent {
     private firestoreService: FirestoreService,
     private navbarService: NavbarService,
   ){
-    this.currentUser = this.firestoreService.currentUser;    
   }
   
   ngOnInit(){
+    this.currentUser = this.firestoreService.currentUser;    
     this.setCurrentUser();
     this.setChatArray();
     this.setChatUserData();
