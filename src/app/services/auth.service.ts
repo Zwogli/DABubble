@@ -56,6 +56,7 @@ export class AuthService {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.currentUserId = user.uid;
+        localStorage.setItem('userId', this.currentUserId)
         this.firestoreService.startSubUser(this.currentUserId);
          console.log('Auth getCurrentUser() if', user);
 

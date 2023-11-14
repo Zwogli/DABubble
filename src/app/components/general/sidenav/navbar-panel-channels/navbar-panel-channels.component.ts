@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Unsubscribe } from '@angular/fire/auth';
+import { Firestore, collection, doc, onSnapshot, query, where } from '@angular/fire/firestore';
 import { takeUntil ,  Subject } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
@@ -13,26 +14,63 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 
 export class NavbarPanelChannelsComponent {
   panelOpenState: boolean = false;
-  currentUserId: any;
-  currentUser!: User;
-  subCurrentUser!: User;
-  private currentUserIsDestroyed$ = new Subject<boolean>();
-  memberInChannelsArray: Channel[] = [];
+
+  // currentUserId: any;
+  // currentUser!: User;
+  // subCurrentUser!: User;
+  // private currentUserIsDestroyed$ = new Subject<boolean>();
+  // memberInChannelsArray: Channel[] = [];
 
   // unsubCurrentUser!: Unsubscribe;
 
+  //!
+  firestore: Firestore = inject(Firestore);
+  loggedUser!:User;
+  loggedUserId = localStorage.getItem('userId');
+  channels!: Channel[];
+  //!
 
   constructor(
     private firestoreService: FirestoreService
   ){
-    this.currentUser = this.firestoreService.currentUser;
+    // this.currentUser = this.firestoreService.currentUser;
   }
 
   ngOnInit(){
-    this.setCurrentUser();
-    this.setMemberInChannelArray();
+    this.readLoggedUser(this.loggedUserId);
+    this.getChannelsFromCurrentUser(this.loggedUserId);
+    
+    /*this.setCurrentUser();
+    this.setMemberInChannelArray();*/
+  }
+
+  readLoggedUser(userId:string | null){
+    if(userId != null){
+      onSnapshot(doc(this.firestore, 'user', userId), (user: any) => {
+        this.loggedUser = user.data();
+      });
+    }else{
+      console.log('Error find no userId');
+    }
+  }
+
+  getChannelsFromCurrentUser(userId:string | null) {
+    if(userId != null){
+      onSnapshot(query(collection(this.firestore, 'channels'), 
+        where('member', 'array-contains', userId)),
+        (memberInChannel) => {
+          this.channels = []; 
+          memberInChannel.forEach((doc:any) => {
+            this.channels.push(doc.data()); //element to array
+          });
+        }
+      );
+    }else{
+      console.log('Error find no channels!');
+    }
   }
   
+  /*
   setMemberInChannelArray(){
     this.firestoreService.channelsArray$
     .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
@@ -52,7 +90,7 @@ export class NavbarPanelChannelsComponent {
       this.currentUser = user;
     } )
   }
-
+*/
   rotateArrow() {
     const channelArrow: HTMLElement | null = document.getElementById(
       `channel--arrow_drop_down`

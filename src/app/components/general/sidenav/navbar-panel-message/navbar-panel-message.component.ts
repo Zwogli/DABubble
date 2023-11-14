@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, QuerySnapshot, collection, doc, onSnapshot, query, where } from '@angular/fire/firestore';
 import { Subject, Subscription, of, takeUntil } from 'rxjs';
 import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
@@ -14,16 +14,25 @@ import { NavbarService } from 'src/app/services/navbar.service';
 export class NavbarPanelMessageComponent {
   firestore: Firestore = inject(Firestore);
   panelOpenState: boolean = false;
-  currentUserId: any;
-  currentUser!: User;
-  subCurrentUser!: User;
-  private currentUserIsDestroyed$ = new Subject<boolean>();
-  userInChatsArray: Chat[] = [];
-  chatBetweenUserIds: string[] = [];
-  chatUserData: User[] = [];
-  chatsArray!:Chat[];
+  // currentUserId: any;
+  // currentUser!: User;
+  // subCurrentUser!: User;
+  // private currentUserIsDestroyed$ = new Subject<boolean>();
+  // userInChatsArray: Chat[] = [];
+  // chatBetweenUserIds: string[] = [];
+  // chatUserData: User[] = [];
+  // chatsArray!:Chat[];
+  // cacheChatUserData!: User;
 
-  cacheChatUserData!: User;
+  //!
+  loggedUser!:User;
+  loggedUserId = localStorage.getItem('userId');
+  user_images = '../../../assets/img/avatar_female-v1.png';
+  chats!: Chat[];
+
+  chatFilteredUserIds!:string[];
+  chatsUserData!:User[];
+  //!
 
   
   constructor(
@@ -33,12 +42,80 @@ export class NavbarPanelMessageComponent {
   }
   
   ngOnInit(){
-    this.currentUser = this.firestoreService.currentUser;    
-    this.setCurrentUser();
-    this.setChatArray();
-    this.setChatUserData();
+    this.readLoggedUser(this.loggedUserId);
+    this.readChatsFromUser(this.loggedUserId);
+    // this.currentUser = this.firestoreService.currentUser;    
+    // this.setCurrentUser();
+    // this.setChatArray();
+    // this.setChatUserData();
   }
   
+  readLoggedUser(userId:string | null){
+    if(userId != null){
+      onSnapshot(doc(this.firestore, 'user', userId), (user: any) => {
+        this.loggedUser = user.data();
+      });
+    }else{
+      console.log('Error find no userId');
+    }
+  }
+
+  readChatsFromUser(userId:string | null) {
+    if(userId != null){
+    onSnapshot(query(collection(this.firestore, 'privateChat'),
+      where('chatBetween', 'array-contains', userId)),
+      (chatsArray) => {
+        this.renderChatsArray(chatsArray)
+        this.getUserIdsFromChats();
+      });
+    }else{
+      console.log('Error find no chats');
+    }
+  }
+
+  renderChatsArray(chatsArray:QuerySnapshot){
+    this.chats = []; //reset variable array
+    chatsArray.forEach((doc: any) => {  //read element of array
+      this.chats.push(doc.data()); //element to array
+    });
+  }
+
+  getUserIdsFromChats() {
+    this.chatFilteredUserIds = [];
+    this.chatFilteredUserIds.push(this.loggedUser.id);
+    this.chats.forEach((chat) => {
+     if(chat.id !== this.loggedUser.id){
+       let filteredUserId = this.filterUserId(chat);
+        this.chatFilteredUserIds.push(filteredUserId[0]);
+     }
+    });
+    this.getUserDataFromChats();
+  }
+
+  filterUserId(chat:Chat){
+    return chat.chatBetween.filter(
+      (chatsUserId: string) => chatsUserId !== this.loggedUser.id);
+  }
+
+
+  async getUserDataFromChats(){
+    this.chatsUserData = [];
+    this.chatFilteredUserIds.forEach((chatsUserIds) =>{
+      onSnapshot(
+        doc(this.firestore, 'user', chatsUserIds), 
+          (doc: any) => { 
+            this.chatsUserData.push(doc.data());
+          });
+    });
+  }
+
+  retryLoadImage(user: User) {
+    if (user) {
+      user.photoUrl = this.user_images;
+    }
+  }
+
+  /*
   ngOnDestroy() {
     this.currentUserIsDestroyed$.next(true);
   }
@@ -66,6 +143,7 @@ export class NavbarPanelMessageComponent {
       this.currentUser = user;
     } )
   }
+  */
 
   toggleNewChat(){
     this.navbarService.menuSlideUp('menuNewChat');

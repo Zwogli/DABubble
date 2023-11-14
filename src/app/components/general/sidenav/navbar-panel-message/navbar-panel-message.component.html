@@ -28,16 +28,16 @@
 		elements for expansion-panel
 		
 	-->
-		<div *ngFor="let user of chatUserData; index as i" class="fix--space-left sort__elemts--row cursor__add">
-			<div [routerLink]="'/home/' + chatsArray[i].id" class="container__Elemets--row">
+		<div *ngFor="let user of chats; index as i" class="fix--space-left sort__elemts--row cursor__add">
+			<div [routerLink]="'/home/' + chats[i].id" class="container__Elemets--row">
 
 				<div class="user__container--avatar">
-					<img class="avatar-small" src="{{ chatUserData[i].photoUrl}}" alt="avatar">
-					<span class="onlinestatus onlinestatus--color-{{ chatUserData[i].onlineStatus }}"></span>
+					<img class="avatar-small" [src]="chatsUserData[i].photoUrl" (error)="retryLoadImage(chatsUserData[i])" alt="avatar">
+					<span class="onlinestatus onlinestatus--color-{{ chatsUserData[i].onlineStatus }}"></span>
 				</div>
 
-				<p>{{ chatUserData[i].name}}
-				<span *ngIf="chatUserData[i].id == currentUser.id">(You)</span>
+				<p>{{ chatsUserData[i].name}}
+				<span *ngIf="chatsUserData[i].id == loggedUser.id">(You)</span>
 				</p>
 			</div>
 		</div>

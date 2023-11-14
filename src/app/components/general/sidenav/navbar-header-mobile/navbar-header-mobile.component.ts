@@ -13,8 +13,15 @@ import { NavbarService } from 'src/app/services/navbar.service';
 })
 
 export class NavbarHeaderMobileComponent {
-  currentUser!: User;
-  private currentUserIsDestroyed$ = new Subject<boolean>();
+  // currentUser!: User;
+  // private currentUserIsDestroyed$ = new Subject<boolean>();
+
+  //! Test
+  firestore: Firestore = inject(Firestore);
+  loggedUser!:User;
+  loggedUserId:string | null = localStorage.getItem('userId');
+  loggedUserAvatar:string|null = localStorage.getItem('userAvatar');
+  //!
 
   constructor(
     private navbarService: NavbarService,
@@ -23,9 +30,22 @@ export class NavbarHeaderMobileComponent {
     }
     
   ngOnInit(){
-      this.setCurrentUser();
+    this.readLoggedUser(this.loggedUserId);
+      // this.setCurrentUser();
   }
 
+  readLoggedUser(userId:string | null){
+    if(userId != null){
+      onSnapshot(doc(this.firestore, 'user', userId), (user: any) => {
+        this.loggedUser = user.data();
+        localStorage.setItem('userAvatar', this.loggedUser.photoUrl)
+      });
+    }else{
+      console.log('Error find no userId');
+    }
+  }
+
+/*
   ngOnDestroy() {
     this.currentUserIsDestroyed$.next(true);
   }
@@ -39,7 +59,7 @@ export class NavbarHeaderMobileComponent {
     console.log('header ', this.currentUser);
     
   }
-
+*/
   openMenu(){
     this.navbarService.menuSlideUp('menu');
   }
