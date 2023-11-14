@@ -25,11 +25,12 @@ export class MenuProfilMobileComponent {
     });
   }
 
-  addUserRadio(){
+  createChannel(){
     let radio = document.querySelector('input[name="addOption"]:checked');
     if(radio != null){
       if(radio.id == 'radioAllUser'){
         console.log('Add all User to Channel');
+        this.renderAllUserinChannel();
       }else if(radio.id == 'radioSingleUser'){
         console.log('Add single User to Channel');
       }
@@ -37,6 +38,20 @@ export class MenuProfilMobileComponent {
       console.log('You have not selected anything');
       
     }
+  }
+
+  renderAllUserinChannel(){
+    
+  }
+
+  hideUserSearchbarNewChannel(){
+    let showContainerSearch: HTMLElement | null = document.getElementById('new-channel-search-user');
+    showContainerSearch?.classList.remove('show');
+  }
+  
+  showUserSearchbarNewChannel(){
+    let showContainerSearch: HTMLElement | null = document.getElementById('new-channel-search-user');
+    showContainerSearch?.classList.add('show');
   }
 
   closeMenu() {
