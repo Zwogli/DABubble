@@ -32,7 +32,6 @@ export class FirestoreService {
   channelsArray: Channel[] = [];
   chatsArray: Chat[] = [];
   chatUserData: User[] = [];
-  privateChats!: [{}]; 
 
   singleChatRecord: Message[] = [];
   // subject item
