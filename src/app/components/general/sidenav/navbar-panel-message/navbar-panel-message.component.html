@@ -32,12 +32,19 @@
 			<div [routerLink]="'/home/' + chats[i].id" class="container__Elemets--row">
 
 				<div class="user__container--avatar">
-					<img class="avatar-small" [src]="chatsUserData[i].photoUrl" (error)="retryLoadImage(chatsUserData[i])" alt="avatar">
-					<span class="onlinestatus onlinestatus--color-{{ chatsUserData[i].onlineStatus }}"></span>
+					<img 
+						[src]="chatsUserData[i].photoUrl" 
+						(error)="retryLoadImage(chatsUserData[i])" 
+						class="avatar-small" 
+						alt="avatar"
+					>
+					<span 
+						class="onlinestatus onlinestatus--color-{{ chatsUserData[i].onlineStatus }}"
+					></span>
 				</div>
 
 				<p>{{ chatsUserData[i].name}}
-				<span *ngIf="chatsUserData[i].id == loggedUser.id">(You)</span>
+				<span *ngIf="chatsUserData[i].id == currentUser.id">(You)</span>
 				</p>
 			</div>
 		</div>
