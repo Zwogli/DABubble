@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { GoogleAuthProvider } from '@angular/fire/auth';
+import { GoogleAuthProvider, signOut } from '@angular/fire/auth';
 
 
 @Injectable({
@@ -68,6 +68,17 @@ export class AuthService {
   }
 
 
+  signOut() {
+    signOut(this.auth).then(() => {
+      // Sign-out successful.
+      this.currentUserId = '';
+      console.log('IS LOGGED OUT');
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
+
+
   async saveCurrentUserData(name: string, email: string, password: any) {
     await this.firestoreService.addCurrentSignUpData(name, email, password);
     this.router.navigate([`choose-avatar/${this.firestoreService.currentSignUpId}`]);
@@ -79,7 +90,7 @@ export class AuthService {
       if (user) {
         this.currentUserId = user.uid;
         this.firestoreService.startSubUser(this.currentUserId);
-
+        console.log(user);
       } else {
         // User is signed out
         this.currentUserId = '';
@@ -106,6 +117,7 @@ export class AuthService {
       this.signUpError = false;
       this.dataError = false;
       this.firestoreService.addUser(user, name, photoUrl);
+      this.firestoreService.addPrivateChat(user.uid);
       this.router.navigate(['home']);
     }, 3500);
   }

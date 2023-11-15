@@ -83,6 +83,7 @@ form {
     background-color: var(--color-blue-bg);
     border: 1px solid var(--color-white);
     width: 100%;
+    font-size: 0.883rem;
 
     &:hover {
       border: 1px solid var(--color-grey-primary-disable);
@@ -119,6 +120,52 @@ form {
     font-weight: 500;
     color: var(--color-blue-primary-default);
     background-color: var(--color-blue-bg);
+  }
+}
+
+.block__or-google {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+
+  hr {
+    height: 0.5px;
+    background-color: #ADB0D9;
+    width: 37%;
+  }
+
+  :first-child {
+    margin-left: 0;
+  }
+
+  :last-child {
+    margin-right: 0;
+  }
+}
+
+.block__google-log-in {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 32px;
+  background-color: var(--color-blue-bg);
+  border: 1px solid var(--color-white);
+  border-radius: 100px;
+  width: calc(100% - 64px);
+  font-size: 0.883rem;
+
+  &:hover {
+    border: 1px solid var(--color-grey-primary-disable);
+  }
+
+  &:focus {
+    outline: 1px solid #535af1;
+    border: 1px solid white;
+  }
+
+  img {
+    height: 29px;
   }
 }
 

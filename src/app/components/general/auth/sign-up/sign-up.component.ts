@@ -62,7 +62,7 @@ export class SignUpComponent implements OnDestroy {
   }
 
   /**
-   * Get the email input field from the form group to use form control
+   * Get the name input field from the form group to use form control
    *
    */
   get nameForm() {

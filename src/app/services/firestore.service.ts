@@ -172,6 +172,15 @@ export class FirestoreService {
     });
   }
 
+
+  async addPrivateChat(uid:any) {
+    await setDoc(doc(this.firestore, 'privateChat', uid), {
+      id: uid,
+      chatBetween: [],
+      chatRecord: uid,
+    });
+  }
+
   async checkSignUpEmail(email: string) {
     return onSnapshot(
       query(collection(this.firestore, 'user'), where('email', '==', email)),
