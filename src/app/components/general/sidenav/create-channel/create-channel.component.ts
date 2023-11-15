@@ -18,13 +18,17 @@ export class CreateChannelComponent {
     if(inputValue === ''){
       this.err_hash = false;
     }else if(sliceFirst != '#'){
-      this.err_hash = true;
-      console.error('Error forgot hashtag "#"');
+      this.errorInput();
     }else{
       this.err_hash = false;
       let sliceSecond = inputValue.slice(1);
       console.log('sliceFirst: ', sliceSecond);
     }
+  }
+
+  errorInput(){
+    this.err_hash = true;
+    return console.error('Error forgot hashtag "#"');
   }
 
   openMenu(){
