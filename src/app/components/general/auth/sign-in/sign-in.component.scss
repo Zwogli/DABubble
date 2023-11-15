@@ -3,6 +3,7 @@
   width: 100%;
   position: absolute;
   z-index: 1;
+  background: var(--color-blue-bg) !important;
 }
 
 mat-card {
@@ -10,9 +11,9 @@ mat-card {
   align-items: center;
   width: calc(100% - 32px);
   margin: 105px 16px 0 16px;
-  height: 410px;
+  height: 493px;
   z-index: 1;
-  padding: 25px 15px;
+  padding: 15px;
   opacity: 0;
   animation: IncreaseOpacity 500ms ease-in-out forwards;
   box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
@@ -154,14 +155,11 @@ form {
   border-radius: 100px;
   width: calc(100% - 64px);
   font-size: 0.883rem;
+  margin-bottom: 20px;
 
   &:hover {
-    border: 1px solid var(--color-grey-primary-disable);
-  }
-
-  &:focus {
-    outline: 1px solid #535af1;
-    border: 1px solid white;
+    border: 1px solid #535af1;
+    cursor: pointer;
   }
 
   img {
@@ -208,13 +206,14 @@ form {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 30px;
+  margin-top: 15px;
+  background: var(--color-blue-bg);
 
   :first-child {
     font-size: 0.833rem;
     font-weight: 400;
     color: var(--color-black);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   button {

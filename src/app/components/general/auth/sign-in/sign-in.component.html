@@ -30,7 +30,7 @@
         <hr>
       </div>
 
-      <div class="block__google-log-in">
+      <div class="block__google-log-in" (click)="this.authService.googleSignIn()">
         <img src="../../../../../assets/img/google-icon.png">
         <span>Anmelden mit Google</span>
       </div>
@@ -51,8 +51,6 @@
   </form>
   </mat-card-content>
 </mat-card>
-
-<button (click)="this.authService.googleSignIn()">Google Log-in</button>
 
 <div class="block__create-account">
   <span>Neu bei DABubble?</span>
