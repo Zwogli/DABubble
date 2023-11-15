@@ -11,6 +11,7 @@ import { NavbarService } from 'src/app/services/navbar.service';
   templateUrl: './navbar-panel-message.component.html',
   styleUrls: ['./navbar-panel-message.component.scss']
 })
+
 export class NavbarPanelMessageComponent {
   panelOpenState: boolean = false; //material design
   firestore: Firestore = inject(Firestore);

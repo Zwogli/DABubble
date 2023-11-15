@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
+import { BehaviorSubject} from 'rxjs';
 import { User } from 'src/app/models/user.class';
-import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
@@ -19,7 +18,6 @@ export class NavbarHeaderMobileComponent {
 
   constructor(
     private navbarService: NavbarService,
-    private firestoreService: FirestoreService,
     ) {
       this.readCurrentUser(this.currentUserId);
     }
