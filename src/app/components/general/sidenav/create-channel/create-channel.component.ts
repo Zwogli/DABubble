@@ -26,6 +26,14 @@ export class CreateChannelComponent {
     }
   }
 
+  /*
+  get nameForm() {
+    return this.signUpForm.get('nameForm');
+  }
+  oder 
+  @ViewChild
+*/
+
   errorInput(){
     this.err_hash = true;
     return console.error('Error forgot hashtag "#"');
