@@ -32,11 +32,11 @@ export class NavbarPanelMessageComponent {
   }
   
   async ngOnInit(){
-    this.readLoggedUser(this.currentUserId);
+    this.readCurrentUser(this.currentUserId);
     this.readChatsFromUser(this.currentUserId);
   }
   
-  readLoggedUser(userId:string | null){
+  readCurrentUser(userId:string | null){
     if(userId != null){
       onSnapshot(doc(this.firestore, 'user', userId), (user: any) => {
         this.currentUser = user.data();
