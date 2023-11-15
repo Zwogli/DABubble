@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
+import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
@@ -13,28 +14,27 @@ import { NavbarService } from 'src/app/services/navbar.service';
 export class NavbarHeaderMobileComponent {
   firestore: Firestore = inject(Firestore);
   currentUser!:User;
+  currentUser$ = new BehaviorSubject<any>(this.currentUser)
   currentUserId:string | null = localStorage.getItem('userId');
-  currentUserAvatar:string|null = localStorage.getItem('userAvatar');
-
 
   constructor(
     private navbarService: NavbarService,
     private firestoreService: FirestoreService,
     ) {
+      this.readCurrentUser(this.currentUserId);
     }
     
   ngOnInit(){
-    this.readCurrentUser(this.currentUserId);
   }
 
   readCurrentUser(userId:string | null){
     if(userId != null){
       onSnapshot(doc(this.firestore, 'user', userId), (user: any) => {
         this.currentUser = user.data();
-        localStorage.setItem('userAvatar', this.currentUser.photoUrl)
+        this.currentUser$.next(this.currentUser);
       });
     }else{
-      console.log('Error find no userId');
+      console.error('Error find no userId');
     }
   }
 

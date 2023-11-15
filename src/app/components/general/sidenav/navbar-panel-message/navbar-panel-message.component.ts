@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Firestore, QuerySnapshot, collection, doc, onSnapshot, query, where } from '@angular/fire/firestore';
+import { BehaviorSubject, Observable, Subject, Subscriber } from 'rxjs';
 import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -20,10 +21,6 @@ export class NavbarPanelMessageComponent {
   chatsUserData!:User[];
   
   users_photoUrl = '../../../assets/img/avatar_female-v1.png';
-  // users_photoUrl:string;
-  // users_onlinestatus:boolean;
-  // users_name:string;
-
   
   constructor(
     private firestoreService: FirestoreService,

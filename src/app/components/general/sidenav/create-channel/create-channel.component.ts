@@ -7,8 +7,25 @@ import { NavbarService } from 'src/app/services/navbar.service';
   styleUrls: ['./create-channel.component.scss']
 })
 export class CreateChannelComponent {
+  err_hash:boolean = false
 
   constructor(private navbarService: NavbarService){}
+
+  checkInputChannel(){
+    const input:any = document.getElementById('create-channel');
+    let inputValue = input.value;
+    let sliceFirst = inputValue.slice(0,1);
+    if(inputValue === ''){
+      this.err_hash = false;
+    }else if(sliceFirst != '#'){
+      this.err_hash = true;
+      console.error('Error forgot hashtag "#"');
+    }else{
+      this.err_hash = false;
+      let sliceSecond = inputValue.slice(1);
+      console.log('sliceFirst: ', sliceSecond);
+    }
+  }
 
   openMenu(){
     this.navbarService.menuSlideUp('menuCreateChannel');
