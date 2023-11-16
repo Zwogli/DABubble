@@ -1,7 +1,8 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 
 @Component({
@@ -9,7 +10,7 @@ import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnDestroy {
   signUpForm = new FormGroup({
     nameForm: new FormControl('', [
       Validators.required,
@@ -31,7 +32,12 @@ export class SignUpComponent {
     checkboxForm: new FormControl(),
   });
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, public firestoreService: FirestoreService) {}
+
+
+  ngOnDestroy(): void {
+    this.firestoreService.emailAlreadyExist = false;
+  }
 
 
   requireUniqueCharacters(minCount: number): ValidatorFn {
@@ -56,7 +62,7 @@ export class SignUpComponent {
   }
 
   /**
-   * Get the email input field from the form group to use form control
+   * Get the name input field from the form group to use form control
    *
    */
   get nameForm() {

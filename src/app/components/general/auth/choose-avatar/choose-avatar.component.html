@@ -43,12 +43,6 @@
           </button>
         </div>
 
-
-        <div class="block__error" *ngIf="this.authService.errorAlreadyExist">
-          *Die zuvor gewählte E-Mail Adresse existiert bereits. Bitte kehre zur vorherigen Seite zurück und wähle eine andere E-Mail
-          Adresse oder nutze die Log-in Daten der bereits registrierten E-Mail Adresse.
-        </div>
-
         <div class="block__error" *ngIf="this.authService.errorUnexpected">
           *Ein unerwarteter Fehler ist aufgetreten. Bitte
           kehre zur vorherigen Seite zurück und führe den Registrierungsprozess noch einmal aus.
@@ -57,7 +51,6 @@
         <div class="block__sign-up-successfull" [class.block__sign-up-successfull--move-left]="this.authService.signUpSuccessfully">
           Konto erfolgreich erstellt!
         </div>
-
 
     </mat-card-content>
   </mat-card>

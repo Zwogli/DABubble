@@ -23,6 +23,18 @@
       </div>
 
       <span class="sign-in__forgot-password" routerLink="/forgot-password">Passwort vergessen?</span>
+
+      <div class="block__or-google">
+        <hr>
+        <span>ODER</span>
+        <hr>
+      </div>
+
+      <div class="block__google-log-in" (click)="this.authService.googleSignIn()">
+        <img src="../../../../../assets/img/google-icon.png">
+        <span>Anmelden mit Google</span>
+      </div>
+
       <div class="block__btn-box">
         <button
         class="btn__log-in"
