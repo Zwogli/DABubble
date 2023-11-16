@@ -18,6 +18,7 @@ export class NavbarPanelMessageComponent {
   currentUser!:User;
   currentUserId = localStorage.getItem('userId');
   chats!: Chat[];
+  chats$ = new BehaviorSubject<any>(this.chats);
   chatFilteredUserIds!:string[];
   chatsUserData!:User[];
   
@@ -61,6 +62,7 @@ export class NavbarPanelMessageComponent {
     this.chats = []; //reset variable array
     chatsArray.forEach((doc: any) => {  //read element of array
       this.chats.push(doc.data()); //element to array
+      this.chats$.next(this.chats);
     });
   }
 

@@ -13,7 +13,7 @@ import { NavbarService } from 'src/app/services/navbar.service';
 export class NavbarHeaderMobileComponent {
   firestore: Firestore = inject(Firestore);
   currentUser!:User;
-  currentUser$ = new BehaviorSubject<any>(this.currentUser)
+  currentUser$ = new BehaviorSubject<any>(this.currentUser);
   currentUserId:string | null = localStorage.getItem('userId');
 
   constructor(

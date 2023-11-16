@@ -29,7 +29,10 @@
 		
 	-->
 		<div *ngFor="let user of chatsUserData; index as i" class="fix--space-left sort__elemts--row cursor__add">
-			<div [routerLink]="'/home/' + chats[i].id" class="container__Elemets--row">
+			<div 
+			*ngIf="chats$ | async as chat"
+			[routerLink]="'/home/' + chat.id" 
+			class="container__Elemets--row">
 
 				<div class="user__container--avatar">
 					<img 
