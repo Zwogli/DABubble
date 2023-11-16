@@ -72,6 +72,7 @@ export class AuthService {
     signOut(this.auth).then(() => {
       // Sign-out successful.
       this.currentUserId = '';
+      localStorage.removeItem('userId');
       console.log('IS LOGGED OUT');
     }).catch((error) => {
       // An error happened.
@@ -90,7 +91,7 @@ export class AuthService {
       if (user) {
         this.currentUserId = user.uid;
         this.firestoreService.startSubUser(this.currentUserId);
-        console.log(user);
+        localStorage.setItem('userId', this.currentUserId);
       } else {
         // User is signed out
         this.currentUserId = '';
