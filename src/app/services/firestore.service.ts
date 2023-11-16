@@ -176,8 +176,8 @@ export class FirestoreService {
   async addPrivateChat(uid:any) {
     await setDoc(doc(this.firestore, 'privateChat', uid), {
       id: uid,
-      chatBetween: [],
-      chatRecord: uid,
+      chatBetween: [uid],
+      chatRecord: '',
     });
   }
 
