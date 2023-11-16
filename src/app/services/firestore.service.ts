@@ -52,8 +52,10 @@ export class FirestoreService {
   // unsub item
   unsubCurrentUser!: Unsubscribe;
 
-  currentSignUpData:any = [];
-  currentSignUpId:any = (125478986565 * Math.random()).toFixed(0);
+  currentSignUpData: any = [];
+  currentSignUpId: any = (125478986565 * Math.random()).toFixed(0);
+  existingEmail: number = 0;
+  emailAlreadyExist = false;
 
   unsubChatRecord!: Unsubscribe;
   unsubChatUser!: Unsubscribe;
@@ -165,11 +167,11 @@ export class FirestoreService {
     this.unsubChatRecord = this.subChatRecord(docId);
   }
 
-  async addUser(userObject: any, name: string, photoUrl: string) {
-    await setDoc(doc(this.firestore, 'user', userObject.uid), {
+  async addUser(userObject: any, name: any, photoUrl: any) {
+    await setDoc(doc(this.firestore, 'user', userObject?.uid), {
       name: name,
-      email: userObject.email,
-      id: userObject.uid,
+      email: userObject?.email,
+      id: userObject?.uid,
       photoUrl: photoUrl,
       onlineStatus: true,
       memberInChannel: [],
@@ -183,6 +185,33 @@ export class FirestoreService {
       name: userName,
       email: userEmail,
     })
+  }
+
+
+
+  async addPrivateChat(uid:any) {
+    await setDoc(doc(this.firestore, 'privateChat', uid), {
+      id: uid,
+      chatBetween: [uid],
+      chatRecord: '',
+    });
+  }
+
+  async checkSignUpEmail(email: string) {
+    return onSnapshot(
+      query(collection(this.firestore, 'user'), where('email', '==', email)),
+      (existingEmail) => {
+        this.existingEmail = 0;
+        this.existingEmail = existingEmail.docs.length;
+        if (existingEmail.docs.length == 1) {
+          this.emailAlreadyExist = true;
+          console.log('EXIST');
+        } else {
+          this.emailAlreadyExist = false;
+          console.log('DOESNT EXIST');
+        }
+      }
+    );
   }
 
 
