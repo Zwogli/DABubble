@@ -73,6 +73,7 @@ export class AuthService {
       // Sign-out successful.
       this.currentUserId = '';
       localStorage.removeItem('userId');
+      this.router.navigateByUrl('');
       console.log('IS LOGGED OUT');
     }).catch((error) => {
       // An error happened.
