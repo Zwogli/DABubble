@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MenuProfilMobileComponent } from '../../general/sidenav/menu-profil-mobile/menu-profil-mobile.component';
 import { DialogProfilEditComponent } from '../dialog-profil-edit/dialog-profil-edit.component';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Subject, takeUntil } from 'rxjs';
+import { DialogProfilMenuComponent } from '../dialog-profil-menu/dialog-profil-menu.component';
 
 @Component({
   selector: 'app-dialog-profil',
@@ -17,7 +17,7 @@ export class DialogProfilComponent {
   private currentUserIsDestroyed$ = new Subject<boolean>();
 
   constructor(
-    public dialogRef: MatDialogRef<MenuProfilMobileComponent>,
+    public dialogRef: MatDialogRef<DialogProfilMenuComponent>,
     public dialog: MatDialog,
     private firestoreService: FirestoreService
   ) {}
