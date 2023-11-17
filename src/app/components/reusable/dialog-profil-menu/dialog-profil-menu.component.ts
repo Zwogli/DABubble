@@ -11,18 +11,12 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./dialog-profil-menu.component.scss']
 })
 export class DialogProfilMenuComponent {
-  private subscription: Subscription;
-  showMenu: boolean = false;
 
   constructor(
     private navbarService: NavbarService, 
     public dialog: MatDialog,
     private authService: AuthService,
-    ) {
-      this.subscription = this.navbarService.showMenu$.subscribe((visible) => {
-        this.showMenu = visible;
-      });
-    }
+    ) {}
 
   openDialogProfil() {
     this.dialog.open(DialogProfilComponent);

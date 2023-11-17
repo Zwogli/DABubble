@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-dialog-new-chat',
@@ -7,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class DialogNewChatComponent {
 
+  constructor(
+    private navbarService: NavbarService,
+  ){}
+
+  closeMenu() {
+    this.navbarService.menuSlideDown();
+  }
 }

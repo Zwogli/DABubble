@@ -100,7 +100,7 @@ export class NavbarPanelMessageComponent {
     }
   }
 
-  toggleNewChat(){
+  openDialogNewChat(){
     this.navbarService.menuSlideUp('menuNewChat');
   }
 

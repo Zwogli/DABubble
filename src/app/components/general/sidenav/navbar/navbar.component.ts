@@ -12,9 +12,9 @@ import { NavbarService } from 'src/app/services/navbar.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
+  private subscription: Subscription;
   showMenu: boolean = false;
   showMainChat: boolean = false;
-  private subscription: Subscription;
   currentUserId:any;
   
   constructor(
