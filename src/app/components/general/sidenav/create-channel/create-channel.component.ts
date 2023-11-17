@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
@@ -9,6 +10,8 @@ import { NavbarService } from 'src/app/services/navbar.service';
   styleUrls: ['./create-channel.component.scss']
 })
 export class CreateChannelComponent {
+  private subscription: Subscription;
+  showMenu: boolean = false;
   err_hash:boolean = false
   newChannelName:string = '';
   newChannelDescription:string = '';
@@ -22,7 +25,12 @@ export class CreateChannelComponent {
 
   constructor(
     private navbarService: NavbarService, 
-    public firestoreService: FirestoreService){}
+    public firestoreService: FirestoreService){
+      this.subscription = this.navbarService.showMenu$.subscribe(
+        visible => {
+          this.showMenu = visible;
+        });
+    }
 
   inputCreateChannel(){
     const input:any = document.getElementById('create-channel');
