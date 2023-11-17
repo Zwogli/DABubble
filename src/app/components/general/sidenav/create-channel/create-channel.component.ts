@@ -10,6 +10,8 @@ import { NavbarService } from 'src/app/services/navbar.service';
 })
 export class CreateChannelComponent {
   err_hash:boolean = false
+  newChannelName:string = '';
+  newChannelDescription:string = '';
   createChannelForm = new FormGroup({
     channelNameForm: new FormControl('', [
       Validators.required,
@@ -39,6 +41,17 @@ export class CreateChannelComponent {
       this.err_hash = false;
       let newChannelName = inputValue.slice(1);
       this.firestoreService.checkChannelExist(newChannelName)
+      this.newChannelName = newChannelName;
+    }
+  }
+
+  manageDescription(){
+    let desciptionInput: any = document.getElementById('channel-desciption');
+    let description = desciptionInput.value;
+    if(description === ''){
+      this.newChannelDescription = '';
+    }else{
+      this.newChannelDescription = description
     }
   }
 
@@ -52,6 +65,7 @@ export class CreateChannelComponent {
   }
 
   openMenu(){
+    this.manageDescription();
     this.navbarService.menuSlideUp('menuCreateChannel');
   }
 

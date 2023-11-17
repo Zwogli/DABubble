@@ -188,7 +188,13 @@ export class FirestoreService {
     })
   }
 
-
+  async addNewChannel(uid:any) {
+    // await setDoc(doc(this.firestore, 'privateChat', uid), {
+    //   id: uid,
+    //   chatBetween: [uid],
+    //   chatRecord: '',
+    // });
+  }
 
   async addPrivateChat(uid:any) {
     await setDoc(doc(this.firestore, 'privateChat', uid), {
