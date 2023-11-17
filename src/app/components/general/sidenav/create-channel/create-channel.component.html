@@ -8,18 +8,27 @@
         Channels are used by your team to communicate. Ideally they should be topic-related #marketing for example.
     </p>
 
-    <form>
+    <form [formGroup]="createChannelForm">
         <div class="form__name">
             <span class="sub-headline">Channel-name</span>
 
             <input
-            (keyup)="checkInputChannel()"
-            id="create-channel" 
+            (keyup)="inputCreateChannel()"
+            formControlName="channelNameForm"
+            id="create-channel"
+            #createChannel
             type="text" 
             placeholder="# e.g. cooperation-projects">
 
-            <label for="create-channel" class="block__alert">*Channel name exists</label>
+            
+            <label *ngIf="this.firestoreService.channelAlreadyExist" for="create-channel" class="block__alert">*Channel name exists</label>
             <label *ngIf="err_hash" for="create-channel" class="block__alert">*You forgot hashtag "#"</label>
+            
+            <div class="block__alert" *ngIf="channelNameForm?.invalid && (channelNameForm?.dirty || channelNameForm?.touched)">
+                <div *ngIf="channelNameForm?.errors?.['minlength']">*Please use at least 4 characters.</div>
+                <div *ngIf="channelNameForm?.errors?.['maxlength']">*Please use less than 16 characters.</div>
+            </div>
+
         </div>
 
         <div>
@@ -29,7 +38,14 @@
         <input type="text" placeholder="Space for your description">
 
         <div class="container__btn">
-            <button (click)="openMenu()">Create</button>
+            <button 
+            class="btn__submit"
+            (click)="openMenu()"
+            [disabled]="createChannelForm.invalid || this.firestoreService.channelAlreadyExist || err_hash"
+            [class.btn-disabled]="createChannelForm.invalid || this.firestoreService.channelAlreadyExist || err_hash"
+            >
+            Create
+            </button>
         </div>
     </form>
 </main>

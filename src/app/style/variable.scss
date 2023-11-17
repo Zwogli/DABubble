@@ -40,6 +40,7 @@
 
 @mixin btn-disabled {
     background-color: var(--color-grey-primary-disable);
+    border-color: var(--color-grey-primary-disable);
     cursor: not-allowed;
     &:hover {
       background-color: var(--color-grey-primary-disable);
