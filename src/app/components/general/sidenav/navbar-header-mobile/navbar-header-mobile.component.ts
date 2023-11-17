@@ -36,7 +36,7 @@ export class NavbarHeaderMobileComponent {
     }
   }
 
-  openMenu(){
+  openDialogProfilMenu(){
     this.navbarService.menuSlideUp('menu');
   }
 }

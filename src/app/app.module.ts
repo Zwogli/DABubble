@@ -36,6 +36,10 @@ import { DialogProfilEditComponent } from './components/reusable/dialog-profil-e
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
 import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
 import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
+import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dialog-overlay.component';
+import { DialogProfilMenuComponent } from './components/reusable/dialog-profil-menu/dialog-profil-menu.component';
+import { DialogNewChatComponent } from './components/reusable/dialog-new-chat/dialog-new-chat.component';
+import { DialogNewChannelComponent } from './components/reusable/dialog-new-channel/dialog-new-channel.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +60,10 @@ import { ResetPasswordComponent } from './components/general/auth/reset-password
     ForgotPasswordComponent,
     CreateChannelComponent,
     ResetPasswordComponent,
+    DialogOverlayComponent,
+    DialogProfilMenuComponent,
+    DialogNewChatComponent,
+    DialogNewChannelComponent,
   ],
 
   imports: [

@@ -76,9 +76,9 @@ export class MenuProfilMobileComponent {
     this.navbarService.menuSlideDown();
   }
 
-  openDialogProfil() {
-    this.dialog.open(DialogProfilComponent);
-  }
+  // openDialogProfil() {
+  //   this.dialog.open(DialogProfilComponent);
+  // }
 
   logout(){
     this.navbarService.toggleOverlay();
