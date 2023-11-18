@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
@@ -8,7 +9,10 @@ import { NavbarService } from 'src/app/services/navbar.service';
 })
 export class CreateChannelComponent {
 
-  constructor(private navbarService: NavbarService){}
+  constructor(
+    private navbarService: NavbarService,
+    private authService: AuthService,
+    ){}
 
   openMenu(){
     this.navbarService.menuSlideUp('menuCreateChannel');

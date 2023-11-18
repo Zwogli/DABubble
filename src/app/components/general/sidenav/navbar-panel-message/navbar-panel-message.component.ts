@@ -3,6 +3,7 @@ import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
 import { Subject, Subscription, of, takeUntil } from 'rxjs';
 import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
+import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
@@ -27,6 +28,7 @@ export class NavbarPanelMessageComponent {
 
   
   constructor(
+    private authService: AuthService,
     private firestoreService: FirestoreService,
     private navbarService: NavbarService,
   ){

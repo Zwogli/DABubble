@@ -5,6 +5,7 @@ import { DialogProfilEditComponent } from '../dialog-profil-edit/dialog-profil-e
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Subject, takeUntil } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dialog-profil',
@@ -17,9 +18,10 @@ export class DialogProfilComponent {
   private currentUserIsDestroyed$ = new Subject<boolean>();
 
   constructor(
+    private authService: AuthService,
+    private firestoreService: FirestoreService,
     public dialogRef: MatDialogRef<MenuProfilMobileComponent>,
     public dialog: MatDialog,
-    private firestoreService: FirestoreService
   ) {}
 
   ngOnInit() {

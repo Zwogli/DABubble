@@ -55,6 +55,7 @@ export class FirestoreService {
   currentSignUpId: any = (125478986565 * Math.random()).toFixed(0);
   existingEmail: number = 0;
   emailAlreadyExist = false;
+  channelAlreadyExist:boolean = false;
 
   unsubChatRecord!: Unsubscribe;
   unsubChatUser!: Unsubscribe;
@@ -196,6 +197,14 @@ export class FirestoreService {
     });
   }
 
+  async addNewChannel(uid:any) {
+    // await setDoc(doc(this.firestore, 'privateChat', uid), {
+    //   id: uid,
+    //   chatBetween: [uid],
+    //   chatRecord: '',
+    // });
+  }
+
   async checkSignUpEmail(email: string) {
     return onSnapshot(
       query(collection(this.firestore, 'user'), where('email', '==', email)),
@@ -213,6 +222,20 @@ export class FirestoreService {
     );
   }
 
+  async checkChannelExist(channel: string) {
+    return onSnapshot(
+      query(collection(this.firestore, 'channels'), where('name', '==', channel)),
+      (existChannel) => {
+        if (existChannel.docs.length == 1) {
+            this.channelAlreadyExist = true;
+            console.error('Channel name exist already!');
+          } else {
+            this.channelAlreadyExist = false;
+            // console.log('DOESNT EXIST');
+          }
+      }
+    );
+  }
 
   //The following functions gets the current sign up data to use in choose-avater.component
 
