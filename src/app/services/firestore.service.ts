@@ -78,19 +78,19 @@ export class FirestoreService {
       return;
     }
   }
- 
- subCurrentUser(docId: string) {
-   return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
-     this.currentUser = doc.data();
-     this.currentUserSubject.next(this.currentUser);
-     this.getChannelsFromCurrentUser();
-     this.getChatFromCurrentUser();
-   });
- }
- 
- startSubUser(docId: string) {
-   this.unsubCurrentUser = this.subCurrentUser(docId);
- }
+
+  subCurrentUser(docId: string) {
+    return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
+      this.currentUser = doc.data();
+      this.currentUserSubject.next(this.currentUser);
+      this.getChannelsFromCurrentUser();
+      this.getChatFromCurrentUser();
+    });
+  }
+
+  startSubUser(docId: string) {
+    this.unsubCurrentUser = this.subCurrentUser(docId);
+  }
 
   getChatFromCurrentUser() {
     return onSnapshot(
@@ -198,9 +198,7 @@ export class FirestoreService {
     });
   }
 
-
-
-  async addPrivateChat(uid:any) {
+  async addPrivateChat(uid: any) {
     await setDoc(doc(this.firestore, 'privateChat', uid), {
       id: uid,
       chatBetween: [uid],
