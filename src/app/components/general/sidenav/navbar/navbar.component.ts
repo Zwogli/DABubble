@@ -29,9 +29,9 @@ export class NavbarComponent {
   }
 
   ngOnInit(){
-    this.currentUserId = localStorage.getItem('uId');
-    this.firestoreService.getChannelsFromCurrentUser(this.currentUserId);
-    this.firestoreService.getChatsFromCurrentUser(this.currentUserId);
+    // this.currentUserId = localStorage.getItem('uId');
+    // this.firestoreService.getChannelsFromCurrentUser(this.currentUserId);
+    // this.firestoreService.getChatsFromCurrentUser(this.currentUserId);
   }
   
   closeMenu(){
