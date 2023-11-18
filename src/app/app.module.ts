@@ -16,6 +16,7 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/general/sidenav/navbar/navbar.component';
@@ -28,18 +29,22 @@ import { DialogProfilComponent } from './components/reusable/dialogs/dialog-prof
 import { IntroComponent } from './components/general/auth/intro/intro.component';
 import { SignInComponent } from './components/general/auth/sign-in/sign-in.component';
 
-import { MainChatComponent } from './components/general/main-chat/main-chat.component';
+import { ChannelComponent } from './components/general/chats/channel/channel.component';
 import { SignUpComponent } from './components/general/auth/sign-up/sign-up.component';
 import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/choose-avatar.component';
 import { DialogProfilEditComponent } from './components/reusable/dialogs/dialog-profil-edit/dialog-profil-edit.component';
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
 import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
+import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
+import { MessageInputComponent } from './components/reusable/message-input/message-input.component';
+import { ThreadComponent } from './components/general/chats/thread/thread.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     IntroComponent,
-    MainChatComponent,
+    ChannelComponent,
     NavbarComponent,
     NavbarHeaderMobileComponent,
     NavbarPanelChannelsComponent,
@@ -53,6 +58,9 @@ import { CreateChannelComponent } from './components/general/sidenav/create-chan
     DialogProfilEditComponent,
     ForgotPasswordComponent,
     CreateChannelComponent,
+    ResetPasswordComponent,
+    MessageInputComponent,
+    ThreadComponent,
   ],
 
   imports: [
@@ -65,6 +73,7 @@ import { CreateChannelComponent } from './components/general/sidenav/create-chan
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
     AngularFireStorageModule,
     BrowserAnimationsModule,
     LayoutModule,
