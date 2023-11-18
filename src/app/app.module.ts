@@ -28,23 +28,29 @@ import { DialogProfilComponent } from './components/reusable/dialog-profil/dialo
 import { IntroComponent } from './components/general/auth/intro/intro.component';
 import { SignInComponent } from './components/general/auth/sign-in/sign-in.component';
 
-import { MainChatComponent } from './components/general/main-chat/main-chat.component';
+import { ChannelComponent } from './components/general/chats/channel/channel.component';
 import { SignUpComponent } from './components/general/auth/sign-up/sign-up.component';
 import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/choose-avatar.component';
 import { DialogProfilEditComponent } from './components/reusable/dialog-profil-edit/dialog-profil-edit.component';
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
 import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
 import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
+
+import { MessageInputComponent } from './components/reusable/message-input/message-input.component';
+import { ThreadComponent } from './components/general/chats/thread/thread.component';
+
+
 import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dialog-overlay.component';
 import { DialogProfilMenuComponent } from './components/reusable/dialog-profil-menu/dialog-profil-menu.component';
 import { DialogNewChatComponent } from './components/reusable/dialog-new-chat/dialog-new-chat.component';
 import { DialogNewChannelComponent } from './components/reusable/dialog-new-channel/dialog-new-channel.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     IntroComponent,
-    MainChatComponent,
+    ChannelComponent,
     NavbarComponent,
     NavbarHeaderMobileComponent,
     NavbarPanelChannelsComponent,
@@ -58,6 +64,8 @@ import { DialogNewChannelComponent } from './components/reusable/dialog-new-chan
     ForgotPasswordComponent,
     CreateChannelComponent,
     ResetPasswordComponent,
+    MessageInputComponent,
+    ThreadComponent,
     DialogOverlayComponent,
     DialogProfilMenuComponent,
     DialogNewChatComponent,

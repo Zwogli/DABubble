@@ -1,0 +1,39 @@
+.message__input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    position: fixed;
+    bottom: 30px;
+    left: 16px;
+    right: 16px;
+
+    padding: 20px;
+
+    border: 1px solid var(--color-blue-border);
+    border-radius: 20px;
+
+    &:focus-within {
+        border: 1px solid var(--color-blue-primary-default);
+    }
+
+    textarea {
+        height: 65px;
+        border: none;
+        resize: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .message-input__btn-container {
+        display: flex;
+        justify-content: space-between;
+
+        .btn-container__extra-btn-wrapper {
+            display: flex;
+            gap: 5px;
+        }
+    }
+}
