@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Unsubscribe } from '@angular/fire/auth';
+import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -11,6 +13,7 @@ import { NavbarService } from 'src/app/services/navbar.service';
 })
 
 export class NavbarHeaderMobileComponent {
+  currentUserId:any;
   currentUser!: User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
 
@@ -18,10 +21,11 @@ export class NavbarHeaderMobileComponent {
     private navbarService: NavbarService,
     private firestoreService: FirestoreService,
     ) {
-  }
-
-  ngOnInit(){
-    this.setCurrentUser();
+    }
+    
+    async ngOnInit(){
+      this.currentUserId = localStorage.getItem('uId');
+      this.setCurrentUser();
   }
 
   ngOnDestroy() {
@@ -36,7 +40,7 @@ export class NavbarHeaderMobileComponent {
     } )
   }
 
-  toggleMenu(){
-    this.navbarService.menuSlideUp();
+  openMenu(){
+    this.navbarService.menuSlideUp('menu');
   }
 }

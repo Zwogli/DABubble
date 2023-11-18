@@ -9,6 +9,8 @@ import {
   doc,
   where,
   getDoc,
+  updateDoc,
+  QuerySnapshot,
   addDoc,
   serverTimestamp,
   orderBy,
@@ -32,6 +34,7 @@ export class FirestoreService {
   channelsArray: Channel[] = [];
   chatsArray: Chat[] = [];
   chatUserData: User[] = [];
+  privateChats!: [{}]; 
 
   singleChatRecord: Message[] = [];
 
@@ -78,71 +81,75 @@ export class FirestoreService {
       return;
     }
   }
- 
- subCurrentUser(docId: string) {
-   return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
-     this.currentUser = doc.data();
-     this.currentUserSubject.next(this.currentUser);
-     this.getChannelsFromCurrentUser();
-     this.getChatFromCurrentUser();
-   });
- }
- 
- startSubUser(docId: string) {
-   this.unsubCurrentUser = this.subCurrentUser(docId);
- }
 
-  getChatFromCurrentUser() {
-    return onSnapshot(
-      //listen to a document, by change updates the document snapshot.
-      query(
-        //create a query against the collection.
-        collection(this.firestore, 'privateChat'), //select database, collection
-        where('chatBetween', 'array-contains', this.currentUser.id)
-      ), //[path], [action], [searched element]
+  subCurrentUser(docId: string) {
+    return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
+      this.currentUser = doc.data();
+      this.currentUserSubject.next(this.currentUser);
+      this.getChannelsFromCurrentUser();
+      this.getChatsFromCurrentUser();
+    });
+  }
 
-      (chatsArray) => {
-        //read array[searched element]
-        this.chatsArray = []; //reset variable array
-        chatsArray.forEach((doc: any) => {
-          //read element of array
-          this.chatsArray.push(doc.data()); //element to array
-        });
-        this.chatsArraySubject.next(this.chatsArray); //update observable
-        this.getUserIdsFromChat();
-      }
+  startSubUser(docId: string) {
+    this.unsubCurrentUser = this.subCurrentUser(docId);
+  }
+
+  getChatsFromCurrentUser() {
+    return onSnapshot(  //listen to a document, by change updates the document snapshot.
+    query(//create a query against the collection.
+      collection(this.firestore, 'privateChat'), //select database, collection
+      where('chatBetween', 'array-contains', this.currentUser.id)), //[path], [action], [searched element]
+    (chatsArray) => { //read array[searched element]
+      this.renderChatsArray(chatsArray)
+      this.chatsArraySubject.next(this.chatsArray); //update observable
+      this.getUserIdsFromChat();
+    }
     );
+  }
+
+  renderChatsArray(chatsArray:QuerySnapshot){
+    this.chatsArray = []; //reset variable array
+    chatsArray.forEach((doc: any) => {  //read element of array
+      this.chatsArray.push(doc.data()); //element to array
+    });
   }
 
   getUserIdsFromChat() {
     this.chatFilteredUserIds = [];
+    this.chatFilteredUserIds.push(this.currentUser.id)
     this.chatsArray.forEach((chatBetweenUserIds) => {
-      let filteredUserId = chatBetweenUserIds.chatBetween.filter(
-        (filterChatUserIds: string) => filterChatUserIds !== this.currentUser.id
-      );
-      this.chatFilteredUserIds.push(filteredUserId[0]);
-    });
+     if(chatBetweenUserIds.id !== this.currentUser.id){
+       let filteredUserId = this.filterUserId(chatBetweenUserIds);
+        this.chatFilteredUserIds.push(filteredUserId[0]);
+     }
+    })
 
     this.getUserDataFromChat();
   }
 
-  async getUserDataFromChat() {
-    this.chatUserData = [];
-    this.chatFilteredUserIds.forEach((chatBetweenUserId) => {
-      onSnapshot(doc(this.firestore, 'user', chatBetweenUserId), (doc: any) => {
-        console.log('firestore chat doc ', doc.data());
+  filterUserId(chatBetweenUserIds:Chat){
+    return chatBetweenUserIds.chatBetween.filter(
+      (filterChatUserIds: string) => filterChatUserIds !== this.currentUser.id);
+  }
 
-        this.chatUserData.push(doc.data());
-      });
+
+  async getUserDataFromChat(){
+    this.chatUserData = [];
+    this.chatFilteredUserIds.forEach((chatBetweenUserId) =>{
+      onSnapshot(
+        doc(this.firestore, 'user', chatBetweenUserId), 
+          (doc: any) => { 
+            this.chatUserData.push(doc.data());
+          }
+      );
     });
     this.chatUserDataSubject.next(this.chatUserData);
   }
 
   getChannelsFromCurrentUser() {
-    return onSnapshot(
-      //listen to a document, by change updates the document snapshot.
-      query(
-        //create a query against the collection.
+    return onSnapshot(  //listen to a document, by change updates the document snapshot.
+      query(//create a query against the collection.
         collection(this.firestore, 'channels'), //select database, collection
         where('member', 'array-contains', this.currentUser.id)
       ), //[path], [action], [searched element]
@@ -199,8 +206,15 @@ export class FirestoreService {
   }
 
 
+  async updateCurrentUserData(userId:string, userName: string, userEmail:string){
+    await updateDoc(doc(this.firestore, 'user', userId), {
+      name: userName,
+      email: userEmail,
+    })
+  }
 
-  async addPrivateChat(uid:any) {
+
+  async addPrivateChat(uid: any) {
     await setDoc(doc(this.firestore, 'privateChat', uid), {
       id: uid,
       chatBetween: [uid],

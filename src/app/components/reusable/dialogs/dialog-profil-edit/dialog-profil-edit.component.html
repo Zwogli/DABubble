@@ -2,28 +2,76 @@
 
     <header>
         <h2> 
-            <span> Profil </span>  
-            <span (click)="onNoClick()" class="material-icons-outlined"> close </span>
+            <span> Edit your Profil </span>  
+            <span (click)="onNoClick()" class="material-icons-outlined close__element"> close </span>
         </h2>
     </header>
     
     <div class="dialog__img">
-        <img class="dialog__img--style" src="assets/img/avatar_female-v1.png" alt="profil-avatar">
+        <img class="dialog__img--style" src="{{ currentUser.photoUrl }}" alt="profil-avatar">
     </div>
     
-    <div class="dialog__content">
-    
-        <div class="dialog__content--header">
-            <h1> User Name </h1>
-        </div>
-    
-    
-        <div class="dialog__content--email">
-            <span class="material-icons-outlined"> email </span>
-            <div class="container__email">
-                <span class="container__email--headline"> E-Mail-Address </span>
-                <span class="container__email--data"> user&#64;email.test </span>
+    <form action="" [formGroup]="updateUserForm">
+        <div class="dialog__content">
+
+            <div class="dialog__content--name">
+                <div class="dialog__content--name-headline">
+                    <span class="material-icons-outlined"> account_circle </span>
+                    <span class="dialog__content--name-headline-txt"> Full name </span>
+                </div>
+
+                <div class="dialog__content--input">
+                    <input 
+                        #userName 
+                        formControlName="nameForm" 
+                        type="text" 
+                        placeholder="{{ currentUser.name }}"
+                    >
+                    <label for="userName" class="block__alert" *ngIf="nameForm?.invalid && (nameForm?.dirty || nameForm?.touched)">
+                        <!-- <div *ngIf="nameForm?.errors?.['required']">*Bitte gib einen Vor- und Nachnamen ein.</div> -->
+                        <div *ngIf="nameForm?.errors?.['pattern']">*Bitte verwende nur Buchstaben.</div>
+                    </label>
+                </div>
+            </div>
+        
+        
+            <div class="dialog__content--email">
+                <div class="dialog__content--email-headline">
+                    <span class="material-icons-outlined"> email </span>
+                    <span class="dialog__content--email-headline-txt"> E-Mail-Address </span>
+                </div>
+
+                <div class="dialog__content--input">
+                    <input 
+                        #userEmail 
+                        formControlName="emailForm" 
+                        type="email" 
+                        placeholder="{{ currentUser.email }}"
+                    >
+                    <div class="block__alert" *ngIf="emailForm?.invalid && emailForm?.touched">
+                        <!-- <div *ngIf="emailForm?.errors?.['required']">*Bitte gib eine E-Mail-Adresse ein.</div> -->
+                        <div *ngIf="emailForm?.errors?.['email']">*Diese E-Mail-Adresse ist leider ungültig.</div>
+                        <div *ngIf="emailForm?.errors?.['pattern']">*E-Mail-Adresse enthält ungültige Zeichen.</div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="dialog__btn">
+                <button
+                    (click)="onNoClick()" 
+                    class="dialog__btn--cancel"> 
+                    Cancel 
+                </button>
+                <button 
+                    class="dialog__btn--save"
+                    [disabled]="updateUserForm.invalid"
+                    [class.btn-disabled]="updateUserForm.invalid"
+                    (click)="updateCurrentUserData(userName.value, userEmail.value)"> 
+                    Save 
+                </button>
             </div>
         </div>
-    </div>
+    </form>
 </main>

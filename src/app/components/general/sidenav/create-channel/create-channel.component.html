@@ -1,0 +1,30 @@
+<main>
+    <header>
+        <span> Create Channel </span>
+        <span [routerLink]="'/home'" class="material-icons-outlined close__element"> close </span>
+    </header>
+
+    <p class="description">
+        Channels are used by your team to communicate. Ideally they should be topic-related #marketing for example.
+    </p>
+
+    <form>
+        <div class="form__name">
+            <span class="sub-headline">Channel-name</span>
+            <input id="channel-name" type="text" placeholder="# e.g. cooperation-projects">
+            <label for="channel-name" class="block__alert">*Channel name exists</label>
+        </div>
+
+        <div>
+            <span class="sub-headline">Description </span>
+            <span>(optional)</span>
+        </div>
+        <input type="text" placeholder="Space for your description">
+
+        <div (click)="openMenu()" class="container__btn">
+            <button>Create</button>
+        </div>
+    </form>
+</main>
+
+<app-menu-profil-mobile></app-menu-profil-mobile>

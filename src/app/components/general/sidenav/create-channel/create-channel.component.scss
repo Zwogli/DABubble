@@ -1,0 +1,64 @@
+@import '../../../../style/variable.scss';
+
+app-menu-profil-mobile{
+    overflow-y: hidden;
+  }
+main{
+    min-height: calc(100dvh - 4rem);
+    padding: 2rem 1rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+}
+header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    .close__element{
+      cursor: pointer;
+    }
+}
+.description{
+    margin-top: 1rem;
+}
+
+form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .form__name{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+    }
+    .container__btn{
+        margin-top: 1rem;
+        display: flex;
+        justify-content: flex-end;
+        button {
+          @include btn_primary;
+          }
+    }
+}
+input{
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  @include input_text;
+}
+.sub-headline{
+    font-weight: 700;
+}
+.btn-disabled {
+  @include btn-disabled;
+}
+
+.block__alert {
+  color: var(--color-purple-error);
+  font-size: 0.667rem;
+}

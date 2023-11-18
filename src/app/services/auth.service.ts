@@ -4,13 +4,12 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider, signOut } from '@angular/fire/auth';
-
 
 @Injectable({
   providedIn: 'root',
@@ -46,12 +45,10 @@ export class AuthService {
       });
   }
 
-
   guestSignIn() {
     this.signIn('guest@mail.com', 'guest_user123');
     this.router.navigate(['home']);
   }
-
 
   googleSignIn() {
     this.afAuth.signInWithPopup(new GoogleAuthProvider())
@@ -61,7 +58,6 @@ export class AuthService {
       this.router.navigate(['home']);
     });
   }
-
 
   signOut() {
     signOut(this.auth).then(() => {
@@ -73,17 +69,18 @@ export class AuthService {
     });
   }
 
-
   async saveCurrentUserData(name: string, email: string, password: any) {
     await this.firestoreService.addCurrentSignUpData(name, email, password);
-    this.router.navigate([`choose-avatar/${this.firestoreService.currentSignUpId}`]);
+    this.router.navigate([
+      `choose-avatar/${this.firestoreService.currentSignUpId}`,
+    ]);
   }
-
 
   getCurrentUser() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.currentUserId = user.uid;
+        localStorage.setItem('uId', this.currentUserId)
         this.firestoreService.startSubUser(this.currentUserId);
         localStorage.setItem('userId', this.currentUserId);
       } else {
@@ -92,7 +89,6 @@ export class AuthService {
       }
     });
   }
-
 
   async signUp(name: string, email: string, password: string, photoUrl: any) {
     await createUserWithEmailAndPassword(this.auth, email, password)
@@ -103,7 +99,6 @@ export class AuthService {
         this.failedSignUp();
       });
   }
-
 
   executeSignUp(userCredential: any, name: any, photoUrl: any) {
     this.signUpSuccessfully = true;
@@ -117,28 +112,23 @@ export class AuthService {
     }, 3500);
   }
 
-
   failedSignUp() {
     this.errorUnexpected = true;
     this.signUpError = true;
     this.signUpSuccessfully = false;
   }
 
-
-  async forgotPassword(email:string,) {
+  async forgotPassword(email: string) {
     sendPasswordResetEmail(this.auth, email)
-    .then(() => {
-      this.emailSended = true;
-      this.firestoreService.emailAlreadyExist = false;
-      setTimeout(() => {
-        this.emailSended = false;
-      }, 4000)
-    })
-    .catch((error) => {
-      this.sendMailError = true;
-    })
+      .then(() => {
+        this.emailSended = true;
+        this.firestoreService.emailAlreadyExist = false;
+        setTimeout(() => {
+          this.emailSended = false;
+        }, 4000);
+      })
+      .catch((error) => {
+        this.sendMailError = true;
+      });
   }
 }
-
-
-

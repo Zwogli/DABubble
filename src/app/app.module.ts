@@ -34,6 +34,7 @@ import { SignUpComponent } from './components/general/auth/sign-up/sign-up.compo
 import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/choose-avatar.component';
 import { DialogProfilEditComponent } from './components/reusable/dialogs/dialog-profil-edit/dialog-profil-edit.component';
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
+import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
 import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
 import { MessageInputComponent } from './components/reusable/message-input/message-input.component';
 import { ThreadComponent } from './components/general/chats/thread/thread.component';
@@ -56,6 +57,7 @@ import { ThreadComponent } from './components/general/chats/thread/thread.compon
     DialogProfilComponent,
     DialogProfilEditComponent,
     ForgotPasswordComponent,
+    CreateChannelComponent,
     ResetPasswordComponent,
     MessageInputComponent,
     ThreadComponent,

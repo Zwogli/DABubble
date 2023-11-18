@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Unsubscribe } from '@angular/fire/auth';
 import { takeUntil ,  Subject } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
@@ -18,11 +19,13 @@ export class NavbarPanelChannelsComponent {
   private currentUserIsDestroyed$ = new Subject<boolean>();
   memberInChannelsArray: Channel[] = [];
 
+  // unsubCurrentUser!: Unsubscribe;
+
 
   constructor(
     private firestoreService: FirestoreService
   ){
-    this.currentUserId = localStorage.getItem("currentUserId")
+    this.currentUser = this.firestoreService.currentUser;
   }
 
   ngOnInit(){
@@ -36,7 +39,6 @@ export class NavbarPanelChannelsComponent {
     .subscribe((channel: any) => {
       this.memberInChannelsArray = channel;
     });
-    console.log('channalArray: ', this.memberInChannelsArray);
   }
 
   ngOnDestroy() {

@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
+import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -14,7 +15,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class ChannelComponent implements OnInit {
   private componentIsDestroyed$ = new Subject<boolean>();
-  public currentUser: User;
+  public currentUser!: User;
   public currentChannel!: Channel;
   public chatRecord!: Message[];
   public selectedMsg!: Message | null;
@@ -23,15 +24,21 @@ export class ChannelComponent implements OnInit {
   constructor(
     private fireService: FirestoreService,
     private chatService: ChatService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private changeDetector: ChangeDetectorRef
-  ) {
-    this.currentUser = this.fireService.currentUser;
-  }
+  ) {}
 
   ngOnInit() {
     this.setChatRecordId();
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+    this.fireService.currentUser$.subscribe((user) => {
+      this.currentUser = user;
+    });
   }
 
   ngAfterViewChecked() {

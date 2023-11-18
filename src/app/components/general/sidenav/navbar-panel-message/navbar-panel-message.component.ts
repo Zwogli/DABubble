@@ -4,6 +4,7 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-navbar-panel-message',
@@ -20,23 +21,34 @@ export class NavbarPanelMessageComponent {
   userInChatsArray: Chat[] = [];
   chatBetweenUserIds: string[] = [];
   chatUserData: User[] = [];
+  chatsArray!:Chat[];
 
   cacheChatUserData!: User;
 
   
   constructor(
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private navbarService: NavbarService,
   ){
-    this.currentUserId = localStorage.getItem("currentUserId")
+    this.currentUser = this.firestoreService.currentUser;    
   }
   
   ngOnInit(){
     this.setCurrentUser();
+    this.setChatArray();
     this.setChatUserData();
   }
   
   ngOnDestroy() {
     this.currentUserIsDestroyed$.next(true);
+  }
+
+  setChatArray(){
+    this.firestoreService.chatsArray$
+    .pipe(takeUntil(this.currentUserIsDestroyed$))
+    .subscribe((chatsArray: any) => {
+      this.chatsArray = chatsArray;
+    });
   }
 
   setChatUserData(){
@@ -45,10 +57,6 @@ export class NavbarPanelMessageComponent {
     .subscribe((chatUser: any) => {
       this.chatUserData = chatUser;
     } )
-    console.log('chat Array chatUserData: ', this.chatUserData, this.chatUserData.forEach((userData) =>{
-      console.log('UserData: ', userData.name);
-      
-    }));
   }
   
   setCurrentUser() {
@@ -57,6 +65,10 @@ export class NavbarPanelMessageComponent {
     .subscribe((user: User) => {
       this.currentUser = user;
     } )
+  }
+
+  toggleNewChat(){
+    this.navbarService.menuSlideUp('menuNewChat');
   }
 
   rotateArrow() {

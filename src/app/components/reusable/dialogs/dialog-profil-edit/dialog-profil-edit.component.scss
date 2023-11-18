@@ -1,4 +1,8 @@
+@import '../../../../style/variable.scss';
+
 main{
+    max-height: calc(90dvh - 2rem);
+    overflow-y: auto;
     padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
@@ -15,6 +19,11 @@ header{
         }
     }
 }
+input{
+    margin-bottom: 0.25rem;
+    @include input_text;
+}
+
 .dialog__img{
     display: flex;
     justify-content: center;
@@ -29,66 +38,71 @@ header{
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
+    gap: 0.5rem;
 
-    &--header{
+    &--name, &--email{
+        width: 100%;
+        // min-height: 110px;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        h1{
-            margin: unset;
-            font-weight: 700;
-            font-size: 1.75rem;
-        }
-        span{
-            padding: 3px;
-            background-color: var(--color-blue-bg);
-            border-radius: 50%;
-            &:active{
-                color: var(--color-blue-primary-default);
+        flex-direction: column;
+        &-headline{
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            &-txt{
+                font-size: 1.2rem;
                 font-weight: 700;
             }
         }
     }
-    &--status{
-        margin-top: .5rem;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 1rem;
-        span{
-            color: var(--color-grey-primary-disable);
-            font-size: 1.1rem;
-        }
-    }
-    &--email{
-        margin-top: 1rem;
-        display: flex;
-        gap: 1rem;          
+
+    &--input{
+        width: 100%;
+        margin-bottom: 0.25rem;
     }
 }
-.container__status{
-    width: 24px;
+
+.dialog__btn{
+    // margin-top: .5rem;
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    &--cancel{
+        @include btn_secondary;
+    }
+    &--save{
+        @include btn_primary;
+    }
 }
-.onlinestatus {
-    height: 10px;
-    width: 10px;
-    border: 2px solid #ffffff;
-    border-radius: 100%;
-    &--color {
+
+.close__element{
+    cursor: pointer;
+}
+
+.btn-disabled {
+    background-color: var(--color-grey-primary-disable);
+    cursor: not-allowed;
+  
+    &:hover {
       background-color: var(--color-grey-primary-disable);
+      cursor: not-allowed;
     }
+  }
+
+.block__alert {
+  color: var(--color-purple-error);
+  font-size: 0.667rem;
 }
-.container__email{
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-    &--headline{
-        font-weight: 700;
-        font-size: 1.1rem;
+
+.btn-disabled {
+    background-color: var(--color-grey-primary-disable);
+    cursor: not-allowed;
+  
+    &:hover {
+      background-color: var(--color-grey-primary-disable);
+      cursor: not-allowed;
     }
-    &--data{
-        font-size: 1rem;
-    }
-}
+  }
