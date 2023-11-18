@@ -59,11 +59,6 @@ export class AuthService {
       const user = userCredential.user;
       this.firestoreService.addUser(user, user?.displayName, user?.photoURL);
       this.router.navigate(['home']);
-      console.log('SUCCESSFULL GOOGLE LOG-IN');
-      console.log(user);
-      console.log(user?.displayName);
-      console.log(user?.uid);
-      console.log(user?.photoURL);
     });
   }
 
@@ -73,7 +68,6 @@ export class AuthService {
       // Sign-out successful.
       this.currentUserId = '';
       localStorage.removeItem('userId');
-      console.log('IS LOGGED OUT');
     }).catch((error) => {
       // An error happened.
     });

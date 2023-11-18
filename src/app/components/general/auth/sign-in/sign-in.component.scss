@@ -131,9 +131,10 @@ form {
   margin-bottom: 20px;
 
   hr {
-    height: 0.5px;
+    height: 1px;
     background-color: #ADB0D9;
     width: 37%;
+    border: 0;
   }
 
   :first-child {
@@ -240,7 +241,7 @@ form {
 
 .block__alert-email {
   position: absolute;
-  top: 143px;
+  top: 145px;
   color: var(--color-purple-error);
   font-size: 0.667rem;
   left: 18px;
@@ -248,7 +249,7 @@ form {
 
 .block__alert-password {
   position: absolute;
-  top: 207px;
+  top: 212px;
   color: var(--color-purple-error);
   font-size: 0.667rem;
   left: 18px;
