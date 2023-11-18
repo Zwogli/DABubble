@@ -8,7 +8,7 @@ import { Channel } from 'src/app/models/channel.class';
 })
 export class ChatSubHeaderComponent {
   @Input() type!: 'channel' | 'private' | 'thread';
-  @Input() data!: Channel;
+  @Input() channel!: Channel;
 
   constructor() {
 
