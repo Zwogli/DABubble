@@ -93,6 +93,7 @@ export class FirestoreService {
     chatsArray.forEach((doc: any) => {  //read element of array
       this.chatsArray.push(doc.data()); //element to array
     });
+    this.chatsArraySubject.next(this.chatsArray);
   }
 
   getUserIdsFromChat() {
