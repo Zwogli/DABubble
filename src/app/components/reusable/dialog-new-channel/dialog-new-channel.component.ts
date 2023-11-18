@@ -41,9 +41,9 @@ export class DialogNewChannelComponent {
     let radio = document.querySelector('input[name="addOption"]:checked');
     if(radio != null){
       if(radio.id == 'radioAllUser'){
-       this.firestoreService.addNewChannelAllUser(this.currentUser.id);
+       this.firestoreService.addNewChannelWithAllUser(this.currentUser.id);
       }else if(radio.id == 'radioSingleUser'){
-        this.firestoreService.addNewChannelSingleUser(this.currentUser.id);
+        this.firestoreService.addNewChannelWithSingleUser(this.currentUser.id);
       }
     }else{
       console.error('You have not selected anything');
