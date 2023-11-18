@@ -35,7 +35,6 @@ export class NavbarPanelMessageComponent {
   }
   
   ngOnInit(){
-    this.currentUser = this.firestoreService.currentUser;    
     this.setCurrentUser();
     this.setChatArray();
     this.setChatUserData();
@@ -43,6 +42,14 @@ export class NavbarPanelMessageComponent {
   
   ngOnDestroy() {
     this.currentUserIsDestroyed$.next(true);
+  }
+
+  setCurrentUser() {
+    this.firestoreService.currentUser$
+    .pipe(takeUntil(this.currentUserIsDestroyed$))
+    .subscribe((user: User) => {
+      this.currentUser = user;
+    } )
   }
 
   setChatArray(){
@@ -61,14 +68,6 @@ export class NavbarPanelMessageComponent {
     } )
   }
   
-  setCurrentUser() {
-    this.firestoreService.currentUser$
-    .pipe(takeUntil(this.currentUserIsDestroyed$))
-    .subscribe((user: User) => {
-      this.currentUser = user;
-    } )
-  }
-
   toggleNewChat(){
     this.navbarService.menuSlideUp('menuNewChat');
   }

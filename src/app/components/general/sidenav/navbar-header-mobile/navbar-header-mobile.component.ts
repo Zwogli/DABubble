@@ -38,8 +38,6 @@ export class NavbarHeaderMobileComponent {
     .subscribe((user: User) => {
       this.currentUser = user;
     } )
-    console.log('header ', this.currentUser);
-    
   }
 
   openMenu(){

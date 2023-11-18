@@ -29,7 +29,7 @@
 		
 	-->
 		<div *ngFor="let user of chatUserData; index as i" class="fix--space-left sort__elemts--row cursor__add">
-			<div [routerLink]="'/home/' + chatsArray[i].id" class="container__Elemets--row">
+			<div *ngIf="chatsArray" [routerLink]="'/home/' + chatsArray[i].id" class="container__Elemets--row">
 
 				<div class="user__container--avatar">
 					<img class="avatar-small" src="{{ chatUserData[i].photoUrl}}" alt="avatar">
