@@ -30,6 +30,7 @@ import { IntroComponent } from './components/general/auth/intro/intro.component'
 import { SignInComponent } from './components/general/auth/sign-in/sign-in.component';
 
 import { ChannelComponent } from './components/general/chats/channel/channel.component';
+import { ThreadComponent } from './components/general/chats/thread/thread.component';
 import { SignUpComponent } from './components/general/auth/sign-up/sign-up.component';
 import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/choose-avatar.component';
 import { DialogProfilEditComponent } from './components/reusable/dialogs/dialog-profil-edit/dialog-profil-edit.component';
@@ -37,7 +38,7 @@ import { ForgotPasswordComponent } from './components/general/auth/forgot-passwo
 import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
 import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
 import { MessageInputComponent } from './components/reusable/message-input/message-input.component';
-import { ThreadComponent } from './components/general/chats/thread/thread.component';
+import { ChatSubHeaderComponent } from './components/reusable/chat-sub-header/chat-sub-header.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { ThreadComponent } from './components/general/chats/thread/thread.compon
     ResetPasswordComponent,
     MessageInputComponent,
     ThreadComponent,
+    ChatSubHeaderComponent,
   ],
 
   imports: [

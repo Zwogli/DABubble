@@ -7,7 +7,7 @@ import { Message } from '../models/message.class';
 export class ChatService {
   public leadingThreadMsg!: Message;
 
-  constructor() {}
+  constructor() {  }
 
   setLeadingMsg(msg: Message) {
     this.leadingThreadMsg = msg;
