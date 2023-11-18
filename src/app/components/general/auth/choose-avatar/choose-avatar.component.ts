@@ -38,7 +38,6 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
     this.authService.errorUnexpected = false;
     this.authService.signUpError = false;
     this,this.authService.signUpSuccessfully = false;
-    console.log('deleted doc');
   }
 
   async getIdFromUrl() {
@@ -50,7 +49,6 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
   chooseAvatar(avatarNr: number) {
     this.unchoosenAvatar.nativeElement.src = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
     this.choosenAvatar = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
-    console.log(this.choosenAvatar);
   }
 
 

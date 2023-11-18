@@ -51,31 +51,22 @@ export class AuthService {
   }
 
   googleSignIn() {
-    this.afAuth
-      .signInWithPopup(new GoogleAuthProvider())
-      .then((userCredential) => {
-        const user = userCredential.user;
-        this.firestoreService.addUser(user, user?.displayName, user?.photoURL);
-        this.router.navigate(['home']);
-        console.log('SUCCESSFULL GOOGLE LOG-IN');
-        console.log(user);
-        console.log(user?.displayName);
-        console.log(user?.uid);
-        console.log(user?.photoURL);
-      });
+    this.afAuth.signInWithPopup(new GoogleAuthProvider())
+    .then((userCredential) => {
+      const user = userCredential.user;
+      this.firestoreService.addUser(user, user?.displayName, user?.photoURL);
+      this.router.navigate(['home']);
+    });
   }
 
   signOut() {
-    signOut(this.auth)
-      .then(() => {
-        // Sign-out successful.
-        this.currentUserId = '';
-        localStorage.removeItem('userId');
-        console.log('IS LOGGED OUT');
-      })
-      .catch((error) => {
-        // An error happened.
-      });
+    signOut(this.auth).then(() => {
+      // Sign-out successful.
+      this.currentUserId = '';
+      localStorage.removeItem('userId');
+    }).catch((error) => {
+      // An error happened.
+    });
   }
 
   async saveCurrentUserData(name: string, email: string, password: any) {

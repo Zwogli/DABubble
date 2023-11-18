@@ -230,10 +230,8 @@ export class FirestoreService {
         this.existingEmail = existingEmail.docs.length;
         if (existingEmail.docs.length == 1) {
           this.emailAlreadyExist = true;
-          console.log('EXIST');
         } else {
           this.emailAlreadyExist = false;
-          console.log('DOESNT EXIST');
         }
       }
     );
@@ -265,7 +263,6 @@ export class FirestoreService {
   getJsonOfCurrentSignUpData(docId: string) {
     onSnapshot(this.getCurrentSignUpDataDoc(docId), (list) => {
       this.currentSignUpData = list.data();
-      console.log(this.currentSignUpData);
     });
   }
 
