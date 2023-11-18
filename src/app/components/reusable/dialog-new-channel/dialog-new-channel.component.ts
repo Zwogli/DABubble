@@ -8,11 +8,30 @@ import { NavbarService } from 'src/app/services/navbar.service';
   styleUrls: ['./dialog-new-channel.component.scss']
 })
 export class DialogNewChannelComponent {
+  setCurrentUser!:User;
+  private currentUserIsDestroyed$ = new Subject<boolean>();
 
   constructor(
     private authService: AuthService,
     private navbarService: NavbarService, 
   ){}
+  
+    ngOnInit() {
+    this.setCurrentUser();
+  }
+
+  ngOnDestroy() {
+    this.currentUserIsDestroyed$.next(true);
+  }
+
+  setCurrentUser() {
+    this.firestoreService.currentUser$
+      .pipe(takeUntil(this.currentUserIsDestroyed$))
+      .subscribe((user: User) => {
+        this.currentUser = user;
+        this.onlineStatus = user.onlineStatus;
+      });
+  }
 
   createChannel(){
     // this.firestoreService.addNewChannel(this.currentUserId);
