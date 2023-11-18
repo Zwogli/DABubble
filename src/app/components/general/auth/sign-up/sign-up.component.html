@@ -23,12 +23,17 @@
 
         <div class="block__input">
           <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="emailForm?.dirty || emailForm?.touched">mail</mat-icon>
-          <input formControlName="emailForm" type="email" placeholder="beispielname@email.com" #userEmail>
+          <input formControlName="emailForm" type="email" placeholder="beispielname@email.com" #userEmail (keyup)="this.firestoreService.checkSignUpEmail(userEmail.value)">
         </div>
         <div class="block__alert-email" *ngIf="emailForm?.invalid && emailForm?.touched">
           <div *ngIf="emailForm?.errors?.['required']">*Bitte gib eine E-Mail-Adresse ein.</div>
           <div *ngIf="emailForm?.errors?.['email']">*Diese E-Mail-Adresse ist leider ungültig.</div>
           <div *ngIf="emailForm?.errors?.['pattern']">*E-Mail-Adresse enthält ungültige Zeichen.</div>
+          <div *ngIf="this.firestoreService.emailAlreadyExist"></div>
+        </div>
+
+        <div class="error-email-exist" *ngIf="this.firestoreService.emailAlreadyExist">
+          *E-Mail-Adresse existiert bereits.
         </div>
 
         <div class="block__input">
@@ -53,8 +58,8 @@
           <button
           class="btn__log-in"
           (click)="this.authService.saveCurrentUserData(userName.value, userEmail.value, userPassword.value)"
-          [disabled]="signUpForm.invalid"
-          [class.btn-disabled]="signUpForm.invalid">Weiter
+          [disabled]="signUpForm.invalid || this.firestoreService.emailAlreadyExist"
+          [class.btn-disabled]="signUpForm.invalid || this.firestoreService.emailAlreadyExist">Weiter
           </button>
         </div>
 
