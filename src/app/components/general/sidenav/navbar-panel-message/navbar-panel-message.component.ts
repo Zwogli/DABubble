@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
-import { Subject, Subscription, of, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription, of, takeUntil } from 'rxjs';
 import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
@@ -22,7 +22,9 @@ export class NavbarPanelMessageComponent {
   userInChatsArray: Chat[] = [];
   chatBetweenUserIds: string[] = [];
   chatUserData: User[] = [];
+  chatUserData$ = new BehaviorSubject<any>(this.chatUserData);
   chatsArray!:Chat[];
+  chatsArray$ = new BehaviorSubject<any>(this.chatsArray);
 
   cacheChatUserData!: User;
 
