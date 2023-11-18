@@ -1,0 +1,43 @@
+<app-navbar-header-mobile></app-navbar-header-mobile>
+
+<div class="sub-header">
+  <div *ngIf="currentChannel" class="sub-header__title">
+    Thread
+    <span> # {{ currentChannel.name }}</span>
+    <mat-icon>expand_more</mat-icon>
+  </div>
+
+  <button aria-label="Icon button with a person add icon">
+    <mat-icon fontSet="material-icons-outlined">person_add</mat-icon>
+  </button>
+</div>
+
+<main>
+  <section
+    #chatContainer
+    [scrollTop]="chatContainer.scrollHeight"
+    class="chat__container"
+  >
+    <div class="message__wrapper">
+      <div class="message">
+        <div class="message__avatar-container">
+          <img src="{{ leadingMsg.sentByPhotoUrl }}" alt="" />
+        </div>
+
+        <div class="message__content-container">
+          <div class="message__header">
+            <span class="message__header-name">{{ leadingMsg.sentByName }}</span>
+            <span *ngIf="leadingMsg.sentAt" class="message__header-time"
+              >{{ leadingMsg.sentAt.toDate() | date : "shortTime" }} Uhr</span
+            >
+          </div>
+
+          <p class="message__content">
+            {{ leadingMsg.message }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <app-message-input [currentChatId]="currentThreadId"></app-message-input>
+</main>
