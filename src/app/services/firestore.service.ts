@@ -105,7 +105,6 @@ export class FirestoreService {
         this.chatFilteredUserIds.push(filteredUserId[0]);
      }
     })
-
     this.getUserDataFromChat();
   }
 
@@ -198,7 +197,15 @@ export class FirestoreService {
     });
   }
 
-  async addNewChannel(uid:any) {
+  async addNewChannelWithAllUser(uid:string) {
+    // await setDoc(doc(this.firestore, 'privateChat', uid), {
+    //   id: uid,
+    //   chatBetween: [uid],
+    //   chatRecord: '',
+    // });
+  }
+
+  async addNewChannelWithSingleUser(uid:string){
     // await setDoc(doc(this.firestore, 'privateChat', uid), {
     //   id: uid,
     //   chatBetween: [uid],
