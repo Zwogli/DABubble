@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
+import { BehaviorSubject} from 'rxjs';
 import { User } from 'src/app/models/user.class';
-import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
@@ -11,32 +11,32 @@ import { NavbarService } from 'src/app/services/navbar.service';
 })
 
 export class NavbarHeaderMobileComponent {
-  currentUser!: User;
-  private currentUserIsDestroyed$ = new Subject<boolean>();
+  firestore: Firestore = inject(Firestore);
+  currentUser!:User;
+  currentUser$ = new BehaviorSubject<any>(this.currentUser);
+  currentUserId:string | null = localStorage.getItem('userId');
 
   constructor(
     private navbarService: NavbarService,
-    private firestoreService: FirestoreService,
     ) {
-  }
-
+      this.readCurrentUser(this.currentUserId);
+    }
+    
   ngOnInit(){
-    this.setCurrentUser();
   }
 
-  ngOnDestroy() {
-    this.currentUserIsDestroyed$.next(true);
-  }
-  
-  setCurrentUser() {
-    this.firestoreService.currentUser$
-    .pipe(takeUntil(this.currentUserIsDestroyed$))
-    .subscribe((user: User) => {
-      this.currentUser = user;
-    } )
+  readCurrentUser(userId:string | null){
+    if(userId != null){
+      onSnapshot(doc(this.firestore, 'user', userId), (user: any) => {
+        this.currentUser = user.data();
+        this.currentUser$.next(this.currentUser);
+      });
+    }else{
+      console.error('Error find no userId');
+    }
   }
 
-  toggleMenu(){
-    this.navbarService.menuSlideUp();
+  openDialogProfilMenu(){
+    this.navbarService.menuSlideUp('menu');
   }
 }

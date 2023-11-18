@@ -1,19 +1,17 @@
-<div *ngIf="showMenu" (click)="closeMenu()" class="overlay"></div>
-
-<main id="menu" class="">
+<div id="menu" class="mobile__menu">
     <div (click)="closeMenu()" class="orientation">
         <div>
             <span></span>
         </div>
     </div>
 
-    <button (click)="openDialogProfil()">
+    <button (click)="openDialogProfil()" class="btn__select">
         <span class="material-icons-outlined"> account_circle </span>
         <span class="button__txt"> Profil </span>
     </button>
 
-    <button>
+    <button (click)="logout()" class="btn__select">
         <span class="material-icons-outlined"> logout </span>
         <span class="button__txt"> Log out </span>
     </button>
-</main>
+</div>

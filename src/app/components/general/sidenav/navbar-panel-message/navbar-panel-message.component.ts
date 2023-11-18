@@ -1,62 +1,107 @@
 import { Component, inject } from '@angular/core';
-import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Firestore, QuerySnapshot, collection, doc, onSnapshot, query, where } from '@angular/fire/firestore';
+import { BehaviorSubject, Observable, Subject, Subscriber } from 'rxjs';
 import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-navbar-panel-message',
   templateUrl: './navbar-panel-message.component.html',
   styleUrls: ['./navbar-panel-message.component.scss']
 })
+
 export class NavbarPanelMessageComponent {
+  panelOpenState: boolean = false; //material design
   firestore: Firestore = inject(Firestore);
-  panelOpenState: boolean = false;
-  currentUserId: any;
-  currentUser!: User;
-  subCurrentUser!: User;
-  private currentUserIsDestroyed$ = new Subject<boolean>();
-  userInChatsArray: Chat[] = [];
-  chatBetweenUserIds: string[] = [];
-  chatUserData: User[] = [];
-
-  cacheChatUserData!: User;
-
+  currentUser!:User;
+  currentUserId = localStorage.getItem('userId');
+  chats!: Chat[];
+  chats$ = new BehaviorSubject<any>(this.chats);
+  chatFilteredUserIds!:string[];
+  chatsUserData!:User[];
+  
+  users_photoUrl = '../../../assets/img/avatar_female-v1.png';
   
   constructor(
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private navbarService: NavbarService,
   ){
-    this.currentUserId = localStorage.getItem("currentUserId")
   }
   
-  ngOnInit(){
-    this.setCurrentUser();
-    this.setChatUserData();
+  async ngOnInit(){
+    this.readCurrentUser(this.currentUserId);
+    this.readChatsFromUser(this.currentUserId);
   }
   
-  ngOnDestroy() {
-    this.currentUserIsDestroyed$.next(true);
+  readCurrentUser(userId:string | null){
+    if(userId != null){
+      onSnapshot(doc(this.firestore, 'user', userId), (user: any) => {
+        this.currentUser = user.data();
+      });
+    }else{
+      console.log('Error find no userId');
+    }
   }
 
-  setChatUserData(){
-    this.firestoreService.chatUserData$
-    .pipe(takeUntil(this.currentUserIsDestroyed$))
-    .subscribe((chatUser: any) => {
-      this.chatUserData = chatUser;
-    } )
-    console.log('chat Array chatUserData: ', this.chatUserData, this.chatUserData.forEach((userData) =>{
-      console.log('UserData: ', userData.name);
-      
-    }));
+  readChatsFromUser(userId:string | null) {
+    if(userId != null){
+    onSnapshot(query(collection(this.firestore, 'privateChat'),
+      where('chatBetween', 'array-contains', userId)),
+      (chatsArray) => {
+        this.renderChatsArray(chatsArray)
+        this.getUserIdsFromChats();
+      });
+    }else{
+      console.log('Error find no chats');
+    }
   }
-  
-  setCurrentUser() {
-    this.firestoreService.currentUser$
-    .pipe(takeUntil(this.currentUserIsDestroyed$))
-    .subscribe((user: User) => {
-      this.currentUser = user;
-    } )
+
+  renderChatsArray(chatsArray:QuerySnapshot){
+    this.chats = []; //reset variable array
+    chatsArray.forEach((doc: any) => {  //read element of array
+      this.chats.push(doc.data()); //element to array
+      this.chats$.next(this.chats);
+    });
+  }
+
+  getUserIdsFromChats() {
+    this.chatFilteredUserIds = [];
+    this.chatFilteredUserIds.push(this.currentUser.id);
+    this.chats.forEach((chat) => {
+     if(chat.id !== this.currentUser.id){
+       let filteredUserId = this.filterUserId(chat);
+        this.chatFilteredUserIds.push(filteredUserId[0]);
+     }
+    });
+    this.getUserDataFromChats();
+  }
+
+  filterUserId(chat:Chat){
+    return chat.chatBetween.filter(
+      (chatsUserId: string) => chatsUserId !== this.currentUser.id);
+  }
+
+  async getUserDataFromChats(){
+    this.chatsUserData = [];
+    this.chatFilteredUserIds.forEach((chatsUserIds) =>{
+      onSnapshot(
+        doc(this.firestore, 'user', chatsUserIds), 
+          (doc: any) => { 
+            this.chatsUserData.push(doc.data());
+          });
+    });
+  }
+
+  retryLoadImage(user:User) {
+    if (user) {
+      user.photoUrl = this.users_photoUrl;
+    }
+  }
+
+  openDialogNewChat(){
+    this.navbarService.menuSlideUp('menuNewChat');
   }
 
   rotateArrow() {

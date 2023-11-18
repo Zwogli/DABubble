@@ -23,23 +23,46 @@
     </mat-expansion-panel-header>
 
     <div class="mat-expansion-panel__content container__elements--column">
-			<!-- <article> -->
-				<!-- 
-					elements for expansion-panel
-				-->
-				<div *ngFor="let user of chatUserData" class="fix--space-left sort__elemts--row">
-					<div [routerLink]="'/home/'+user.id" class="container__Elemets--row">
 
-						<div class="user__container--avatar">
-							<img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
-							<span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
-						</div>
+	<!-- 
+		elements for expansion-panel
+		
+	-->
+		<div *ngFor="let user of chatsUserData; index as i" class="fix--space-left sort__elemts--row cursor__add">
+			<div 
+			*ngIf="chats$ | async as chat"
+			[routerLink]="'/home/' + chat.id" 
+			class="container__Elemets--row">
 
-						<p>{{ user.name}}</p>
-
-					</div>
+				<div class="user__container--avatar">
+					<img 
+						[src]="user.photoUrl" 
+						(error)="retryLoadImage(user)" 
+						class="avatar-small" 
+						alt="avatar"
+					>
+					<span 
+						class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"
+					></span>
 				</div>
-			<!-- </article> -->
+
+				<p>{{ user.name}}
+				<span *ngIf="user.id == currentUser.id">(You)</span>
+				</p>
+			</div>
+		</div>
+
+		<div 
+			(click)="openDialogNewChat()"
+			class="fix--space-left sort__elemts--row cursor__add"
+		>
+			<div class="container--small">
+				<div class="circle__add--bg">
+					<span class="material-icons-outlined"> person_add </span>
+				</div>
+			</div>
+			<p> New Chat </p>
+		</div>
 
     </div>
   </mat-expansion-panel>

@@ -1,5 +1,12 @@
-import { Component } from '@angular/core';
-import { takeUntil ,  Subject } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import {
+  Firestore,
+  collection,
+  doc,
+  onSnapshot,
+  query,
+  where,
+} from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -7,48 +14,49 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 @Component({
   selector: 'app-navbar-panel-channels',
   templateUrl: './navbar-panel-channels.component.html',
-  styleUrls: ['./navbar-panel-channels.component.scss']
+  styleUrls: ['./navbar-panel-channels.component.scss'],
 })
-
 export class NavbarPanelChannelsComponent {
   panelOpenState: boolean = false;
-  currentUserId: any;
+  firestore: Firestore = inject(Firestore);
   currentUser!: User;
-  subCurrentUser!: User;
-  private currentUserIsDestroyed$ = new Subject<boolean>();
-  memberInChannelsArray: Channel[] = [];
+  currentUserId = localStorage.getItem('userId');
+  channels!: Channel[];
 
+  constructor(private firestoreService: FirestoreService) {}
 
-  constructor(
-    private firestoreService: FirestoreService
-  ){
-    this.currentUserId = localStorage.getItem("currentUserId")
+  ngOnInit() {
+    this.readCurrentUser(this.currentUserId);
+    this.getChannelsFromCurrentUser(this.currentUserId);
   }
 
-  ngOnInit(){
-    this.setCurrentUser();
-    this.setMemberInChannelArray();
-  }
-  
-  setMemberInChannelArray(){
-    this.firestoreService.channelsArray$
-    .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
-    .subscribe((channel: any) => {
-      this.memberInChannelsArray = channel;
-    });
-    console.log('channalArray: ', this.memberInChannelsArray);
+  readCurrentUser(userId: string | null) {
+    if (userId != null) {
+      onSnapshot(doc(this.firestore, 'user', userId), (user: any) => {
+        this.currentUser = user.data();
+      });
+    } else {
+      console.log('Error find no userId');
+    }
   }
 
-  ngOnDestroy() {
-    this.currentUserIsDestroyed$.next(true);
-  }
-  
-  setCurrentUser() {
-    this.firestoreService.currentUser$
-    .pipe(takeUntil(this.currentUserIsDestroyed$))
-    .subscribe((user: User) => {
-      this.currentUser = user;
-    } )
+  getChannelsFromCurrentUser(userId: string | null) {
+    if (userId != null) {
+      onSnapshot(
+        query(
+          collection(this.firestore, 'channels'),
+          where('member', 'array-contains', userId)
+        ),
+        (memberInChannel) => {
+          this.channels = [];
+          memberInChannel.forEach((doc: any) => {
+            this.channels.push(doc.data()); //element to array
+          });
+        }
+      );
+    } else {
+      console.log('Error find no channels!');
+    }
   }
 
   rotateArrow() {

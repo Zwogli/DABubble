@@ -5,11 +5,10 @@
 		>
 		  <mat-expansion-panel-header>
 			<mat-panel-title
-			  (click)="rotateArrow()"
 			  class="container__element--spacebetween"
 			>
 	  
-			  <div class="panel__titel--left">
+			  <div class="panel__titel--left" (click)="rotateArrow()">
 				<span
 				  id="channel--arrow_drop_down"
 				  class="material-icons-outlined rotate"
@@ -22,7 +21,7 @@
 				</div>
 			  </div>
 	  
-			  <span class="material-icons-outlined element--blue"> add </span>
+			  <span [routerLink]="'/home/' + 'addChannel'" class="material-icons-outlined element--blue"> add </span>
 	  
 			</mat-panel-title>
 		  </mat-expansion-panel-header>
@@ -32,14 +31,14 @@
 				<!-- 
 					elements for expansion-panel
 				-->
-				<div *ngFor="let channel of memberInChannelsArray" class="fix--space-left sort__elemts--row">
+				<div *ngFor="let channel of channels" class="fix--space-left sort__elemts--row cursor__add">
 					<p [routerLink]="'/home/'+channel.id"> # {{ channel.name }} </p>
 				</div>
 				
 				<!-- 
 					add channel element
 				-->				
-				<div class="fix--space-left sort__elemts--row">
+				<div [routerLink]="'/home/' + 'addChannel'" class="fix--space-left sort__elemts--row cursor__add">
 					<span class="material-icons-outlined element--blue"> add_circle </span>
 					<p class="element--blue">Add Channel</p>
 				</div>

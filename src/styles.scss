@@ -4,6 +4,8 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
   --color-black: black;
+  --color-black-shadow: rgba(0, 0, 0, 0.2);
+
   --color-white: white;
 
   --color-blue-bg:#ECEEFE;
@@ -62,14 +64,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 button {
   font-family: var(--font-selection);
 }
-app-navbar{
+app-navbar, app-create-channel{
   position: relative;
   display: block;
   overflow-y: hidden;
   width: 100dvw;
   height: 100dvh;
 }
-
-// .d-flex{
-//   display: flex;
-// }
