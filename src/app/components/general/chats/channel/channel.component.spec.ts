@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainChatComponent } from './main-chat.component';
+import { MainChatComponent } from './channel.component';
 
 describe('MainChatComponent', () => {
   let component: MainChatComponent;
@@ -8,7 +8,7 @@ describe('MainChatComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MainChatComponent]
+      declarations: [MainChatComponent],
     });
     fixture = TestBed.createComponent(MainChatComponent);
     component = fixture.componentInstance;
