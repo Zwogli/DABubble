@@ -34,7 +34,6 @@ export class DialogNewChannelComponent {
   }
 
   createChannel(){
-    // this.firestoreService.addNewChannel(this.currentUserId);
     this.selectionUserIntoChannel();
   }
 
@@ -42,26 +41,13 @@ export class DialogNewChannelComponent {
     let radio = document.querySelector('input[name="addOption"]:checked');
     if(radio != null){
       if(radio.id == 'radioAllUser'){
-        console.log('Add all User to Channel', 
-        // this.createNewChannel.newChannelName, 
-        // this.createNewChannel.newChannelDescription
-        );
-
-        this.renderAllUserinChannel();
+       this.firestoreService.addNewChannelAllUser(this.currentUser.id);
       }else if(radio.id == 'radioSingleUser'){
-        console.log('Add single User to Channel ', 
-        // this.createNewChannel.newChannelName, 
-        // this.createNewChannel.newChannelDescription
-        );
-
+        this.firestoreService.addNewChannelSingleUser(this.currentUser.id);
       }
     }else{
-      console.log('You have not selected anything');
+      console.error('You have not selected anything');
     }
-  }
-
-  renderAllUserinChannel(){
-    
   }
   
   hideUserSearchbarNewChannel(){
