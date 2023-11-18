@@ -198,6 +198,12 @@ export class FirestoreService {
   }
 
   async addNewChannelWithAllUser(uid:string) {
+   //  let allUser: User[] = [],
+   //    return onSnapshot(doc(this.firestore, 'user'), (db: any) => {
+   //   console.log('firestore users ', db);
+   //    allUser.push(db.data());
+   // });
+   //    console.log('firestore users after push ', db);
     // await setDoc(doc(this.firestore, 'privateChat', uid), {
     //   id: uid,
     //   chatBetween: [uid],
