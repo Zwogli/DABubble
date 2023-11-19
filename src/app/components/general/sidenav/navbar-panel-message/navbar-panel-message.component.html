@@ -30,8 +30,7 @@
 	-->
 		<div *ngFor="let user of chatUserData; index as i" class="fix--space-left sort__elemts--row cursor__add">
 			<div 
-			*ngIf="chatsArray$ | async as chat"
-			[routerLink]="'/home/' + chatsArray[i].id" 
+			[routerLink]="'/home/' + privateChats[i].id" 
 			class="container__Elemets--row">
 
 				<div class="user__container--avatar">

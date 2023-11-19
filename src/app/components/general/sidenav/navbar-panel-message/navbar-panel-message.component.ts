@@ -19,12 +19,12 @@ export class NavbarPanelMessageComponent {
   currentUser!: User;
   subCurrentUser!: User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
-  userInChatsArray: Chat[] = [];
+  userInprivateChats: Chat[] = [];
   chatBetweenUserIds: string[] = [];
   chatUserData: User[] = [];
   chatUserData$ = new BehaviorSubject<any>(this.chatUserData);
-  chatsArray!:Chat[];
-  chatsArray$ = new BehaviorSubject<any>(this.chatsArray);
+  privateChats!:Chat[];
+  privateChats$ = new BehaviorSubject<any>(this.privateChats);
 
   cacheChatUserData!: User;
 
@@ -51,15 +51,16 @@ export class NavbarPanelMessageComponent {
     .pipe(takeUntil(this.currentUserIsDestroyed$))
     .subscribe((user: User) => {
       this.currentUser = user;
-    } )
+    });
   }
 
   setChatArray(){
-    this.firestoreService.chatsArray$
+    this.firestoreService.privateChats$
     .pipe(takeUntil(this.currentUserIsDestroyed$))
-    .subscribe((chatsArray: any) => {
-      this.chatsArray = chatsArray;
+    .subscribe((chats: any) => {
+      this.privateChats = chats;
     });
+    console.log('all Chats ', this.privateChats);
   }
 
   setChatUserData(){
@@ -68,6 +69,7 @@ export class NavbarPanelMessageComponent {
     .subscribe((chatUser: any) => {
       this.chatUserData = chatUser;
     } )
+    console.log('Chat Users ', this.chatUserData);
   }
   
   toggleNewChat(){

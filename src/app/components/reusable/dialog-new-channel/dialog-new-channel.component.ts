@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { User, linkWithPhoneNumber } from '@angular/fire/auth';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
@@ -8,11 +11,12 @@ import { NavbarService } from 'src/app/services/navbar.service';
   styleUrls: ['./dialog-new-channel.component.scss']
 })
 export class DialogNewChannelComponent {
-  setCurrentUser!:User;
+  currentUser!:User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
 
   constructor(
     private authService: AuthService,
+    private firestoreService:FirestoreService,
     private navbarService: NavbarService, 
   ){}
   
@@ -27,28 +31,27 @@ export class DialogNewChannelComponent {
   setCurrentUser() {
     this.firestoreService.currentUser$
       .pipe(takeUntil(this.currentUserIsDestroyed$))
-      .subscribe((user: User) => {
+      .subscribe((user: any) => {
         this.currentUser = user;
-        this.onlineStatus = user.onlineStatus;
       });
   }
 
   createChannel(){
-    this.selectionUserIntoChannel();
+    // this.selectionUserIntoChannel();
   }
 
-  selectionUserIntoChannel(){
-    let radio = document.querySelector('input[name="addOption"]:checked');
-    if(radio != null){
-      if(radio.id == 'radioAllUser'){
-       this.firestoreService.addNewChannelWithAllUser(this.currentUser.id);
-      }else if(radio.id == 'radioSingleUser'){
-        this.firestoreService.addNewChannelWithSingleUser(this.currentUser.id);
-      }
-    }else{
-      console.error('You have not selected anything');
-    }
-  }
+  // selectionUserIntoChannel(){
+  //   let radio = document.querySelector('input[name="addOption"]:checked');
+  //   if(radio != null){
+  //     if(radio.id == 'radioAllUser'){
+  //      this.firestoreService.addNewChannelWithAllUser(this.currentUser.id);
+  //     }else if(radio.id == 'radioSingleUser'){
+  //       this.firestoreService.addNewChannelWithSingleUser(this.currentUser.id);
+  //     }
+  //   }else{
+  //     console.error('You have not selected anything');
+  //   }
+  // }
   
   hideUserSearchbarNewChannel(){
     let showContainerSearch: HTMLElement | null = document.getElementById('new-channel-search-user');
