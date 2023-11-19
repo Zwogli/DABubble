@@ -237,13 +237,13 @@ export class FirestoreService {
 
   async addNewChannelWithAllUser(uId:string) {
     let allUserAsMember: User[] = [];
-      return onSnapshot(collection(this.firestore, 'user'), (doc: any) => {
+      onSnapshot(collection(this.firestore, 'user'), (doc: any) => {
         doc.forEach((userDoc: any) => {
           allUserAsMember.push(userDoc.data())
         });
       // allUserAsMember.push(doc.data());
       this.addNewChannel(uId, allUserAsMember);
-   });
+    });
   }
 
   async addNewChannelWithSingleUser(uid:string){

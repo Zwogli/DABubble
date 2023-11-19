@@ -39,15 +39,15 @@ export class DialogNewChannelComponent {
   }
 
   createChannel(){
-    debugger
     this.selectionUserIntoChannel();
-    this.router.navigate(['home']);
+    // this.router.navigate(['home']);
   }
 
   async selectionUserIntoChannel(){
     let radio = document.querySelector('input[name="addOption"]:checked');
     if(radio != null){
       if(radio.id == 'radioAllUser'){
+        debugger
        await this.firestoreService.addNewChannelWithAllUser(this.currentUser.id);
       }
       // else if(radio.id == 'radioSingleUser'){
