@@ -30,6 +30,7 @@
 	-->
 		<div *ngFor="let user of chatUserData; index as i" class="fix--space-left sort__elemts--row cursor__add">
 			<div 
+			*ngIf="privateChats[i]"
 			[routerLink]="'/home/' + privateChats[i].id" 
 			class="container__Elemets--row">
 

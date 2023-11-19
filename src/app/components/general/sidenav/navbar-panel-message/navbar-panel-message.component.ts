@@ -60,7 +60,6 @@ export class NavbarPanelMessageComponent {
     .subscribe((chats: any) => {
       this.privateChats = chats;
     });
-    console.log('all Chats ', this.privateChats);
   }
 
   setChatUserData(){
@@ -69,7 +68,6 @@ export class NavbarPanelMessageComponent {
     .subscribe((chatUser: any) => {
       this.chatUserData = chatUser;
     } )
-    console.log('Chat Users ', this.chatUserData);
   }
   
   toggleNewChat(){
