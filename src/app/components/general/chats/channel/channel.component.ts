@@ -24,7 +24,6 @@ export class ChannelComponent implements OnInit {
   constructor(
     private fireService: FirestoreService,
     private chatService: ChatService,
-    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private changeDetector: ChangeDetectorRef

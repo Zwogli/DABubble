@@ -32,7 +32,6 @@ export class AuthService {
   ) {
     this.getCurrentUser();
     console.log('Auth');
-    
   }
 
   signIn(email: string, password: string) {
