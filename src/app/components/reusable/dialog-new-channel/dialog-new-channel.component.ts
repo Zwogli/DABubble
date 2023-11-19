@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { User, linkWithPhoneNumber } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
@@ -18,6 +19,7 @@ export class DialogNewChannelComponent {
     private authService: AuthService,
     private firestoreService:FirestoreService,
     private navbarService: NavbarService, 
+    public router: Router,
   ){}
   
     ngOnInit() {
@@ -37,21 +39,24 @@ export class DialogNewChannelComponent {
   }
 
   createChannel(){
-    // this.selectionUserIntoChannel();
+    debugger
+    this.selectionUserIntoChannel();
+    this.router.navigate(['home']);
   }
 
-  // selectionUserIntoChannel(){
-  //   let radio = document.querySelector('input[name="addOption"]:checked');
-  //   if(radio != null){
-  //     if(radio.id == 'radioAllUser'){
-  //      this.firestoreService.addNewChannelWithAllUser(this.currentUser.id);
-  //     }else if(radio.id == 'radioSingleUser'){
-  //       this.firestoreService.addNewChannelWithSingleUser(this.currentUser.id);
-  //     }
-  //   }else{
-  //     console.error('You have not selected anything');
-  //   }
-  // }
+  async selectionUserIntoChannel(){
+    let radio = document.querySelector('input[name="addOption"]:checked');
+    if(radio != null){
+      if(radio.id == 'radioAllUser'){
+       await this.firestoreService.addNewChannelWithAllUser(this.currentUser.id);
+      }
+      // else if(radio.id == 'radioSingleUser'){
+      //   this.firestoreService.addNewChannelWithSingleUser(this.currentUser.id);
+      // }
+    }else{
+      console.error('You have not selected anything');
+    }
+  }
   
   hideUserSearchbarNewChannel(){
     let showContainerSearch: HTMLElement | null = document.getElementById('new-channel-search-user');

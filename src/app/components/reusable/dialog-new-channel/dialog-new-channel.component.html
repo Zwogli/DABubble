@@ -10,7 +10,7 @@
         <span (click)="closeMenu()" class="material-icons-outlined close__element"> close </span>
     </div>
 
-    <form class="radio-form">
+    <form class="radio-form" (ngSubmit)="createChannel()" return="false">
 
         <div class="container__input">
             <input 
@@ -47,8 +47,9 @@
         </div>
 
         <div class="container__btn--right">
+            <!-- (click)="createChannel()" -->
             <button
-            (click)="createChannel()"
+            type="submit"
             class="btn__log-in"
             >
                 Create

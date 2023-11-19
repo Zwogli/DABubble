@@ -14,8 +14,7 @@ export class CreateChannelComponent {
   private subscription: Subscription;
   showMenu: boolean = false;
   err_hash:boolean = false
-  newChannelName:string = '';
-  newChannelDescription:string = '';
+  // newChannelDescription:string = '';
   createChannelForm = new FormGroup({
     channelNameForm: new FormControl('', [
       Validators.required,
@@ -52,7 +51,7 @@ export class CreateChannelComponent {
       this.err_hash = false;
       let newChannelName = inputValue.slice(1);
       this.firestoreService.checkChannelExist(newChannelName)
-      this.newChannelName = newChannelName;
+      this.firestoreService.newChannelName = newChannelName;
     }
   }
 
@@ -60,9 +59,9 @@ export class CreateChannelComponent {
     let desciptionInput: any = document.getElementById('channel-desciption');
     let description = desciptionInput.value;
     if(description === ''){
-      this.newChannelDescription = '';
+      this.firestoreService.newChannelDescription = '';
     }else{
-      this.newChannelDescription = description
+      this.firestoreService.newChannelDescription = description
     }
   }
 

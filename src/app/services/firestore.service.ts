@@ -62,6 +62,8 @@ export class FirestoreService {
   existingEmail: number = 0;
   emailAlreadyExist = false;
   channelAlreadyExist:boolean = false;
+  newChannelName:string = '';
+  newChannelDescription:string = '';
 
   unsubChatRecord!: Unsubscribe;
   unsubChatUser!: Unsubscribe;
@@ -209,26 +211,39 @@ export class FirestoreService {
     });
   }
 
-  async addPrivateChat(uid:any) {
-    await setDoc(doc(this.firestore, 'privateChat', uid), {
-      id: uid,
-      chatBetween: [uid],
+  async addPrivateChat(uId:any) {
+    await setDoc(doc(this.firestore, 'privateChat', uId), {
+      id: uId,
+      chatBetween: [uId],
       chatRecord: '',
     });
   }
 
-  async addNewChannelWithAllUser(uid:string) {
-   //  let allUser: User[] = [],
-   //    return onSnapshot(this.firestore, 'user', (doc: any) => {
-   //   console.log('firestore users ', doc);
-   //    allUser.push(doc.data());
-   // });
-   //    console.log('firestore users after push ', db);
-    // await setDoc(doc(this.firestore, 'privateChat', uid), {
-    //   id: uid,
-    //   chatBetween: [uid],
-    //   chatRecord: '',
+  async addNewChannel(uId:string, member:User[]){   
+    const newChannelRef = doc(collection(this.firestore, 'channels'));
+
+    await setDoc(newChannelRef, this.getNewChannelCleanJson(uId, member, newChannelRef));
+
+    // await setDoc(doc(collection(this.firestore, "channels")), {
+    //   chatRecord: "",
+    //   createdAt: serverTimestamp(),
+    //   createdBy: this.currentUser.id,
+    //   description: this.newChannelDescription,
+    //   id: ,
+    //   member: member,
+    //   name: this.newChannelName,
     // });
+  }
+
+  async addNewChannelWithAllUser(uId:string) {
+    let allUserAsMember: User[] = [];
+      return onSnapshot(collection(this.firestore, 'user'), (doc: any) => {
+        doc.forEach((userDoc: any) => {
+          allUserAsMember.push(userDoc.data())
+        });
+      // allUserAsMember.push(doc.data());
+      this.addNewChannel(uId, allUserAsMember);
+   });
   }
 
   async addNewChannelWithSingleUser(uid:string){
@@ -279,6 +294,18 @@ export class FirestoreService {
       thread: data.thread,
       reactedBy: data.reactedBy,
     };
+  }
+
+  getNewChannelCleanJson(uId:string, member:User[], newChannelRef:any){
+  return {
+    chatRecord: "",
+    createdAt: serverTimestamp(),
+    createdBy: uId,
+    description: this.newChannelDescription,
+    id: newChannelRef.id,
+    member: member,
+    name: this.newChannelName,
+  }
   }
 
   //The following functions gets the current sign up data to use in choose-avater.component
