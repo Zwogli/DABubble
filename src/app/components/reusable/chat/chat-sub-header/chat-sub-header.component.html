@@ -19,9 +19,22 @@
     <span class="title__sub"># {{ channel.name }} </span>
   </div>
 
+  <button class="button__close">
     <mat-icon
+      *ngIf="channel"
+      [routerLink]="'/home/' + channel.id"
       fontSet="material-icons-outlined"
       aria-label="Icon button with a person add icon"
+      [inline]="true"
       >close</mat-icon
     >
+  </button>
+</div>
+
+<!-- PRIVATE subheader -->
+<div *ngIf="type === 'private'" class="sub-header">
+  <div class="sub-header__title">
+    <span class="title__main"></span>
+    <span class="title__sub"></span>
+  </div>
 </div>

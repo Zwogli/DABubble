@@ -21,6 +21,16 @@
     }
 }
 
+.button__close {
+    background-color: white !important;
+
+    mat-icon {
+        font-size: 24px !important;
+        height: 24px;
+        width: 24px;
+    }
+}
+
 .sub-header__title {
     display: flex;
     justify-content: flex-start;
@@ -50,12 +60,6 @@
         color: var(--color-blue-primary-hover);
         font-size: 14px;
         margin-left: 5px;
-    }
-
-    mat-icon {
-        font-size: 24px !important;
-        height: 24px !important;
-        width: 24px !important;
     }
 
     &:hover {
