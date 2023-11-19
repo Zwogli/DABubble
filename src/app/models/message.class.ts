@@ -16,11 +16,11 @@ export class Message {
   }[];
 
   constructor(data: any) {
-    this.id = data.id || '';
-    this.message = '';
-    this.sentById = '';
-    this.sentByName = '';
-    this.sentByPhotoUrl = '';
+    this.id = '';
+    this.message = data.message || '';
+    this.sentById = data.sentById || '';
+    this.sentByName = data.sentByName || '';
+    this.sentByPhotoUrl = data.sentByPhotoUrl || '';
     this.sentAt = '';
     this.thread = {
       id: '',

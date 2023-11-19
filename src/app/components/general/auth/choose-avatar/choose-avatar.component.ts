@@ -35,11 +35,9 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
-    this.authService.errorAlreadyExist = false;
     this.authService.errorUnexpected = false;
     this.authService.signUpError = false;
     this,this.authService.signUpSuccessfully = false;
-    console.log('deleted doc');
   }
 
   async getIdFromUrl() {
@@ -51,19 +49,16 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
   chooseAvatar(avatarNr: number) {
     this.unchoosenAvatar.nativeElement.src = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
     this.choosenAvatar = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
-    console.log(this.choosenAvatar);
   }
+
 
   async onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
-      console.log(file);
       const path = `avatars/${file.name}`;
       const uploadTask = await this.fireStorage.upload(path, file);
       const url = await uploadTask.ref.getDownloadURL();
-      console.log('download url', url);
       this.choosenAvatar = url;
-      console.log(this.choosenAvatar);
       this.unchoosenAvatar.nativeElement.src = `${url}`;
     }
   }
