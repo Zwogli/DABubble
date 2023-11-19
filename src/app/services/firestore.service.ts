@@ -267,9 +267,8 @@ export class FirestoreService {
           }
       });
   }
-  }
 
-  getCleanJson(data: Message, doc: any): {} {
+  getCleanJson(data: Message, doc: any):{} {
     return {
       id: doc.id,
       message: data.message,

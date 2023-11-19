@@ -61,7 +61,6 @@ import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dia
     DialogProfilComponent,
     DialogProfilEditComponent,
     ForgotPasswordComponent,
-<<<<<<<<< Temporary merge branch 1
     CreateChannelComponent,
     DialogNewChannelComponent,
     DialogNewChatComponent,
