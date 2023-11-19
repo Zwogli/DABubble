@@ -5,13 +5,15 @@ import {
   collection,
   query,
   setDoc,
-  addDoc,
   deleteDoc,
   doc,
   where,
   getDoc,
   updateDoc,
   QuerySnapshot,
+  addDoc,
+  serverTimestamp,
+  orderBy,
   getDocs,
 } from '@angular/fire/firestore';
 import { Unsubscribe } from '@angular/fire/auth';
@@ -35,6 +37,7 @@ export class FirestoreService {
   chatUserData: User[] = [];
 
   singleChatRecord: Message[] = [];
+
   // subject item
   private currentUserSubject = new BehaviorSubject<User>(this.currentUser);
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
@@ -43,12 +46,14 @@ export class FirestoreService {
   private singleChatRecordSubject = new BehaviorSubject<any>(
     this.singleChatRecord
   );
+
   // observable item
   currentUser$ = this.currentUserSubject.asObservable();
   channelsArray$ = this.channelsArraySubject.asObservable();
   privateChats$ = this.privateChatsSubject.asObservable();
   chatUserData$ = this.chatUserDataSubject.asObservable();
   singleChatRecord$ = this.singleChatRecordSubject.asObservable();
+
   // unsub item
   unsubCurrentUser!: Unsubscribe;
 
@@ -62,32 +67,35 @@ export class FirestoreService {
   unsubChatUser!: Unsubscribe;
 
   constructor() {}
- 
- subCurrentUser(docId: string) {
-   return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
-     this.currentUser = doc.data();
-     this.currentUserSubject.next(this.currentUser);
-     this.test();
-     this.getChannelsFromCurrentUser();
-     this.getChatsFromCurrentUser();
-   });
- }
 
- async test(){
-  let q = query(collection(this.firestore, "privateChat"), where("chatBetween", "==", true));
-  let querySnap = await getDocs(q);
-  querySnap.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
-  });
-  // console.log('test', docSnap.data());
-  
- }
- 
- startSubUser(docId: string) {
-   this.unsubCurrentUser = this.subCurrentUser(docId);
- }
- 
+  ngOnDestroy() {
+    this.unsubCurrentUser();
+    this.unsubChatRecord();
+  }
+
+  async getSingleDoc(colId: string, docId: string) {
+    const docSnap = await getDoc(doc(this.firestore, colId, docId));
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log('No such document found!');
+      return;
+    }
+  }
+
+  subCurrentUser(docId: string) {
+    return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
+      this.currentUser = doc.data();
+      this.currentUserSubject.next(this.currentUser);
+      this.getChannelsFromCurrentUser();
+      this.getChatsFromCurrentUser();
+    });
+  }
+
+  startSubUser(docId: string) {
+    this.unsubCurrentUser = this.subCurrentUser(docId);
+  }
+
   getChatsFromCurrentUser() {
     onSnapshot(query(collection(this.firestore, 'privateChat'), //select database, collection
       where('chatBetween', 'array-contains', this.currentUser.id)), //[path], [action], [searched element]
@@ -153,26 +161,32 @@ export class FirestoreService {
     );
   }
 
-  ngOnDestroy() {
-    this.unsubCurrentUser();
+  startSubChat(docId: string) {
+    this.unsubChatRecord = this.subChatRecord(docId);
   }
 
   subChatRecord(docId: string) {
     return onSnapshot(
-      query(collection(this.firestore, 'chatRecords', docId, 'messages')),
+      query(
+        collection(this.firestore, 'chatRecords', docId, 'messages'),
+        orderBy('sentAt')
+      ),
       (docs: any) => {
         this.singleChatRecord = [];
         docs.forEach((doc: any) => {
           this.singleChatRecord.push(doc.data());
         });
         this.singleChatRecordSubject.next(this.singleChatRecord);
-        console.log(this.singleChatRecord);
       }
     );
   }
 
-  startSubChat(docId: string) {
-    this.unsubChatRecord = this.subChatRecord(docId);
+  async addMessage(docId: string, data: Message) {
+    const newMsgRef = doc(
+      collection(this.firestore, 'chatRecords', docId, 'messages')
+    );
+
+    await setDoc(newMsgRef, this.getCleanJson(data, newMsgRef));
   }
 
   async addUser(userObject: any, name: any, photoUrl: any) {
@@ -192,10 +206,8 @@ export class FirestoreService {
     await updateDoc(doc(this.firestore, 'user', userId), {
       name: userName,
       email: userEmail,
-    })
+    });
   }
-
-
 
   async addPrivateChat(uid:any) {
     await setDoc(doc(this.firestore, 'privateChat', uid), {
@@ -235,10 +247,8 @@ export class FirestoreService {
         this.existingEmail = existingEmail.docs.length;
         if (existingEmail.docs.length == 1) {
           this.emailAlreadyExist = true;
-          console.log('EXIST');
         } else {
           this.emailAlreadyExist = false;
-          console.log('DOESNT EXIST');
         }
       }
     );
@@ -257,6 +267,20 @@ export class FirestoreService {
           }
       });
   }
+  }
+
+  getCleanJson(data: Message, doc: any): {} {
+    return {
+      id: doc.id,
+      message: data.message,
+      sentById: data.sentById,
+      sentByName: data.sentByName,
+      sentByPhotoUrl: data.sentByPhotoUrl,
+      sentAt: serverTimestamp(),
+      thread: data.thread,
+      reactedBy: data.reactedBy,
+    };
+  }
 
   //The following functions gets the current sign up data to use in choose-avater.component
 
@@ -271,7 +295,6 @@ export class FirestoreService {
   getJsonOfCurrentSignUpData(docId: string) {
     onSnapshot(this.getCurrentSignUpDataDoc(docId), (list) => {
       this.currentSignUpData = list.data();
-      console.log(this.currentSignUpData);
     });
   }
 

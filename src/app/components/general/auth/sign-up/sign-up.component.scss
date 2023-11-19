@@ -60,28 +60,28 @@ mat-card {
 
 .block__alert-name {
   position: absolute;
-  top: 143px;
+  top: 144px;
   color: var(--color-purple-error);
   font-size: 0.667rem;
   left: 18px;
 }
 
 .block__alert-email {
-  top: 207px !important;
+  top: 211px !important;
 }
 
 .block__alert-password {
-  top: 271px;
+  top: 277px;
 }
 
 .block__error {
-  top: 370px !important;
+  top: 378px !important;
   left: 18px !important;
 }
 
 .block__error-checkbox {
   position: absolute;
-  top: 308px;
+  top: 315px;
   color: var(--color-purple-error);
   font-size: 0.667rem;
   left: 18px;
@@ -89,7 +89,7 @@ mat-card {
 
 .error-email-exist {
   position: absolute;
-  top: 207px;
+  top: 211px;
   color: var(--color-purple-error);
   font-size: 0.667rem;
   left: 18px;
