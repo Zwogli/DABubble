@@ -37,7 +37,6 @@ import { DialogProfilEditComponent } from './components/reusable/dialog-profil-e
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
 import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
-import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
 import { MessageInputComponent } from './components/reusable/chat/message-input/message-input.component';
 import { ChatSubHeaderComponent } from './components/reusable/chat/chat-sub-header/chat-sub-header.component';
 
