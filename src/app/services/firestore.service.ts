@@ -15,6 +15,8 @@ import {
   serverTimestamp,
   orderBy,
   getDocs,
+  QueryDocumentSnapshot,
+  DocumentData,
 } from '@angular/fire/firestore';
 import { Unsubscribe } from '@angular/fire/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -29,13 +31,14 @@ import { Chat } from '../models/chat.class';
 export class FirestoreService {
   firestore: Firestore = inject(Firestore);
   chatFilteredUserIds: string[] = [];
+  allUserAsMember: User[] = [];
+  newChannelRefId!:string;
 
   // variable item to observe
   currentUser!: User;
   channelsArray: Channel[] = [];
   privateChats: Chat[] = [];
   chatUserData: User[] = [];
-
   singleChatRecord: Message[] = [];
 
   // subject item
@@ -219,30 +222,52 @@ export class FirestoreService {
     });
   }
 
-  async addNewChannel(uId:string, member:User[]){   
-    const newChannelRef = doc(collection(this.firestore, 'channels'));
+  async getAllUser(){
+    this.allUserAsMember = [];
+    const collRef = collection(this.firestore, "user");
+    const getColl = await getDocs(collRef);
 
-    await setDoc(newChannelRef, this.getNewChannelCleanJson(uId, member, newChannelRef));
-
-    // await setDoc(doc(collection(this.firestore, "channels")), {
-    //   chatRecord: "",
-    //   createdAt: serverTimestamp(),
-    //   createdBy: this.currentUser.id,
-    //   description: this.newChannelDescription,
-    //   id: ,
-    //   member: member,
-    //   name: this.newChannelName,
-    // });
+    getColl.forEach((user:any) => {
+      this.allUserAsMember.push(user.data())
+    });
   }
 
-  async addNewChannelWithAllUser(uId:string) {
-    let allUserAsMember: User[] = [];
-      onSnapshot(collection(this.firestore, 'user'), (doc: any) => {
-        doc.forEach((userDoc: any) => {
-          allUserAsMember.push(userDoc.data())
-        });
-      // allUserAsMember.push(doc.data());
-      this.addNewChannel(uId, allUserAsMember);
+  async addNewChannel(uId:string){   
+    this.newChannelRefId = '';
+    const newChannelRef = doc(collection(this.firestore, 'channels'));
+    this.newChannelRefId = newChannelRef.id
+    let memberId:string[] = [];
+    this.allUserAsMember.filter((user) => 
+      memberId.push(user.id));
+    await setDoc(newChannelRef, this.getNewChannelCleanJson(uId, memberId));
+  }
+
+  getNewChannelCleanJson(uId:string, memberId:string[]){
+    return {
+      chatRecord: "",
+      createdAt: serverTimestamp(),
+      createdBy: uId,
+      description: this.newChannelDescription,
+      id: this.newChannelRefId,
+      member: memberId,
+      name: this.newChannelName,
+    }
+    }
+
+    
+  async updateUsers(){
+    this.allUserAsMember.forEach((user) => {
+      this.updateMemberInChanell(user);      
+      console.log('update', user);
+    })
+  }
+
+  async updateMemberInChanell(user:User){
+    let newMembership:string[]= user.memberInChannel;
+    newMembership.push(this.newChannelRefId);
+    
+    await updateDoc(doc(this.firestore, 'user', user.id), {
+      memberInChannel: newMembership,
     });
   }
 
@@ -294,18 +319,6 @@ export class FirestoreService {
       thread: data.thread,
       reactedBy: data.reactedBy,
     };
-  }
-
-  getNewChannelCleanJson(uId:string, member:User[], newChannelRef:any){
-  return {
-    chatRecord: "",
-    createdAt: serverTimestamp(),
-    createdBy: uId,
-    description: this.newChannelDescription,
-    id: newChannelRef.id,
-    member: member,
-    name: this.newChannelName,
-  }
   }
 
   //The following functions gets the current sign up data to use in choose-avater.component

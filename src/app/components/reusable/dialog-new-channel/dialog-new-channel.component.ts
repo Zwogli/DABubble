@@ -38,17 +38,19 @@ export class DialogNewChannelComponent {
       });
   }
 
-  createChannel(){
-    this.selectionUserIntoChannel();
-    // this.router.navigate(['home']);
+  async createChannel(){
+    await this.selectionUserIntoChannel();
+    
   }
 
   async selectionUserIntoChannel(){
     let radio = document.querySelector('input[name="addOption"]:checked');
     if(radio != null){
       if(radio.id == 'radioAllUser'){
-        debugger
-       await this.firestoreService.addNewChannelWithAllUser(this.currentUser.id);
+        await this.firestoreService.getAllUser();
+        await this.firestoreService.addNewChannel(this.currentUser.id);
+        await this.firestoreService.updateUsers();
+        this.router.navigate(['home' + this.firestoreService.newChannelRefId]);
       }
       // else if(radio.id == 'radioSingleUser'){
       //   this.firestoreService.addNewChannelWithSingleUser(this.currentUser.id);
