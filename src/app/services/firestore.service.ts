@@ -257,15 +257,14 @@ export class FirestoreService {
     
   async updateUsers(){
     this.allUserAsMember.forEach((user) => {
-      this.updateMemberInChanell(user);      
-      console.log('update', user);
+      this.updateMemberInChanel(user);      
     })
   }
 
-  async updateMemberInChanell(user:User){
+  async updateMemberInChanel(user:User){
     let newMembership:string[]= user.memberInChannel;
     newMembership.push(this.newChannelRefId);
-    
+  
     await updateDoc(doc(this.firestore, 'user', user.id), {
       memberInChannel: newMembership,
     });

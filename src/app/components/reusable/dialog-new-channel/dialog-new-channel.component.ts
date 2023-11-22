@@ -50,7 +50,8 @@ export class DialogNewChannelComponent {
         await this.firestoreService.getAllUser();
         await this.firestoreService.addNewChannel(this.currentUser.id);
         await this.firestoreService.updateUsers();
-        this.router.navigate(['home' + this.firestoreService.newChannelRefId]);
+        this.router.navigate(['home/', this.firestoreService.newChannelRefId]);
+        this.resetVariables();
       }
       // else if(radio.id == 'radioSingleUser'){
       //   this.firestoreService.addNewChannelWithSingleUser(this.currentUser.id);
@@ -58,6 +59,13 @@ export class DialogNewChannelComponent {
     }else{
       console.error('You have not selected anything');
     }
+  }
+
+  resetVariables(){
+    this.firestoreService.allUserAsMember = [];
+    this.firestoreService.newChannelRefId = '';
+    console.log('array & ID ', this.firestoreService.allUserAsMember, this.firestoreService.newChannelRefId);
+    
   }
   
   hideUserSearchbarNewChannel(){
