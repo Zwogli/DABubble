@@ -6,11 +6,12 @@
   <div
     *ngFor="let message of chatRecord; index as i"
     class="message__wrapper"
-    [ngClass]="{ message__menuOpened: message === selectedMsg }"
+    [ngClass]="{}"
   >
     <!-- ========== Date Pill ========== -->
     <div
       *ngIf="message.sentAt && (isFirstMsgOfDay(message, i) || i == 0)"
+      [style.margin-top]="message == chatRecord[0] ? '45px' : '0'"
       class="chat__date-pill"
     >
       <div class="date-pill__line"></div>
@@ -33,28 +34,12 @@
       <div class="date-pill__line"></div>
     </div>
 
-    <!-- ========== Onclick/ onhover Menu ========== -->
-    <div *ngIf="selectedMsg === message" class="message__menu">
-      <button mat-icon-button aria-label="Icon button with a emoji add icon">
-        <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
-      </button>
-      <button
-        (click)="this.startThread.emit(message)"
-        mat-icon-button
-        aria-label="Icon button with a chat bubble"
-      >
-        <mat-icon fontSet="material-icons-outlined">comment</mat-icon>
-      </button>
-      <button mat-icon-button aria-label="Icon button with vertical dots icon">
-        <mat-icon fontSet="material-icons-outlined">more_vert</mat-icon>
-      </button>
-    </div>
-
     <!-- ========== Message itself ========== -->
     <div
       class="message"
       [ngClass]="{
-        message__self: message.sentById === currentUser.id
+        message__self: message.sentById === currentUser.id,
+        message__menuOpened: message === selectedMsg
       }"
       (click)="toggleMsgMenu(message)"
     >
@@ -88,6 +73,26 @@
             >
           </div>
         </div>
+      </div>
+
+      <!-- ========== Onclick/ onhover Menu ========== -->
+      <div *ngIf="selectedMsg === message" class="message__menu">
+        <button mat-icon-button aria-label="Icon button with a emoji add icon">
+          <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
+        </button>
+        <button
+          (click)="this.startThread.emit(message)"
+          mat-icon-button
+          aria-label="Icon button with a chat bubble"
+        >
+          <mat-icon fontSet="material-icons-outlined">comment</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          aria-label="Icon button with vertical dots icon"
+        >
+          <mat-icon fontSet="material-icons-outlined">more_vert</mat-icon>
+        </button>
       </div>
     </div>
   </div>
