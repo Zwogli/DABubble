@@ -172,6 +172,13 @@ export class DialogNewChannelComponent {
   }
 
   closeMenu() {
+    let radioBtnAll:any = document.getElementById('radioAllUser');
+    let radioBtnSingle:any = document.getElementById('radioSingleUser');
+    if(radioBtnSingle.checked = true){
+      radioBtnSingle.checked = false;
+      radioBtnAll.checked = true;
+    }
+    this.hideUserSearchbarNewChannel();
     this.navbarService.menuSlideDown();
   }
 }

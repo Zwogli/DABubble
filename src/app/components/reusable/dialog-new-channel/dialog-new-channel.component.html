@@ -53,16 +53,18 @@
                         <div *ngIf="searchInputForm?.errors?.['minlength']">*Please use at least 2 characters.</div>
                     </div>
 
+<!-- render filtered User -->
+
                     <div id="filtered-user" 
                     class="container__filteredUser"
                     *ngIf="this.filteredUser.length >= 1"
                     >
                         <div 
                         *ngFor="let user of this.filteredUser"
-                        class="container__user" 
+                        class="container__user-Elements" 
                         (click)="addFilteredUser(user)"
                         >
-                            <div class="container__user--avatar">
+                            <div class="container__user-Elements--avatar">
                                 <img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
                                 <span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
                             </div>
@@ -71,22 +73,26 @@
                         </div>
                     </div>
 
-                    <div id="added-user"
-                    class="container__user"
-                    *ngFor="let user of this.firestoreService.usersAsMemberChache">
+<!-- render added User -->
 
-                    <div *ngIf="user != this.currentUser" class="container__user--avatar">
-                        <img class="avatar-small" src="{{ user.photoUrl }}" alt="avatar">
-                        <span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
+                    <div class="container__user">
+                        <div id="added-user"
+                        class="container__user-Elements"
+                        *ngFor="let user of this.firestoreService.usersAsMemberChache">
+    
+                            <div *ngIf="user != this.currentUser" class="container__user-Elements--avatar">
+                                <img class="avatar-small" src="{{ user.photoUrl }}" alt="avatar">
+                                <span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
+                            </div>
+                        
+                            <p *ngIf="user != this.currentUser">{{ user.name }}</p>
+                        
+                            <span class="material-icons-outlined close__element"
+                            (click)="removeUser(user)"
+                            *ngIf="user != this.currentUser">
+                             close 
+                            </span>
                     </div>
-
-                    <p *ngIf="user != this.currentUser">{{ user.name }}</p>
-
-                    <span class="material-icons-outlined close__element"
-                    (click)="removeUser(user)"
-                    *ngIf="user != this.currentUser">
-                     close 
-                    </span>
 
                     </div>
                 </div>

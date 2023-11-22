@@ -100,11 +100,21 @@ filtered user
     border-radius: 0px 20px 20px 20px;
   }
   .container__user{
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .container__user-Elements{
     display: flex;
     align-items: center;
     gap: 1rem;
 
     &:hover{
+      width: fit-content;
       padding-right: 20px;
       background-color: var(--color-blue-bg);
       border-radius: 35px;
@@ -177,3 +187,27 @@ show / hide
   color: var(--color-purple-error);
   font-size: 0.667rem;
 }
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+scroll-bar
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px var(--color-grey-hover); 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-blue-bg); 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-blue-primary-hover); 
+  }
