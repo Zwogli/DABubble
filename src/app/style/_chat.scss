@@ -40,7 +40,7 @@ main {
 .message__menuOpened {
     background-color: var(--color-blue-bg);
     transition: 125ms ease-in-out;
-
+    
     &:not(.message__self) {
 
         .message__content {
