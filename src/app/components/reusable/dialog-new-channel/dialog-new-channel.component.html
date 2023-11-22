@@ -53,12 +53,15 @@
                         <div *ngIf="searchInputForm?.errors?.['minlength']">*Please use at least 2 characters.</div>
                     </div>
 
-                    <div 
-                    id="filtered-user" 
+                    <div id="filtered-user" 
                     class="container__filteredUser"
-                    *ngFor="let user of this.filteredUser"
+                    *ngIf="this.filteredUser.length >= 1"
                     >
-                        <div class="container__user">
+                        <div 
+                        *ngFor="let user of this.filteredUser"
+                        class="container__user" 
+                        (click)="addFilteredUser(user)"
+                        >
                             <div class="container__user--avatar">
                                 <img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
                                 <span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
@@ -68,7 +71,23 @@
                         </div>
                     </div>
 
-                    <div id="added-user"></div>
+                    <div id="added-user"
+                    class="container__user"
+                    *ngFor="let user of this.addedUser">
+
+                    <div class="container__user--avatar">
+                        <img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
+                        <span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
+                    </div>
+
+                    <p>{{ user.name }}</p>
+
+                    <span class="material-icons-outlined close__element"
+                    (click)="removeUser(user)">
+                     close 
+                    </span>
+
+                    </div>
                 </div>
             </form>
         </div>

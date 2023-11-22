@@ -21,6 +21,7 @@ export class DialogNewChannelComponent {
     ]),
   });
   filteredUser:User[] = [];
+  addedUser:User[] = [];
 
   constructor(
     private authService: AuthService,
@@ -56,9 +57,9 @@ export class DialogNewChannelComponent {
 
       if(this.isSelectAllUser(radio)){
         this.renderAllUserIntoNewChannel();
-      }
-
-      else if(this.isSelectSingleUser(radio)){
+      }else 
+      if(this.isSelectSingleUser(radio)){
+        this.addedUser.push(this.currentUser)
         console.log('Add single user');
         
       //   this.firestoreService.addNewChannelWithSingleUser(this.currentUser.id);
@@ -93,7 +94,7 @@ export class DialogNewChannelComponent {
     this.firestoreService.newChannelRefId = '';
   }
   
-  // search single user 
+  // show searchbar
   hideUserSearchbarNewChannel(){
     let showContainerSearch: HTMLElement | null = document.getElementById('new-channel-search-user');
     showContainerSearch?.classList.add('hide');
@@ -105,11 +106,18 @@ export class DialogNewChannelComponent {
     if(inputSearchUser != null){
       inputSearchUser.value = null;
     }
+    this.filteredUser = [];
+    this.addedUser = [];
   }
   
   showUserSearchbarNewChannel(){
     let showContainerSearch: HTMLElement | null = document.getElementById('new-channel-search-user');
     showContainerSearch?.classList.remove('hide');
+  }
+
+  // filter searched user
+  get searchInputForm() {
+    return this.searchUserForm.get('searchInputForm');
   }
 
   async searchForUser(){
@@ -119,10 +127,14 @@ export class DialogNewChannelComponent {
     const getColl = await this.firestoreService.setGetColl();
     this.filteredUser = [];
     
-    if(inputValue.length > 1){
+    if(this.isCheckedMinLetter(inputValue)){
       this.getAllUser(allUser, getColl);
       this.filterAllUser(allUser, inputValue);
     }
+  }
+
+  isCheckedMinLetter(inputValue:string){
+    return inputValue.length > 1
   }
 
   getAllUser(allUser:User[], getColl:any){
@@ -132,18 +144,32 @@ export class DialogNewChannelComponent {
   }
 
   filterAllUser(allUser:User[], inputValue:string){
-    
     allUser.forEach((user) => {
       let userName = user.name.toLowerCase();
-      if(userName.includes(inputValue)){
-        console.log(user.name);
+      if(this.isFilteredUser(userName, inputValue)){
         this.filteredUser.push(user);
       }
     })
   }
 
-  get searchInputForm() {
-    return this.searchUserForm.get('searchInputForm');
+  isFilteredUser(userName:any, inputValue:string){
+    return userName.includes(inputValue) && 
+    !userName.includes(this.currentUser.name)
+  }
+
+  // store searched user
+  addFilteredUser(user:User){
+    const input:any = document.getElementById('searchbar-user');
+    input.value = null;
+    this.filteredUser = [];
+    this.addedUser.push(user);
+  }
+
+  removeUser(user:User){
+    let addedUserIndex = this.addedUser.indexOf(user);
+    if(addedUserIndex >= 0) {
+      this.addedUser.splice(addedUserIndex, 1);
+    }
   }
 
   closeMenu() {
