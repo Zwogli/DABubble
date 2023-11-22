@@ -31,7 +31,6 @@ export class AuthService {
     public afAuth: AngularFireAuth
   ) {
     this.getCurrentUser();
-    console.log('Auth');
   }
 
   signIn(email: string, password: string) {

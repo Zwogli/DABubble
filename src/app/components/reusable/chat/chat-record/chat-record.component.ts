@@ -54,7 +54,6 @@ export class ChatRecordComponent implements OnInit {
   }
 
   loadChatRecord() {
-    console.log('In load' + this.chatRecordId);
     this.fireService.startSubChat(this.chatRecordId);
     this.fireService.singleChatRecord$
       .pipe(takeUntil(this.componentIsDestroyed$))
