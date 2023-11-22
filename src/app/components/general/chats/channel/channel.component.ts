@@ -1,10 +1,16 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Unsubscribe } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  Subscription,
+  Unsubscribable,
+  takeUntil,
+} from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
-import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -15,11 +21,13 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 })
 export class ChannelComponent implements OnInit {
   private componentIsDestroyed$ = new Subject<boolean>();
-  public currentUser!: User;
+  public currentUser!: Observable<User>;
   public currentChannel!: Channel;
   public chatRecord!: Message[];
   public selectedMsg!: Message | null;
   public today: Date = new Date();
+
+  unsubCurrentUser!: Subscription;
 
   constructor(
     private fireService: FirestoreService,
@@ -27,28 +35,23 @@ export class ChannelComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private changeDetector: ChangeDetectorRef
-  ) {}
+  ) {
+    this.currentUser = this.fireService.currentUser$;
+  }
 
   ngOnInit() {
     this.setChatRecordId();
-    this.setCurrentUser();
-  }
-
-  setCurrentUser() {
-    this.fireService.currentUser$.subscribe((user) => {
-      this.currentUser = user;
-    });
-  }
-
-  ngAfterViewChecked() {
-    // Prevents initial scroll-state on chat div to throw err
-    this.changeDetector.detectChanges();
   }
 
   ngOnDestroy() {
     this.fireService.unsubChatRecord();
     this.componentIsDestroyed$.next(true);
     this.componentIsDestroyed$.complete();
+  }
+
+  ngAfterViewChecked() {
+    // Prevents initial scroll-state on chat div to throw err
+    this.changeDetector.detectChanges();
   }
 
   async setChatRecordId() {

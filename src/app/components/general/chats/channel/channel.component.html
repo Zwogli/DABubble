@@ -1,6 +1,9 @@
 <app-navbar-header-mobile></app-navbar-header-mobile>
 
-<app-chat-sub-header [type]="'channel'" [channel]="currentChannel"></app-chat-sub-header>
+<app-chat-sub-header
+  [type]="'channel'"
+  [channel]="currentChannel"
+></app-chat-sub-header>
 
 <main>
   <section
@@ -45,7 +48,6 @@
         </button>
         <button
           (click)="startThread(message)"
-          
           mat-icon-button
           aria-label="Icon button with a chat bubble"
         >
@@ -62,7 +64,9 @@
       <!-- ========== Message itself ========== -->
       <div
         class="message"
-        [ngClass]="{ message__self: message.sentById === currentUser.id }"
+        [ngClass]="{
+          message__self: message.sentById === (currentUser | async)?.id
+        }"
         (click)="toggleMsgMenu(message)"
       >
         <div class="message__avatar-container">
