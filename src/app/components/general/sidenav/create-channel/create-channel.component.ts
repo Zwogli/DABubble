@@ -14,7 +14,6 @@ export class CreateChannelComponent {
   private subscription: Subscription;
   showMenu: boolean = false;
   err_hash:boolean = false
-  // newChannelDescription:string = '';
   createChannelForm = new FormGroup({
     channelNameForm: new FormControl('', [
       Validators.required,

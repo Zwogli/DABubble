@@ -230,7 +230,6 @@ export class FirestoreService {
  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create new channel all user
 
   async checkChannelExist(channel: string) {
-    console.log(channel);
     this.channelAlreadyExist = false;
     let q = query(collection(this.firestore, 'channels'), 
       where('name', '==', channel));
@@ -240,7 +239,7 @@ export class FirestoreService {
         this.channelAlreadyExist = true;
         console.error('Channel name exist already!');
       } 
-      });
+    });
   }
 
   async getAllUser(){
