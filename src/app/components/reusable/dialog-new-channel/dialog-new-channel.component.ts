@@ -64,8 +64,6 @@ export class DialogNewChannelComponent {
   resetVariables(){
     this.firestoreService.allUserAsMember = [];
     this.firestoreService.newChannelRefId = '';
-    console.log('array & ID ', this.firestoreService.allUserAsMember, this.firestoreService.newChannelRefId);
-    
   }
   
   hideUserSearchbarNewChannel(){

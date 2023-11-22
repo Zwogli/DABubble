@@ -43,7 +43,7 @@
         <div class="container__btn">
             <button 
             class="btn__submit"
-            (click)="openMenu()"
+            (click)="openUserSelection()"
             [disabled]="createChannelForm.invalid || this.firestoreService.channelAlreadyExist || err_hash"
             [class.btn-disabled]="createChannelForm.invalid || this.firestoreService.channelAlreadyExist || err_hash"
             >

@@ -34,6 +34,10 @@ export class CreateChannelComponent {
         });
     }
 
+  get channelNameForm() {
+    return this.createChannelForm.get('channelNameForm');
+  }
+
   inputCreateChannel(){
     const input:any = document.getElementById('create-channel');
     let inputValue = input.value;
@@ -42,40 +46,48 @@ export class CreateChannelComponent {
   }
 
   checkInput(inputValue:string, sliceFirstLetter:string){
-    if(inputValue === ''){
-      this.err_hash = false;
-      this.firestoreService.channelAlreadyExist = false;
-    }else if(sliceFirstLetter != '#'){
-      this.errorInput();
+    if(this.isEmptyString(inputValue)){
+      this.resetErrorMsg();
+    }else if(this.isMissedHashtag(sliceFirstLetter)){
+      this.errorMsgMissedHashtag();
     }else{
-      this.err_hash = false;
-      let newChannelName = inputValue.slice(1);
-      this.firestoreService.checkChannelExist(newChannelName)
-      this.firestoreService.newChannelName = newChannelName;
+      this.createChannel(inputValue);
     }
+  }
+
+  isEmptyString(value:string){
+    return value === '';
+  }
+
+  resetErrorMsg(){
+    this.err_hash = false;
+    this.firestoreService.channelAlreadyExist = false;
+  }
+
+  isMissedHashtag(firstLetter:string){
+    return firstLetter != '#';
+  }
+
+  errorMsgMissedHashtag(){
+    this.err_hash = true;
+    console.error('Error forgot hashtag "#"');
+  }
+
+  createChannel(value:string){
+    this.err_hash = false;
+    let newChannelName = value.slice(1);
+    this.firestoreService.checkChannelExist(newChannelName)
+    this.firestoreService.newChannelName = newChannelName;
+  }
+
+  openUserSelection(){
+    this.manageDescription();
+    this.navbarService.menuSlideUp('menuCreateChannel');
   }
 
   manageDescription(){
     let desciptionInput: any = document.getElementById('channel-desciption');
     let description = desciptionInput.value;
-    if(description === ''){
-      this.firestoreService.newChannelDescription = '';
-    }else{
-      this.firestoreService.newChannelDescription = description
-    }
-  }
-
-  errorInput(){
-    this.err_hash = true;
-    return console.error('Error forgot hashtag "#"');
-  }
-
-  get channelNameForm() {
-    return this.createChannelForm.get('channelNameForm');
-  }
-
-  openMenu(){
-    this.manageDescription();
-    this.navbarService.menuSlideUp('menuCreateChannel');
+    this.firestoreService.newChannelDescription = description
   }
 }

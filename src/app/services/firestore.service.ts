@@ -31,8 +31,6 @@ import { Chat } from '../models/chat.class';
 export class FirestoreService {
   firestore: Firestore = inject(Firestore);
   chatFilteredUserIds: string[] = [];
-  allUserAsMember: User[] = [];
-  newChannelRefId!:string;
 
   // variable item to observe
   currentUser!: User;
@@ -40,7 +38,6 @@ export class FirestoreService {
   privateChats: Chat[] = [];
   chatUserData: User[] = [];
   singleChatRecord: Message[] = [];
-
   // subject item
   private currentUserSubject = new BehaviorSubject<User>(this.currentUser);
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
@@ -49,24 +46,25 @@ export class FirestoreService {
   private singleChatRecordSubject = new BehaviorSubject<any>(
     this.singleChatRecord
   );
-
   // observable item
   currentUser$ = this.currentUserSubject.asObservable();
   channelsArray$ = this.channelsArraySubject.asObservable();
   privateChats$ = this.privateChatsSubject.asObservable();
   chatUserData$ = this.chatUserDataSubject.asObservable();
   singleChatRecord$ = this.singleChatRecordSubject.asObservable();
-
   // unsub item
   unsubCurrentUser!: Unsubscribe;
-
+  // sign up 
   currentSignUpData: any = [];
   currentSignUpId: any = (125478986565 * Math.random()).toFixed(0);
   existingEmail: number = 0;
   emailAlreadyExist = false;
+  // create channel
   channelAlreadyExist:boolean = false;
   newChannelName:string = '';
   newChannelDescription:string = '';
+  allUserAsMember: User[] = [];
+  newChannelRefId!:string;
 
   unsubChatRecord!: Unsubscribe;
   unsubChatUser!: Unsubscribe;
@@ -100,6 +98,8 @@ export class FirestoreService {
   startSubUser(docId: string) {
     this.unsubCurrentUser = this.subCurrentUser(docId);
   }
+
+  //>>>>>>>>>>>>>>>>>>>>>read chats from user
 
   getChatsFromCurrentUser() {
     onSnapshot(query(collection(this.firestore, 'privateChat'), //select database, collection
@@ -148,6 +148,9 @@ export class FirestoreService {
         });
   }
 
+  //>>>>>>>>>>>>>>>>>>>>>read chats from user END
+  //>>>>>>>>>>>>>>>>>>>>>read channels from user
+
   getChannelsFromCurrentUser() {
     return onSnapshot(  //listen to a document, by change updates the document snapshot.
       query(//create a query against the collection.
@@ -165,6 +168,8 @@ export class FirestoreService {
       }
     );
   }
+
+  //>>>>>>>>>>>>>>>>>>>>>read channels from user END
 
   startSubChat(docId: string) {
     this.unsubChatRecord = this.subChatRecord(docId);
@@ -222,6 +227,22 @@ export class FirestoreService {
     });
   }
 
+ //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create new channel all user
+
+  async checkChannelExist(channel: string) {
+    console.log(channel);
+    this.channelAlreadyExist = false;
+    let q = query(collection(this.firestore, 'channels'), 
+      where('name', '==', channel));
+    let querySnapshot = await getDocs(q);
+    querySnapshot.forEach((existChannel:any) => {
+      if (existChannel.data().name == channel) {
+        this.channelAlreadyExist = true;
+        console.error('Channel name exist already!');
+      } 
+      });
+  }
+
   async getAllUser(){
     this.allUserAsMember = [];
     const collRef = collection(this.firestore, "user");
@@ -270,6 +291,8 @@ export class FirestoreService {
     });
   }
 
+  //>>>>>>>>>>>>>>>>>>create new channel all user END
+
   async addNewChannelWithSingleUser(uid:string){
     // await setDoc(doc(this.firestore, 'privateChat', uid), {
     //   id: uid,
@@ -277,6 +300,7 @@ export class FirestoreService {
     //   chatRecord: '',
     // });
   }
+
 
   async checkSignUpEmail(email: string) {
     return onSnapshot(
@@ -291,20 +315,6 @@ export class FirestoreService {
         }
       }
     );
-  }
-
-  async checkChannelExist(channel: string) {
-    return onSnapshot(
-      query(collection(this.firestore, 'channels'), where('name', '==', channel)),
-      (existChannel) => {
-        if (existChannel.docs.length == 1) {
-            this.channelAlreadyExist = true;
-            console.error('Channel name exist already!');
-          } else {
-            this.channelAlreadyExist = false;
-            // console.log('DOESNT EXIST');
-          }
-      });
   }
 
   getCleanJson(data: Message, doc: any):{} {
