@@ -21,11 +21,11 @@ export class DialogNewChannelComponent {
     ]),
   });
   filteredUser:User[] = [];
-  addedUser:User[] = [];
+  // addedUser:User[] = [];
 
   constructor(
     private authService: AuthService,
-    private firestoreService:FirestoreService,
+    public firestoreService:FirestoreService,
     private navbarService: NavbarService, 
     public router: Router,
   ){}
@@ -56,13 +56,12 @@ export class DialogNewChannelComponent {
     if(this.isNotNull(radio)){
 
       if(this.isSelectAllUser(radio)){
-        this.renderAllUserIntoNewChannel();
+        await this.firestoreService.getAllUser();
+        this.createNewChannel();
       }else 
       if(this.isSelectSingleUser(radio)){
-        this.addedUser.push(this.currentUser)
-        console.log('Add single user');
-        
-      //   this.firestoreService.addNewChannelWithSingleUser(this.currentUser.id);
+        this.firestoreService.usersAsMemberChache.push(this.currentUser)
+        this.createNewChannel();
       }
     }else{
       console.error('You have not selected anything');
@@ -81,8 +80,7 @@ export class DialogNewChannelComponent {
     return selection.id == 'radioSingleUser';
   }
 
-  async renderAllUserIntoNewChannel(){
-    await this.firestoreService.getAllUser();
+  async createNewChannel(){
     await this.firestoreService.addNewChannel(this.currentUser.id);
     await this.firestoreService.updateUsers();
     this.router.navigate(['home/', this.firestoreService.newChannelRefId]);
@@ -90,7 +88,7 @@ export class DialogNewChannelComponent {
   }
 
   resetVariables(){
-    this.firestoreService.allUserAsMember = [];
+    this.firestoreService.usersAsMemberChache = [];
     this.firestoreService.newChannelRefId = '';
   }
   
@@ -107,7 +105,7 @@ export class DialogNewChannelComponent {
       inputSearchUser.value = null;
     }
     this.filteredUser = [];
-    this.addedUser = [];
+    this.firestoreService.usersAsMemberChache = [];
   }
   
   showUserSearchbarNewChannel(){
@@ -157,18 +155,18 @@ export class DialogNewChannelComponent {
     !userName.includes(this.currentUser.name)
   }
 
-  // store searched user
+  // push searched user
   addFilteredUser(user:User){
     const input:any = document.getElementById('searchbar-user');
     input.value = null;
     this.filteredUser = [];
-    this.addedUser.push(user);
+    this.firestoreService.usersAsMemberChache.push(user);
   }
 
   removeUser(user:User){
-    let addedUserIndex = this.addedUser.indexOf(user);
+    let addedUserIndex = this.firestoreService.usersAsMemberChache.indexOf(user);
     if(addedUserIndex >= 0) {
-      this.addedUser.splice(addedUserIndex, 1);
+      this.firestoreService.usersAsMemberChache.splice(addedUserIndex, 1);
     }
   }
 

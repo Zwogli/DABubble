@@ -63,7 +63,7 @@ export class FirestoreService {
   channelAlreadyExist:boolean = false;
   newChannelName:string = '';
   newChannelDescription:string = '';
-  allUserAsMember: User[] = [];
+  usersAsMemberChache: User[] = [];
   newChannelRefId!:string;
   searchedUser: User[] = [];
 
@@ -228,7 +228,7 @@ export class FirestoreService {
     });
   }
 
- //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create new channel all user
+ //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create new channel
 
   async checkChannelExist(channel: string) {
     this.channelAlreadyExist = false;
@@ -244,12 +244,12 @@ export class FirestoreService {
   }
 
   async getAllUser(){
-    this.allUserAsMember = [];
+    this.usersAsMemberChache = [];
     const collRef = collection(this.firestore, "user");
     const getColl = await getDocs(collRef);
 
     getColl.forEach((user:any) => {
-      this.allUserAsMember.push(user.data())
+      this.usersAsMemberChache.push(user.data())
     });
   }
 
@@ -258,7 +258,7 @@ export class FirestoreService {
     const newChannelRef = doc(collection(this.firestore, 'channels'));
     this.newChannelRefId = newChannelRef.id
     let memberId:string[] = [];
-    this.allUserAsMember.filter((user) => 
+    this.usersAsMemberChache.filter((user) => 
       memberId.push(user.id));
     await setDoc(newChannelRef, this.getNewChannelCleanJson(uId, memberId));
   }
@@ -274,10 +274,9 @@ export class FirestoreService {
       name: this.newChannelName,
     }
     }
-
     
   async updateUsers(){
-    this.allUserAsMember.forEach((user) => {
+    this.usersAsMemberChache.forEach((user) => {
       this.updateMemberInChanel(user);      
     })
   }
@@ -290,36 +289,12 @@ export class FirestoreService {
       memberInChannel: newMembership,
     });
   }
-
-  //>>>>>>>>>>>>>>>>>>create new channel all user END
-  //>>>>>>>>>>>>>>>>>>create new channel single user
-
+  
   async setGetColl(){
     const collRef = collection(this.firestore, "user");
     return await getDocs(collRef);
   }
-
-  // async searchForUser(searchedName: string) {
-  //   this.searchedUser = [];
-  //   let q = query(collection(this.firestore, 'user'), 
-  //     where('name', 'array-contains-any', searchedName));
-  //   let querySnapshot = await getDocs(q);
-
-  //   querySnapshot.forEach((existUser:any) => {
-  //     console.log('firestore single User', existUser.data());
-      
-  //       // this.searchedUser.push()
-  //   });
-  // }
-
-  async addNewChannelWithSingleUser(uid:string){
-    // await setDoc(doc(this.firestore, 'privateChat', uid), {
-    //   id: uid,
-    //   chatBetween: [uid],
-    //   chatRecord: '',
-    // });
-  }
-
+  //>>>>>>>>>>>>>>>>>>create new channel all user END
 
   async checkSignUpEmail(email: string) {
     return onSnapshot(

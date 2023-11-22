@@ -73,17 +73,18 @@
 
                     <div id="added-user"
                     class="container__user"
-                    *ngFor="let user of this.addedUser">
+                    *ngFor="let user of this.firestoreService.usersAsMemberChache">
 
-                    <div class="container__user--avatar">
-                        <img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
+                    <div *ngIf="user != this.currentUser" class="container__user--avatar">
+                        <img class="avatar-small" src="{{ user.photoUrl }}" alt="avatar">
                         <span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
                     </div>
 
-                    <p>{{ user.name }}</p>
+                    <p *ngIf="user != this.currentUser">{{ user.name }}</p>
 
                     <span class="material-icons-outlined close__element"
-                    (click)="removeUser(user)">
+                    (click)="removeUser(user)"
+                    *ngIf="user != this.currentUser">
                      close 
                     </span>
 
