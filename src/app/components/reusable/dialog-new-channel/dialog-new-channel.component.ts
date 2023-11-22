@@ -83,6 +83,7 @@ export class DialogNewChannelComponent {
   async createNewChannel(){
     await this.firestoreService.addNewChannel(this.currentUser.id);
     await this.firestoreService.updateUsers();
+    this.navbarService.toggleOverlay();
     this.router.navigate(['home/', this.firestoreService.newChannelRefId]);
     this.resetVariables();
   }

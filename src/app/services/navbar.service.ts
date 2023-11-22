@@ -31,7 +31,6 @@ export class NavbarService {
     activMenu?.classList.remove('slide--up');
     activMenu?.classList.add('slide--down');
 
-
     activMenu?.classList.add('slide--up');
     this.selectedMenu = '';
   }
