@@ -65,6 +65,7 @@ export class FirestoreService {
   newChannelDescription:string = '';
   allUserAsMember: User[] = [];
   newChannelRefId!:string;
+  searchedUser: User[] = [];
 
   unsubChatRecord!: Unsubscribe;
   unsubChatUser!: Unsubscribe;
@@ -291,6 +292,25 @@ export class FirestoreService {
   }
 
   //>>>>>>>>>>>>>>>>>>create new channel all user END
+  //>>>>>>>>>>>>>>>>>>create new channel single user
+
+  async setGetColl(){
+    const collRef = collection(this.firestore, "user");
+    return await getDocs(collRef);
+  }
+
+  // async searchForUser(searchedName: string) {
+  //   this.searchedUser = [];
+  //   let q = query(collection(this.firestore, 'user'), 
+  //     where('name', 'array-contains-any', searchedName));
+  //   let querySnapshot = await getDocs(q);
+
+  //   querySnapshot.forEach((existUser:any) => {
+  //     console.log('firestore single User', existUser.data());
+      
+  //       // this.searchedUser.push()
+  //   });
+  // }
 
   async addNewChannelWithSingleUser(uid:string){
     // await setDoc(doc(this.firestore, 'privateChat', uid), {

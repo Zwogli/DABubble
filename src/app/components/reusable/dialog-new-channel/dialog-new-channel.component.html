@@ -39,11 +39,38 @@
                 <label for="radioSingleUser">Add certain people</label>
             </div>
 
-            <div id="new-channel-search-user" class="container__search hide">
-                <input type="text" placeholder="Enter Name">
+            <form [formGroup]="searchUserForm">
+                <div id="new-channel-search-user" class="container__search hide">
+                    <input 
+                    id="searchbar-user"
+                    (keyup)="searchForUser()"
+                    formControlName="searchInputForm"
+                    type="text" 
+                    placeholder="Enter Name"
+                    >
 
-                <div id="added-user"></div>
-            </div>
+                    <div class="block__alert" *ngIf="searchInputForm?.invalid && (searchInputForm?.dirty || searchInputForm?.touched)">
+                        <div *ngIf="searchInputForm?.errors?.['minlength']">*Please use at least 2 characters.</div>
+                    </div>
+
+                    <div 
+                    id="filtered-user" 
+                    class="container__filteredUser"
+                    *ngFor="let user of this.filteredUser"
+                    >
+                        <div class="container__user">
+                            <div class="container__user--avatar">
+                                <img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
+                                <span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
+                            </div>
+
+                            <p>{{ user.name }}</p>
+                        </div>
+                    </div>
+
+                    <div id="added-user"></div>
+                </div>
+            </form>
         </div>
 
         <div class="container__btn--right">

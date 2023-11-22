@@ -2,7 +2,6 @@
 
 .mobile__menu {
   width: calc(100dvw - 52px);
-  max-height: 300px;
   padding: 30px 26px 30px 26px;
   background-color: var(--color-white);
   position: absolute;
@@ -87,6 +86,58 @@ menu-newChat
     @include input_radio;
   }
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+filtered user
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+  .container__filteredUser{
+    margin-left: 20px;
+    width: 60%;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 1rem 2rem;
+    border: 1px solid var(--color-blue-border);
+    border-radius: 0px 20px 20px 20px;
+  }
+  .container__user{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    &:hover{
+      padding-right: 20px;
+      background-color: var(--color-blue-bg);
+      border-radius: 35px;
+    }
+
+    p{
+      margin-bottom: unset;
+    }
+
+    &--avatar{
+      height: 50px;
+      width: 50px;
+      position: relative;
+      .onlinestatus {
+        height: 14px;
+        width: 14px;
+    
+        border: 2px solid var(--color-white);
+        border-radius: 100%;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        z-index: 1;
+        &--color-false {
+          background-color: var(--color-grey-primary-disable);
+        }
+        &--color-true {
+          background-color: var(--color-green);
+        }
+      }
+    }
+  }
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 animation
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 .slide--up {
@@ -115,3 +166,14 @@ animation
       transform: translateY(300px);
     }
   }
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+show / hide
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.hide{
+  display: none;
+}
+
+.block__alert {
+  color: var(--color-purple-error);
+  font-size: 0.667rem;
+}
