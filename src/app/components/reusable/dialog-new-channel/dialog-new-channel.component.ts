@@ -21,7 +21,7 @@ export class DialogNewChannelComponent {
     ]),
   });
   filteredUser:User[] = [];
-  // addedUser:User[] = [];
+  alreadyFiltered:boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -125,7 +125,6 @@ export class DialogNewChannelComponent {
     let allUser:User[] = [];
     const getColl = await this.firestoreService.setGetColl();
     this.filteredUser = [];
-    
     if(this.isCheckedMinLetter(inputValue)){
       this.getAllUser(allUser, getColl);
       this.filterAllUser(allUser, inputValue);
@@ -145,13 +144,13 @@ export class DialogNewChannelComponent {
   filterAllUser(allUser:User[], inputValue:string){
     allUser.forEach((user) => {
       let userName = user.name.toLowerCase();
-      if(this.isFilteredUser(userName, inputValue)){
+      if(this.isFilteredUser(user ,userName, inputValue)){
         this.filteredUser.push(user);
       }
     })
   }
 
-  isFilteredUser(userName:any, inputValue:string){
+  isFilteredUser(user:User, userName:any, inputValue:string){
     return userName.includes(inputValue) && 
     !userName.includes(this.currentUser.name)
   }
@@ -161,7 +160,23 @@ export class DialogNewChannelComponent {
     const input:any = document.getElementById('searchbar-user');
     input.value = null;
     this.filteredUser = [];
-    this.firestoreService.usersAsMemberChache.push(user);
+    this.alreadyFiltered = false;
+    this.isAlreadyFiltered(user)
+    if(this.alreadyFiltered){
+      console.error('User already added', this.alreadyFiltered);
+    }else{
+      this.firestoreService.usersAsMemberChache.push(user);
+    }
+  }
+
+  isAlreadyFiltered(user:User){
+    this.firestoreService.usersAsMemberChache.forEach((user)=>{
+      if(user === user){
+        this.alreadyFiltered = true;
+      }else{
+        this.alreadyFiltered = false;
+      }
+    })
   }
 
   removeUser(user:User){

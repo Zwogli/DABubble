@@ -101,6 +101,7 @@ filtered user
     padding: 1rem 2rem;
     border: 1px solid var(--color-blue-border);
     border-radius: 0px 20px 20px 20px;
+    cursor: pointer;
   }
   .container__user{
     max-height: 200px;
@@ -115,6 +116,7 @@ filtered user
     display: flex;
     align-items: center;
     gap: 1rem;
+    cursor: default;
 
     &:hover{
       width: fit-content;

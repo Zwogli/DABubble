@@ -49,6 +49,8 @@
                     placeholder="Enter Name"
                     >
 
+                    <label *ngIf="this.alreadyFiltered" for="searchbar-user" class="block__alert">*User already added</label>
+
                     <div class="block__alert" *ngIf="searchInputForm?.invalid && (searchInputForm?.dirty || searchInputForm?.touched)">
                         <div *ngIf="searchInputForm?.errors?.['minlength']">*Please use at least 2 characters.</div>
                     </div>
