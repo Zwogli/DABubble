@@ -20,6 +20,23 @@
 input[type=text] {
   @include input_text;
 }
+.orientation {
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      width: 62px;
+      display: flex;
+      border-radius: 23px;
+      border: 3px solid var(--color-grey-bar);
+      cursor: pointer;
+    }
+  }
+}
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 menu-newChat
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/

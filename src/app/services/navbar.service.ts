@@ -15,7 +15,6 @@ export class NavbarService {
 
   menuSlideUp(selectedMenu:string){
     this.selectedMenu = selectedMenu
-    // let menu: HTMLElement | null = document.getElementById('menu');
     let activMenu: HTMLElement | null = document.getElementById(this.selectedMenu);
 
     this.toggleOverlay();
