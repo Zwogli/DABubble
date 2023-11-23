@@ -67,7 +67,7 @@ menu-newChat
   
     .container__search{
       margin-top: 0.5rem;
-      // display: flex;
+      position: relative;
       flex-direction: column;
       gap: 0.5rem;
     }
@@ -92,6 +92,9 @@ filtered user
     margin-left: 20px;
     width: 60%;
     max-height: 400px;
+    position: absolute;
+    z-index: 5;
+    background-color: var(--color-white);
     display: flex;
     flex-direction: column;
     gap: 15px;
