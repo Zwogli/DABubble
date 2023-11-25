@@ -2,7 +2,7 @@
 
 .mobile__menu {
   width: calc(100dvw - 52px);
-  max-height: 300px;
+  min-height: 300px;
   padding: 30px 26px 30px 26px;
   background-color: var(--color-white);
   position: absolute;
@@ -37,13 +37,98 @@ menu-newChat
     justify-content: flex-end;
     align-items: flex-end;
     gap: 1rem;
-    input[type=text] {
-      margin-bottom: 0.25rem;
-    }
-    button {
-      @include btn_primary;
+  }
+  button {
+    @include btn_primary;
+  }
+  /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+filtered user
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.container__search{
+  margin-top: 0.5rem;
+  width: 100%;
+  position: relative;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.container__filteredUser{
+  margin-left: 20px;
+  width: 60%;
+  max-height: 400px;
+  position: absolute;
+  z-index: 5;
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 1rem 2rem;
+  border: 1px solid var(--color-blue-border);
+  border-radius: 0px 20px 20px 20px;
+  cursor: pointer;
+}
+.container__user{
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.container__user-Elements, .container__user-Elements--selected{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: default;
+
+  &:hover{
+    width: fit-content;
+    padding-right: 20px;
+    background-color: var(--color-blue-bg);
+    border-radius: 35px;
+  }
+
+  p{
+    margin-bottom: unset;
+  }
+
+  &--avatar{
+    height: 50px;
+    width: 50px;
+    position: relative;
+    .onlinestatus {
+      height: 14px;
+      width: 14px;
+  
+      border: 2px solid var(--color-white);
+      border-radius: 100%;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: 1;
+      &--color-false {
+        background-color: var(--color-grey-primary-disable);
+      }
+      &--color-true {
+        background-color: var(--color-green);
+      }
     }
   }
+}
+.input__label{
+position: relative;
+}
+
+.container__user-Elements--selected{
+  position: absolute;
+  top: 8.5px;
+  width: fit-content;
+  margin-left: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: var(--color-blue-bg);
+  border-radius: 35px;
+}
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 animation
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
