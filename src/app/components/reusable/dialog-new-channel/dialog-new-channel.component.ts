@@ -194,6 +194,9 @@ export class DialogNewChannelComponent {
       radioBtnAll.checked = true;
     }
     this.hideUserSearchbarNewChannel();
+    setTimeout(() => {
+      this.navbarService.toggleOverlay();
+    }, 250);
     this.navbarService.menuSlideDown();
   }
 }

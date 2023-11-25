@@ -28,6 +28,9 @@ export class DialogProfilMenuComponent {
   }
 
   closeMenu() {
+    setTimeout(() => {
+      this.navbarService.toggleOverlay();
+    }, 250);
     this.navbarService.menuSlideDown();
   }
 }

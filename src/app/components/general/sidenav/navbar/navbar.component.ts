@@ -34,6 +34,9 @@ export class NavbarComponent {
   }
   
   closeMenu(){
+    setTimeout(() => {
+      this.navbarService.toggleOverlay();
+    }, 250);
     this.navbarService.menuSlideDown();
   }
 

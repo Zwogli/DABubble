@@ -24,9 +24,6 @@ export class NavbarService {
 
   menuSlideDown(){
     let activMenu: HTMLElement | null = document.getElementById(this.selectedMenu);
-    setTimeout(() => {
-      this.toggleOverlay();
-    }, 250);
     activMenu?.classList.remove('slide--up');
     activMenu?.classList.add('slide--down');
 

@@ -16,6 +16,9 @@ export class DialogNewChatComponent {
   ){}
 
   closeMenu() {
+    setTimeout(() => {
+      this.navbarService.toggleOverlay();
+    }, 250);
     this.navbarService.menuSlideDown();
   }
 }
