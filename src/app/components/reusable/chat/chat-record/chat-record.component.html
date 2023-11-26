@@ -69,7 +69,7 @@
           <div class="message__footer-last-timestamp">
             <span>Letzte Antwort</span>
             <span>
-              {{ message.thread.lastAnswer.toDate() | date : "EEEE hh:mm" }}
+              {{ message.thread.lastAnswer.toDate() | date : "shortTime" }}
               Uhr</span
             >
           </div>

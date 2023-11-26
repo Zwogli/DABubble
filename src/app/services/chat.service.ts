@@ -24,14 +24,13 @@ export class ChatService implements OnInit {
   public leadingThreadMsg!: any;
   public leadingThreadMsgId!: string;
   public channelId!: string;
+  public chatRecordId!: string;
 
   public threadParentChatRecordId!: string;
 
-  public chatRecordId!: string;
   private chatRecordIdSubject = new Subject<string>();
   chatRecordIdChanged$ = this.chatRecordIdSubject.asObservable();
 
-  private threadChatRecordId!: string;
   private threadChatRecordSubject = new Subject<string>();
   threadChatRecordIdChanged$ = this.threadChatRecordSubject.asObservable();
 
@@ -50,6 +49,10 @@ export class ChatService implements OnInit {
     await this.addNewChatRecord('thread', this.chatRecordId, msgId);
     // await this.setLeadingMsg(msgId);
     this.router.navigate(['/thread/', msgId, this.channelId]);
+  }
+
+  openThread(msg: Message, channelId: string) {
+    this.router.navigate(['/thread/', msg.id, channelId]);
   }
 
   async setLeadingMsg(msgId: string, parentChatRecordId: string) {

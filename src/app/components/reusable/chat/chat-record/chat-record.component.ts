@@ -6,8 +6,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, takeUntil } from 'rxjs';
+import { chatTypes } from 'src/app/interfaces/chats/types';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
 import { ChatService } from 'src/app/services/chat.service';
@@ -21,6 +22,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class ChatRecordComponent implements OnInit {
   @Input() chatRecordId!: string;
   @Input() currentUser!: User;
+  @Input() parentType!: chatTypes;
   @Output('startThread') startThread: EventEmitter<any> = new EventEmitter();
 
   public selectedMsg!: Message | null;
@@ -32,14 +34,22 @@ export class ChatRecordComponent implements OnInit {
   constructor(
     private fireService: FirestoreService,
     private chatService: ChatService,
-    private changeDetector: ChangeDetectorRef
-  ) { }
+    private changeDetector: ChangeDetectorRef,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.chatService.chatRecordIdChanged$.subscribe((chatRecordId) => {
-      this.chatRecordId = chatRecordId;
-      this.loadChatRecord();
-    });
+    if (this.parentType === 'thread') {
+      this.chatService.threadChatRecordIdChanged$.subscribe((chatRecordId) => {
+        this.chatRecordId = chatRecordId;
+        this.loadChatRecord();
+      });
+    } else {
+      this.chatService.chatRecordIdChanged$.subscribe((chatRecordId) => {
+        this.chatRecordId = chatRecordId;
+        this.loadChatRecord();
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -68,6 +78,8 @@ export class ChatRecordComponent implements OnInit {
       event.stopPropagation();
     }
     console.log('OpenThread');
+    const channelId = this.route.snapshot.paramMap.get('channelId')!;
+    this.chatService.openThread(msg, channelId);
   }
 
   toggleMsgMenu(msg: Message) {
