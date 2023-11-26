@@ -29,15 +29,13 @@ export class ChannelComponent implements OnInit {
   constructor(
     private fireService: FirestoreService,
     private route: ActivatedRoute,
-    private router: Router,
     private chatService: ChatService
   ) {
     this.setCurrentUser();
     this.setChatRecordId();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
@@ -52,7 +50,7 @@ export class ChannelComponent implements OnInit {
         .then((doc: any) => {
           this.chatRecordId = doc.chatRecord;
           this.currentChannel = doc;
-          this.chatService.setChatRecordId(doc.chatRecord)
+          this.chatService.setChatRecordId(doc.chatRecord);
         });
     }
   }
@@ -66,7 +64,10 @@ export class ChannelComponent implements OnInit {
   }
 
   startThread(msg: Message) {
-    this.chatService.setLeadingMsg(msg);
-    this.router.navigate(['/thread/', msg.id, this.currentChannel.id]);
+    this.chatService.startThreadFromChannel(
+      msg.id,
+      this.currentChannel.id,
+      this.currentChannel.chatRecord
+    );
   }
 }

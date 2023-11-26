@@ -7,7 +7,7 @@ export class Message {
   sentAt: any;
   thread: {
     id: string;
-    length: string;
+    length: number;
     lastAnswer: any;
   };
   reactedBy: {
@@ -24,7 +24,7 @@ export class Message {
     this.sentAt = '';
     this.thread = {
       id: '',
-      length: '',
+      length: 0,
       lastAnswer: '',
     };
     this.reactedBy = [];
