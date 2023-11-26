@@ -23,6 +23,8 @@ export class ChatService implements OnInit {
   public leadingThreadMsgId!: string;
   public channelId!: string;
 
+  public threadParentChatRecordId!: string;
+
   public chatRecordId!: string;
   private chatRecordIdSubject = new Subject<string>();
   chatRecordIdChanged$ = this.chatRecordIdSubject.asObservable();
@@ -33,9 +35,7 @@ export class ChatService implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   async startThreadFromChannel(
     msgId: string,
@@ -51,15 +51,16 @@ export class ChatService implements OnInit {
   }
 
   async setLeadingMsg(msgId: string, parentChatRecordId: string) {
+    this.threadParentChatRecordId = parentChatRecordId;
     const docRef = doc(
       this.firestore,
       'chatRecords',
-      parentChatRecordId,
+      this.threadParentChatRecordId,
       'messages',
       msgId
-    ); 
+    );
     console.log(docRef);
-    
+
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -95,7 +96,12 @@ export class ChatService implements OnInit {
 
     if (src === 'thread' && msgThread.length === 0) {
       await this.deleteChatRecord(msgThread.id);
-      this.deleteMsgChatRecordRef(this.chatRecordId, this.leadingThreadMsg.id);
+      console.log('before delete ref msg id is:', this.leadingThreadMsg.id);
+
+      this.deleteMsgChatRecordRef(
+        this.threadParentChatRecordId,
+        this.leadingThreadMsg.id
+      );
     }
 
     this.router.navigate(['/home/', this.channelId]);

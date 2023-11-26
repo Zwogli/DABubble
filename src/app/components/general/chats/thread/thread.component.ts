@@ -46,6 +46,7 @@ export class ThreadComponent implements OnInit {
   async setCurrentChannel() {
     const channelId = this.route.snapshot.paramMap.get('channelId');
     if (channelId) {
+      this.chatService.channelId = channelId;
       await this.fireService
         .getSingleDoc('channels', channelId)
         .then((doc: any) => {

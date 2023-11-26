@@ -27,6 +27,7 @@
     </div>
   </div>
   <app-chat-record
+    *ngIf="leadingMsg && leadingMsg.thread.length > 0"
     [chatRecordId]="chatRecordId"
     [currentUser]="currentUser"
   ></app-chat-record>
