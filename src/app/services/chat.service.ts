@@ -1,7 +1,7 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import { Message } from '../models/message.class';
 import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { chatTypes } from '../interfaces/chats/types';
 import {
   Firestore,
@@ -16,14 +16,14 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class ChatService {
+export class ChatService implements OnInit {
   firestore: Firestore = inject(Firestore);
 
   public leadingThreadMsg!: any;
   public leadingThreadMsgId!: string;
   public channelId!: string;
 
-  private chatRecordId!: string;
+  public chatRecordId!: string;
   private chatRecordIdSubject = new Subject<string>();
   chatRecordIdChanged$ = this.chatRecordIdSubject.asObservable();
 
@@ -31,7 +31,11 @@ export class ChatService {
   private threadChatRecordSubject = new Subject<string>();
   threadChatRecordIdChanged$ = this.threadChatRecordSubject.asObservable();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+
+  }
 
   async startThreadFromChannel(
     msgId: string,
@@ -41,44 +45,27 @@ export class ChatService {
     this.chatRecordId = chatRecordId;
     this.channelId = channelId;
     this.leadingThreadMsgId = msgId;
-    await this.setLeadingMsg(msgId);
     await this.addNewChatRecord('thread', this.chatRecordId, msgId);
+    // await this.setLeadingMsg(msgId);
     this.router.navigate(['/thread/', msgId, this.channelId]);
   }
 
-  async setLeadingMsg(msgId: string) {
+  async setLeadingMsg(msgId: string, parentChatRecordId: string) {
     const docRef = doc(
       this.firestore,
       'chatRecords',
-      this.chatRecordId,
+      parentChatRecordId,
       'messages',
       msgId
-    );
+    ); 
+    console.log(docRef);
+    
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log(docSnap.data());
+      console.log('LeadingMsg set as: ', docSnap.data());
       this.leadingThreadMsg = docSnap.data();
     }
-  }
-
-  async navigateBack(src: chatTypes) {
-    const msgThread = this.leadingThreadMsg.thread;
-
-    if (src === 'thread' && msgThread.length === 0) {
-      await this.deleteChatRecord(this.leadingThreadMsg.id);
-      this.deleteMsgChatRecordRef(this.chatRecordId, this.leadingThreadMsg.id);
-    }
-
-    this.router.navigate(['/home/', this.channelId]);
-  }
-
-  setChatRecordId(chatRecordId: string) {
-    this.chatRecordIdSubject.next(chatRecordId);
-  }
-
-  setThreadChatRecordId(chatRecordId: string) {
-    this.threadChatRecordSubject.next(chatRecordId);
   }
 
   async addNewChatRecord(
@@ -103,7 +90,28 @@ export class ChatService {
     }
   }
 
+  async navigateBack(src: chatTypes) {
+    const msgThread = this.leadingThreadMsg.thread;
+
+    if (src === 'thread' && msgThread.length === 0) {
+      await this.deleteChatRecord(msgThread.id);
+      this.deleteMsgChatRecordRef(this.chatRecordId, this.leadingThreadMsg.id);
+    }
+
+    this.router.navigate(['/home/', this.channelId]);
+  }
+
+  setChatRecordId(chatRecordId: string) {
+    this.chatRecordIdSubject.next(chatRecordId);
+  }
+
+  setThreadChatRecordId(chatRecordId: string) {
+    this.threadChatRecordSubject.next(chatRecordId);
+  }
+
   async deleteChatRecord(docId: string) {
+    console.log(docId);
+
     await deleteDoc(doc(this.firestore, 'chatRecords', docId));
   }
 
