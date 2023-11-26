@@ -3,7 +3,6 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/models/message.class';
 import { chatTypes } from 'src/app/interfaces/chats/types';
 import { ChatService } from 'src/app/services/chat.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-message-input',
@@ -17,15 +16,21 @@ export class MessageInputComponent {
 
   constructor(
     private fireService: FirestoreService,
-    private chatService: ChatService,
-    private route: ActivatedRoute
+    private chatService: ChatService
   ) {}
 
+
+  /**
+   * Sends the message to the corresponding chatRecord and checks if
+   * the given chatRecord is for a thread or not. If so, the meta data
+   * for the thread gets updated accordingly.
+   * 
+   */
   sendMessage() {
     const data = new Message(this.setMsgData());
     this.fireService.addMessage(this.currentChatId, data);
     this.msgPayload = '';
-    this.chatService.updateThreadMetaData();
+    this.checkParentType();
   }
 
   setMsgData() {
@@ -36,5 +41,11 @@ export class MessageInputComponent {
       sentByName: user.name,
       sentByPhotoUrl: user.photoUrl,
     };
+  }
+
+  checkParentType() {
+    if (this.parentChat === 'thread') {
+      this.chatService.updateThreadMetaData();
+    }
   }
 }
