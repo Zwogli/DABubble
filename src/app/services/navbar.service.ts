@@ -9,12 +9,14 @@ export class NavbarService {
   showMenuSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false) // behaviorSubject near a observable
   showMenu$: Observable<boolean> = this.showMenuSubject.asObservable();  // change behaviorSubject -> observable
   /** */
+  toggleOverlayNewChatSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  showOverlayNewChat$: Observable<boolean> = this.toggleOverlayNewChatSubject.asObservable();
   selectedMenu:string = '';
 
   constructor() { }
 
   menuSlideUp(selectedMenu:string){
-    this.selectedMenu = selectedMenu
+    this.selectedMenu = selectedMenu;
     let activMenu: HTMLElement | null = document.getElementById(this.selectedMenu);
 
     this.toggleOverlay();
@@ -29,6 +31,19 @@ export class NavbarService {
 
     activMenu?.classList.add('slide--up');
     this.selectedMenu = '';
+  }
+
+  manageOverlayNewChat(menuId:string){
+    this.toggleOverlayNewChat();
+    this.selectedMenu = menuId;
+    let activMenu: HTMLElement | null = document.getElementById(this.selectedMenu);
+    activMenu?.classList.remove('slide--down');
+    activMenu?.classList.add('slide--up');
+  }
+
+  toggleOverlayNewChat(){
+    const currentValue = this.toggleOverlayNewChatSubject.value;
+    this.toggleOverlayNewChatSubject.next(!currentValue);
   }
 
   toggleOverlay() {

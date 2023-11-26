@@ -71,7 +71,7 @@ export class NavbarPanelMessageComponent {
   }
   
   toggleNewChat(){
-    this.navbarService.menuSlideUp('menuNewChat');
+    this.navbarService.manageOverlayNewChat('menuNewChat');
   }
 
   rotateArrow() {

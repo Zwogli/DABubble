@@ -309,6 +309,7 @@ export class FirestoreService {
     const collRef = collection(this.firestore, "user");
     return await getDocs(collRef);
   }
+
   //>>>>>>>>>>>>>>>>>>create new channel all user END
 
   async checkSignUpEmail(email: string) {

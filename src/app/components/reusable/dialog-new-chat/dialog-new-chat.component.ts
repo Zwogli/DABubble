@@ -12,19 +12,27 @@ import { NavbarService } from 'src/app/services/navbar.service';
 })
 export class DialogNewChatComponent {
   @ViewChild('searchbarUser') searchbarUser!: ElementRef;
+  showOverlay: boolean = false;
+  private subscription: Subscription;
   currentUser!:User;
   allUsers!:User[];
   filteredUser:User[] = [];
   selectedUser:User[] = [];
   userSelected:boolean = true;
+  isAlreadyInChat:boolean = false;
   private currentUserIsDestroyed$ = new Subject<boolean>();
   private allUsersIsDestroyed$ = new Subject<boolean>();
 
   constructor(
     private authService: AuthService,
     private firestoreService:FirestoreService,
-    private navbarService: NavbarService,
-  ){}
+    public navbarService: NavbarService,
+  ){
+    this.subscription = this.navbarService.showOverlayNewChat$.subscribe(
+      visible => {
+        this.showOverlay = visible;
+      });
+  }
   
 //<<<<<<<<<<<<<<<< subscribe >>>>>>>>>>>>
   ngOnInit() {
@@ -57,7 +65,11 @@ export class DialogNewChatComponent {
 searchForUser(){
   let searchbarValue = this.searchbarUser.nativeElement.value.toLowerCase();
   this.filteredUser = [];
-  this.filterForUser(searchbarValue);
+  if(searchbarValue === null || searchbarValue === ""){
+    this.filteredUser = [];
+  }else{
+    this.filterForUser(searchbarValue);
+  }
 }
 
 filterForUser(inputName:string){
@@ -74,7 +86,7 @@ isCheckedInput(inputName:string, userName:string){
   !userName.includes(this.currentUser.name);
 }
 
-//<<<<<<<<<<<<<<<< slecet user >>>>>>>>>>>>
+//<<<<<<<<<<<<<<<< slecet add/remove user >>>>>>>>>>>>
   selectUser(user:User){
     this.selectedUser.push(user);
     this.filteredUser = [];
@@ -83,25 +95,40 @@ isCheckedInput(inputName:string, userName:string){
   }
 
   removeUser(){
-    let user = this.selectedUser[0];
-    let userIndexOf = this.selectedUser.indexOf(user);
-    this.selectedUser.splice(userIndexOf,1);
+    this.selectedUser = [];
     this.userSelected = true;
+    this.isAlreadyInChat = false;
   }
 
-
-
 submitNewChat(){
-  console.log('show all user', this.selectedUser);
-  this.selectedUser = [];
-  
+  this.isAlreadyInChat = false;
+  this.checkIsAlreadyInChat();
+  if(this.isAlreadyInChat){
+    console.error('Chat already excist');
+  }else{
+    this.selectedUser = [];
+    this.userSelected = true;
+  }
 }
+
+checkIsAlreadyInChat(){
+  let selectedUserId = this.selectedUser[0].id;
+  let allChatsUserData = this.firestoreService.chatUserData;
+  allChatsUserData.forEach((user) => {
+    if(user.id == selectedUserId){
+      this.isAlreadyInChat = true;
+    }
+  })
+}
+
+
 
 //<<<<<<<<<<<<<<<< manage overlay/menu >>>>>>>>>>>>
   closeMenu() {
     setTimeout(() => {
-      this.navbarService.toggleOverlay();
+      this.navbarService.toggleOverlayNewChat();
     }, 250);
     this.navbarService.menuSlideDown();
+    this.removeUser();
   }
 }

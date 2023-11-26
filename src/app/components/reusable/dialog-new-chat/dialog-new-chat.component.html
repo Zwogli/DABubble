@@ -1,3 +1,5 @@
+<div id="overlay__newChat" class="overlay" *ngIf="showOverlay" (click)="closeMenu()"></div>
+
 <div id="menuNewChat" class="mobile__menu">
     <div (click)="closeMenu()" class="orientation">
         <div>
@@ -19,6 +21,13 @@
                 (keyup)="searchForUser()"
                 type="text" 
                 placeholder="Search user">
+
+                <label 
+                *ngIf="this.isAlreadyInChat"
+                for="searchbarUser" 
+                class="block__alert">
+                *User chat already open
+                </label>
 
                 <!-- selected User -->
                 <div 
@@ -64,8 +73,8 @@
         <button 
         class="btn__submit"
         (click)="submitNewChat()"
-        [disabled]="!this.userSelected"
-        [class.btn-disabled]="!this.userSelected">
+        [disabled]="this.userSelected"
+        [class.btn-disabled]="this.userSelected">
             Add
         </button>
     </form>
