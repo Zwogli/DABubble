@@ -43,6 +43,11 @@ export class ThreadComponent implements OnInit {
       });
   }
 
+  /**
+   * This function caches the channel-object in which the thread has been
+   * started and the corresponding message is stored
+   * 
+   */
   async setCurrentChannel() {
     const channelId = this.route.snapshot.paramMap.get('channelId');
     if (channelId) {
@@ -52,12 +57,18 @@ export class ThreadComponent implements OnInit {
         .then((doc: any) => {
           this.currentChannel = doc;
           this.parentChatRecordId = doc.chatRecord;
-          console.log(this.parentChatRecordId);
           this.setChatRecordId();
         });
     }
   }
 
+
+  /**
+   * Because the chatRecord for a thread is nested in the corresponding
+   * message itself (Document of a subcollection), it needs to be accessed
+   * in this certain way.
+   * 
+   */
   async setChatRecordId() {
     const msgId = this.route.snapshot.paramMap.get('msgId');
     if (msgId) {
@@ -73,10 +84,8 @@ export class ThreadComponent implements OnInit {
 
   async setLeadingMsg(msgId: string) {
     this.chatService.chatRecordId = this.chatRecordId;
-    console.log(this.chatRecordId);
     if (msgId) {
       await this.chatService.setLeadingMsg(msgId, this.parentChatRecordId);
-      console.log(msgId);
     }
     this.leadingMsg = this.chatService.leadingThreadMsg;
   }

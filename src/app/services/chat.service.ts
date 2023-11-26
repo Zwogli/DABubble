@@ -9,6 +9,8 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  increment,
+  serverTimestamp,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
@@ -33,7 +35,7 @@ export class ChatService implements OnInit {
   private threadChatRecordSubject = new Subject<string>();
   threadChatRecordIdChanged$ = this.threadChatRecordSubject.asObservable();
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -126,5 +128,26 @@ export class ChatService implements OnInit {
     await updateDoc(msgRef, {
       'thread.id': '',
     });
+  }
+
+  async updateThreadMetaData() {
+    console.log('Msg has been send in a thread');
+    console.log(this.threadParentChatRecordId);
+    console.log(this.leadingThreadMsg.id);
+    const threadMetaRef = doc(
+      this.firestore,
+      'chatRecords',
+      this.threadParentChatRecordId,
+      'messages',
+      this.leadingThreadMsg.id
+    );
+    console.log(threadMetaRef);
+
+    await updateDoc(threadMetaRef, {
+      'thread.lastAnswer': serverTimestamp(),
+      'thread.length': increment(1),
+    });
+
+    this.setLeadingMsg(this.leadingThreadMsg.id, this.threadParentChatRecordId);
   }
 }

@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/models/message.class';
-import { Channel } from 'src/app/models/channel.class';
+import { chatTypes } from 'src/app/interfaces/chats/types';
+import { ChatService } from 'src/app/services/chat.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-message-input',
@@ -11,13 +13,19 @@ import { Channel } from 'src/app/models/channel.class';
 export class MessageInputComponent {
   public msgPayload!: string;
   @Input() currentChatId!: string;
+  @Input() parentChat!: chatTypes;
 
-  constructor(private fireService: FirestoreService) {}
+  constructor(
+    private fireService: FirestoreService,
+    private chatService: ChatService,
+    private route: ActivatedRoute
+  ) {}
 
   sendMessage() {
     const data = new Message(this.setMsgData());
     this.fireService.addMessage(this.currentChatId, data);
     this.msgPayload = '';
+    this.chatService.updateThreadMetaData();
   }
 
   setMsgData() {
