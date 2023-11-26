@@ -108,6 +108,7 @@ submitNewChat(){
   }else{
     this.selectedUser = [];
     this.userSelected = true;
+    //todo firestoreService setDoc selectedUser & update user privat chats
   }
 }
 
