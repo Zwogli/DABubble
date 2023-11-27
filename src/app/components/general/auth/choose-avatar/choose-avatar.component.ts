@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -17,7 +18,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ChooseAvatarComponent implements OnInit, OnDestroy {
   choosenAvatar: any = 0;
+  avatarIsChoosen = false;
   public idFromUrl: any = '';
+  userWillCloseWindow = false;
 
   @ViewChild('unchoosenAvatar') unchoosenAvatar!: ElementRef;
 
@@ -37,7 +40,8 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
     this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
     this.authService.errorUnexpected = false;
     this.authService.signUpError = false;
-    this,this.authService.signUpSuccessfully = false;
+    this.authService.signUpSuccessfully = false;
+    this.avatarIsChoosen = false;
   }
 
   async getIdFromUrl() {
@@ -49,8 +53,8 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
   chooseAvatar(avatarNr: number) {
     this.unchoosenAvatar.nativeElement.src = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
     this.choosenAvatar = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
+    this.avatarIsChoosen = true;
   }
-
 
   async onFileChange(event: any) {
     const file = event.target.files[0];
@@ -60,9 +64,9 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
       const url = await uploadTask.ref.getDownloadURL();
       this.choosenAvatar = url;
       this.unchoosenAvatar.nativeElement.src = `${url}`;
+      this.avatarIsChoosen = true;
     }
   }
-
 
   async prepareChoosenAvatar() {
     if (this.choosenAvatar == 0) {
@@ -82,7 +86,13 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
       if (this.authService.signUpSuccessfully) {
         this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
       }
-    },3500)
+    }, 3500);
+  }
 
+
+  //If the user closes the window or app, the collection currentSignUpData will be deleted automatically
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHandler(event:any) {
+    this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
   }
 }
