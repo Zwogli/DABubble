@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Channel } from 'src/app/models/channel.class';
 import { Message } from 'src/app/models/message.class';
+import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-thread',
   templateUrl: './thread.component.html',
-  styleUrls: ['./thread.component.scss', '../../../../style/chat.scss'],
+  styleUrls: ['./thread.component.scss'],
 })
 export class ThreadComponent implements OnInit {
   public currentThreadId!: string;
@@ -19,6 +20,7 @@ export class ThreadComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fireService: FirestoreService,
+    private auth: AuthService,
     private chatService: ChatService
   ) {}
 
