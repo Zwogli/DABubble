@@ -62,29 +62,29 @@ export class DialogNewChatComponent {
   }
 
 //<<<<<<<<<<<<<<<< search user >>>>>>>>>>>>
-searchForUser(){
-  let searchbarValue = this.searchbarUser.nativeElement.value.toLowerCase();
-  this.filteredUser = [];
-  if(searchbarValue === null || searchbarValue === ""){
+  searchForUser(){
+    let searchbarValue = this.searchbarUser.nativeElement.value.toLowerCase();
     this.filteredUser = [];
-  }else{
-    this.filterForUser(searchbarValue);
-  }
-}
-
-filterForUser(inputName:string){
-  this.allUsers.forEach((user) => {
-    let userName = user.name.toLowerCase();
-    if(this.isCheckedInput(inputName, userName)){
-      this.filteredUser.push(user);
+    if(searchbarValue === null || searchbarValue === ""){
+      this.filteredUser = [];
+    }else{
+      this.filterForUser(searchbarValue);
     }
-  })
-}
+  }
 
-isCheckedInput(inputName:string, userName:string){
-  return userName.includes(inputName) &&
-  !userName.includes(this.currentUser.name);
-}
+  filterForUser(inputName:string){
+    this.allUsers.forEach((user) => {
+      let userName = user.name.toLowerCase();
+      if(this.isCheckedInput(inputName, userName)){
+        this.filteredUser.push(user);
+      }
+    })
+  }
+
+  isCheckedInput(inputName:string, userName:string){
+    return userName.includes(inputName) &&
+    !userName.includes(this.currentUser.name);
+  }
 
 //<<<<<<<<<<<<<<<< slecet add/remove user >>>>>>>>>>>>
   selectUser(user:User){
@@ -100,29 +100,26 @@ isCheckedInput(inputName:string, userName:string){
     this.isAlreadyInChat = false;
   }
 
-submitNewChat(){
-  this.isAlreadyInChat = false;
-  this.checkIsAlreadyInChat();
-  if(this.isAlreadyInChat){
-    console.error('Chat already excist');
-  }else{
-    this.selectedUser = [];
-    this.userSelected = true;
-    //todo firestoreService setDoc selectedUser & update user privat chats
-  }
-}
-
-checkIsAlreadyInChat(){
-  let selectedUserId = this.selectedUser[0].id;
-  let allChatsUserData = this.firestoreService.chatUserData;
-  allChatsUserData.forEach((user) => {
-    if(user.id == selectedUserId){
-      this.isAlreadyInChat = true;
+  submitNewChat(){
+    this.isAlreadyInChat = false;
+    this.checkIsAlreadyInChat();
+    if(this.isAlreadyInChat){
+      console.error('DABubble: chat already excist');
+    }else{
+      this.firestoreService.createNewChat(this.selectedUser[0]);
+      this.removeUser();
     }
-  })
-}
+  }
 
-
+  checkIsAlreadyInChat(){
+    let selectedUserId = this.selectedUser[0].id;
+    let allChatsUserData = this.firestoreService.chatUserData;
+    allChatsUserData.forEach((user) => {
+      if(user.id == selectedUserId){
+        this.isAlreadyInChat = true;
+      }
+    })
+  }
 
 //<<<<<<<<<<<<<<<< manage overlay/menu >>>>>>>>>>>>
   closeMenu() {
