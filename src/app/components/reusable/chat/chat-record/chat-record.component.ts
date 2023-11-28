@@ -6,13 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { chatTypes } from 'src/app/interfaces/chats/types';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
 import { ChatService } from 'src/app/services/chat.service';
-import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-chat-record',
@@ -85,7 +84,6 @@ export class ChatRecordComponent implements OnInit {
     if (msg != this.selectedMsg) {
       event.stopPropagation();
     }
-    console.log('OpenThread');
     const channelId = this.route.snapshot.paramMap.get('channelId')!;
     this.chatService.openThread(msg, channelId);
   }

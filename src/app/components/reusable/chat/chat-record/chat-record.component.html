@@ -11,7 +11,11 @@
   >
     <!-- ========== Date Pill ========== -->
     <div
-      *ngIf="message.sentAt && (isFirstMsgOfDay(message, i) || i == 0)"
+      *ngIf="
+        message.sentAt &&
+        (isFirstMsgOfDay(message, i) || i == 0) &&
+        parentType !== 'thread'
+      "
       [style.margin-top]="message == chatRecord[0] ? '45px' : '0'"
       class="chat__date-pill"
     >

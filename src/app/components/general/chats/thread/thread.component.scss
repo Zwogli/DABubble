@@ -1,5 +1,9 @@
 @import 'src/app/style/_chat.scss';
 
+.leading-msg {
+    margin: 0;
+}
+
 .thread__separator-container {
     display: flex;
     align-items: center;
