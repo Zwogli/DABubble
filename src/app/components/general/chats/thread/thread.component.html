@@ -25,6 +25,12 @@
         </p>
       </div>
     </div>
+    <div class="thread__separator-container">
+      <span *ngIf="leadingMsg.thread.length > 0"
+        >{{ leadingMsg.thread.length }} Antworten</span
+      >
+      <div class="thread__separator-line"></div>
+    </div>
   </div>
   <app-chat-record
     [parentType]="'thread'"
@@ -35,6 +41,5 @@
   <app-message-input
     [currentChatId]="chatRecordId"
     [parentChat]="'thread'"
-   
   ></app-message-input>
 </main>
