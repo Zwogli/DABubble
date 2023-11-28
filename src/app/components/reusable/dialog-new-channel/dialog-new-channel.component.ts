@@ -179,7 +179,7 @@ export class DialogNewChannelComponent {
   /**
    * add filtered user
    */
-  
+
   resetErrorMsg(){
     this.alreadyFiltered = false;
   }
@@ -189,7 +189,7 @@ export class DialogNewChannelComponent {
     input.value = null;
     this.filteredUser = [];
     this.alreadyFiltered = false;
-    this.isAlreadyFiltered(user)
+    this.isAlreadyFiltered()
     if(this.alreadyFiltered){
       console.error('User already added', this.alreadyFiltered);
     }else{
@@ -197,7 +197,7 @@ export class DialogNewChannelComponent {
     }
   }
 
-  isAlreadyFiltered(user:User){
+  isAlreadyFiltered(){
     this.firestoreService.usersAsMemberChache.forEach((user)=>{
       if(user === user){
         this.alreadyFiltered = true;
@@ -214,7 +214,12 @@ export class DialogNewChannelComponent {
     }
   }
 
+  /**
+   * manage overlay / menu 
+   */
+
   closeMenu() {
+    // todo fix overlay
     let radioBtnAll:any = document.getElementById('radioAllUser');
     let radioBtnSingle:any = document.getElementById('radioSingleUser');
     if(radioBtnSingle.checked = true){
