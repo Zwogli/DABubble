@@ -82,6 +82,7 @@
           <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
         </button>
         <button
+          *ngIf="message.thread.length <= 0"
           (click)="this.startThread.emit(message)"
           mat-icon-button
           aria-label="Icon button with a chat bubble"

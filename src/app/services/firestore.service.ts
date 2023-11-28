@@ -44,16 +44,12 @@ export class FirestoreService {
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private privateChatsSubject = new BehaviorSubject<any>(this.privateChats);
   private chatUserDataSubject = new BehaviorSubject<any>(this.chatUserData);
-  private singleChatRecordSubject = new BehaviorSubject<any>(
-    this.singleChatRecord
-  );
 
   // observable item
   currentUser$ = this.currentUserSubject.asObservable();
   channelsArray$ = this.channelsArraySubject.asObservable();
   privateChats$ = this.privateChatsSubject.asObservable();
   chatUserData$ = this.chatUserDataSubject.asObservable();
-  singleChatRecord$ = this.singleChatRecordSubject.asObservable();
 
   // unsub item
   unsubCurrentUser!: Unsubscribe;
@@ -64,14 +60,13 @@ export class FirestoreService {
   emailAlreadyExist = false;
   channelAlreadyExist: boolean = false;
 
-  unsubChatRecord!: Unsubscribe;
+  
   unsubChatUser!: Unsubscribe;
 
   constructor() {}
 
   ngOnDestroy() {
     this.unsubCurrentUser();
-    this.unsubChatRecord();
   }
 
   async getSingleDoc(colId: string, docId: string) {
@@ -178,26 +173,6 @@ export class FirestoreService {
           this.channelsArray.push(doc.data()); //element to array
         });
         this.channelsArraySubject.next(this.channelsArray); //update observable
-      }
-    );
-  }
-
-  startSubChat(docId: string) {
-    this.unsubChatRecord = this.subChatRecord(docId);
-  }
-
-  subChatRecord(docId: string) {
-    return onSnapshot(
-      query(
-        collection(this.firestore, 'chatRecords', docId, 'messages'),
-        orderBy('sentAt')
-      ),
-      (docs: any) => {
-        this.singleChatRecord = [];
-        docs.forEach((doc: any) => {
-          this.singleChatRecord.push(doc.data());
-        });
-        this.singleChatRecordSubject.next(this.singleChatRecord);
       }
     );
   }

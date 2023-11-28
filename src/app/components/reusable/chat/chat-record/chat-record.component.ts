@@ -32,11 +32,12 @@ export class ChatRecordComponent implements OnInit {
   private componentIsDestroyed$ = new Subject<boolean>();
 
   constructor(
-    private fireService: FirestoreService,
     private chatService: ChatService,
     private changeDetector: ChangeDetectorRef,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.chatRecord = [];
+  }
 
   ngOnInit() {
     if (this.parentType === 'thread') {
@@ -53,7 +54,6 @@ export class ChatRecordComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.fireService.unsubChatRecord();
     this.componentIsDestroyed$.next(true);
     this.componentIsDestroyed$.complete();
   }
@@ -64,13 +64,21 @@ export class ChatRecordComponent implements OnInit {
   }
 
   loadChatRecord() {
-    this.fireService.startSubChat(this.chatRecordId);
-    this.fireService.singleChatRecord$
-      .pipe(takeUntil(this.componentIsDestroyed$))
-      .subscribe((chat: Message[]) => {
-        this.chatRecord = chat;
-        // console.log('Messages recieved from service. ', chat);
-      });
+    if (this.parentType === 'thread') {
+      this.chatService.startSubThreadChat(this.chatRecordId);
+      this.chatService.threadChatRecord$
+        .pipe(takeUntil(this.componentIsDestroyed$))
+        .subscribe((chat: Message[]) => {
+          this.chatRecord = chat;
+        });
+    } else {
+      this.chatService.startSubChat(this.chatRecordId);
+      this.chatService.chatRecord$
+        .pipe(takeUntil(this.componentIsDestroyed$))
+        .subscribe((chat: Message[]) => {
+          this.chatRecord = chat;
+        });
+    }
   }
 
   openThread(msg: Message, event: any) {

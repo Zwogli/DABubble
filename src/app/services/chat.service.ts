@@ -1,7 +1,7 @@
 import { Injectable, OnInit, inject } from '@angular/core';
 import { Message } from '../models/message.class';
-import { Subject } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 import { chatTypes } from '../interfaces/chats/types';
 import {
   Firestore,
@@ -10,10 +10,14 @@ import {
   doc,
   getDoc,
   increment,
+  onSnapshot,
+  orderBy,
+  query,
   serverTimestamp,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
+import { Unsubscribe } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -24,19 +28,78 @@ export class ChatService implements OnInit {
   public leadingThreadMsg!: any;
   public leadingThreadMsgId!: string;
   public channelId!: string;
-  public chatRecordId!: string;
 
+  public chatRecordId!: string;
   public threadParentChatRecordId!: string;
+
+  public chatRecord!: Message[];
+  public threadChatRecord!: Message[];
+
+  private chatRecordSubject = new BehaviorSubject<Message[]>(this.chatRecord);
+  private threadChatRecordSubject = new BehaviorSubject<Message[]>(
+    this.threadChatRecord
+  );
+
+  chatRecord$ = this.chatRecordSubject.asObservable();
+  threadChatRecord$ = this.threadChatRecordSubject.asObservable();
 
   private chatRecordIdSubject = new Subject<string>();
   chatRecordIdChanged$ = this.chatRecordIdSubject.asObservable();
 
-  private threadChatRecordSubject = new Subject<string>();
-  threadChatRecordIdChanged$ = this.threadChatRecordSubject.asObservable();
+  private threadChatRecordIdSubject = new Subject<string>();
+  threadChatRecordIdChanged$ = this.threadChatRecordIdSubject.asObservable();
+
+  unsubChatRecord!: Unsubscribe;
+  unsubThreadChatRecord!: Unsubscribe;
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  ngOnDestroy() {
+    this.unsubChatRecord();
+    this.unsubThreadChatRecord();
+  }
+
+  startSubChat(docId: string) {
+    this.unsubChatRecord = this.subChatRecord(docId);
+  }
+
+  startSubThreadChat(docId: string) {
+    this.unsubThreadChatRecord = this.subThreadChatRecord(docId);
+  }
+
+  subChatRecord(docId: string) {
+    return onSnapshot(
+      query(
+        collection(this.firestore, 'chatRecords', docId, 'messages'),
+        orderBy('sentAt')
+      ),
+      (docs: any) => {
+        this.chatRecord = [];
+        docs.forEach((doc: any) => {
+          this.chatRecord.push(doc.data());
+        });
+        this.chatRecordSubject.next(this.chatRecord);
+      }
+    );
+  }
+
+  subThreadChatRecord(docId: string) {
+    return onSnapshot(
+      query(
+        collection(this.firestore, 'chatRecords', docId, 'messages'),
+        orderBy('sentAt')
+      ),
+      (docs: any) => {
+        this.threadChatRecord = [];
+        docs.forEach((doc: any) => {
+          this.threadChatRecord.push(doc.data());
+        });
+        this.threadChatRecordSubject.next(this.threadChatRecord);
+      }
+    );
+  }
 
   async startThreadFromChannel(
     msgId: string,
@@ -117,7 +180,7 @@ export class ChatService implements OnInit {
   }
 
   setThreadChatRecordId(chatRecordId: string) {
-    this.threadChatRecordSubject.next(chatRecordId);
+    this.threadChatRecordIdSubject.next(chatRecordId);
   }
 
   async deleteChatRecord(docId: string) {
