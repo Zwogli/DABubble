@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,6 +11,8 @@ import { NavbarService } from 'src/app/services/navbar.service';
   styleUrls: ['./create-channel.component.scss']
 })
 export class CreateChannelComponent {
+  @ViewChild('inputCreateChannel') inputCreateChannel!: ElementRef;
+  @ViewChild('channelDescription') channelDescription!: ElementRef;
   private subscription: Subscription;
   showMenu: boolean = false;
   err_hash:boolean = false
@@ -37,9 +39,8 @@ export class CreateChannelComponent {
     return this.createChannelForm.get('channelNameForm');
   }
 
-  inputCreateChannel(){
-    const input:any = document.getElementById('create-channel');
-    let inputValue = input.value;
+  checkInputCreateChannel(){
+    const inputValue:any = this.inputCreateChannel.nativeElement.value;
     let sliceFirstLetter = inputValue.slice(0,1);
     this.checkInput(inputValue, sliceFirstLetter)
   }
@@ -50,7 +51,7 @@ export class CreateChannelComponent {
     }else if(this.isMissedHashtag(sliceFirstLetter)){
       this.errorMsgMissedHashtag();
     }else{
-      this.createChannel(inputValue);
+      this.checkNewChannelName(inputValue);
     }
   }
 
@@ -69,24 +70,23 @@ export class CreateChannelComponent {
 
   errorMsgMissedHashtag(){
     this.err_hash = true;
-    console.error('Error forgot hashtag "#"');
+    console.error('DABubble: Error forgot hashtag "#"');
   }
 
-  createChannel(value:string){
+  checkNewChannelName(value:string){
     this.err_hash = false;
     let newChannelName = value.slice(1);
     this.firestoreService.checkChannelExist(newChannelName)
     this.firestoreService.newChannelName = newChannelName;
   }
 
-  openUserSelection(){
+  submitNewChannel(){
     this.manageDescription();
     this.navbarService.menuSlideUp('menuCreateChannel');
   }
 
   manageDescription(){
-    let desciptionInput: any = document.getElementById('channel-desciption');
-    let description = desciptionInput.value;
+    let description: any = this.channelDescription.nativeElement.value;
     this.firestoreService.newChannelDescription = description
   }
 }
