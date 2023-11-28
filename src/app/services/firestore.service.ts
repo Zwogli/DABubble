@@ -298,11 +298,6 @@ export class FirestoreService {
       memberInChannel: newMembership,
     });
   }
-
-  async setGetColl(){
-    const collRef = collection(this.firestore, "user");
-    return await getDocs(collRef);
-  }
   
 //>>>>>>>>>>>>>>>>>>create new channel all user END
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create new chat

@@ -18,7 +18,7 @@
             name="addOption"
             type="radio"
             value="all"
-            (click)="hideUserSearchbarNewChannel()"
+            (click)="hideSearchbar()"
             checked
             >
             <label for="radioAllUser">Add all members of 
@@ -34,7 +34,7 @@
                 name="addOption" 
                 type="radio"
                 value="single"
-                (click)="showUserSearchbarNewChannel()"
+                (click)="showSearchbar()"
                 >
                 <label for="radioSingleUser">Add certain people</label>
             </div>
@@ -43,11 +43,17 @@
                 <div id="new-channel-search-user" class="container__search hide">
                     <input 
                     id="searchbar-user"
+                    #inputSearchbarUser
                     (keyup)="searchForUser()"
+                    (click)="resetErrorMsg()"
                     formControlName="searchInputForm"
                     type="text" 
                     placeholder="Enter Name"
                     >
+
+                    <!-- 
+                        error msg
+                    -->
 
                     <label *ngIf="this.alreadyFiltered" for="searchbar-user" class="block__alert">*User already added</label>
 
@@ -55,7 +61,9 @@
                         <div *ngIf="searchInputForm?.errors?.['minlength']">*Please use at least 2 characters.</div>
                     </div>
 
-<!-- render filtered User -->
+                    <!-- 
+                        render filtered User 
+                    -->
 
                     <div id="filtered-user" 
                     class="container__filteredUser"
@@ -75,7 +83,9 @@
                         </div>
                     </div>
 
-<!-- render added User -->
+                    <!-- 
+                        render added User 
+                    -->
 
                     <div class="container__user">
                         <div id="added-user"
@@ -103,7 +113,7 @@
 
         <div class="container__btn--right">
             <button
-            (click)="createChannel()"
+            (click)="submitCreateChannel()"
             class="btn__log-in"
             >
                 Create
