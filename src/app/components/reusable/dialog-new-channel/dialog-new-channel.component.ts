@@ -196,7 +196,7 @@ export class DialogNewChannelComponent {
     input.value = null;
     this.filteredUser = [];
     this.alreadyFiltered = false;
-    this.isAlreadyFiltered()
+    this.isAlreadyFiltered(user)
     if(this.alreadyFiltered){
       console.error('User already added', this.alreadyFiltered);
     }else{
@@ -204,9 +204,9 @@ export class DialogNewChannelComponent {
     }
   }
 
-  isAlreadyFiltered(){
+  isAlreadyFiltered(filteredUser:User){
     this.firestoreService.usersAsMemberChache.forEach((user)=>{
-      if(user === user){
+      if(user === filteredUser){
         this.alreadyFiltered = true;
       }else{
         this.alreadyFiltered = false;
