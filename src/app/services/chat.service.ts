@@ -1,6 +1,6 @@
 import { Injectable, OnInit, inject } from '@angular/core';
 import { Message } from '../models/message.class';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { chatTypes } from '../interfaces/chats/types';
 import {
@@ -28,6 +28,8 @@ export class ChatService implements OnInit {
   firestore: Firestore = inject(Firestore);
 
   public leadingThreadMsg!: any;
+  private leadingThreadMsgSubject = new BehaviorSubject(this.leadingThreadMsg);
+  public leadingThreadMsg$ = this.leadingThreadMsgSubject.asObservable();
   public leadingThreadMsgId!: string;
   public channelId!: string;
 
@@ -133,6 +135,7 @@ export class ChatService implements OnInit {
 
     if (docSnap.exists()) {
       this.leadingThreadMsg = docSnap.data();
+      this.leadingThreadMsgSubject.next(this.leadingThreadMsg);
     }
   }
 
@@ -201,7 +204,6 @@ export class ChatService implements OnInit {
 
   async navigateBack(src: chatTypes) {
     const msgThread = this.leadingThreadMsg.thread;
-
     if (src === 'thread' && msgThread.length === 0) {
       await this.deleteChatRecord(msgThread.id);
 
@@ -210,7 +212,6 @@ export class ChatService implements OnInit {
         this.leadingThreadMsg.id
       );
     }
-
     this.router.navigate(['/home/', this.channelId]);
   }
 
