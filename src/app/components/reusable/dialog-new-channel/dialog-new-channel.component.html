@@ -1,4 +1,6 @@
-<div id="menuCreateChannel" class="mobile__menu">
+<div id="overlay__newChannel" class="overlay" *ngIf="showOverlay" (click)="closeMenu()"></div>
+
+<div id="menuNewChannel" class="mobile__menu">
     <div (click)="closeMenu()" class="orientation">
         <div>
             <span></span>

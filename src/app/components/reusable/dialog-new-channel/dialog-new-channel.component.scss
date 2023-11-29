@@ -1,5 +1,15 @@
 @import '../../../style/variable.scss';
 
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: var(--color-grey-primary-overlay);
+  z-index: 5;
+}
+
 .mobile__menu {
   width: calc(100dvw - 52px);
   padding: 30px 26px 30px 26px;

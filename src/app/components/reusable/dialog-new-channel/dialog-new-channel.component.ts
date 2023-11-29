@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -19,10 +19,12 @@ export class DialogNewChannelComponent {
     ]),
   });
   @ViewChild('inputSearchbarUser') inputSearchbarUser!: ElementRef;
-  currentUser!:User;
   allUsers!:User[];
-  filteredUser:User[] = [];
   alreadyFiltered:boolean = false;
+  currentUser!:User;
+  filteredUser:User[] = [];
+  showOverlay: boolean = false;
+  private subscription: Subscription;
   private currentUserIsDestroyed$ = new Subject<boolean>();
   private allUsersIsDestroyed$ = new Subject<boolean>();
 
@@ -31,7 +33,12 @@ export class DialogNewChannelComponent {
     public firestoreService:FirestoreService,
     private navbarService: NavbarService, 
     public router: Router,
-  ){}
+  ){
+    this.subscription = this.navbarService.showOverlayNewChannel$.subscribe(
+      visible => {
+        this.showOverlay = visible;
+      });
+  }
   
   /**
    * sub currentUSer
@@ -228,7 +235,7 @@ export class DialogNewChannelComponent {
     }
     this.hideSearchbar();
     setTimeout(() => {
-      this.navbarService.toggleOverlay();
+      this.navbarService.toggleOverlayNewChannel();
     }, 250);
     this.navbarService.menuSlideDown();
   }

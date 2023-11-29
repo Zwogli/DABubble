@@ -82,7 +82,7 @@ export class CreateChannelComponent {
 
   submitNewChannel(){
     this.manageDescription();
-    this.navbarService.menuSlideUp('menuCreateChannel');
+    this.navbarService.manageOverlayNewChannel('menuNewChannel');
   }
 
   manageDescription(){
