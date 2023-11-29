@@ -24,6 +24,7 @@ import { Message } from '../models/message.class';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Chat } from '../models/chat.class';
+import { chatTypes } from '../interfaces/chats/types';
 
 @Injectable({
   providedIn: 'root',
@@ -45,16 +46,12 @@ export class FirestoreService {
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private privateChatsSubject = new BehaviorSubject<any>(this.privateChats);
   private chatUserDataSubject = new BehaviorSubject<any>(this.chatUserData);
-  private singleChatRecordSubject = new BehaviorSubject<any>(
-    this.singleChatRecord
-  );
   // observable item
   allUsers$ = this.allUsersSubject.asObservable();
   currentUser$ = this.currentUserSubject.asObservable();
   channelsArray$ = this.channelsArraySubject.asObservable();
   privateChats$ = this.privateChatsSubject.asObservable();
   chatUserData$ = this.chatUserDataSubject.asObservable();
-  singleChatRecord$ = this.singleChatRecordSubject.asObservable();
   // unsub item
   unsubCurrentUser!: Unsubscribe;
   // sign up 
@@ -70,18 +67,28 @@ export class FirestoreService {
   newChannelRefId!:string;
   searchedUser: User[] = [];
 
-  unsubChatRecord!: Unsubscribe;
+  
   unsubChatUser!: Unsubscribe;
 
   constructor() {}
 
   ngOnDestroy() {
     this.unsubCurrentUser();
-    this.unsubChatRecord();
   }
 
   async getSingleDoc(colId: string, docId: string) {
     const docSnap = await getDoc(doc(this.firestore, colId, docId));
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log('No such document found!');
+      return;
+    }
+  }
+  async getSingleSubDoc(colId: string, docId: string) {
+    const docSnap = await getDoc(
+      doc(this.firestore, 'chatRecords', colId, 'messages', docId)
+    );
     if (docSnap.exists()) {
       return docSnap.data();
     } else {
@@ -119,17 +126,23 @@ export class FirestoreService {
 //>>>>>>>>>>>>>>>>>>>>>read chats from user
 
   getChatsFromCurrentUser() {
-    onSnapshot(query(collection(this.firestore, 'privateChat'), //select database, collection
-      where('chatBetween', 'array-contains', this.currentUser.id)), //[path], [action], [searched element]
-      (userInChats) => { //read array[searched element]
-      this.renderChatsInArray(userInChats)
-      this.getUserIdsFromChat();
-    });
+    onSnapshot(
+      query(
+        collection(this.firestore, 'privateChat'), //select database, collection
+        where('chatBetween', 'array-contains', this.currentUser.id)
+      ), //[path], [action], [searched element]
+      (userInChats) => {
+        //read array[searched element]
+        this.renderChatsInArray(userInChats);
+        this.getUserIdsFromChat();
+      }
+    );
   }
 
-  renderChatsInArray(userInChats:QuerySnapshot){
+  renderChatsInArray(userInChats: QuerySnapshot) {
     this.privateChats = []; //reset variable array
-    userInChats.forEach((doc: any) => {  //read element of array
+    userInChats.forEach((doc: any) => {
+      //read element of array
       this.privateChats.push(doc.data()); //element to array
       this.privateChatsSubject.next(this.privateChats); // update privateChats
     });
@@ -137,32 +150,33 @@ export class FirestoreService {
 
   getUserIdsFromChat() {
     this.chatFilteredUserIds = [];
-    this.chatFilteredUserIds.push(this.currentUser.id)
+    this.chatFilteredUserIds.push(this.currentUser.id);
     this.privateChats.forEach((chatBetween) => {
-     if(chatBetween.id !== this.currentUser.id){
-       let filteredUserId = this.filterUserId(chatBetween);
+      if (chatBetween.id !== this.currentUser.id) {
+        let filteredUserId = this.filterUserId(chatBetween);
         this.chatFilteredUserIds.push(filteredUserId[0]);
-     }
-    })
+      }
+    });
     this.getUserDataFromChat();
   }
 
-  filterUserId(chatBetween:Chat){
+  filterUserId(chatBetween: Chat) {
     return chatBetween.chatBetween.filter(
-      (filterUserIds: string) => filterUserIds !== this.currentUser.id);
+      (filterUserIds: string) => filterUserIds !== this.currentUser.id
+    );
   }
 
-
-  async getUserDataFromChat(){
+  async getUserDataFromChat() {
     this.chatUserData = [];
-    this.chatFilteredUserIds.forEach((chatBetweenUserId) =>{
+    this.chatFilteredUserIds.forEach((chatBetweenUserId) => {
       return onSnapshot(
-        doc(this.firestore, 'user', chatBetweenUserId), 
-          (doc: any) => { 
-            this.chatUserData.push(doc.data());
-            this.chatUserDataSubject.next(this.chatUserData);
-          });
-        });
+        doc(this.firestore, 'user', chatBetweenUserId),
+        (doc: any) => {
+          this.chatUserData.push(doc.data());
+          this.chatUserDataSubject.next(this.chatUserData);
+        }
+      );
+    });
   }
 
 //>>>>>>>>>>>>>>>>>>>>>read chats from user END
@@ -176,27 +190,6 @@ export class FirestoreService {
           this.channelsArray.push(doc.data()); 
         });
         this.channelsArraySubject.next(this.channelsArray);
-      }
-    );
-  }
-
-
-  startSubChat(docId: string) {
-    this.unsubChatRecord = this.subChatRecord(docId);
-  }
-
-  subChatRecord(docId: string) {
-    return onSnapshot(
-      query(
-        collection(this.firestore, 'chatRecords', docId, 'messages'),
-        orderBy('sentAt')
-      ),
-      (docs: any) => {
-        this.singleChatRecord = [];
-        docs.forEach((doc: any) => {
-          this.singleChatRecord.push(doc.data());
-        });
-        this.singleChatRecordSubject.next(this.singleChatRecord);
       }
     );
   }
@@ -221,8 +214,11 @@ export class FirestoreService {
     });
   }
 
-
-  async updateCurrentUserData(userId:string, userName: string, userEmail:string){
+  async updateCurrentUserData(
+    userId: string,
+    userName: string,
+    userEmail: string
+  ) {
     await updateDoc(doc(this.firestore, 'user', userId), {
       name: userName,
       email: userEmail,
@@ -410,5 +406,4 @@ export class FirestoreService {
     await deleteDoc(this.getCurrentSignUpDataDoc(docId));
     this.currentSignUpData = [];
   }
-  
 }
