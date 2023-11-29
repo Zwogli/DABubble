@@ -26,17 +26,21 @@
 
 	<!-- 
 		elements for expansion-panel
+		
 	-->
-		<div *ngFor="let user of chatUserData; let i=index" class="fix--space-left sort__elemts--row">
-			<div [routerLink]="'/home/' + chatsArray[i].id" class="container__Elemets--row">
+		<div *ngFor="let user of chatUserData; index as i" class="fix--space-left sort__elemts--row cursor__add">
+			<div 
+			*ngIf="privateChats[i]"
+			[routerLink]="'/home/' + privateChats[i].id" 
+			class="container__Elemets--row">
 
 				<div class="user__container--avatar">
-					<img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
-					<span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
+					<img class="avatar-small" src="{{ chatUserData[i].photoUrl}}" alt="avatar">
+					<span class="onlinestatus onlinestatus--color-{{ chatUserData[i].onlineStatus }}"></span>
 				</div>
 
-				<p>{{ user.name}}
-				<span *ngIf="user.id == currentUser.id">(You)</span>
+				<p>{{ chatUserData[i].name}}
+				<span *ngIf="chatUserData[i].id == currentUser.id">(You)</span>
 				</p>
 			</div>
 		</div>
@@ -53,5 +57,6 @@
 			<p> New Chat </p>
 		</div>
 
-    </div>
+	</div>
+
   </mat-expansion-panel>

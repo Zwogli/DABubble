@@ -56,12 +56,14 @@
 
     <form class="radio-form">
 
-        <div class="container__elements">
+        <div class="container__input">
             <input 
             id="radioAllUser" 
             name="addOption"
             type="radio"
             value="all"
+            (click)="hideUserSearchbarNewChannel()"
+            checked
             >
             <label for="radioAllUser">Add all members of 
                 <span>OfficeTeam</span>
@@ -69,18 +71,28 @@
         </div>
 
         <div class="container__elements">
-            <input 
-            id="radioSingleUser"
-            name="addOption" 
-            type="radio"
-            value="single"
-            >
-            <label for="radioUser">Add certain people</label>
+
+            <div class="container__input">
+                <input 
+                id="radioSingleUser"
+                name="addOption" 
+                type="radio"
+                value="single"
+                (click)="showUserSearchbarNewChannel()"
+                >
+                <label for="radioSingleUser">Add certain people</label>
+            </div>
+
+            <div id="new-channel-search-user" class="container__search hide">
+                <input type="text" placeholder="Enter Name">
+
+                <div id="added-user"></div>
+            </div>
         </div>
 
         <div class="container__btn--right">
             <button
-            (click)="addUserRadio()"
+            (click)="createChannel()"
             class="btn__log-in"
             >
                 Create

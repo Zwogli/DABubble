@@ -1,112 +1,17 @@
 <app-navbar-header-mobile></app-navbar-header-mobile>
 
-<div class="sub-header">
-  <div *ngIf="currentChannel" class="sub-header__title">
-    # {{ currentChannel.name }} <mat-icon>expand_more</mat-icon>
-  </div>
-
-  <button aria-label="Icon button with a person add icon">
-    <mat-icon fontSet="material-icons-outlined">person_add</mat-icon>
-  </button>
-</div>
+<app-chat-sub-header
+  [type]="'channel'"
+  [channel]="currentChannel"
+></app-chat-sub-header>
 
 <main>
-  <section
-    #chatContainer
-    [scrollTop]="chatContainer.scrollHeight"
-    class="chat__container"
-  >
-    <div
-      *ngFor="let message of chatRecord; index as i"
-      class="message__wrapper"
-      [ngClass]="{ message__menuOpened: message === selectedMsg }"
-    >
-      <!-- ========== Date Pill ========== -->
-      <div
-        *ngIf="message.sentAt && (isFirstMsgOfDay(message, i) || i == 0)"
-        class="chat__date-pill"
-      >
-        <div class="date-pill__line"></div>
-        <div
-          *ngIf="
-            (message.sentAt.toDate() | date : 'EEEE d MMMM') ==
-              (today | date : 'EEEE d MMMM');
-            then isToday;
-            else notToday
-          "
-        ></div>
-        <ng-template #isToday>
-          <span class="date-pill__content">Today</span></ng-template
-        >
-        <ng-template #notToday>
-          <span class="date-pill__content">
-            {{ message.sentAt.toDate() | date : "EEEE, d MMMM" }}
-          </span>
-        </ng-template>
-        <div class="date-pill__line"></div>
-      </div>
+  <app-chat-record
+    (startThread)="startThread($event)"
+    [chatRecordId]="chatRecordId"
+    [currentUser]="currentUser"
+  ></app-chat-record>
 
-      <!-- ========== Onclick/ onhover Menu ========== -->
-      <div *ngIf="selectedMsg === message" class="message__menu">
-        <button mat-icon-button aria-label="Icon button with a emoji add icon">
-          <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
-        </button>
-        <button
-          (click)="startThread(message)"
-          
-          mat-icon-button
-          aria-label="Icon button with a chat bubble"
-        >
-          <mat-icon fontSet="material-icons-outlined">comment</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          aria-label="Icon button with vertical dots icon"
-        >
-          <mat-icon fontSet="material-icons-outlined">more_vert</mat-icon>
-        </button>
-      </div>
-
-      <!-- ========== Message itself ========== -->
-      <div
-        class="message"
-        [ngClass]="{ message__self: message.sentById === currentUser.id }"
-        (click)="toggleMsgMenu(message)"
-      >
-        <div class="message__avatar-container">
-          <img src="{{ message.sentByPhotoUrl }}" alt="" />
-        </div>
-
-        <div class="message__content-container">
-          <div class="message__header">
-            <span class="message__header-name">{{ message.sentByName }}</span>
-            <span *ngIf="message.sentAt" class="message__header-time"
-              >{{ message.sentAt.toDate() | date : "shortTime" }} Uhr</span
-            >
-          </div>
-
-          <p class="message__content">
-            {{ message.message }}
-          </p>
-
-          <div *ngIf="message.thread.id" class="message__footer">
-            <span
-              (click)="openThread(message, $event)"
-              class="message__footer-count"
-              >{{ message.thread.length }} Antworten</span
-            >
-            <div class="message__footer-last-timestamp">
-              <span>Letzte Antwort</span>
-              <span>
-                {{ message.thread.lastAnswer.toDate() | date : "EEEE hh:mm" }}
-                Uhr</span
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
   <app-message-input
     *ngIf="currentChannel"
     [currentChatId]="currentChannel.chatRecord"

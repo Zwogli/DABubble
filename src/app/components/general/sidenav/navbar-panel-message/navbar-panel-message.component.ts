@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription, of, takeUntil } from 'rxjs';
 import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
+import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
@@ -18,19 +19,21 @@ export class NavbarPanelMessageComponent {
   currentUser!: User;
   subCurrentUser!: User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
-  userInChatsArray: Chat[] = [];
+  userInprivateChats: Chat[] = [];
   chatBetweenUserIds: string[] = [];
   chatUserData: User[] = [];
-  chatsArray!:Chat[];
+  chatUserData$ = new BehaviorSubject<any>(this.chatUserData);
+  privateChats!:Chat[];
+  privateChats$ = new BehaviorSubject<any>(this.privateChats);
 
   cacheChatUserData!: User;
 
   
   constructor(
+    private authService: AuthService,
     private firestoreService: FirestoreService,
     private navbarService: NavbarService,
   ){
-    this.currentUser = this.firestoreService.currentUser;    
   }
   
   ngOnInit(){
@@ -43,11 +46,19 @@ export class NavbarPanelMessageComponent {
     this.currentUserIsDestroyed$.next(true);
   }
 
-  setChatArray(){
-    this.firestoreService.chatsArray$
+  setCurrentUser() {
+    this.firestoreService.currentUser$
     .pipe(takeUntil(this.currentUserIsDestroyed$))
-    .subscribe((chatsArray: any) => {
-      this.chatsArray = chatsArray;
+    .subscribe((user: User) => {
+      this.currentUser = user;
+    });
+  }
+
+  setChatArray(){
+    this.firestoreService.privateChats$
+    .pipe(takeUntil(this.currentUserIsDestroyed$))
+    .subscribe((chats: any) => {
+      this.privateChats = chats;
     });
   }
 
@@ -59,16 +70,8 @@ export class NavbarPanelMessageComponent {
     } )
   }
   
-  setCurrentUser() {
-    this.firestoreService.currentUser$
-    .pipe(takeUntil(this.currentUserIsDestroyed$))
-    .subscribe((user: User) => {
-      this.currentUser = user;
-    } )
-  }
-
   toggleNewChat(){
-    this.navbarService.menuSlideUp('menuNewChat');
+    this.navbarService.manageOverlayNewChat('menuNewChat');
   }
 
   rotateArrow() {

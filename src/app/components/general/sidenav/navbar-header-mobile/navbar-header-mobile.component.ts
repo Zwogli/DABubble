@@ -3,6 +3,7 @@ import { Unsubscribe } from '@angular/fire/auth';
 import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
+import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
@@ -13,18 +14,17 @@ import { NavbarService } from 'src/app/services/navbar.service';
 })
 
 export class NavbarHeaderMobileComponent {
-  currentUserId:any;
   currentUser!: User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
 
   constructor(
+    private authService: AuthService,
     private navbarService: NavbarService,
     private firestoreService: FirestoreService,
     ) {
     }
     
-    async ngOnInit(){
-      this.currentUserId = localStorage.getItem('uId');
+  ngOnInit(){
       this.setCurrentUser();
   }
 

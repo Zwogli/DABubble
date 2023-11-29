@@ -25,20 +25,27 @@ import { NavbarPanelChannelsComponent } from './components/general/sidenav/navba
 import { NavbarPanelMessageComponent } from './components/general/sidenav/navbar-panel-message/navbar-panel-message.component';
 import { NavbarSearchbarComponent } from './components/general/sidenav/navbar-searchbar/navbar-searchbar.component';
 import { MenuProfilMobileComponent } from './components/general/sidenav/menu-profil-mobile/menu-profil-mobile.component';
-import { DialogProfilComponent } from './components/reusable/dialogs/dialog-profil/dialog-profil.component';
+import { DialogProfilComponent } from './components/reusable/dialog-profil/dialog-profil.component';
 import { IntroComponent } from './components/general/auth/intro/intro.component';
 import { SignInComponent } from './components/general/auth/sign-in/sign-in.component';
 
 import { ChannelComponent } from './components/general/chats/channel/channel.component';
+import { ThreadComponent } from './components/general/chats/thread/thread.component';
 import { SignUpComponent } from './components/general/auth/sign-up/sign-up.component';
 import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/choose-avatar.component';
-import { DialogProfilEditComponent } from './components/reusable/dialogs/dialog-profil-edit/dialog-profil-edit.component';
+import { DialogProfilEditComponent } from './components/reusable/dialog-profil-edit/dialog-profil-edit.component';
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
-import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
 import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
-import { MessageInputComponent } from './components/reusable/message-input/message-input.component';
-import { ThreadComponent } from './components/general/chats/thread/thread.component';
+import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
+import { MessageInputComponent } from './components/reusable/chat/message-input/message-input.component';
+import { ChatSubHeaderComponent } from './components/reusable/chat/chat-sub-header/chat-sub-header.component';
 
+import { DialogNewChannelComponent } from './components/reusable/dialog-new-channel/dialog-new-channel.component';
+import { DialogNewChatComponent } from './components/reusable/dialog-new-chat/dialog-new-chat.component';
+import { DialogProfilMenuComponent } from './components/reusable/dialog-profil-menu/dialog-profil-menu.component';
+import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dialog-overlay.component';
+import { PrivateComponent } from './components/general/chats/private/private.component';
+import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat-record.component';
 
 @NgModule({
   declarations: [
@@ -58,9 +65,16 @@ import { ThreadComponent } from './components/general/chats/thread/thread.compon
     DialogProfilEditComponent,
     ForgotPasswordComponent,
     CreateChannelComponent,
+    DialogNewChannelComponent,
+    DialogNewChatComponent,
+    DialogProfilMenuComponent,
+    DialogOverlayComponent,
     ResetPasswordComponent,
     MessageInputComponent,
     ThreadComponent,
+    ChatSubHeaderComponent,
+    PrivateComponent,
+    ChatRecordComponent,
   ],
 
   imports: [

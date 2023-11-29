@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavbarService } from 'src/app/services/navbar.service';
-import { DialogProfilComponent } from '../../../reusable/dialogs/dialog-profil/dialog-profil.component';
+import { DialogProfilComponent } from '../../../reusable/dialog-profil/dialog-profil.component';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-menu-profil-mobile',
@@ -16,20 +16,21 @@ export class MenuProfilMobileComponent {
   private subscription: Subscription;
 
   constructor(
-    private router: Router,
     private navbarService: NavbarService, 
     public dialog: MatDialog,
+    private authService: AuthService,
     ) {
     this.subscription = this.navbarService.showMenu$.subscribe((visible) => {
       this.showMenu = visible;
     });
   }
 
-  addUserRadio(){
+  createChannel(){
     let radio = document.querySelector('input[name="addOption"]:checked');
     if(radio != null){
       if(radio.id == 'radioAllUser'){
         console.log('Add all User to Channel');
+        this.renderAllUserinChannel();
       }else if(radio.id == 'radioSingleUser'){
         console.log('Add single User to Channel');
       }
@@ -39,7 +40,24 @@ export class MenuProfilMobileComponent {
     }
   }
 
+  renderAllUserinChannel(){
+    
+  }
+
+  hideUserSearchbarNewChannel(){
+    let showContainerSearch: HTMLElement | null = document.getElementById('new-channel-search-user');
+    showContainerSearch?.classList.remove('show');
+  }
+  
+  showUserSearchbarNewChannel(){
+    let showContainerSearch: HTMLElement | null = document.getElementById('new-channel-search-user');
+    showContainerSearch?.classList.add('show');
+  }
+
   closeMenu() {
+    setTimeout(() => {
+      this.navbarService.toggleOverlay();
+    }, 250);
     this.navbarService.menuSlideDown();
   }
 
@@ -49,6 +67,6 @@ export class MenuProfilMobileComponent {
 
   logout(){
     this.navbarService.toggleOverlay();
-    this.router.navigateByUrl('');
+    this.authService.signOut();
   }
 }

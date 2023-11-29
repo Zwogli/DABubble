@@ -1,4 +1,4 @@
-<main>
+<main *ngIf="currentUser">
     <img src="assets/img/logo_dabubble-mobile.png" alt="Logo_DABubble">
-    <img (click)="openMenu()" class="avatar-small" src="{{ currentUser.photoUrl }}" alt="avatar">
+    <img (click)="openMenu()" *ngIf="currentUser" class="avatar-small" src="{{ currentUser.photoUrl }}" alt="avatar">
 </main>

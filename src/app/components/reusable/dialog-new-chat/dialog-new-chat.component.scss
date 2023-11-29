@@ -1,0 +1,202 @@
+@import '../../../style/variable.scss';
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: var(--color-grey-primary-overlay);
+  z-index: 5;
+}
+
+.mobile__menu {
+  width: calc(100dvw - 52px);
+  // min-height: 300px;
+  padding: 30px 26px 30px 26px;
+  background-color: var(--color-white);
+  position: absolute;
+  border-radius: 30px 30px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 5;
+  filter: drop-shadow(0px -5px 3px var(--color-black-shadow));
+}
+
+.close__element{
+  cursor: pointer;
+}
+
+input[type=text] {
+  @include input_text;
+}
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+menu-newChat
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.container__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  .search-user-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 1rem;
+  }
+  .btn__submit {
+    @include btn_primary;
+  }
+  .btn-disabled {
+    @include btn-disabled;
+  }
+  /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+filtered user
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.container__search{
+  margin-top: 0.5rem;
+  width: 100%;
+  position: relative;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.container__filteredUser{
+  margin-left: 20px;
+  width: 60%;
+  max-height: 100px;
+  overflow-y: auto;
+  // position: absolute;
+  // z-index: 5;
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 1rem 2rem;
+  border: 1px solid var(--color-blue-border);
+  border-radius: 0px 20px 20px 20px;
+  cursor: pointer;
+}
+.container__user{
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.container__user-Elements, .container__user-Elements--selected{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: default;
+
+  &:hover{
+    width: fit-content;
+    padding-right: 20px;
+    background-color: var(--color-blue-bg);
+    border-radius: 35px;
+  }
+
+  p{
+    margin-bottom: unset;
+  }
+
+  &--avatar{
+    height: 50px;
+    width: 50px;
+    position: relative;
+    .onlinestatus {
+      height: 14px;
+      width: 14px;
+  
+      border: 2px solid var(--color-white);
+      border-radius: 100%;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: 1;
+      &--color-false {
+        background-color: var(--color-grey-primary-disable);
+      }
+      &--color-true {
+        background-color: var(--color-green);
+      }
+    }
+  }
+}
+.input__label{
+position: relative;
+}
+
+.container__user-Elements--selected{
+  position: absolute;
+  top: 8.5px;
+  width: fit-content;
+  margin-left: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: var(--color-blue-bg);
+  border-radius: 35px;
+}
+.block__alert {
+  color: var(--color-purple-error);
+  font-size: 0.667rem;
+}
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+animation
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.slide--up {
+    bottom: 0;
+    animation: 0.5s slide-up;
+  }
+  .slide--down {
+    bottom: 0;
+    transform: translateY(300px);
+    animation: 0.5s slide-down;
+  }
+  
+  @keyframes slide-up {
+    0% {
+      transform: translateY(300px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  @keyframes slide-down {
+    0% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(300px);
+    }
+  }
+  /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+scroll-bar
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px var(--color-grey-hover); 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-blue-bg); 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-blue-primary-hover); 
+  }

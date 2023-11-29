@@ -3,6 +3,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
+import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
@@ -18,9 +19,10 @@ export class NavbarComponent {
   currentUserId:any;
   
   constructor(
+    private authService: AuthService,
+    private firestoreService: FirestoreService,
     private navbarService: NavbarService, 
     public dialog: MatDialog,
-    private firestoreService: FirestoreService,
     ){
       this.subscription = this.navbarService.showMenu$.subscribe(
         visible => {
@@ -29,12 +31,12 @@ export class NavbarComponent {
   }
 
   ngOnInit(){
-    // this.currentUserId = localStorage.getItem('uId');
-    // this.firestoreService.getChannelsFromCurrentUser(this.currentUserId);
-    // this.firestoreService.getChatsFromCurrentUser(this.currentUserId);
   }
   
   closeMenu(){
+    setTimeout(() => {
+      this.navbarService.toggleOverlay();
+    }, 250);
     this.navbarService.menuSlideDown();
   }
 

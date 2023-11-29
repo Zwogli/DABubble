@@ -41,9 +41,6 @@ form{
         margin-top: 1rem;
         display: flex;
         justify-content: flex-end;
-        button {
-          @include btn_primary;
-          }
     }
 }
 input{
@@ -54,6 +51,11 @@ input{
 .sub-headline{
     font-weight: 700;
 }
+
+.btn__submit{
+  @include btn_primary;
+}
+
 .btn-disabled {
   @include btn-disabled;
 }
