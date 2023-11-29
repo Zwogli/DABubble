@@ -111,7 +111,7 @@ export class ChatService implements OnInit {
     this.chatRecordId = chatRecordId;
     this.channelId = channelId;
     this.leadingThreadMsgId = msgId;
-    await this.createNewChatRecord('thread', this.chatRecordId, msgId);
+    await this.createNewChatRecord('thread', msgId, this.chatRecordId);
     // await this.setLeadingMsg(msgId);
     this.router.navigate(['/thread/', msgId, this.channelId]);
   }
@@ -132,7 +132,6 @@ export class ChatService implements OnInit {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log('LeadingMsg set as: ', docSnap.data());
       this.leadingThreadMsg = docSnap.data();
     }
   }
@@ -140,7 +139,7 @@ export class ChatService implements OnInit {
   async createNewChatRecord(
     hostType: chatTypes,
     targetId: string,
-    chatRecordId: string,
+    chatRecordId: string
   ) {
     const newChatRecordRef = doc(collection(this.firestore, 'chatRecords'));
     await setDoc(newChatRecordRef, {});
@@ -157,7 +156,7 @@ export class ChatService implements OnInit {
       case 'private':
         this.saveChatRefInPrivateCol(targetId, newChatRecordRef);
         break;
-      
+
       default:
         break;
     }
@@ -184,13 +183,9 @@ export class ChatService implements OnInit {
     targetId: string,
     newChatRecordRef: DocumentReference<DocumentData>
   ) {
-    const targetRef = doc(
-      this.firestore,
-      'channels',
-      targetId
-    );
+    const targetRef = doc(this.firestore, 'channels', targetId);
     await updateDoc(targetRef, {
-      'chatRecord': newChatRecordRef.id,
+      chatRecord: newChatRecordRef.id,
     });
   }
 
@@ -198,13 +193,9 @@ export class ChatService implements OnInit {
     targetId: string,
     newChatRecordRef: DocumentReference<DocumentData>
   ) {
-    const targetRef = doc(
-      this.firestore,
-      'privateChat',
-      targetId
-    );
+    const targetRef = doc(this.firestore, 'privateChat', targetId);
     await updateDoc(targetRef, {
-      'chatRecord': newChatRecordRef.id,
+      chatRecord: newChatRecordRef.id,
     });
   }
 
@@ -213,7 +204,6 @@ export class ChatService implements OnInit {
 
     if (src === 'thread' && msgThread.length === 0) {
       await this.deleteChatRecord(msgThread.id);
-      console.log('before delete ref msg id is:', this.leadingThreadMsg.id);
 
       this.deleteMsgChatRecordRef(
         this.threadParentChatRecordId,
@@ -233,8 +223,6 @@ export class ChatService implements OnInit {
   }
 
   async deleteChatRecord(docId: string) {
-    console.log(docId);
-
     await deleteDoc(doc(this.firestore, 'chatRecords', docId));
   }
 
@@ -246,9 +234,6 @@ export class ChatService implements OnInit {
   }
 
   async updateThreadMetaData() {
-    console.log('Msg has been send in a thread');
-    console.log(this.threadParentChatRecordId);
-    console.log(this.leadingThreadMsg.id);
     const threadMetaRef = doc(
       this.firestore,
       'chatRecords',
@@ -256,7 +241,6 @@ export class ChatService implements OnInit {
       'messages',
       this.leadingThreadMsg.id
     );
-    console.log(threadMetaRef);
 
     await updateDoc(threadMetaRef, {
       'thread.lastAnswer': serverTimestamp(),
