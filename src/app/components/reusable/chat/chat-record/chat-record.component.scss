@@ -1,0 +1,26 @@
+@import 'src/app/style/_chat.scss';
+
+.chat__date-pill {
+    display: flex;
+    flex-direction: row;
+    margin-inline: auto;
+    margin-bottom: 20px;
+    padding: 0 16px;
+}
+
+.date-pill__content {
+    width: fit-content;
+    padding: 5px 15px;
+
+    font-size: 1rem;
+    border: 1px solid var(--color-blue-border);
+    border-radius: 30px;
+}
+
+.date-pill__line {
+    flex-grow: 1;
+    height: 1px;
+    margin-block: auto;
+
+    background-color: var(--color-blue-border);
+}

@@ -5,6 +5,10 @@
     font-family: var(--font-selection) !important;
 }
 
+.mat-typography {
+  font-family: var(--font-selection) !important;
+}
+
 .mat-h1, .mat-headline-5, .mat-typography .mat-h1, .mat-typography .mat-headline-5, .mat-typography h1{
   font-family: var(--font-selection);
 }
