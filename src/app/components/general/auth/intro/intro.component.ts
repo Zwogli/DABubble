@@ -13,19 +13,14 @@ export class IntroComponent implements OnInit {
   introIsDone!: boolean;
 
   ngOnInit(): void {
-    this.runAnimation();
-
     this.loadLoadingAmounts();
+    console.log(this.animationToTop);
     if (this.playedIntroAmount[0] == 0) {
       this.introIsDone = false;
+      this.runAnimation();
     } else {
       this.introIsDone = true;
     }
-
-    // if (this.loaded[0] == 0 && this.loading) {
-    //   this.showLoadingAnimation();
-    //   this.loadWebsite();
-    // }
     this.countLoading();
   }
 
@@ -51,16 +46,17 @@ export class IntroComponent implements OnInit {
   }
 
   runAnimation() {
-    setTimeout(() => {
-      this.animationToLeft = true;
-    }, 1000);
+      console.log('test');
+      setTimeout(() => {
+        this.animationToLeft = true;
+      }, 1000);
 
-    setTimeout(() => {
-      this.animationToRight = true;
-    }, 1500);
+      setTimeout(() => {
+        this.animationToRight = true;
+      }, 1500);
 
-    setTimeout(() => {
-      this.animationToTop = true;
-    }, 3000);
-  }
+      setTimeout(() => {
+        this.animationToTop = true;
+      }, 3000);
+    }
 }
