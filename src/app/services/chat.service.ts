@@ -4,6 +4,8 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { chatTypes } from '../interfaces/chats/types';
 import {
+  DocumentData,
+  DocumentReference,
   Firestore,
   collection,
   deleteDoc,
@@ -109,7 +111,7 @@ export class ChatService implements OnInit {
     this.chatRecordId = chatRecordId;
     this.channelId = channelId;
     this.leadingThreadMsgId = msgId;
-    await this.addNewChatRecord('thread', this.chatRecordId, msgId);
+    await this.createNewChatRecord('thread', this.chatRecordId, msgId);
     // await this.setLeadingMsg(msgId);
     this.router.navigate(['/thread/', msgId, this.channelId]);
   }
@@ -127,8 +129,6 @@ export class ChatService implements OnInit {
       'messages',
       msgId
     );
-    console.log(docRef);
-
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -137,26 +137,75 @@ export class ChatService implements OnInit {
     }
   }
 
-  async addNewChatRecord(
-    target: chatTypes,
+  async createNewChatRecord(
+    hostType: chatTypes,
+    targetId: string,
     chatRecordId: string,
-    msgId: string
   ) {
     const newChatRecordRef = doc(collection(this.firestore, 'chatRecords'));
     await setDoc(newChatRecordRef, {});
 
-    if (target === 'thread') {
-      const msgRef = doc(
-        this.firestore,
-        'chatRecords',
-        chatRecordId,
-        'messages',
-        msgId
-      );
-      await updateDoc(msgRef, {
-        'thread.id': newChatRecordRef.id,
-      });
+    switch (hostType) {
+      case 'channel':
+        this.saveChatRefInChannelCol(targetId, newChatRecordRef);
+        break;
+
+      case 'thread':
+        this.saveChatRefInMsgAsThread(chatRecordId, targetId, newChatRecordRef);
+        break;
+
+      case 'private':
+        this.saveChatRefInPrivateCol(targetId, newChatRecordRef);
+        break;
+      
+      default:
+        break;
     }
+  }
+
+  async saveChatRefInMsgAsThread(
+    chatRecordId: string,
+    targetId: string,
+    newChatRecordRef: DocumentReference<DocumentData>
+  ) {
+    const targetRef = doc(
+      this.firestore,
+      'chatRecords',
+      chatRecordId,
+      'messages',
+      targetId
+    );
+    await updateDoc(targetRef, {
+      'thread.id': newChatRecordRef.id,
+    });
+  }
+
+  async saveChatRefInChannelCol(
+    targetId: string,
+    newChatRecordRef: DocumentReference<DocumentData>
+  ) {
+    const targetRef = doc(
+      this.firestore,
+      'channels',
+      targetId
+    );
+    await updateDoc(targetRef, {
+      'chatRecord': newChatRecordRef.id,
+    });
+  }
+
+  async saveChatRefInPrivateCol(
+    targetId: string,
+    newChatRecordRef: DocumentReference<DocumentData>
+  ) {
+    const targetRef = doc(
+      this.firestore,
+      'privateChat',
+      targetId
+    );
+    await updateDoc(targetRef, {
+      'chatRecord': newChatRecordRef.id,
+    });
   }
 
   async navigateBack(src: chatTypes) {
