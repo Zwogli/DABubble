@@ -1,10 +1,10 @@
-<app-navbar-header-mobile></app-navbar-header-mobile>
+<app-header-mobile [parent]="'navbar'"></app-header-mobile>
 
 <main>
   <app-navbar-searchbar></app-navbar-searchbar>
 
   <button
-    [routerLink]="'/home/'+'newChat'"
+    [routerLink]="'/home/' + 'newChat'"
     mat-fab
     color="primary"
     aria-label="Example icon button with a delete icon"
@@ -12,11 +12,10 @@
     <mat-icon> edit_square </mat-icon>
   </button>
 
-  <article >
+  <article>
     <app-navbar-panel-channels></app-navbar-panel-channels>
     <app-navbar-panel-message></app-navbar-panel-message>
   </article>
-
 </main>
 
 <app-dialog-overlay *ngIf="showMenu"></app-dialog-overlay>

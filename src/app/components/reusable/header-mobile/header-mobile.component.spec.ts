@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarHeaderMobileComponent } from './navbar-header-mobile.component';
+import { NavbarHeaderMobileComponent } from './header-mobile.component';
 
 describe('NavbarHeaderMobileComponent', () => {
   let component: NavbarHeaderMobileComponent;
@@ -8,7 +8,7 @@ describe('NavbarHeaderMobileComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NavbarHeaderMobileComponent]
+      declarations: [NavbarHeaderMobileComponent],
     });
     fixture = TestBed.createComponent(NavbarHeaderMobileComponent);
     component = fixture.componentInstance;

@@ -1,11 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Unsubscribe } from '@angular/fire/firestore';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
-  Observable,
   Subject,
-  Subscription,
-  Unsubscribable,
   takeUntil,
 } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';

@@ -1,28 +1,26 @@
-import { Component, inject } from '@angular/core';
-import { Unsubscribe } from '@angular/fire/auth';
-import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
-import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
-  selector: 'app-navbar-header-mobile',
-  templateUrl: './navbar-header-mobile.component.html',
-  styleUrls: ['./navbar-header-mobile.component.scss']
+  selector: 'app-header-mobile',
+  templateUrl: './header-mobile.component.html',
+  styleUrls: ['./header-mobile.component.scss']
 })
 
-export class NavbarHeaderMobileComponent {
+export class HeaderMobileComponent {
+  @Input() parent!: string; 
   currentUser!: User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
 
   constructor(
-    private authService: AuthService,
     private navbarService: NavbarService,
+    private router: Router,
     private firestoreService: FirestoreService,
-    ) {
-    }
+    ) {    }
     
   ngOnInit(){
       this.setCurrentUser();
@@ -30,6 +28,7 @@ export class NavbarHeaderMobileComponent {
 
   ngOnDestroy() {
     this.currentUserIsDestroyed$.next(true);
+    this.currentUserIsDestroyed$.complete();
   }
   
   setCurrentUser() {
@@ -42,5 +41,9 @@ export class NavbarHeaderMobileComponent {
 
   openMenu(){
     this.navbarService.menuSlideUp('menu');
+  }
+
+  navigateBack() {
+    this.router.navigate(['/home/']);
   }
 }
