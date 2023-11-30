@@ -24,7 +24,7 @@ import { Message } from '../models/message.class';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Chat } from '../models/chat.class';
-import { chatTypes } from '../interfaces/chats/types';
+import { ChatService } from './chat.service';
 
 @Injectable({
   providedIn: 'root',
@@ -39,26 +39,31 @@ export class FirestoreService {
   channelsArray: Channel[] = [];
   privateChats: Chat[] = [];
   chatUserData: User[] = [];
-  singleChatRecord: Message[] = [];
+
   // subject item
   private allUsersSubject = new BehaviorSubject<Array<User>>(this.allUsers);
   private currentUserSubject = new BehaviorSubject<User>(this.currentUser);
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private privateChatsSubject = new BehaviorSubject<any>(this.privateChats);
   private chatUserDataSubject = new BehaviorSubject<any>(this.chatUserData);
+
   // observable item
   allUsers$ = this.allUsersSubject.asObservable();
   currentUser$ = this.currentUserSubject.asObservable();
   channelsArray$ = this.channelsArraySubject.asObservable();
   privateChats$ = this.privateChatsSubject.asObservable();
   chatUserData$ = this.chatUserDataSubject.asObservable();
+
   // unsub item
   unsubCurrentUser!: Unsubscribe;
+  unsubChatUser!: Unsubscribe;
+
   // sign up 
   currentSignUpData: any = [];
   currentSignUpId: any = (125478986565 * Math.random()).toFixed(0);
   existingEmail: number = 0;
   emailAlreadyExist = false;
+
   // create channel
   channelAlreadyExist:boolean = false;
   newChannelName:string = '';
@@ -67,10 +72,7 @@ export class FirestoreService {
   newChannelRefId!:string;
   searchedUser: User[] = [];
 
-  
-  unsubChatUser!: Unsubscribe;
-
-  constructor() {}
+  constructor(private chatService: ChatService) {}
 
   ngOnDestroy() {
     this.unsubCurrentUser();
@@ -171,7 +173,7 @@ export class FirestoreService {
     this.chatFilteredUserIds.forEach((chatBetweenUserId) => {
       return onSnapshot(
         doc(this.firestore, 'user', chatBetweenUserId),
-        (doc: any) => {
+        (doc: any) => {          
           this.chatUserData.push(doc.data());
           this.chatUserDataSubject.next(this.chatUserData);
         }
@@ -266,6 +268,7 @@ export class FirestoreService {
     this.usersAsMemberChache.filter((user) => 
       memberId.push(user.id));
     await setDoc(newChannelRef, this.getNewChannelCleanJson(uId, memberId));
+    this.chatService.createNewChatRecord('channel', newChannelRef.id);
   }
 
   getNewChannelCleanJson(uId:string, memberId:string[]){
@@ -311,6 +314,7 @@ export class FirestoreService {
     await setDoc(newChatRef, this.getNewChatCleanJson(chatBetween, newChatRefId));
     this.updateUsersPrivatChat(selectedUser, newChatRefId);
     chatBetween= [];
+    this.chatService.createNewChatRecord('private', newChatRef.id);
   }
 
   getCleanArrayChatBetween(chatBetween:string[], selectedUser:User){

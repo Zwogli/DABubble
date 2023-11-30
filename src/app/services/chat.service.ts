@@ -114,7 +114,6 @@ export class ChatService implements OnInit {
     this.channelId = channelId;
     this.leadingThreadMsgId = msgId;
     await this.createNewChatRecord('thread', msgId, this.chatRecordId);
-    // await this.setLeadingMsg(msgId);
     this.router.navigate(['/thread/', msgId, this.channelId]);
   }
 
@@ -122,6 +121,13 @@ export class ChatService implements OnInit {
     this.router.navigate(['/thread/', msg.id, channelId]);
   }
 
+  /**
+   * This function sets the data of the message the thread has been started on
+   * to display on the very top of the chatRecord
+   *
+   * @param msgId - Id of the message the thread has been started on
+   * @param parentChatRecordId - Id of the chatRecord where the message is stored in
+   */
   async setLeadingMsg(msgId: string, parentChatRecordId: string) {
     this.threadParentChatRecordId = parentChatRecordId;
     const docRef = doc(
@@ -139,10 +145,19 @@ export class ChatService implements OnInit {
     }
   }
 
+  /**
+   * This function creates a new chatRecord and takes several params 
+   * to determine where the reference of the new chatRecord needs to
+   * be stored
+   *
+   * @param hostType - String of the type of channel the new chatRecord is referenced to
+   * @param targetId - Id of the document where the reference of the chatRecord needs to be stored
+   * @param {string} [chatRecordId] - Optional, just needed for threads to locate the specific message in a given chatRecord
+   */
   async createNewChatRecord(
     hostType: chatTypes,
     targetId: string,
-    chatRecordId: string
+    chatRecordId?: string
   ) {
     const newChatRecordRef = doc(collection(this.firestore, 'chatRecords'));
     await setDoc(newChatRecordRef, {});
@@ -153,7 +168,13 @@ export class ChatService implements OnInit {
         break;
 
       case 'thread':
-        this.saveChatRefInMsgAsThread(chatRecordId, targetId, newChatRecordRef);
+        if (chatRecordId) {
+          this.saveChatRefInMsgAsThread(
+            chatRecordId,
+            targetId,
+            newChatRecordRef
+          );
+        }
         break;
 
       case 'private':
