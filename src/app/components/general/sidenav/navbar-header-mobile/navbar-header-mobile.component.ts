@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Unsubscribe } from '@angular/fire/auth';
 import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
 import { Subject, takeUntil } from 'rxjs';
+import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -23,7 +24,10 @@ export class NavbarHeaderMobileComponent {
     private firestoreService: FirestoreService,
     ) {
     }
-    
+
+  /**
+   * subscribe
+   */ 
   ngOnInit(){
       this.setCurrentUser();
   }

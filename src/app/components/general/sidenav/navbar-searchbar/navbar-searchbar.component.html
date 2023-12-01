@@ -1,5 +1,10 @@
 <main class="element__margin--bottom">
-    <input name="navbar--searchbar" type="text" placeholder="Go to...">
+    <input 
+    #searchbarNavbar
+    (keyup)="searchFor()"
+    name="navbar--searchbar" 
+    type="text" 
+    placeholder="Go to...">
     <label for="navbar--searchbar">
         <span class="material-icons-outlined"> search </span>
     </label>
