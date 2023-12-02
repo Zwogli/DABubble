@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
@@ -9,16 +10,28 @@ import { NavbarService } from 'src/app/services/navbar.service';
   styleUrls: ['./dialog-overlay.component.scss']
 })
 export class DialogOverlayComponent {
+  mobileView: boolean = false;
+  private subscription: Subscription;
 
   constructor(
     private authService: AuthService,
-    private navbarService: NavbarService, 
-    ){}
+    private navbarService: NavbarService,
+    public responsiveService: BreakpointObserverService,
+    ){
+      this.subscription = this.responsiveService.mobileView$.subscribe(
+        visible => {
+          this.mobileView = visible;
+        });
+    }
 
   closeMenu() {
-    setTimeout(() => {
-      this.navbarService.toggleOverlay();
-    }, 250);
-    this.navbarService.menuSlideDown();
+    if(this.mobileView){
+      setTimeout(() => {
+        this.navbarService.toggleOverlay();
+      }, 250);
+      this.navbarService.menuSlideDown();
+    }else{
+      this.navbarService.hideDialog()
+    }
   }
 }

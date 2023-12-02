@@ -1,7 +1,17 @@
+<!-- class="mobile__menu" -->
 <div 
 id="dialog-profil-menu" 
-class="mobile__menu">
-    <div (click)="closeMenu()" class="orientation">
+[class.mobile__menu]="mobileView"
+[class.slide--up]="mobileView"
+[class.slide--down]="mobileView"
+[class.desktop__menu]="!mobileView"
+[class.hide]="!mobileView"
+>
+
+    <div 
+    *ngIf="mobileView" 
+    (click)="closeMenu()" 
+    class="orientation">
         <div>
             <span></span>
         </div>

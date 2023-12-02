@@ -14,7 +14,19 @@ export class NavbarService {
   selectedMenu:string = '';
 
   constructor() { }
+  showDialog(selectedMenu:string){
+    this.selectedMenu = selectedMenu;
+    let activMenu: HTMLElement | null = document.getElementById(this.selectedMenu);
+    this.toggleOverlay();
+    activMenu?.classList.remove('hide');
+  }
 
+  hideDialog(){
+    let activMenu: HTMLElement | null = document.getElementById(this.selectedMenu);
+    this.toggleOverlay();
+    activMenu?.classList.add('hide');
+  }
+  
   menuSlideUp(selectedMenu:string){
     this.selectedMenu = selectedMenu;
     let activMenu: HTMLElement | null = document.getElementById(this.selectedMenu);

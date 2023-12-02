@@ -49,7 +49,11 @@ export class HeaderMobileComponent {
   }
 
   openMenu(){
+    if(this.mobileView){
       this.navbarService.menuSlideUp('dialog-profil-menu');
+    }else{
+      this.navbarService.showDialog('dialog-profil-menu');
+    }
   }
 
   navigateBack() {
