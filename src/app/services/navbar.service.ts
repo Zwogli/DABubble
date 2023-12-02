@@ -18,6 +18,8 @@ export class NavbarService {
     this.selectedMenu = selectedMenu;
     let activMenu: HTMLElement | null = document.getElementById(this.selectedMenu);
     this.toggleOverlay();
+    activMenu?.classList.remove('slide--down');
+    activMenu?.classList.remove('slide--up');
     activMenu?.classList.remove('hide');
   }
 
@@ -41,7 +43,7 @@ export class NavbarService {
     activMenu?.classList.remove('slide--up');
     activMenu?.classList.add('slide--down');
 
-    activMenu?.classList.add('slide--up');
+    // activMenu?.classList.add('slide--up');
     this.selectedMenu = '';
   }
 
