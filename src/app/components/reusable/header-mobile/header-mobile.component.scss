@@ -1,6 +1,7 @@
 app-navbar-searchbar{
     width: 50dvw;
     max-width: 500px;
+    margin: 0 2rem;
 }
 header {
     padding: 0 1rem;
@@ -10,9 +11,16 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-
-.avatar-small {
+.header__profil{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     cursor: pointer;
+    h1{
+        white-space: nowrap;
+        margin: unset;
+        text-align: center;
+    }   
 }
 
 .logo__container {

@@ -4,13 +4,20 @@
 
   <app-navbar-searchbar *ngIf="!mobileView"></app-navbar-searchbar>
 
-  <img
-    (click)="openMenu()"
-    *ngIf="currentUser"
-    class="avatar-small"
-    src="{{ currentUser.photoUrl }}"
-    alt="avatar"
-  />
+  <div
+  (click)="openMenu()" 
+  class="header__profil">
+    <h1 *ngIf="currentUser && !mobileView">{{ currentUser.name }}</h1>
+
+    <img
+      *ngIf="currentUser"
+      class="avatar-small"
+      src="{{ currentUser.photoUrl }}"
+      alt="avatar"
+    />
+
+    <mat-icon *ngIf="!mobileView">keyboard_arrow_down</mat-icon>
+  </div>
 </header>
 
 <!-- Header for channels, threads and private chats -->
