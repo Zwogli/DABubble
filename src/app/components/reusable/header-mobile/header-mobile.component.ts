@@ -49,7 +49,7 @@ export class HeaderMobileComponent {
   }
 
   openMenu(){
-      this.navbarService.menuSlideUp('menu');
+      this.navbarService.menuSlideUp('dialog-profil-menu');
   }
 
   navigateBack() {
