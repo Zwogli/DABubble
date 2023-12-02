@@ -8,11 +8,11 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
-  selector: 'app-navbar-panel-message',
-  templateUrl: './navbar-panel-message.component.html',
-  styleUrls: ['./navbar-panel-message.component.scss']
+  selector: 'app-navbar-panel-chat',
+  templateUrl: './navbar-panel-chat.component.html',
+  styleUrls: ['./navbar-panel-chat.component.scss']
 })
-export class NavbarPanelMessageComponent {
+export class NavbarPanelChatComponent {
   firestore: Firestore = inject(Firestore);
   panelOpenState: boolean = false;
   currentUserId: any;

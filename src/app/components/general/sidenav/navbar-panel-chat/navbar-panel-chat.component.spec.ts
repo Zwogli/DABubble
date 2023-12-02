@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarPanelMessageComponent } from './navbar-panel-message.component';
+import { NavbarPanelChatComponent } from './navbar-panel-chat.component';
 
 describe('NavbarPanelMessageComponent', () => {
-  let component: NavbarPanelMessageComponent;
-  let fixture: ComponentFixture<NavbarPanelMessageComponent>;
+  let component: NavbarPanelChatComponent;
+  let fixture: ComponentFixture<NavbarPanelChatComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [NavbarPanelMessageComponent]
+      declarations: [NavbarPanelChatComponent]
     });
-    fixture = TestBed.createComponent(NavbarPanelMessageComponent);
+    fixture = TestBed.createComponent(NavbarPanelChatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

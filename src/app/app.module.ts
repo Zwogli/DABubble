@@ -22,7 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/general/sidenav/navbar/navbar.component';
 import { HeaderMobileComponent } from './components/reusable/header-mobile/header-mobile.component';
 import { NavbarPanelChannelsComponent } from './components/general/sidenav/navbar-panel-channels/navbar-panel-channels.component';
-import { NavbarPanelMessageComponent } from './components/general/sidenav/navbar-panel-message/navbar-panel-message.component';
+import { NavbarPanelChatComponent } from './components/general/sidenav/navbar-panel-chat/navbar-panel-chat.component';
 import { NavbarSearchbarComponent } from './components/general/sidenav/navbar-searchbar/navbar-searchbar.component';
 import { DialogProfilComponent } from './components/reusable/dialog-profil/dialog-profil.component';
 import { IntroComponent } from './components/general/auth/intro/intro.component';
@@ -54,7 +54,7 @@ import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat
     NavbarComponent,
     HeaderMobileComponent,
     NavbarPanelChannelsComponent,
-    NavbarPanelMessageComponent,
+    NavbarPanelChatComponent,
     NavbarSearchbarComponent,
     SignInComponent,
     SignUpComponent,
