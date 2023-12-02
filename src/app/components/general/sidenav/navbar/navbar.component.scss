@@ -23,6 +23,26 @@ app-menu-profil-mobile{
 .mobile{
   margin-bottom: 1rem;
 }
+
+.navbar__header{
+  padding: 0 1rem 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  div{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    span{
+      font-weight: 700;
+      font-size: 1.3rem
+    }
+  }
+  mat-icon{
+    margin-right: 8px;
+  }
+}
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 scroll-bar
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/

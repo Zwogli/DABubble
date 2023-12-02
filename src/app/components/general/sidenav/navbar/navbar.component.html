@@ -1,16 +1,28 @@
 <app-header-mobile [parent]="'navbar'"></app-header-mobile>
 
 <main>
+
   <app-navbar-searchbar 
   *ngIf="mobileView" 
   [class.mobile]="mobileView">
   </app-navbar-searchbar>
 
+  <div
+  class="navbar__header"
+  *ngIf="!mobileView" >
+    <div>
+      <img src="assets/img/workspace.png" alt="Logo of the current workspace" />
+      <span>Code learning</span>
+    </div>
+    <mat-icon>edit_square</mat-icon>
+  </div>
+
   <button
-    [routerLink]="'/home/' + 'newChat'"
-    mat-fab
-    color="primary"
-    aria-label="Example icon button with a delete icon"
+  *ngIf="mobileView"
+  [routerLink]="'/home/' + 'newChat'"
+  mat-fab
+  color="primary"
+  aria-label="Example icon button with a delete icon"
   >
     <mat-icon> edit_square </mat-icon>
   </button>
