@@ -1,6 +1,9 @@
 <!-- Header for sidenav -->
 <header *ngIf="parent === 'navbar'">
   <img src="assets/img/logo_dabubble-mobile.png" alt="Logo_DABubble" />
+
+  <app-navbar-searchbar *ngIf="!mobileView"></app-navbar-searchbar>
+
   <img
     (click)="openMenu()"
     *ngIf="currentUser"

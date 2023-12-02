@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
+import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
 
@@ -15,12 +16,20 @@ export class HeaderMobileComponent {
   @Input() parent!: string; 
   currentUser!: User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
+  mobileView: boolean = false;
+  private subscription: Subscription;
 
   constructor(
     private navbarService: NavbarService,
     private router: Router,
     private firestoreService: FirestoreService,
-    ) {    }
+    public responsiveService: BreakpointObserverService, 
+    ) {
+      this.subscription = this.responsiveService.mobileView$.subscribe(
+        visible => {
+          this.mobileView = visible;
+        });
+    }
     
   ngOnInit(){
       this.setCurrentUser();
