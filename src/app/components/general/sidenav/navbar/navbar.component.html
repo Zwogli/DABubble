@@ -1,7 +1,10 @@
 <app-header-mobile [parent]="'navbar'"></app-header-mobile>
 
 <main>
-  <app-navbar-searchbar *ngIf="mobileView"></app-navbar-searchbar>
+  <app-navbar-searchbar 
+  *ngIf="mobileView" 
+  [class.mobile]="mobileView">
+  </app-navbar-searchbar>
 
   <button
     [routerLink]="'/home/' + 'newChat'"
