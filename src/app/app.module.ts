@@ -24,7 +24,6 @@ import { HeaderMobileComponent } from './components/reusable/header-mobile/heade
 import { NavbarPanelChannelsComponent } from './components/general/sidenav/navbar-panel-channels/navbar-panel-channels.component';
 import { NavbarPanelMessageComponent } from './components/general/sidenav/navbar-panel-message/navbar-panel-message.component';
 import { NavbarSearchbarComponent } from './components/general/sidenav/navbar-searchbar/navbar-searchbar.component';
-import { MenuProfilMobileComponent } from './components/general/sidenav/menu-profil-mobile/menu-profil-mobile.component';
 import { DialogProfilComponent } from './components/reusable/dialog-profil/dialog-profil.component';
 import { IntroComponent } from './components/general/auth/intro/intro.component';
 import { SignInComponent } from './components/general/auth/sign-in/sign-in.component';
@@ -60,7 +59,6 @@ import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat
     SignInComponent,
     SignUpComponent,
     ChooseAvatarComponent,
-    MenuProfilMobileComponent,
     DialogProfilComponent,
     DialogProfilEditComponent,
     ForgotPasswordComponent,
