@@ -1,0 +1,14 @@
+main{
+    height: 100dvh;
+    width: 100%;
+    background-color: var(--color-blue-bg);
+    position: relative;
+    overflow: hidden;
+}
+.navbar__desktop{
+    margin: 1rem;
+    width: 400px;
+    height: calc(100dvh - 80px - 2rem);
+    border-radius: 30px;
+    position: unset;
+}

@@ -45,6 +45,7 @@ import { DialogProfilMenuComponent } from './components/reusable/dialog-profil-m
 import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dialog-overlay.component';
 import { PrivateComponent } from './components/general/chats/private/private.component';
 import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat-record.component';
+import { MainComponent } from './components/general/main/main.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat
     ChatSubHeaderComponent,
     PrivateComponent,
     ChatRecordComponent,
+    MainComponent,
   ],
 
   imports: [
