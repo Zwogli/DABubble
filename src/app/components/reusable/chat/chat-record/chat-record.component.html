@@ -86,7 +86,7 @@
           <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
         </button>
         <button
-          *ngIf="message.thread.length <= 0"
+          *ngIf="message.thread.length <= 0 && parentType !== 'thread'"
           (click)="this.startThread.emit(message)"
           mat-icon-button
           aria-label="Icon button with a chat bubble"
@@ -94,6 +94,7 @@
           <mat-icon fontSet="material-icons-outlined">comment</mat-icon>
         </button>
         <button
+          *ngIf="message.sentById === currentUser.id"
           mat-icon-button
           aria-label="Icon button with vertical dots icon"
         >

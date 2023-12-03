@@ -1,18 +1,17 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100svh;
+}
+
 main {
     display: flex;
     flex-direction: column;
-}
-
-.chat__container {
-    // 338px == Height of header and input field + margins
-    height: calc(100svh - 338px);
     overflow-y: auto;
 }
 
 .message__wrapper {
     position: relative;
-    // padding: 10px 0;
-    // margin-top: 45px;
 }
 
 .message {

@@ -11,9 +11,9 @@
     [chatRecordId]="chatRecordId"
     [currentUser]="currentUser"
   ></app-chat-record>
-
-  <app-message-input
-    *ngIf="currentChannel"
-    [currentChatId]="currentChannel.chatRecord"
-  ></app-message-input>
 </main>
+
+<app-message-input
+  *ngIf="currentChannel"
+  [currentChatId]="currentChannel.chatRecord"
+></app-message-input>

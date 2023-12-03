@@ -5,41 +5,42 @@
   [channel]="currentChannel"
 ></app-chat-sub-header>
 
-<main>
-  <div *ngIf="leadingMsg" class="message__wrapper">
-    <div class="message leading-msg">
-      <div class="message__avatar-container">
-        <img src="{{ leadingMsg.sentByPhotoUrl }}" alt="" />
-      </div>
-
-      <div class="message__content-container">
-        <div class="message__header">
-          <span class="message__header-name">{{ leadingMsg.sentByName }}</span>
-          <span *ngIf="leadingMsg.sentAt" class="message__header-time"
-            >{{ leadingMsg.sentAt.toDate() | date : "shortTime" }} Uhr</span
-          >
-        </div>
-
-        <p class="message__content">
-          {{ leadingMsg.message }}
-        </p>
-      </div>
+<div *ngIf="leadingMsg" class="message__wrapper">
+  <div class="message leading-msg">
+    <div class="message__avatar-container">
+      <img src="{{ leadingMsg.sentByPhotoUrl }}" alt="" />
     </div>
-    <div class="thread__separator-container">
-      <span *ngIf="leadingMsg.thread.length > 0"
-        >{{ leadingMsg.thread.length }} Antworten</span
-      >
-      <div class="thread__separator-line"></div>
+
+    <div class="message__content-container">
+      <div class="message__header">
+        <span class="message__header-name">{{ leadingMsg.sentByName }}</span>
+        <span *ngIf="leadingMsg.sentAt" class="message__header-time"
+          >{{ leadingMsg.sentAt.toDate() | date : "shortTime" }} Uhr</span
+        >
+      </div>
+
+      <p class="message__content">
+        {{ leadingMsg.message }}
+      </p>
     </div>
   </div>
+  <div class="thread__separator-container">
+    <span *ngIf="leadingMsg.thread.length > 0"
+      >{{ leadingMsg.thread.length }} Antworten</span
+    >
+    <div class="thread__separator-line"></div>
+  </div>
+</div>
+
+<main>
   <app-chat-record
     [parentType]="'thread'"
     [chatRecordId]="chatRecordId"
     [currentUser]="currentUser"
   ></app-chat-record>
-
-  <app-message-input
-    [currentChatId]="chatRecordId"
-    [parentChat]="'thread'"
-  ></app-message-input>
 </main>
+
+<app-message-input
+  [currentChatId]="chatRecordId"
+  [parentChat]="'thread'"
+></app-message-input>
