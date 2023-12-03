@@ -21,11 +21,11 @@ const routes: Routes = [
   // { path: 'home', component: NavbarComponent },
   { path: 'home', component: MainComponent,
 
-  // children: [
-  //   { path: 'home/addChannel', component: CreateChannelComponent },
-  //   { path: 'home/:channelId', component: ChannelComponent },
-  //   { path: 'thread/:msgId/:channelId', component: ThreadComponent },
-  // ]
+  children: [
+    { path: 'add/newChannel', component: CreateChannelComponent },
+    { path: 'channel/:channelId', component: ChannelComponent },
+    { path: 'thread/:msgId/:channelId', component: ThreadComponent },
+  ]
   },
 ];
 

@@ -5,6 +5,11 @@ main{
     position: relative;
     overflow: hidden;
 }
+
+.main__content{
+    display: flex;
+}
+
 .navbar__desktop{
     margin: 1rem;
     width: 400px;
@@ -14,9 +19,9 @@ main{
 }
 
 .input__desktop{
+    border-radius: 30px;
+    margin: 1rem 1rem 1rem 0;
     width: calc(100dvw - 400px - 2rem);
+    background-color: var(--color-white);
 }
 
-.main__content{
-    display: flex;
-}

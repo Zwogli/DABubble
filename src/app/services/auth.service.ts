@@ -38,7 +38,7 @@ export class AuthService {
       .then((userCredential) => {
         // Signed in
         this.logInError = false;
-        this.router.navigate(['home']);//test #Entwicklerteam  + 'vIGUW5jmoxQQaKOf9AkD'
+        this.router.navigate(['home/channel/vIGUW5jmoxQQaKOf9AkD']);//test #Entwicklerteam  + 'vIGUW5jmoxQQaKOf9AkD'
       })
       .catch((error) => {
         this.logInError = true;
@@ -47,7 +47,7 @@ export class AuthService {
 
   guestSignIn() {
     this.signIn('guest@mail.com', 'guest_user123');
-    this.router.navigate(['home']);
+    this.router.navigate(['home/channel/vIGUW5jmoxQQaKOf9AkD']);
   }
 
   googleSignIn() {
@@ -55,7 +55,7 @@ export class AuthService {
     .then((userCredential) => {
       const user = userCredential.user;
       this.firestoreService.addUser(user, user?.displayName, user?.photoURL);
-      this.router.navigate(['home']);
+      this.router.navigate(['home/channel/vIGUW5jmoxQQaKOf9AkD']);
     });
   }
 
@@ -109,7 +109,7 @@ export class AuthService {
       this.dataError = false;
       this.firestoreService.addUser(user, name, photoUrl);
       this.firestoreService.addPrivateChat(user.uid);
-      this.router.navigate(['home']);
+      this.router.navigate(['home/channel/vIGUW5jmoxQQaKOf9AkD']);
     }, 3500);
   }
 
