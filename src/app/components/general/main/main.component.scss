@@ -12,3 +12,11 @@ main{
     border-radius: 30px;
     position: unset;
 }
+
+.input__desktop{
+    width: calc(100dvw - 400px - 2rem);
+}
+
+.main__content{
+    display: flex;
+}

@@ -1,6 +1,16 @@
 <main>
     <app-header-mobile></app-header-mobile>
 
-    <app-navbar
-    [class.navbar__desktop]="!mobileView"></app-navbar>
+    <div class="main__content">
+        <app-navbar
+        [class.navbar__desktop]="!mobileView">
+        </app-navbar>
+    
+        <app-channel
+        [class.input__desktop]="!mobileView"
+        *ngIf="!mobileView"
+        >
+        </app-channel>
+
+    </div>
 </main>

@@ -19,10 +19,14 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   // { path: 'home', component: NavbarComponent },
-  { path: 'home', component: MainComponent },
-  { path: 'home/addChannel', component: CreateChannelComponent },
-  { path: 'home/:channelId', component: ChannelComponent },
-  { path: 'thread/:msgId/:channelId', component: ThreadComponent },
+  { path: 'home', component: MainComponent,
+
+  // children: [
+  //   { path: 'home/addChannel', component: CreateChannelComponent },
+  //   { path: 'home/:channelId', component: ChannelComponent },
+  //   { path: 'thread/:msgId/:channelId', component: ThreadComponent },
+  // ]
+  },
 ];
 
 @NgModule({
