@@ -19,10 +19,10 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   // { path: 'home', component: NavbarComponent },
+  { path: 'add/newChannel', component: CreateChannelComponent },
   { path: 'home', component: MainComponent,
-
+  
   children: [
-    { path: 'add/newChannel', component: CreateChannelComponent },
     { path: 'channel/:channelId', component: ChannelComponent },
     { path: 'thread/:msgId/:channelId', component: ThreadComponent },
   ]

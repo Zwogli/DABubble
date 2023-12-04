@@ -6,11 +6,13 @@
         [class.navbar__desktop]="!mobileView">
         </app-navbar>
     
-        <app-channel
+        <!-- <app-channel
         [class.input__desktop]="!mobileView"
         *ngIf="!mobileView"
         >
-        </app-channel>
+        </app-channel> -->
+
+        <router-outlet *ngIf="!mobileView"></router-outlet>
 
     </div>
 </main>
