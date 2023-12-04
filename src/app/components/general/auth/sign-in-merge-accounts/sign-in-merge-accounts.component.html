@@ -1,8 +1,11 @@
-<mat-card>
-  <mat-card-content>
-    <form class="example-form" [formGroup]="signInForm">
-      <span class="sign-in__headline">Anmeldung</span>
-      <span class="sign-in__info-text">Wir empfehlen dir, die E-Mail Adresse zu nutzen, die du bei der Arbeit verwendest.</span>
+<div class="block__sign-up">
+  <img src="../../../../assets/img/logo+text.png">
+
+  <mat-card *ngIf="!this.authService.isLoggedInForMerging">
+    <mat-card-content>
+      <form class="example-form" [formGroup]="signInForm">
+        <span class="sign-in__headline">Accounts verbinden</span>
+      <span class="sign-in__info-text">Wir haben festgestellt, dass du bereits einen DABubble Account hast. Bitte melde dich zunächst mit deinem Passwort und deiner Email Adresse an und anschließend mit deinem Google Account. Verwende jeweils die selbe E-Mail-Adresse, so können beide Accounts zusammengeführt werden und zukünftig kannst du dich mit beiden Anmeldemethoden einloggen.</span>
 
       <div class="block__input">
         <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="emailForm?.dirty || emailForm?.touched">mail</mat-icon>
@@ -24,35 +27,26 @@
 
       <span class="sign-in__forgot-password" routerLink="/forgot-password">Passwort vergessen?</span>
 
-      <div class="block__or-google">
-        <hr>
-        <span>ODER</span>
-        <hr>
-      </div>
-
-      <div class="block__google-log-in" (click)="this.authService.googleSignIn()">
-        <img src="../../../../../assets/img/google-icon.png">
-        <span>Anmelden mit Google</span>
-      </div>
-
       <div class="block__btn-box">
         <button
         class="btn__log-in"
-        (click)="this.authService.signIn(userEmail.value, userPassword.value, 'sign-in')"
+        (click)="this.authService.signIn(userEmail.value, userPassword.value, 'merge-accounts')"
         [disabled]="signInForm.invalid"
         [class.btn-disabled]="signInForm.invalid"
-        >Anmelden</button>
-        <button class="btn__guest-log-in" (click)="this.authService.guestSignIn()">Gäste-Login</button>
+        >Anmelden & weiter zum Google Log-in</button>
       </div>
 
       <div class="block__error" *ngIf="this.authService.logInError">
         *Log-in Daten sind unvollständig oder stimmen nicht überein.
       </div>
-  </form>
-  </mat-card-content>
-</mat-card>
+    </form>
+    </mat-card-content>
+  </mat-card>
 
-<div class="block__create-account">
-  <span>Neu bei DABubble?</span>
-  <button routerLink="/sign-up">Konto erstellen</button>
+  <mat-card *ngIf="this.authService.isLoggedInForMerging">
+    <div class="block__google-log-in" (click)="this.authService.linkAccounts()">
+      <img src="../../../../../assets/img/google-icon.png">
+      <span>Mit Google anmelden & Accounts verbinden</span>
+    </div>
+  </mat-card>
 </div>

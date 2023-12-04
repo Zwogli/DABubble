@@ -14,7 +14,6 @@ export class IntroComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLoadingAmounts();
-    console.log(this.animationToTop);
     if (this.playedIntroAmount[0] == 0) {
       this.introIsDone = false;
       this.runAnimation();
@@ -46,7 +45,6 @@ export class IntroComponent implements OnInit {
   }
 
   runAnimation() {
-      console.log('test');
       setTimeout(() => {
         this.animationToLeft = true;
       }, 1000);

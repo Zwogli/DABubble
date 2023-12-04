@@ -46,6 +46,7 @@ import { DialogProfilMenuComponent } from './components/reusable/dialog-profil-m
 import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dialog-overlay.component';
 import { PrivateComponent } from './components/general/chats/private/private.component';
 import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat-record.component';
+import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat
     ChatSubHeaderComponent,
     PrivateComponent,
     ChatRecordComponent,
+    SignInMergeAccountsComponent,
   ],
 
   imports: [
