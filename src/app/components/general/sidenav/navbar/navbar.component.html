@@ -27,12 +27,11 @@
     <mat-icon> edit_square </mat-icon>
   </button>
 
-  <article>
+  <div class="panels">
     <app-navbar-panel-channels></app-navbar-panel-channels>
     <app-navbar-panel-chat></app-navbar-panel-chat>
-  </article>
+  </div>
 </main>
 
-<app-dialog-overlay *ngIf="showMenu"></app-dialog-overlay>
-<app-dialog-profil-menu></app-dialog-profil-menu>
+<!-- <app-dialog-profil-menu></app-dialog-profil-menu> -->
 <app-dialog-new-chat></app-dialog-new-chat>

@@ -1,16 +1,21 @@
-<!-- [class.slide--down]="mobileView" [class.slide--up]="mobileView"-->
 <div 
-id="dialog-profil-menu" 
-[class.mobile__menu]="mobileView"
+class="overlay"
+(click)="closeDialogMenu()"
+></div>
 
-
-[class.desktop__menu]="!mobileView"
-[class.hide]="!mobileView"
+<!-- [class.dialog__mobile]="mobileView"
+[class.dialog__desktop]="!mobileView"
+[class.hide]="!mobileView" -->
+<div 
+[class.dialog__desktop]="showDialogProfilMenu && !mobileView" 
+[class.dialog__mobile]="showDialogProfilMenu && mobileView" 
+[class.slide--up]="showDialogProfilMenu && mobileView"
+[class.slide--down]="showCloseAnimation && mobileView"
 >
 
     <div 
     *ngIf="mobileView" 
-    (click)="closeMenu()" 
+    (click)="closeDialogMenu()" 
     class="orientation">
         <div>
             <span></span>

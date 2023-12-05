@@ -7,11 +7,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class DialogManagerService {
   /** subjects */
   showMenuSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false) // behaviorSubject near a observable
+  toggleDialogProfilMenuSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   toggleDialogAddChannelSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   toggleDialogNewChannelSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   toggleDialogNewChatSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   /** observable */
   showMenu$: Observable<boolean> = this.showMenuSubject.asObservable();  // change behaviorSubject -> observable
+  showDialogProfilMenu$: Observable<boolean> = this.toggleDialogProfilMenuSubject.asObservable();
   showDialogAddChannel$: Observable<boolean> = this.toggleDialogAddChannelSubject.asObservable();
   showDialogNewChannel$: Observable<boolean> = this.toggleDialogNewChannelSubject.asObservable();
   showDialogNewChat$: Observable<boolean> = this.toggleDialogNewChatSubject.asObservable();
@@ -73,6 +75,10 @@ export class DialogManagerService {
   /**
    * new dialog managment
    */
+  showDialogProfilMenu(){
+    const currentValue = this.toggleDialogProfilMenuSubject.value;
+    this.toggleDialogProfilMenuSubject.next(!currentValue);
+  }
 
   showDialogAddChannel(){
     const currentValue = this.toggleDialogAddChannelSubject.value;

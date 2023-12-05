@@ -1,30 +1,32 @@
 @import '../../../style/variable.scss';
+.overlay {
+  @include overlay;
+}
 
-.mobile__menu {
+.dialog__desktop{
+  background-color: var(--color-white);
+  padding: 1rem;
+  width: fit-content;
+  @include display_column;
+  position: absolute;
+  top: 80px;
+  right: calc(-100dvw + 1rem);
+  z-index: 5;
+  border-radius: 30px 0 30px 30px;
+  white-space: nowrap;
+}
+
+.dialog__mobile {
   width: calc(100dvw - 52px);
-  height: 220px;
   padding: 30px 26px 30px 26px;
   background-color: var(--color-white);
   position: absolute;
+  bottom: 0;
+  z-index: 5;
   border-radius: 30px 30px 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  z-index: 5;
   filter: drop-shadow(0px -5px 3px var(--color-black-shadow));
-}
-
-.desktop__menu{
-  background-color: var(--color-white);
-  height: max-content;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  right: calc(2rem + 25px);
-  top: 80px;
-  z-index: 5;
-  border-radius: 30px 0px 30px 30px;
+  @include display_column;
+  gap: 1rem;
 }
 
 .close__element{
@@ -42,9 +44,7 @@ menu-profil
   display: flex;
   justify-content: center;
   div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include display_center;
     span {
       width: 62px;
       display: flex;
@@ -84,11 +84,11 @@ menu-profil
 animation
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 .slide--up {
-    bottom: 0;
+    bottom: -100dvh;
     animation: 0.5s slide-up;
   }
   .slide--down {
-    bottom: 0;
+    bottom: 0dvh;
     transform: translateY(300px);
     animation: 0.5s slide-down;
   }

@@ -1,3 +1,5 @@
+@import '../../../style/variable.scss';
+
 main{
     height: 100dvh;
     width: 100%;
@@ -15,11 +17,15 @@ app-dialog-add-channel{
     z-index: 5;
     display: block;
     overflow-y: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include display_center;
     overflow: hidden;
   }
+
+app-dialog-profil-menu{
+    position: absolute;
+    top: 0;
+    z-index: 5;
+}
 
 .main__content{
     display: flex;

@@ -15,6 +15,7 @@ import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 export class MainComponent {
   showMenu: boolean = false;
   showMainChat: boolean = false;
+  showDialogProfilMenu: boolean = false;
   showDialogAddChannel: boolean = false;
   mobileView: boolean = false;
   private subscription: Subscription;
@@ -37,6 +38,10 @@ export class MainComponent {
       this.subscription = this.dialogService.showDialogAddChannel$.subscribe(
         visible => {
           this.showDialogAddChannel = visible;
+        });
+      this.subscription = this.dialogService.showDialogProfilMenu$.subscribe(
+        visible => {
+          this.showDialogProfilMenu = visible;
         });
   }
 }
