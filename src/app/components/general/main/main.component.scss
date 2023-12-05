@@ -6,6 +6,18 @@ main{
     overflow: hidden;
 }
 
+app-create-channel{
+    background-color: var(--color-white);
+    width: 100dvw;
+    height: 100dvh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    display: block;
+    overflow-y: hidden;
+  }
+
 .main__content{
     display: flex;
 }
@@ -18,11 +30,3 @@ main{
     border-radius: 30px;
     position: unset;
 }
-
-// router-outlet{
-//     border-radius: 30px;
-//     margin: 1rem 1rem 1rem 0;
-//     width: calc(100dvw - 400px - 2rem);
-//     background-color: var(--color-white);
-// }
-

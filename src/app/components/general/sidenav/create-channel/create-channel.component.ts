@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { DialogManagerService } from 'src/app/services/dialog-manager.service';
+import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.service';
 
 @Component({
   selector: 'app-create-channel',
@@ -21,15 +22,26 @@ export class CreateChannelComponent {
       Validators.maxLength(17)
     ]),
   });
+  mobileView: boolean = false;
+  showDialogCreateChannel: boolean = false;
 
   constructor(
     private authService: AuthService,
     public firestoreService: FirestoreService,
-    private dialogService: DialogManagerService, 
+    private dialogService: DialogManagerService,
+    public responsiveService: BreakpointObserverService,  
     ){
       this.subscription = this.dialogService.showMenu$.subscribe(
         visible => {
           this.showMenu = visible;
+        });
+      this.subscription = this.responsiveService.mobileView$.subscribe(
+        visible => {
+          this.mobileView = visible;
+        });
+      this.subscription = this.dialogService.showDialogCreateChannel$.subscribe(
+        visible => {
+          this.showDialogCreateChannel = visible;
         });
     }
 
@@ -88,5 +100,10 @@ export class CreateChannelComponent {
     let desciptionInput: any = document.getElementById('channel-desciption');
     let description = desciptionInput.value;
     this.firestoreService.newChannelDescription = description
+  }
+
+  closeDialogCreateChannel(){
+    this.resetErrorMsg();
+    this.dialogService.showCreateChannel();
   }
 }

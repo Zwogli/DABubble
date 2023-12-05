@@ -28,7 +28,7 @@ export class DialogNewChatComponent {
     private firestoreService:FirestoreService,
     public dialogService: DialogManagerService,
   ){
-    this.subscription = this.dialogService.showOverlayNewChat$.subscribe(
+    this.subscription = this.dialogService.showDialogNewChat$.subscribe(
       visible => {
         this.showOverlay = visible;
       });

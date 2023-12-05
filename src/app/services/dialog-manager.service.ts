@@ -5,12 +5,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DialogManagerService {
-  /** helpfull trick to create observable boolean */
+  /** subjects */
   showMenuSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false) // behaviorSubject near a observable
+  toggleDialogCreateChannelSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  toggleDialogNewChatSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  /** observable */
   showMenu$: Observable<boolean> = this.showMenuSubject.asObservable();  // change behaviorSubject -> observable
-  /** */
-  toggleOverlayNewChatSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  showOverlayNewChat$: Observable<boolean> = this.toggleOverlayNewChatSubject.asObservable();
+  showDialogCreateChannel$: Observable<boolean> = this.toggleDialogCreateChannelSubject.asObservable();
+  showDialogNewChat$: Observable<boolean> = this.toggleDialogNewChatSubject.asObservable();
+
   selectedMenu:string = '';
 
   constructor() { }
@@ -56,8 +59,8 @@ export class DialogManagerService {
   }
 
   toggleOverlayNewChat(){
-    const currentValue = this.toggleOverlayNewChatSubject.value;
-    this.toggleOverlayNewChatSubject.next(!currentValue);
+    const currentValue = this.toggleDialogNewChatSubject.value;
+    this.toggleDialogNewChatSubject.next(!currentValue);
   }
 
   toggleOverlay() {
@@ -66,6 +69,7 @@ export class DialogManagerService {
   }
 
   showCreateChannel(){
-    
+    const currentValue = this.toggleDialogCreateChannelSubject.value;
+    this.toggleDialogCreateChannelSubject.next(!currentValue);
   }
 }

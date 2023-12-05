@@ -2,19 +2,15 @@
     <app-header-mobile></app-header-mobile>
 
     <div class="main__content">
+        
         <app-navbar
         [class.navbar__desktop]="!mobileView">
         </app-navbar>
-    
-        <!-- <app-channel
-        [class.input__desktop]="!mobileView"
-        *ngIf="!mobileView"
-        >
-        </app-channel> -->
 
         <router-outlet *ngIf="!mobileView"></router-outlet>
 
     </div>
 
-    <app-create-channel></app-create-channel>
+    <app-create-channel *ngIf="showDialogCreateChannel"></app-create-channel>
+
 </main>
