@@ -104,6 +104,6 @@ export class DialogAddChannelComponent {
 
   closeDialogCreateChannel(){
     this.resetErrorMsg();
-    this.dialogService.showCreateChannel();
+    this.dialogService.showDialogAddChannel();
   }
 }

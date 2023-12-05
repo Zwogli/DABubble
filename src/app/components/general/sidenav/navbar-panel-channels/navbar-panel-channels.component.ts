@@ -65,6 +65,6 @@ export class NavbarPanelChannelsComponent {
   }
 
   openDialogNewChannel(){
-    this.dialogService.showCreateChannel();
+    this.dialogService.showDialogAddChannel();
   }
 }

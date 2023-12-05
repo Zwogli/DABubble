@@ -68,7 +68,7 @@ export class DialogManagerService {
     this.showMenuSubject.next(!currentValue);  // next change the negated value
   }
 
-  showCreateChannel(){
+  showDialogAddChannel(){
     const currentValue = this.toggleDialogCreateChannelSubject.value;
     this.toggleDialogCreateChannelSubject.next(!currentValue);
   }

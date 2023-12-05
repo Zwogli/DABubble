@@ -23,6 +23,7 @@ desktop / mobile
 .dialog--desktop{
   min-width: fit-content;
   min-height: fit-content;
+  border-radius: 30px;
   background-color: var(--color-white);
   padding: 2rem 1rem;
   position: absolute;
@@ -31,12 +32,13 @@ desktop / mobile
   justify-content: flex-start;
   align-items: flex-start;
   gap: 1rem;
-  border-radius: 30px;
 }
 
 .dialog--mobile{
+
     width: 100%;
     min-height: calc(100dvh - 4rem);
+    background-color: var(--color-white);
     padding: 2rem 1rem;
     position: relative;
     display: flex;
