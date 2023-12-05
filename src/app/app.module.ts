@@ -35,7 +35,7 @@ import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/c
 import { DialogProfilEditComponent } from './components/reusable/dialog-profil-edit/dialog-profil-edit.component';
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
-import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
+import { DialogAddChannelComponent } from './components/reusable/dialog-add-channel/dialog-add-channel.component';
 import { MessageInputComponent } from './components/reusable/chat/message-input/message-input.component';
 import { ChatSubHeaderComponent } from './components/reusable/chat/chat-sub-header/chat-sub-header.component';
 
@@ -63,7 +63,7 @@ import { MainComponent } from './components/general/main/main.component';
     DialogProfilComponent,
     DialogProfilEditComponent,
     ForgotPasswordComponent,
-    CreateChannelComponent,
+    DialogAddChannelComponent,
     DialogNewChannelComponent,
     DialogNewChatComponent,
     DialogProfilMenuComponent,

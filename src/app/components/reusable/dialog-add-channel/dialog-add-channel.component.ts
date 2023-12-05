@@ -7,11 +7,11 @@ import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.service';
 
 @Component({
-  selector: 'app-create-channel',
-  templateUrl: './create-channel.component.html',
-  styleUrls: ['./create-channel.component.scss']
+  selector: 'app-dialog-add-channel',
+  templateUrl: './dialog-add-channel.component.html',
+  styleUrls: ['./dialog-add-channel.component.scss']
 })
-export class CreateChannelComponent {
+export class DialogAddChannelComponent {
   private subscription: Subscription;
   showMenu: boolean = false;
   err_hash:boolean = false

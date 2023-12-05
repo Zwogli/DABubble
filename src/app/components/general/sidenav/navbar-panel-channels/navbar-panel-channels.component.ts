@@ -6,7 +6,7 @@ import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { CreateChannelComponent } from '../create-channel/create-channel.component';
+import { DialogAddChannelComponent } from '../../../reusable/dialog-add-channel/dialog-add-channel.component';
 import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 
 @Component({

@@ -7,7 +7,7 @@ import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/c
 import { NavbarComponent } from './components/general/sidenav/navbar/navbar.component';
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
-import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
+import { DialogAddChannelComponent } from './components/reusable/dialog-add-channel/dialog-add-channel.component';
 import { ThreadComponent } from './components/general/chats/thread/thread.component';
 import { MainComponent } from './components/general/main/main.component';
 
