@@ -6,7 +6,7 @@ main{
     overflow: hidden;
 }
 
-app-create-channel{
+app-dialog-add-channel{
     background-color: var(--color-white);
     width: 100dvw;
     height: 100dvh;
@@ -16,6 +16,10 @@ app-create-channel{
     z-index: 5;
     display: block;
     overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
   }
 
 .main__content{

@@ -1,6 +1,14 @@
-<div class="overlay"></div>
+<div 
+class="overlay" 
+(click)="closeDialogCreateChannel()"
+*ngIf="!mobileView">
+</div>
 
-<main>
+<div
+[class.dialog--desktop]="!mobileView"
+[class.dialog--mobile]="mobileView"
+>
+
     <header>
         <span> Create Channel </span>
         <span (click)="closeDialogCreateChannel()" class="material-icons-outlined close__element"> close </span>
@@ -53,7 +61,7 @@
             </button>
         </div>
     </form>
-</main>
+</div>
 
 <app-dialog-overlay *ngIf="showMenu"></app-dialog-overlay>
 <app-dialog-new-channel></app-dialog-new-channel>
