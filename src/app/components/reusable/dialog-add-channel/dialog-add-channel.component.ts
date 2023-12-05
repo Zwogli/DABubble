@@ -23,7 +23,7 @@ export class DialogAddChannelComponent {
     ]),
   });
   mobileView: boolean = false;
-  showDialogCreateChannel: boolean = false;
+  showDialogAddChannel: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -35,13 +35,13 @@ export class DialogAddChannelComponent {
         visible => {
           this.showMenu = visible;
         });
+        this.subscription = this.dialogService.showDialogAddChannel$.subscribe(
+          visible => {
+            this.showDialogAddChannel = visible;
+          });
       this.subscription = this.responsiveService.mobileView$.subscribe(
         visible => {
           this.mobileView = visible;
-        });
-      this.subscription = this.dialogService.showDialogCreateChannel$.subscribe(
-        visible => {
-          this.showDialogCreateChannel = visible;
         });
     }
 
@@ -93,11 +93,12 @@ export class DialogAddChannelComponent {
 
   openUserSelection(){
     this.manageDescription();
-    this.dialogService.menuSlideUp('menuCreateChannel');
+    this.dialogService.showDialogNewChannel();
+    // this.dialogService.menuSlideUp('menuCreateChannel');
   }
 
   manageDescription(){
-    let desciptionInput: any = document.getElementById('channel-desciption');
+    let desciptionInput: any = document.getElementById('channel-description');
     let description = desciptionInput.value;
     this.firestoreService.newChannelDescription = description
   }

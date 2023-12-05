@@ -7,11 +7,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class DialogManagerService {
   /** subjects */
   showMenuSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false) // behaviorSubject near a observable
-  toggleDialogCreateChannelSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  toggleDialogAddChannelSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  toggleDialogNewChannelSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   toggleDialogNewChatSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   /** observable */
   showMenu$: Observable<boolean> = this.showMenuSubject.asObservable();  // change behaviorSubject -> observable
-  showDialogCreateChannel$: Observable<boolean> = this.toggleDialogCreateChannelSubject.asObservable();
+  showDialogAddChannel$: Observable<boolean> = this.toggleDialogAddChannelSubject.asObservable();
+  showDialogNewChannel$: Observable<boolean> = this.toggleDialogNewChannelSubject.asObservable();
   showDialogNewChat$: Observable<boolean> = this.toggleDialogNewChatSubject.asObservable();
 
   selectedMenu:string = '';
@@ -68,8 +70,17 @@ export class DialogManagerService {
     this.showMenuSubject.next(!currentValue);  // next change the negated value
   }
 
+  /**
+   * new dialog managment
+   */
+
   showDialogAddChannel(){
-    const currentValue = this.toggleDialogCreateChannelSubject.value;
-    this.toggleDialogCreateChannelSubject.next(!currentValue);
+    const currentValue = this.toggleDialogAddChannelSubject.value;
+    this.toggleDialogAddChannelSubject.next(!currentValue);
+  }
+
+  showDialogNewChannel(){
+    const currentValue = this.toggleDialogNewChannelSubject.value;
+    this.toggleDialogNewChannelSubject.next(!currentValue);
   }
 }

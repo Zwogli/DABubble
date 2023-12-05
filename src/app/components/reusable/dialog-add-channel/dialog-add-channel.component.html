@@ -1,8 +1,8 @@
 <div 
 class="overlay" 
 (click)="closeDialogCreateChannel()"
-*ngIf="!mobileView">
-</div>
+*ngIf="!mobileView"
+></div>
 
 <div
 [class.dialog--desktop]="!mobileView"
@@ -28,7 +28,8 @@ class="overlay"
             id="create-channel"
             #createChannel
             type="text" 
-            placeholder="# e.g. cooperation-projects">
+            placeholder="# e.g. cooperation-projects"
+            >
             
             <label *ngIf="this.firestoreService.channelAlreadyExist" for="create-channel" class="block__alert">*Channel name exists</label>
             <label *ngIf="err_hash" for="create-channel" class="block__alert">*You forgot hashtag "#"</label>
@@ -46,7 +47,7 @@ class="overlay"
         </div>
         <input 
         type="text"
-        id="channel-desciption"
+        id="channel-description"
         placeholder="Space for your description">
 
 
@@ -63,5 +64,7 @@ class="overlay"
     </form>
 </div>
 
-<app-dialog-overlay *ngIf="showMenu"></app-dialog-overlay>
-<app-dialog-new-channel></app-dialog-new-channel>
+<!-- <app-dialog-overlay *ngIf="showMenu"></app-dialog-overlay> -->
+<app-dialog-new-channel
+[class.dialog__newChannel--desktop]="!mobileView"
+></app-dialog-new-channel>

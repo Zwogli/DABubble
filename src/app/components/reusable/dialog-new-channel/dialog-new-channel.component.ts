@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { DialogManagerService } from 'src/app/services/dialog-manager.service';
+import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.service';
 
 @Component({
   selector: 'app-dialog-new-channel',
@@ -13,8 +14,9 @@ import { DialogManagerService } from 'src/app/services/dialog-manager.service';
   styleUrls: ['./dialog-new-channel.component.scss']
 })
 export class DialogNewChannelComponent {
-  currentUser!:User;
+  private subscription: Subscription;
   private currentUserIsDestroyed$ = new Subject<boolean>();
+  currentUser!:User;
   searchUserForm = new FormGroup({
     searchInputForm: new FormControl('', [
       Validators.minLength(2),
@@ -22,13 +24,26 @@ export class DialogNewChannelComponent {
   });
   filteredUser:User[] = [];
   alreadyFiltered:boolean = false;
+  showDialogNewChannel: boolean = false;
+  showCloseAnimation:boolean = false;
+  mobileView: boolean = false;
 
   constructor(
     private authService: AuthService,
     public firestoreService:FirestoreService,
     private dialogService: DialogManagerService, 
     public router: Router,
-  ){}
+    public responsiveService: BreakpointObserverService, 
+  ){
+    this.subscription = this.dialogService.showDialogNewChannel$.subscribe(
+      visible => {
+        this.showDialogNewChannel = visible;
+      });
+    this.subscription = this.responsiveService.mobileView$.subscribe(
+      visible => {
+        this.mobileView = visible;
+      });
+  }
   
   // sub currentUSer
     ngOnInit() {
@@ -83,7 +98,8 @@ export class DialogNewChannelComponent {
   async createNewChannel(){
     await this.firestoreService.addNewChannel(this.currentUser.id);
     await this.firestoreService.updateUsers();
-    this.dialogService.toggleOverlay();
+    this.closeDialogNewChannel();
+    this.dialogService.showDialogAddChannel();
     this.router.navigate(['home/', this.firestoreService.newChannelRefId]);
     this.resetVariables();
   }
@@ -186,7 +202,7 @@ export class DialogNewChannelComponent {
     }
   }
 
-  closeMenu() {
+  closeDialogNewChannel(){
     let radioBtnAll:any = document.getElementById('radioAllUser');
     let radioBtnSingle:any = document.getElementById('radioSingleUser');
     if(radioBtnSingle.checked = true){
@@ -194,9 +210,7 @@ export class DialogNewChannelComponent {
       radioBtnAll.checked = true;
     }
     this.hideUserSearchbarNewChannel();
-    setTimeout(() => {
-      this.dialogService.toggleOverlay();
-    }, 250);
-    this.dialogService.menuSlideDown();
+    this.showCloseAnimation = true;
+    this.dialogService.showDialogNewChannel();
   }
 }
