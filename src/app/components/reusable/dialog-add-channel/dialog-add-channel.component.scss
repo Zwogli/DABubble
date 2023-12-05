@@ -1,14 +1,11 @@
-/*
-global
-*/
 @import '../../../style/variable.scss';
 .overlay {
   @include overlay;
 }
 
-/*
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 desktop / mobile
-*/
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 .dialog--desktop{
   background-color: var(--color-white);
   border-radius: 30px;
@@ -16,10 +13,7 @@ desktop / mobile
   min-height: fit-content;
   padding: 2rem 1rem;
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  @include display_column_start;
   gap: 1rem;
 }
 
@@ -29,10 +23,7 @@ desktop / mobile
     background-color: var(--color-white);
     padding: 2rem 1rem;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    @include display_column_start;
     gap: 1rem;
 }
 
@@ -43,19 +34,15 @@ app-dialog-new-channel{
 }
 
 .dialog__newChannel--desktop{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include display_center;
 }
 
-/*
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 content
-*/
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 header{
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include display_between_center;
     font-size: 1.4rem;
     font-weight: 700;
     .close__element{
@@ -68,12 +55,10 @@ header{
 
 form{
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    @include display_column;
     .form__name{
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 1rem;
+      @include display_column;
+      margin-bottom: 1rem;
     }
     .container__btn{
         margin-top: 1rem;

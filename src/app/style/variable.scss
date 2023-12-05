@@ -60,6 +60,29 @@ display
   align-items: center;
 }
 
+@mixin display_column{
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin display_column_start{
+  @include display_column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+@mixin display_column_end{
+  @include display_column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+@mixin display_between_center{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 input
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
