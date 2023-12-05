@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 import { DialogProfilComponent } from '../../reusable/dialog-profil/dialog-profil.component';
 import { Subscription } from 'rxjs';
 import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.service';
@@ -18,7 +18,7 @@ export class DialogProfilMenuComponent {
 
   constructor(
     private authService: AuthService,
-    private navbarService: NavbarService, 
+    private dialogService: DialogManagerService, 
     public dialog: MatDialog,
     public responsiveService: BreakpointObserverService, 
     ) {
@@ -33,14 +33,14 @@ export class DialogProfilMenuComponent {
   }
 
   logout(){
-    this.navbarService.toggleOverlay();
+    this.dialogService.toggleOverlay();
     this.authService.signOut();
   }
 
   closeMenu() {
     setTimeout(() => {
-      this.navbarService.toggleOverlay();
+      this.dialogService.toggleOverlay();
     }, 250);
-    this.navbarService.menuSlideDown();
+    this.dialogService.menuSlideDown();
   }
 }

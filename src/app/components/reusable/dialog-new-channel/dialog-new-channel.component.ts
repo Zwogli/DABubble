@@ -5,7 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 
 @Component({
   selector: 'app-dialog-new-channel',
@@ -26,7 +26,7 @@ export class DialogNewChannelComponent {
   constructor(
     private authService: AuthService,
     public firestoreService:FirestoreService,
-    private navbarService: NavbarService, 
+    private dialogService: DialogManagerService, 
     public router: Router,
   ){}
   
@@ -83,7 +83,7 @@ export class DialogNewChannelComponent {
   async createNewChannel(){
     await this.firestoreService.addNewChannel(this.currentUser.id);
     await this.firestoreService.updateUsers();
-    this.navbarService.toggleOverlay();
+    this.dialogService.toggleOverlay();
     this.router.navigate(['home/', this.firestoreService.newChannelRefId]);
     this.resetVariables();
   }
@@ -195,8 +195,8 @@ export class DialogNewChannelComponent {
     }
     this.hideUserSearchbarNewChannel();
     setTimeout(() => {
-      this.navbarService.toggleOverlay();
+      this.dialogService.toggleOverlay();
     }, 250);
-    this.navbarService.menuSlideDown();
+    this.dialogService.menuSlideDown();
   }
 }

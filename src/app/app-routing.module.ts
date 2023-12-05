@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   // { path: 'home', component: NavbarComponent },
-  { path: 'add/newChannel', component: CreateChannelComponent },
+  // { path: 'add/newChannel', component: CreateChannelComponent },
   { path: 'home', component: MainComponent,
   
   children: [

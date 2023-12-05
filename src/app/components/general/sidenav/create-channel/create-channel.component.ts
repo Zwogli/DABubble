@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 
 @Component({
   selector: 'app-create-channel',
@@ -25,9 +25,9 @@ export class CreateChannelComponent {
   constructor(
     private authService: AuthService,
     public firestoreService: FirestoreService,
-    private navbarService: NavbarService, 
+    private dialogService: DialogManagerService, 
     ){
-      this.subscription = this.navbarService.showMenu$.subscribe(
+      this.subscription = this.dialogService.showMenu$.subscribe(
         visible => {
           this.showMenu = visible;
         });
@@ -81,7 +81,7 @@ export class CreateChannelComponent {
 
   openUserSelection(){
     this.manageDescription();
-    this.navbarService.menuSlideUp('menuCreateChannel');
+    this.dialogService.menuSlideUp('menuCreateChannel');
   }
 
   manageDescription(){

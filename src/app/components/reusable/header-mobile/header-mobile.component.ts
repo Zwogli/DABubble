@@ -4,7 +4,7 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 
 @Component({
   selector: 'app-header-mobile',
@@ -20,7 +20,7 @@ export class HeaderMobileComponent {
   private subscription: Subscription;
 
   constructor(
-    private navbarService: NavbarService,
+    private dialogService: DialogManagerService,
     private router: Router,
     private firestoreService: FirestoreService,
     public responsiveService: BreakpointObserverService, 
@@ -50,9 +50,9 @@ export class HeaderMobileComponent {
 
   openMenu(){
     if(this.mobileView){
-      this.navbarService.menuSlideUp('dialog-profil-menu');
+      this.dialogService.menuSlideUp('dialog-profil-menu');
     }else{
-      this.navbarService.showDialog('dialog-profil-menu');
+      this.dialogService.showDialog('dialog-profil-menu');
     }
   }
 

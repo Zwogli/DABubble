@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class NavbarService {
+export class DialogManagerService {
   /** helpfull trick to create observable boolean */
   showMenuSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false) // behaviorSubject near a observable
   showMenu$: Observable<boolean> = this.showMenuSubject.asObservable();  // change behaviorSubject -> observable
@@ -63,5 +63,9 @@ export class NavbarService {
   toggleOverlay() {
     const currentValue = this.showMenuSubject.value; //behaviorSubject (complex object) you need showMenu.value for set init value
     this.showMenuSubject.next(!currentValue);  // next change the negated value
+  }
+
+  showCreateChannel(){
+    
   }
 }

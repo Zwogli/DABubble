@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { Unsubscribe } from '@angular/fire/auth';
+import { MatDialog } from '@angular/material/dialog';
 import { takeUntil ,  Subject } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { CreateChannelComponent } from '../create-channel/create-channel.component';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 
 @Component({
   selector: 'app-navbar-panel-channels',
@@ -20,12 +23,11 @@ export class NavbarPanelChannelsComponent {
   private currentUserIsDestroyed$ = new Subject<boolean>();
   memberInChannelsArray: Channel[] = [];
 
-  // unsubCurrentUser!: Unsubscribe;
-
-
   constructor(
     private authService: AuthService,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    private dialogService: DialogManagerService,
+    public dialog: MatDialog,
   ){
     this.currentUser = this.firestoreService.currentUser;
   }
@@ -60,5 +62,9 @@ export class NavbarPanelChannelsComponent {
       `channel--arrow_drop_down`
     );
     channelArrow?.classList.toggle('rotate');
+  }
+
+  openDialogNewChannel(){
+    this.dialogService.showCreateChannel();
   }
 }

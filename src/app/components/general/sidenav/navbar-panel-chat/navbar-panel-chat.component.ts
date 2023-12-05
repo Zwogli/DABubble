@@ -5,7 +5,7 @@ import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 
 @Component({
   selector: 'app-navbar-panel-chat',
@@ -32,7 +32,7 @@ export class NavbarPanelChatComponent {
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
-    private navbarService: NavbarService,
+    private dialogService: DialogManagerService,
   ){
   }
   
@@ -71,7 +71,7 @@ export class NavbarPanelChatComponent {
   }
   
   toggleNewChat(){
-    this.navbarService.manageOverlayNewChat('menuNewChat');
+    this.dialogService.manageOverlayNewChat('menuNewChat');
   }
 
   rotateArrow() {

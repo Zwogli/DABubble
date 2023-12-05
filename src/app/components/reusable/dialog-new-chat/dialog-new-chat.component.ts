@@ -3,7 +3,7 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 
 @Component({
   selector: 'app-dialog-new-chat',
@@ -26,9 +26,9 @@ export class DialogNewChatComponent {
   constructor(
     private authService: AuthService,
     private firestoreService:FirestoreService,
-    public navbarService: NavbarService,
+    public dialogService: DialogManagerService,
   ){
-    this.subscription = this.navbarService.showOverlayNewChat$.subscribe(
+    this.subscription = this.dialogService.showOverlayNewChat$.subscribe(
       visible => {
         this.showOverlay = visible;
       });
@@ -124,9 +124,9 @@ export class DialogNewChatComponent {
 //<<<<<<<<<<<<<<<< manage overlay/menu >>>>>>>>>>>>
   closeMenu() {
     setTimeout(() => {
-      this.navbarService.toggleOverlayNewChat();
+      this.dialogService.toggleOverlayNewChat();
     }, 250);
-    this.navbarService.menuSlideDown();
+    this.dialogService.menuSlideDown();
     this.removeUser();
   }
 }
