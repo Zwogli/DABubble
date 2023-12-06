@@ -42,8 +42,17 @@ export class DialogProfilMenuComponent {
     this.authService.signOut();
   }
 
+//<<<<<<<<<<<<<<<< manage dialog >>>>>>>>>>>>
   closeDialogMenu(){
-    this.showCloseAnimation = true;
+    if(this.mobileView){
+      this.showCloseAnimation = true;
+      this.closeAnimation();
+    }else{
+      this.dialogService.showDialogProfilMenu();
+    }
+  }
+
+  closeAnimation(){
     if(this.showCloseAnimation){
       setTimeout(() => {
         this.dialogService.showDialogProfilMenu();

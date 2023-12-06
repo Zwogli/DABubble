@@ -14,10 +14,8 @@ import { DialogManagerService } from 'src/app/services/dialog-manager.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  showMenu: boolean = false;
-  showMainChat: boolean = false;
-  mobileView: boolean = false;
   private subscription: Subscription;
+  mobileView: boolean = false;
   currentUserId:any;
   
   constructor(
@@ -27,24 +25,12 @@ export class NavbarComponent {
     public responsiveService: BreakpointObserverService, 
     public dialog: MatDialog,
     ){
-      this.subscription = this.dialogService.showMenu$.subscribe(
-        visible => {
-          this.showMenu = visible;
-        });
-      this.subscription = this.responsiveService.mobileView$.subscribe(
-        visible => {
-          this.mobileView = visible;
-        });
+    this.subscription = this.responsiveService.mobileView$.subscribe(
+      visible => {
+        this.mobileView = visible;
+      });
   }
 
   ngOnInit(){
   }
-  
-  closeMenu(){
-    setTimeout(() => {
-      this.dialogService.toggleOverlay();
-    }, 250);
-    this.dialogService.menuSlideDown();
-  }
-
 }

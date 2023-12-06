@@ -13,7 +13,6 @@ import { DialogManagerService } from 'src/app/services/dialog-manager.service';
   styleUrls: ['./navbar-panel-chat.component.scss']
 })
 export class NavbarPanelChatComponent {
-  firestore: Firestore = inject(Firestore);
   panelOpenState: boolean = false;
   currentUserId: any;
   currentUser!: User;
@@ -70,8 +69,8 @@ export class NavbarPanelChatComponent {
     } )
   }
   
-  toggleNewChat(){
-    this.dialogService.manageOverlayNewChat('menuNewChat');
+  openDialogNewChat(){
+    this.dialogService.showDialogNewChat();
   }
 
   rotateArrow() {

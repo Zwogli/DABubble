@@ -13,8 +13,6 @@ import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.
 })
 export class DialogAddChannelComponent {
   private subscription: Subscription;
-  showMenu: boolean = false;
-  err_hash:boolean = false
   createChannelForm = new FormGroup({
     channelNameForm: new FormControl('', [
       Validators.required,
@@ -22,6 +20,7 @@ export class DialogAddChannelComponent {
       Validators.maxLength(17)
     ]),
   });
+  err_hash:boolean = false
   mobileView: boolean = false;
   showDialogAddChannel: boolean = false;
 
@@ -31,18 +30,14 @@ export class DialogAddChannelComponent {
     private dialogService: DialogManagerService,
     public responsiveService: BreakpointObserverService,  
     ){
-      this.subscription = this.dialogService.showMenu$.subscribe(
+      this.subscription = this.dialogService.showDialogAddChannel$.subscribe(
         visible => {
-          this.showMenu = visible;
-        });
-        this.subscription = this.dialogService.showDialogAddChannel$.subscribe(
-          visible => {
-            this.showDialogAddChannel = visible;
-          });
+          this.showDialogAddChannel = visible;
+      });
       this.subscription = this.responsiveService.mobileView$.subscribe(
         visible => {
           this.mobileView = visible;
-        });
+      });
     }
 
   get channelNameForm() {

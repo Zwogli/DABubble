@@ -25,13 +25,13 @@ export class DialogOverlayComponent {
     }
 
   closeMenu() {
-    if(this.mobileView){
-      setTimeout(() => {
-        this.dialogService.toggleOverlay();
-      }, 250);
-      this.dialogService.menuSlideDown();
-    }else{
-      this.dialogService.hideDialog()
-    }
+    // if(this.mobileView){
+    //   setTimeout(() => {
+    //     this.dialogService.toggleOverlay();
+    //   }, 250);
+    //   this.dialogService.menuSlideDown();
+    // }else{
+    //   this.dialogService.hideDialog()
+    // }
   }
 }

@@ -8,7 +8,9 @@ main{
     overflow: hidden;
 }
 
-app-dialog-profil-menu{
+app-dialog-profil-menu, 
+app-dialog-add-channel, 
+app-dialog-new-chat{
     width: 100dvw;
     height: 100dvh;
     position: absolute;
@@ -18,14 +20,8 @@ app-dialog-profil-menu{
     overflow: hidden;
 }
 
-app-dialog-add-channel{
-    width: 100dvw;
-    height: 100dvh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
-    overflow: hidden;
+app-dialog-add-channel, 
+app-dialog-new-chat{
     @include display_center;
   }
 

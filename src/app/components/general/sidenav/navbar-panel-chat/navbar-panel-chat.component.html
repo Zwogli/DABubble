@@ -24,10 +24,10 @@
 
     <div class="mat-expansion-panel__content container__elements--column">
 
-	<!-- 
-		elements for expansion-panel
-		
-	-->
+		<!-- 
+			elements for expansion-panel
+
+		-->
 		<div *ngFor="let user of chatUserData; index as i" class="fix--space-left sort__elemts--row cursor__add">
 			<div 
 			*ngIf="privateChats[i]"
@@ -45,8 +45,11 @@
 			</div>
 		</div>
 
+		<!-- 
+			add chat element
+		-->		
 		<div 
-			(click)="toggleNewChat()"
+			(click)="openDialogNewChat()"
 			class="fix--space-left sort__elemts--row cursor__add"
 		>
 			<div class="container--small">

@@ -1,7 +1,21 @@
-<div id="overlay__newChat" class="overlay" *ngIf="showOverlay" (click)="closeMenu()"></div>
+<div 
+class="overlay" 
+(click)="closeDialognewChat()"
+*ngIf="showDialogNewChat"
+></div>
 
-<div id="menuNewChat" class="mobile__menu">
-    <div (click)="closeMenu()" class="orientation">
+<div 
+[class.dialog__desktop]="showDialogNewChat && !mobileView" 
+[class.dialog__mobile]="mobileView" 
+[class.slide--up]="!showCloseAnimation && showDialogNewChat && mobileView"
+[class.slide--down]="showCloseAnimation && mobileView"
+>
+
+    <div 
+    (click)="closeDialognewChat()"
+    *ngIf="mobileView" 
+    class="orientation"
+    >
         <div>
             <span></span>
         </div>
@@ -9,7 +23,11 @@
 
     <div class="container__header">
         <span>Add User</span>
-        <span (click)="closeMenu()" class="material-icons-outlined close__element"> close </span>
+        <span 
+        (click)="closeDialognewChat()" 
+        class="material-icons-outlined close__element"
+        *ngIf="!mobileView"
+        > close </span>
     </div>
 
     <form class="search-user-form">
@@ -29,7 +47,9 @@
                 *User chat already open
                 </label>
 
-                <!-- selected User -->
+                <!-- 
+                    selected User 
+                -->
                 <div 
                 *ngFor="let user of this.selectedUser"
                 class="container__user-Elements--selected" 
@@ -47,10 +67,9 @@
 
             </div>
 
-
-
-            <!-- render filtered User -->
-
+            <!-- 
+                render filtered User 
+            -->
             <div id="filtered-user" 
             class="container__filteredUser"
             *ngIf="this.filteredUser.length >= 1"

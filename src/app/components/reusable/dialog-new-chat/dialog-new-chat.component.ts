@@ -4,6 +4,7 @@ import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { DialogManagerService } from 'src/app/services/dialog-manager.service';
+import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.service';
 
 @Component({
   selector: 'app-dialog-new-chat',
@@ -12,7 +13,9 @@ import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 })
 export class DialogNewChatComponent {
   @ViewChild('searchbarUser') searchbarUser!: ElementRef;
-  showOverlay: boolean = false;
+  mobileView: boolean = false;
+  showDialogNewChat: boolean = false;
+  showCloseAnimation:boolean = false;
   private subscription: Subscription;
   currentUser!:User;
   allUsers!:User[];
@@ -27,10 +30,15 @@ export class DialogNewChatComponent {
     private authService: AuthService,
     private firestoreService:FirestoreService,
     public dialogService: DialogManagerService,
+    public responsiveService: BreakpointObserverService, 
   ){
+    this.subscription = this.responsiveService.mobileView$.subscribe(
+      visible => {
+        this.mobileView = visible;
+      });
     this.subscription = this.dialogService.showDialogNewChat$.subscribe(
       visible => {
-        this.showOverlay = visible;
+        this.showDialogNewChat = visible;
       });
   }
   
@@ -121,12 +129,22 @@ export class DialogNewChatComponent {
     })
   }
 
-//<<<<<<<<<<<<<<<< manage overlay/menu >>>>>>>>>>>>
-  closeMenu() {
-    setTimeout(() => {
-      this.dialogService.toggleOverlayNewChat();
-    }, 250);
-    this.dialogService.menuSlideDown();
+//<<<<<<<<<<<<<<<< manage dialog >>>>>>>>>>>>
+  closeDialognewChat(){
+    if(this.mobileView){
+      this.showCloseAnimation = true;
+      this.closeAnimation();
+    }else{
+      this.dialogService.showDialogNewChat();
+    }
     this.removeUser();
+  }
+
+  closeAnimation(){
+    if(this.showCloseAnimation){
+      setTimeout(() => {
+        this.dialogService.showDialogNewChat();
+      }, 500);
+    }
   }
 }
