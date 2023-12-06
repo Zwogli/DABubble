@@ -1,11 +1,12 @@
 main {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 }
 
 .chat__container {
     // 338px == Height of header and input field + margins
-    height: calc(100svh - 338px);
+    height: calc(100svh - 338px - 2rem);
     overflow-y: auto;
 }
 

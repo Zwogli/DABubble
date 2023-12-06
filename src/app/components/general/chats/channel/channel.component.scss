@@ -1,5 +1,6 @@
 @import 'src/app/style/_chat.scss';
 
 app-message-input{
-    width: calc(100% - 350px);
+    position: relative;
+    // width: calc(100% - 350px);
 }

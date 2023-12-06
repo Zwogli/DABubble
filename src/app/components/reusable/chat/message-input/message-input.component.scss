@@ -1,12 +1,16 @@
 .message__input {
+    margin: 0 1rem 1rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 5px;
 
-    position: fixed;
-    bottom: 30px;
-    left: 16px;
-    right: 16px;
+    // position: fixed;
+    // bottom: 30px;
+    // left: 16px;
+    // right: 16px;
+    position: absolute;
+    left: 0;
+    right: 0;
 
     padding: 20px;
 
