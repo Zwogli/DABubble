@@ -8,6 +8,16 @@ main{
     overflow: hidden;
 }
 
+app-dialog-profil-menu{
+    width: 100dvw;
+    height: 100dvh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    overflow: hidden;
+}
+
 app-dialog-add-channel{
     width: 100dvw;
     height: 100dvh;
@@ -15,17 +25,9 @@ app-dialog-add-channel{
     top: 0;
     left: 0;
     z-index: 5;
-    display: block;
-    overflow-y: hidden;
-    @include display_center;
     overflow: hidden;
+    @include display_center;
   }
-
-app-dialog-profil-menu{
-    position: absolute;
-    top: 0;
-    z-index: 5;
-}
 
 .main__content{
     display: flex;

@@ -39,12 +39,15 @@ export class DialogProfilMenuComponent {
   }
 
   logout(){
-    this.dialogService.toggleOverlay();
     this.authService.signOut();
   }
 
   closeDialogMenu(){
     this.showCloseAnimation = true;
-    this.dialogService.showDialogProfilMenu();
+    if(this.showCloseAnimation){
+      setTimeout(() => {
+        this.dialogService.showDialogProfilMenu();
+      }, 500);
+    }
   }
 }

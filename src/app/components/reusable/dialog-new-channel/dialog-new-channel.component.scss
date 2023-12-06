@@ -25,12 +25,12 @@
   width: calc(100dvw - 52px);
   background-color: var(--color-white);
   padding: 30px 26px;
-  position: absolute;
   border-radius: 30px 30px 0 0;
+  filter: drop-shadow(0px -5px 3px var(--color-black-shadow));
+  position: absolute;
+  z-index: 5;
   @include display_column;
   gap: 1rem;
-  z-index: 5;
-  filter: drop-shadow(0px -5px 3px var(--color-black-shadow));
 }
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -57,6 +57,7 @@ input[type=text] {
     }
   }
 }
+
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 menu-newChat
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
@@ -77,6 +78,7 @@ menu-newChat
       @include btn_primary;
     }
   }
+
   /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   new channel -> menu-slectUser
   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
@@ -118,6 +120,7 @@ menu-newChat
   input[type="radio"]{
     @include input_radio;
   }
+
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 filtered user
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
@@ -183,35 +186,7 @@ filtered user
       }
     }
   }
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-animation
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-.slide--up {
-    bottom: 0;
-    animation: 0.5s slide-up;
-  }
-  .slide--down {
-    bottom: 0;
-    transform: translateY(300px);
-    animation: 0.5s slide-down;
-  }
-  
-  @keyframes slide-up {
-    0% {
-      transform: translateY(300px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
-  }
-  @keyframes slide-down {
-    0% {
-      transform: translateY(0px);
-    }
-    100% {
-      transform: translateY(300px);
-    }
-  }
+
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 show / hide
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/

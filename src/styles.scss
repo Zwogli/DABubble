@@ -81,6 +81,36 @@ app-navbar{
 }
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+animation dialog
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.slide--up {
+  bottom: 0;
+  animation: 0.5s slide-up;
+}
+.slide--down {
+  bottom: 0;
+  transform: translateY(300px);
+  animation: 0.5s slide-down;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(300px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes slide-down {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(300px);
+  }
+}
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 scroll-bar
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
   /* width */
