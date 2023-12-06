@@ -42,7 +42,6 @@ import { ChatSubHeaderComponent } from './components/reusable/chat/chat-sub-head
 import { DialogNewChannelComponent } from './components/reusable/dialog-new-channel/dialog-new-channel.component';
 import { DialogNewChatComponent } from './components/reusable/dialog-new-chat/dialog-new-chat.component';
 import { DialogProfilMenuComponent } from './components/reusable/dialog-profil-menu/dialog-profil-menu.component';
-import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dialog-overlay.component';
 import { PrivateComponent } from './components/general/chats/private/private.component';
 import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat-record.component';
 import { MainComponent } from './components/general/main/main.component';
@@ -67,7 +66,6 @@ import { MainComponent } from './components/general/main/main.component';
     DialogNewChannelComponent,
     DialogNewChatComponent,
     DialogProfilMenuComponent,
-    DialogOverlayComponent,
     ResetPasswordComponent,
     MessageInputComponent,
     ThreadComponent,
