@@ -1,13 +1,18 @@
 <main>
     <app-header-mobile></app-header-mobile>
 
-    <div class="main__content">
+    <div class="content">
         
         <app-navbar
         [class.navbar__desktop]="!mobileView">
         </app-navbar>
 
-        <router-outlet *ngIf="!mobileView"></router-outlet>
+        <div 
+        [class.posts__desktop]="!mobileView">
+            <router-outlet 
+            *ngIf="!mobileView"
+            ></router-outlet>
+        </div>
 
     </div>
 

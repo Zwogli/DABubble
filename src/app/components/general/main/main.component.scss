@@ -25,15 +25,22 @@ app-dialog-new-chat{
     @include display_center;
   }
 
-.main__content{
+.content{
     display: flex;
 }
 
 .navbar__desktop{
-    margin: 1rem;
-    min-width: 380px;
-    width: 400px;
+    margin: 1rem 0 1rem 1rem;
+    min-width: 350px;
+    width: 350px;
     height: calc(100dvh - 80px - 2rem);
     border-radius: 30px;
     position: unset;
+}
+
+.posts__desktop{
+    margin: 1rem;
+    width: 100dvw;
+    background-color: var(--color-white);
+    border-radius: 30px;
 }

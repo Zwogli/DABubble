@@ -126,11 +126,11 @@ scroll-bar
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: var(--color-blue-bg); 
+    background: var(--color-blue-border); 
     border-radius: 10px;
   }
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-blue-primary-hover); 
+    background: var(--color-blue-primary-default); 
   }

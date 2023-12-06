@@ -1,4 +1,7 @@
-<app-header-mobile [parent]="'chat'"></app-header-mobile>
+<app-header-mobile 
+[parent]="'chat'"
+*ngIf="mobileView"
+></app-header-mobile>
 
 <app-chat-sub-header
   [type]="'channel'"

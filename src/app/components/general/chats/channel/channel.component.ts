@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   Subject,
+  Subscription,
   takeUntil,
 } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
+import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
@@ -16,6 +18,8 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./channel.component.scss'],
 })
 export class ChannelComponent implements OnInit {
+  private subscription: Subscription;
+  mobileView: boolean = false;
   public currentUser!: User;
   public currentChannel!: Channel;
   public chatRecordId!: string;
@@ -25,10 +29,15 @@ export class ChannelComponent implements OnInit {
   constructor(
     private fireService: FirestoreService,
     private route: ActivatedRoute,
-    private chatService: ChatService
+    private chatService: ChatService,
+    public responsiveService: BreakpointObserverService, 
   ) {
     this.setCurrentUser();
     this.setChatRecordId();
+    this.subscription = this.responsiveService.mobileView$.subscribe(
+      visible => {
+        this.mobileView = visible;
+      });
   }
 
   ngOnInit() {}
