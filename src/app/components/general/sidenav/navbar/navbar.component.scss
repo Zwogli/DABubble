@@ -31,40 +31,55 @@ app-menu-profil-mobile{
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  div{
+  &--left{
     display: flex;
     align-items: center;
     gap: 1rem;
     span{
+      cursor: default;
       font-weight: 700;
       font-size: 1.3rem
     }
   }
-  mat-icon{
-    margin-right: 8px;
+  &--right{
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3px;
+
+    mat-icon{
+      cursor: pointer;
+    }
   }
+  &--right:hover{
+    
+    background-color: var(--color-blue-bg);
+    border-radius: 50%;
+  }
+
 }
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 scroll-bar
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-  /* width */
-::-webkit-scrollbar {
-  width: 10px;
-}
+//   /* width */
+// ::-webkit-scrollbar {
+//   width: 10px;
+// }
 
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px var(--color-grey-hover); 
-  border-radius: 10px;
-}
+// /* Track */
+// ::-webkit-scrollbar-track {
+//   box-shadow: inset 0 0 5px var(--color-grey-hover); 
+//   border-radius: 10px;
+// }
  
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: var(--color-blue-bg); 
-  border-radius: 10px;
-}
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   background: var(--color-blue-bg); 
+//   border-radius: 10px;
+// }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-blue-primary-hover); 
-}
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//   background: var(--color-blue-primary-hover); 
+// }

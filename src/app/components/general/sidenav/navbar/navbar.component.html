@@ -8,11 +8,13 @@
   <div
   class="navbar__header"
   *ngIf="!mobileView" >
-    <div>
+    <div class="navbar__header--left">
       <img src="assets/img/workspace.png" alt="Logo of the current workspace" />
       <span>Code learning</span>
     </div>
-    <mat-icon>edit_square</mat-icon>
+    <div class="navbar__header--right">
+      <mat-icon>edit_square</mat-icon>
+    </div>
   </div>
 
   <button
