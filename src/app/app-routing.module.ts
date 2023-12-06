@@ -4,10 +4,10 @@ import { IntroComponent } from './components/general/auth/intro/intro.component'
 import { ChannelComponent } from './components/general/chats/channel/channel.component';
 import { SignUpComponent } from './components/general/auth/sign-up/sign-up.component';
 import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/choose-avatar.component';
-import { NavbarComponent } from './components/general/sidenav/navbar/navbar.component';
+// import { NavbarComponent } from './components/general/sidenav/navbar/navbar.component';
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
-import { DialogAddChannelComponent } from './components/reusable/dialog-add-channel/dialog-add-channel.component';
+// import { DialogAddChannelComponent } from './components/reusable/dialog-add-channel/dialog-add-channel.component';
 import { ThreadComponent } from './components/general/chats/thread/thread.component';
 import { MainComponent } from './components/general/main/main.component';
 
