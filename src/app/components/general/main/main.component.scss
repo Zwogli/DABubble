@@ -41,6 +41,7 @@ app-dialog-new-chat{
 .posts__desktop{
     margin: 1rem;
     width: 100dvw;
+    height: calc(100dvh - 2rem - 80px);
     background-color: var(--color-white);
     border-radius: 30px;
 }
