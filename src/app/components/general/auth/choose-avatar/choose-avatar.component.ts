@@ -82,7 +82,7 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
       this.firestoreService.currentSignUpData.password,
       this.choosenAvatar,
       'sign-up',
-      0,
+      [],
       [],
     );
     setTimeout(() => {
