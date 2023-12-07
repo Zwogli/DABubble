@@ -9,7 +9,7 @@
 
       <div class="block__input">
         <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="nameForm?.dirty || nameForm?.touched">person</mat-icon>
-        <input formControlName="nameForm" value="{{ this.firestoreService.currentUserData.name }}" placeholder="Name und Nachname" #userName>
+        <input value="{{ this.firestoreService.currentUserData.name }}" placeholder="Name und Nachname" #userName>
       </div>
       <!-- <div class="block__alert-name" *ngIf="nameForm?.invalid && (nameForm?.dirty || nameForm?.touched)">
         <div *ngIf="nameForm?.errors?.['required']">*Bitte gib einen Vor- und Nachnamen ein.</div>
@@ -18,7 +18,7 @@
 
       <div class="block__input">
         <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="emailForm?.dirty || emailForm?.touched">mail</mat-icon>
-        <input formControlName="emailForm" [disabled]="true" type="email" value="{{ this.firestoreService.currentUserData.email }}" placeholder="beispielname@email.com" #userEmail>
+        <input type="email" value="{{ this.firestoreService.currentUserData.email }}" placeholder="beispielname@email.com" #userEmail>
       </div>
       <!-- <div class="block__alert-email" *ngIf="emailForm?.invalid && (emailForm?.touched)">
         <div *ngIf="emailForm?.errors?.['required']">*Bitte gib eine E-Mail-Adresse ein.</div>
