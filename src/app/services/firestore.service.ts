@@ -213,8 +213,8 @@ export class FirestoreService {
       id: userObject?.uid,
       photoUrl: photoUrl,
       onlineStatus: true,
-      memberInChannel: [memberInChannel],
-      activePrivateChats: [activePrivateChats],
+      memberInChannel: memberInChannel,
+      activePrivateChats: activePrivateChats,
       googleAccount: googleAccount,
     });
   }

@@ -145,7 +145,7 @@ export class AuthService {
     });
   }
 
-  async signUp(name: string, email: string, password: string, photoUrl: any, location: string, activePrivateChats:any, memberInChannel:any) {
+  async signUp(name: string, email: string, password: string, photoUrl: any, location: string, activePrivateChats:any, memberInChannel:[]) {
     await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         this.executeSignUp(userCredential, name, photoUrl, location, activePrivateChats, memberInChannel);
@@ -155,7 +155,7 @@ export class AuthService {
       });
   }
 
-  executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel:any) {
+  executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel:[]) {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
@@ -169,7 +169,7 @@ export class AuthService {
         this.router.navigate(['home']);
       }
       if (activePrivateChats == 0) {
-        activePrivateChats = user?.uid;
+        activePrivateChats = [user?.uid];
       }
       this.firestoreService.addUser(user, name, photoUrl, this.googleAccount, activePrivateChats, memberInChannel);
       this.firestoreService.addPrivateChat(user.uid);
