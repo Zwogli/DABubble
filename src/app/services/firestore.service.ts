@@ -58,7 +58,7 @@ export class FirestoreService {
   unsubCurrentUser!: Unsubscribe;
   unsubChatUser!: Unsubscribe;
 
-  // auth 
+  // auth
   currentSignUpData: any = [];
   currentUserData: any = [];
   currentSignUpId: any = (125478986565 * Math.random()).toFixed(0);
@@ -175,7 +175,7 @@ export class FirestoreService {
     this.chatFilteredUserIds.forEach((chatBetweenUserId) => {
       return onSnapshot(
         doc(this.firestore, 'user', chatBetweenUserId),
-        (doc: any) => {          
+        (doc: any) => {
           this.chatUserData.push(doc.data());
           this.chatUserDataSubject.next(this.chatUserData);
         }
@@ -213,8 +213,8 @@ export class FirestoreService {
       id: userObject?.uid,
       photoUrl: photoUrl,
       onlineStatus: true,
-      memberInChannel: memberInChannel,
-      activePrivateChats: activePrivateChats,
+      memberInChannel: [memberInChannel],
+      activePrivateChats: [activePrivateChats],
       googleAccount: googleAccount,
     });
   }
