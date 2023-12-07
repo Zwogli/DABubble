@@ -170,30 +170,40 @@ export class AuthService {
       });
   }
 
-  executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel:[]) {
+  async executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel:[]) {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
       this.signUpError = false;
       this.dataError = false;
-      this.checkLocationToPrepareData(location, activePrivateChats, user?.uid);
+      //this.checkLocationToPrepareData(location, activePrivateChats, user?.uid);
+      if (location == 'merge-accounts') {
+        this.isLoggedInForMerging = true;
+        this.googleAccount = true;
+      } else {
+        this.googleAccount = false;
+        this.router.navigate(['home']);
+      }
+      if (activePrivateChats == 0) {
+        activePrivateChats = [user?.uid];
+      }
       this.firestoreService.addUser(user, name, photoUrl, this.googleAccount, activePrivateChats, memberInChannel);
       this.firestoreService.addPrivateChat(user.uid);
     }, 3500);
   }
 
-  checkLocationToPrepareData(location:string, activePrivateChats:any, userId:any) {
-    if (location == 'merge-accounts') {
-      this.isLoggedInForMerging = true;
-      this.googleAccount = true;
-    } else {
-      this.googleAccount = false;
-      this.router.navigate(['home']);
-    }
-    if (activePrivateChats == 0) {
-      activePrivateChats = [userId];
-    }
-  }
+  // async checkLocationToPrepareData(location:string, activePrivateChats:any, userId:any) {
+  //   if (location == 'merge-accounts') {
+  //     this.isLoggedInForMerging = true;
+  //     this.googleAccount = true;
+  //   } else {
+  //     this.googleAccount = false;
+  //     this.router.navigate(['home']);
+  //   }
+  //   if (activePrivateChats == 0) {
+  //     activePrivateChats = [userId];
+  //   }
+  // }
 
   failedSignUp() {
     this.errorUnexpected = true;
