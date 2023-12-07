@@ -432,7 +432,6 @@ export class FirestoreService {
           if (signUpData) {
             this.currentSignUpData = list.data();
             resolve(this.currentSignUpData);
-            console.log(this.currentSignUpData);
           }
         }
         if (coll == 'currentUserData') {
@@ -440,14 +439,12 @@ export class FirestoreService {
           if (currentUserData) {
             this.currentUserData = list.data();
             resolve("Data added successfully");
-            console.log(this.currentUserData);
           }
         }
         if (coll == 'user') {
           const userData = list.data();
           if (userData) {
             this.currentUserData = list.data();
-            console.log(this.currentUserData);
             resolve("Data added successfully");
           }
         }
@@ -469,7 +466,6 @@ export class FirestoreService {
   }
 
   async addCurrentUserData() {
-    console.log(this.currentUserData);
     return new Promise(async (resolve, reject) => {
       try {
         await setDoc(
@@ -485,7 +481,6 @@ export class FirestoreService {
           }
         );
         resolve("Data added successfully");
-        console.log(this.currentUserData);
       } catch (error) {
         reject(error);
       }
