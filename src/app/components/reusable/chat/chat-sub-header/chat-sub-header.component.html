@@ -19,10 +19,9 @@
     <span class="title__sub"># {{ channel.name }} </span>
   </div>
 
-  <button class="button__close">
+  <button (click)="navigateBack()" class="button__close">
     <mat-icon
       *ngIf="channel"
-      [routerLink]="'/home/' + channel.id"
       fontSet="material-icons-outlined"
       aria-label="Icon button with a person add icon"
       [inline]="true"
