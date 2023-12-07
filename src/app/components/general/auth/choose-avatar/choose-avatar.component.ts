@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -17,7 +18,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ChooseAvatarComponent implements OnInit, OnDestroy {
   choosenAvatar: any = 0;
+  avatarIsChoosen = false;
   public idFromUrl: any = '';
+  userWillCloseWindow = false;
 
   @ViewChild('unchoosenAvatar') unchoosenAvatar!: ElementRef;
 
@@ -30,14 +33,15 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     await this.getIdFromUrl();
-    this.firestoreService.getJsonOfCurrentSignUpData(this.idFromUrl);
+    this.firestoreService.getJsonOfCurrentData('currentSignUpData', this.idFromUrl);
   }
 
   ngOnDestroy(): void {
-    this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
+    this.firestoreService.deleteCurrentData('currentSignUpData', this.idFromUrl);
     this.authService.errorUnexpected = false;
     this.authService.signUpError = false;
-    this,this.authService.signUpSuccessfully = false;
+    this.authService.signUpSuccessfully = false;
+    this.avatarIsChoosen = false;
   }
 
   async getIdFromUrl() {
@@ -49,8 +53,8 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
   chooseAvatar(avatarNr: number) {
     this.unchoosenAvatar.nativeElement.src = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
     this.choosenAvatar = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
+    this.avatarIsChoosen = true;
   }
-
 
   async onFileChange(event: any) {
     const file = event.target.files[0];
@@ -60,9 +64,9 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
       const url = await uploadTask.ref.getDownloadURL();
       this.choosenAvatar = url;
       this.unchoosenAvatar.nativeElement.src = `${url}`;
+      this.avatarIsChoosen = true;
     }
   }
-
 
   async prepareChoosenAvatar() {
     if (this.choosenAvatar == 0) {
@@ -76,13 +80,22 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
       this.firestoreService.currentSignUpData.name,
       this.firestoreService.currentSignUpData.email,
       this.firestoreService.currentSignUpData.password,
-      this.choosenAvatar
+      this.choosenAvatar,
+      'sign-up',
+      0,
+      0
     );
     setTimeout(() => {
       if (this.authService.signUpSuccessfully) {
-        this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
+        this.firestoreService.deleteCurrentData('currentSignUpData',this.idFromUrl);
       }
-    },3500)
-
+    }, 3500);
   }
+
+  //Diese Funktion noch mal überprüfen, es funktioniert, aber löscht die coll auch bei aktualisieren der Seite
+  //If the user closes the window or app, the collection currentSignUpData will be deleted automatically
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeUnloadHandler(event:any) {
+  //   this.firestoreService.deleteCurrentData('currentSignUpData', this.idFromUrl);
+  // }
 }

@@ -10,7 +10,7 @@
           <span class="sign-in__headline">Wähle deinen Avatar</span>
         </div>
 
-        <img class="img__profile-choose-avatar" #unchoosenAvatar src="../../../../assets/img/avatars/guest-avatar.png">
+        <img class="img__profile-choose-avatar" [class.img-border-color]="avatarIsChoosen" #unchoosenAvatar src="../../../../assets/img/avatars/guest-avatar.png">
 
         <span class="text__name">{{ this.firestoreService.currentSignUpData.name }}</span>
 
@@ -55,4 +55,3 @@
     </mat-card-content>
   </mat-card>
 </div>
-

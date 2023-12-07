@@ -38,7 +38,7 @@
       <div class="block__btn-box">
         <button
         class="btn__log-in"
-        (click)="this.authService.signIn(userEmail.value, userPassword.value)"
+        (click)="this.authService.signIn(userEmail.value, userPassword.value, 'sign-in')"
         [disabled]="signInForm.invalid"
         [class.btn-disabled]="signInForm.invalid"
         >Anmelden</button>
