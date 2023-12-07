@@ -5,17 +5,26 @@
     <mat-card-content>
       <form class="example-form" [formGroup]="signInForm">
         <span class="sign-in__headline">Accounts verbinden</span>
-      <span class="sign-in__info-text">Wir haben festgestellt, dass du bereits einen DABubble Account hast. Bitte melde dich zunächst mit deinem Passwort und deiner Email Adresse an und anschließend mit deinem Google Account. Verwende jeweils die selbe E-Mail-Adresse, so können beide Accounts zusammengeführt werden und zukünftig kannst du dich mit beiden Anmeldemethoden einloggen.</span>
+      <span class="sign-in__info-text">Wir haben festgestellt, dass für <p class="email">{{ this.firestoreService.currentUserData.email }}</p> bereits ein DABubble Account registriert ist. Bitte melde dich zunächst mit deinem Passwort und deiner Email Adresse an und anschließend mit deinem Google Account. Verwende jeweils die selbe E-Mail-Adresse, so können beide Accounts zusammengeführt werden und zukünftig kannst du dich mit beiden Anmeldemethoden einloggen.</span>
+
+      <div class="block__input">
+        <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="nameForm?.dirty || nameForm?.touched">person</mat-icon>
+        <input formControlName="nameForm" value="{{ this.firestoreService.currentUserData.name }}" placeholder="Name und Nachname" #userName>
+      </div>
+      <!-- <div class="block__alert-name" *ngIf="nameForm?.invalid && (nameForm?.dirty || nameForm?.touched)">
+        <div *ngIf="nameForm?.errors?.['required']">*Bitte gib einen Vor- und Nachnamen ein.</div>
+        <div *ngIf="nameForm?.errors?.['pattern']">*Bitte verwende nur Buchstaben.</div>
+      </div> -->
 
       <div class="block__input">
         <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="emailForm?.dirty || emailForm?.touched">mail</mat-icon>
-        <input formControlName="emailForm" type="email" placeholder="beispielname@email.com" #userEmail>
+        <input formControlName="emailForm" [disabled]="true" type="email" value="{{ this.firestoreService.currentUserData.email }}" placeholder="beispielname@email.com" #userEmail>
       </div>
-      <div class="block__alert-email" *ngIf="emailForm?.invalid && (emailForm?.touched)">
+      <!-- <div class="block__alert-email" *ngIf="emailForm?.invalid && (emailForm?.touched)">
         <div *ngIf="emailForm?.errors?.['required']">*Bitte gib eine E-Mail-Adresse ein.</div>
         <div *ngIf="emailForm?.errors?.['email']">*Diese E-Mail-Adresse ist leider ungültig.</div>
         <div *ngIf="emailForm?.errors?.['pattern']">*E-Mail-Adresse enthält ungültige Zeichen.</div>
-      </div>
+      </div> -->
 
       <div class="block__input">
         <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="passwordForm?.dirty || passwordForm?.touched">lock</mat-icon>
@@ -30,7 +39,7 @@
       <div class="block__btn-box">
         <button
         class="btn__log-in"
-        (click)="this.authService.signIn(userEmail.value, userPassword.value, 'merge-accounts')"
+        (click)="this.prepareSignUp(userName.value, userEmail.value, userPassword.value, 'merge-accounts')"
         [disabled]="signInForm.invalid"
         [class.btn-disabled]="signInForm.invalid"
         >Anmelden & weiter zum Google Log-in</button>
@@ -43,8 +52,10 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card *ngIf="this.authService.isLoggedInForMerging">
-    <div class="block__google-log-in" (click)="this.authService.linkAccounts()">
+  <mat-card class="change-height" *ngIf="this.authService.isLoggedInForMerging">
+    <span class="sign-in__headline">Accounts verbinden</span>
+    <span class="sign-in__info-text">Mit dem nächsten Klick sind beide Accounts miteinander verbunden.</span>
+    <div class="block__google-log-in" (click)="prepareAccountLinking()">
       <img src="../../../../../assets/img/google-icon.png">
       <span>Mit Google anmelden & Accounts verbinden</span>
     </div>

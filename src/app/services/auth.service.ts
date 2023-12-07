@@ -5,7 +5,6 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   sendPasswordResetEmail,
-  linkWithCredential,
 } from 'firebase/auth';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -37,10 +36,8 @@ export class AuthService {
   }
 
   signIn(email: string, password: string, location:string) {
-    console.log(email, password);
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-        // Signed in
         this.logInError = false;
         if (location == 'merge-accounts') {
           this.isLoggedInForMerging = true;
@@ -51,7 +48,6 @@ export class AuthService {
       })
       .catch((error) => {
         this.logInError = true;
-        console.log(error.code);
       });
   }
 
@@ -78,111 +74,42 @@ export class AuthService {
       await this.firestoreService.checkSignUpEmail(user?.email);
       if (!this.firestoreService.emailAlreadyExist) {
         this.googleAccount = true;
-        this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount);
+        this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, 0, 0);
+        this.firestoreService.addPrivateChat(user?.uid);
         this.router.navigate(['home']);
-        console.log('KEIN EXISTIERENDER USER')
       } else {
         await this.firestoreService.checkIfGoogleAccount(user?.uid);
-        console.log(user?.uid)
-        console.log(this.firestoreService.isGoogleAccount);
         if (this.firestoreService.emailAlreadyExist && this.firestoreService.isGoogleAccount) {
           this.googleAccount = true;
-          this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount);
+          await this.firestoreService.getJsonOfCurrentData('user', user?.uid);
+          await this.firestoreService.addCurrentUserData();
+          await this.firestoreService.addUser(user, this.firestoreService.currentUserData.name, this.firestoreService.currentUserData.photoUrl, this.googleAccount, this.firestoreService.currentUserData.activePrivateChats, this.firestoreService.currentUserData.memberInChannel);
+          this.firestoreService.addPrivateChat(user?.uid);
           this.router.navigate(['home']);
-          console.log('EXISTIERT UND GOOGLE ACCOUNT');
         }
         if (this.firestoreService.emailAlreadyExist && !this.firestoreService.isGoogleAccount) {
-          user?.delete();
+          await this.firestoreService.getJsonOfCurrentData('user', user?.uid);
           this.afAuth.signOut();
-          console.log('WEITERLEITUNG COMPONENT');
-          console.log('EXISTIERT UND NORMALER ACCOUNT');
-          this.router.navigate(['sign-in-merge-accounts']);
-
-          //accounts zusammenführen
+          await user?.delete();
+          await this.firestoreService.deleteUser(user?.uid);
+          await this.firestoreService.addCurrentUserData();
+          this.router.navigate([`sign-in-merge-accounts/${user?.uid}`]);
         }
       }
     } catch {}
   }
 
-  linkAccounts() {
+  async linkAccounts() {
     const provider = new GoogleAuthProvider();
 
     linkWithPopup(this.auth.currentUser, provider)
       .then((result) => {
-        // Accounts successfully linked.
+        // Accounts successfully linked
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const user = result.user;
         this.router.navigate(['home']);
-        // ...
       })
       .catch((error) => {
-        console.log(error.code);
-        // Handle Errors here.
-        // ...
-      });
-  }
-
-  // async googleSignIn() {
-  //   await this.afAuth.signInWithPopup(new GoogleAuthProvider())
-  //   .then((userCredential) => {
-  //     const user = userCredential.user;
-  //     this.firestoreService.checkSignUpEmail(user?.email);
-
-  //     if (this.firestoreService.emailAlreadyExist) {
-  //       // Benutzerkonto verknüpfen
-  //       const existingUser = this.getExistingUserCredentials(user?.email, 'password');
-  //       console.log(existingUser);
-  //       this.linkEmailPasswordWithGoogle(existingUser, user);
-  //     } else {
-  //       // Neuen Benutzer registrieren (falls nicht vorhanden)
-  //       this.firestoreService.addUser(user, user?.displayName, user?.photoURL);
-  //     }
-
-  //     this.router.navigate(['home']);
-  //     console.log(this.firestoreService.emailAlreadyExist);
-  //   });
-  // }
-
-  // async googleSignIn() {
-  //   try {
-  //     const userCredential = await this.afAuth.signInWithPopup(new GoogleAuthProvider());
-  //     const user = userCredential.user;
-  //     console.log(user?.email);
-
-  //     console.log('vor der funnktion', this.firestoreService.emailAlreadyExist);
-  //     await this.firestoreService.checkSignUpEmail(user?.email);
-  //     console.log('nach der funnktion', this.firestoreService.emailAlreadyExist);
-
-  //     // if (this.firestoreService.emailAlreadyExist) {
-  //     //   // Benutzerkonto verknüpfen
-  //     //   const existingUser = await this.getExistingUserCredentials(user?.email, 'password');
-  //     //   console.log(existingUser);
-  //     //   console.log('if abfrage true');
-  //     //   await this.linkEmailPasswordWithGoogle(existingUser, user);
-  //     // } else {
-  //     //   // Neuen Benutzer registrieren (falls nicht vorhanden)
-  //     //   await this.firestoreService.addUser(user, user?.displayName, user?.photoURL);
-  //     //   console.log('if abfrage false');
-  //     // }
-  //     this.getExistingUserCredentials(user?.email, 'password');
-  //     // console.log(existingUser);
-  //     // await this.linkEmailPasswordWithGoogle(existingUser, user);
-  //     this.router.navigate(['home']);
-  //   } catch (error) {
-  //     console.error('Fehler bei der Google-Anmeldung:', error);
-  //   }
-  // }
-
-  linkEmailPasswordWithGoogle(emailPasswordUser: any, googleUser: any) {
-    const googleCredential = googleUser.credential;
-    console.log(googleCredential);
-
-    return emailPasswordUser
-      .linkWithCredential(googleCredential)
-      .then((linkedUserCredential: any) => {
-        const linkedUser = linkedUserCredential.user;
-        console.log('Konten erfolgreich verknüpft:', linkedUser);
-        // Hier kannst du zusätzliche Aktionen ausführen, wenn die Konten erfolgreich verknüpft wurden
       });
   }
 
@@ -193,10 +120,8 @@ export class AuthService {
         this.currentUserId = '';
         localStorage.removeItem('userId');
         this.router.navigateByUrl('');
-        console.log('IS LOGGED OUT');
       })
       .catch((error) => {
-        // An error happened.
       });
   }
 
@@ -220,26 +145,34 @@ export class AuthService {
     });
   }
 
-  async signUp(name: string, email: string, password: string, photoUrl: any) {
+  async signUp(name: string, email: string, password: string, photoUrl: any, location: string, activePrivateChats:any, memberInChannel:any) {
     await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-        this.executeSignUp(userCredential, name, photoUrl);
+        this.executeSignUp(userCredential, name, photoUrl, location, activePrivateChats, memberInChannel);
       })
       .catch((error) => {
         this.failedSignUp();
       });
   }
 
-  executeSignUp(userCredential: any, name: any, photoUrl: any) {
+  executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel:any) {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
       this.signUpError = false;
       this.dataError = false;
-      this.googleAccount = false;
-      this.firestoreService.addUser(user, name, photoUrl, this.googleAccount);
+      if (location == 'merge-accounts') {
+        this.isLoggedInForMerging = true;
+        this.googleAccount = true;
+      } else {
+        this.googleAccount = false;
+        this.router.navigate(['home']);
+      }
+      if (activePrivateChats == 0) {
+        activePrivateChats = user?.uid;
+      }
+      this.firestoreService.addUser(user, name, photoUrl, this.googleAccount, activePrivateChats, memberInChannel);
       this.firestoreService.addPrivateChat(user.uid);
-      this.router.navigate(['home']);
     }, 3500);
   }
 

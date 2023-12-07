@@ -2,17 +2,38 @@
 @import "../sign-up/sign-up.component.scss";
 
 mat-card {
-  height: 500px !important;
+  height: 580px !important;
+}
+
+.change-height {
+  height: 265px !important;
+  justify-content: center;
 }
 
 .block__btn-box {
   justify-content: center !important;
 }
 
+.block__alert-name {
+  top: 263px !important;
+}
+
 .block__alert-email {
-  top: 264px !important;
+  top: 330px !important;
 }
 
 .block__alert-password {
-  top: 331px;
+  top: 396px;
+}
+
+.block__google-log-in {
+  margin-top: 5px !important;
+  img {
+    height: 35px !important;
+  }
+}
+
+.email {
+  color: var(--color-blue-primary-hover);
+  margin: 0;
 }

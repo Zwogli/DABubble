@@ -33,11 +33,11 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     await this.getIdFromUrl();
-    this.firestoreService.getJsonOfCurrentSignUpData(this.idFromUrl);
+    this.firestoreService.getJsonOfCurrentData('currentSignUpData', this.idFromUrl);
   }
 
   ngOnDestroy(): void {
-    this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
+    this.firestoreService.deleteCurrentData('currentSignUpData', this.idFromUrl);
     this.authService.errorUnexpected = false;
     this.authService.signUpError = false;
     this.authService.signUpSuccessfully = false;
@@ -80,19 +80,22 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
       this.firestoreService.currentSignUpData.name,
       this.firestoreService.currentSignUpData.email,
       this.firestoreService.currentSignUpData.password,
-      this.choosenAvatar
+      this.choosenAvatar,
+      'sign-up',
+      0,
+      0
     );
     setTimeout(() => {
       if (this.authService.signUpSuccessfully) {
-        this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
+        this.firestoreService.deleteCurrentData('currentSignUpData',this.idFromUrl);
       }
     }, 3500);
   }
 
-
+  //Diese Funktion noch mal überprüfen, es funktioniert, aber löscht die coll auch bei aktualisieren der Seite
   //If the user closes the window or app, the collection currentSignUpData will be deleted automatically
-  @HostListener('window:beforeunload', ['$event'])
-  beforeUnloadHandler(event:any) {
-    this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
-  }
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeUnloadHandler(event:any) {
+  //   this.firestoreService.deleteCurrentData('currentSignUpData', this.idFromUrl);
+  // }
 }

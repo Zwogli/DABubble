@@ -57,12 +57,12 @@ export class FirestoreService {
   singleChatRecord$ = this.singleChatRecordSubject.asObservable();
   // unsub item
   unsubCurrentUser!: Unsubscribe;
-  // sign up
+  // auth
   currentSignUpData: any = [];
+  currentUserData: any = [];
   currentSignUpId: any = (125478986565 * Math.random()).toFixed(0);
   existingEmail: number = 0;
   emailAlreadyExist = false;
-  // google sign-in/up
   isGoogleAccount = false;
   // create channel
   channelAlreadyExist:boolean = false;
@@ -211,17 +211,25 @@ export class FirestoreService {
     await setDoc(newMsgRef, this.getCleanJson(data, newMsgRef));
   }
 
-  async addUser(userObject: any, name: any, photoUrl: any, googleAccount: boolean) {
+  async addUser(userObject: any, name: any, photoUrl: any, googleAccount: boolean, activePrivateChats:any, memberInChannel:any) {
     await setDoc(doc(this.firestore, 'user', userObject?.uid), {
       name: name,
       email: userObject?.email,
       id: userObject?.uid,
       photoUrl: photoUrl,
       onlineStatus: true,
-      memberInChannel: [],
-      activePrivateChats: [],
-      googleAccount: googleAccount
+      memberInChannel: memberInChannel,
+      activePrivateChats: activePrivateChats,
+      googleAccount: googleAccount,
     });
+  }
+
+  async deleteUser(docId: any) {
+    await deleteDoc(this.getCurrentUserDataDoc(docId))
+    .catch(
+      (err) => {console.log(err)}
+    );
+    console.log('Account wurde gelöscht');
   }
 
 
@@ -408,17 +416,44 @@ export class FirestoreService {
 
   //The following functions gets the current sign up data to use in choose-avater.component
 
-  getCurrentSignUpDataCol() {
-    return collection(this.firestore, 'currentSignUpData');
+  getCurrentDataCol(coll: string) {
+    return collection(this.firestore, coll);
   }
 
-  getCurrentSignUpDataDoc(docId: any) {
-    return doc(collection(this.firestore, 'currentSignUpData'), docId);
+  getCurrentDataDoc(coll: string, docId: any) {
+    return doc(collection(this.firestore, coll), docId);
   }
 
-  getJsonOfCurrentSignUpData(docId: string) {
-    onSnapshot(this.getCurrentSignUpDataDoc(docId), (list) => {
-      this.currentSignUpData = list.data();
+  async getJsonOfCurrentData(coll: string, docId: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      onSnapshot(this.getCurrentDataDoc(coll, docId), (list) => {
+        if (coll == 'currentSignUpData') {
+          const signUpData = list.data();
+          if (signUpData) {
+            this.currentSignUpData = list.data();
+            resolve(this.currentSignUpData);
+            console.log(this.currentSignUpData);
+          }
+        }
+        if (coll == 'currentUserData') {
+          const currentUserData = list.data();
+          if (currentUserData) {
+            this.currentUserData = list.data();
+            resolve("Data added successfully");
+            console.log(this.currentUserData);
+          }
+        }
+        if (coll == 'user') {
+          const userData = list.data();
+          if (userData) {
+            this.currentUserData = list.data();
+            console.log(this.currentUserData);
+            resolve("Data added successfully");
+          }
+        }
+      }, (error) => {
+        reject(error);
+      });
     });
   }
 
@@ -433,8 +468,32 @@ export class FirestoreService {
     );
   }
 
-  async deleteCurrentSignUpData(docId: any) {
-    await deleteDoc(this.getCurrentSignUpDataDoc(docId));
+  async addCurrentUserData() {
+    console.log(this.currentUserData);
+    return new Promise(async (resolve, reject) => {
+      try {
+        await setDoc(
+          doc(this.firestore, 'currentUserData', this.currentUserData.id),
+          {
+            name: this.currentUserData.name,
+            email: this.currentUserData.email,
+            id: this.currentUserData.id,
+            photoUrl: this.currentUserData.photoUrl,
+            onlineStatus: true,
+            memberInChannel: this.currentUserData.memberInChannel,
+            activePrivateChats: this.currentUserData.activePrivateChats,
+          }
+        );
+        resolve("Data added successfully");
+        console.log(this.currentUserData);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async deleteCurrentData(coll: string, docId: any) {
+    await deleteDoc(this.getCurrentDataDoc(coll, docId));
     this.currentSignUpData = [];
   }
 

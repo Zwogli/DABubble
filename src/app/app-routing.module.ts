@@ -14,7 +14,7 @@ import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-
 
 const routes: Routes = [
   { path: '', component: IntroComponent },
-  { path: 'sign-in-merge-accounts', component: SignInMergeAccountsComponent },
+  { path: 'sign-in-merge-accounts/:id', component: SignInMergeAccountsComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
