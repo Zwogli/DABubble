@@ -62,6 +62,8 @@ export class FirestoreService {
   unsubCurrentUser!: Unsubscribe;
   // sign up 
   currentSignUpData: any = [];
+  currentUserData: any = [];
+  currentUserId!: any;
   currentSignUpId: any = (125478986565 * Math.random()).toFixed(0);
   existingEmail: number = 0;
   emailAlreadyExist = false;
@@ -226,11 +228,11 @@ export class FirestoreService {
     await setDoc(newMsgRef, this.getCleanJson(data, newMsgRef));
   }
 
-  async addUser(userObject: any, name: any, photoUrl: any) {
-    await setDoc(doc(this.firestore, 'user', userObject?.uid), {
+  async addUser(userObject: any, name: any, photoUrl: any, googleAccount: boolean, activePrivateChats:any, memberInChannel:any, docId:any) {
+    await setDoc(doc(this.firestore, 'user', docId), {
       name: name,
       email: userObject?.email,
-      id: userObject?.uid,
+      id: docId,
       photoUrl: photoUrl,
       onlineStatus: true,
       memberInChannel: [],
@@ -348,16 +350,27 @@ export class FirestoreService {
     activePrivateChats = [];
   }
 
-  async checkSignUpEmail(email: string) {
-    return onSnapshot(
-      query(collection(this.firestore, 'user'), where('email', '==', email)),
-      (existingEmail) => {
-        this.existingEmail = 0;
-        this.existingEmail = existingEmail.docs.length;
-        if (existingEmail.docs.length == 1) {
-          this.emailAlreadyExist = true;
-        } else {
-          this.emailAlreadyExist = false;
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create new chat END
+
+  async checkSignUpEmail(email: any): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      onSnapshot(
+        query(collection(this.firestore, 'user'), where('email', '==', email)),
+        (existingEmail) => {
+          this.existingEmail = existingEmail.docs.length;
+          if (existingEmail.docs.length == 1) {
+            const user = existingEmail.docs[0].data();
+            this.currentUserId = user['id'];
+            this.emailAlreadyExist = true;
+          } else {
+            this.emailAlreadyExist = false;
+          }
+          // Resolve das Versprechen, nachdem die Überprüfung abgeschlossen ist
+          resolve();
+        },
+        (error) => {
+          // Falls ein Fehler auftritt, reject das Versprechen
+          reject(error);
         }
       }
     );
