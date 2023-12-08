@@ -4,8 +4,8 @@ export class User {
   id: string;
   photoUrl: string;
   onlineStatus: boolean;
-  memberInChannel: any[];
-  activePrivateChats: any[];
+  memberInChannel: string[];
+  activePrivateChats: string[];
 
   constructor(data: any) {
     this.name = data.name || '';

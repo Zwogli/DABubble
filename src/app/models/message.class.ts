@@ -1,5 +1,3 @@
-import { serverTimestamp } from "@angular/fire/firestore";
-
 export class Message {
   id: string;
   message: string;
@@ -9,7 +7,7 @@ export class Message {
   sentAt: any;
   thread: {
     id: string;
-    length: number;
+    length: string;
     lastAnswer: any;
   };
   reactedBy: {
@@ -26,7 +24,7 @@ export class Message {
     this.sentAt = '';
     this.thread = {
       id: '',
-      length: 0,
+      length: '',
       lastAnswer: '',
     };
     this.reactedBy = [];

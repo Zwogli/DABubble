@@ -9,13 +9,13 @@ import {
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { GoogleAuthProvider, signOut, linkWithPopup } from '@angular/fire/auth';
+import { GoogleAuthProvider, signOut } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  auth: any = getAuth();
+  auth = getAuth();
   signUpError = false;
   signUpSuccessfully = false;
   emailSended = false;
@@ -24,8 +24,6 @@ export class AuthService {
   dataError = false;
   errorUnexpected = false;
   currentUserId: string = '';
-  googleAccount = false;
-  isLoggedInForMerging = false;
 
   constructor(
     public router: Router,
@@ -35,29 +33,16 @@ export class AuthService {
     this.getCurrentUser();
   }
 
-  //////////sign-in
-  signIn(email: string, password: string, location:string) {
+  signIn(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
+        // Signed in
         this.logInError = false;
-        if (location == 'merge-accounts') {
-          this.isLoggedInForMerging = true;
-        } else {
-          this.router.navigate(['home']);
-        }
-
+        this.router.navigate(['home']);
       })
       .catch((error) => {
         this.logInError = true;
       });
-  }
-
-  async getExistingUserCredentials(email: any, password: string) {
-    signInWithEmailAndPassword(this.auth, email, password).then(
-      (userCredential) => {
-        console.log(userCredential);
-      }
-    );
   }
 
   guestSignIn() {
@@ -127,15 +112,15 @@ export class AuthService {
 
   //////////sign-out
   signOut() {
-    signOut(this.auth)
-      .then(() => {
-        // Sign-out successful.
-        this.currentUserId = '';
-        localStorage.removeItem('userId');
-        this.router.navigateByUrl('');
-      })
-      .catch((error) => {
-      });
+    signOut(this.auth).then(() => {
+      // Sign-out successful.
+      this.currentUserId = '';
+      localStorage.removeItem('userId');
+      this.router.navigateByUrl('');
+      console.log('IS LOGGED OUT');
+    }).catch((error) => {
+      // An error happened.
+    });
   }
 
   //////////data preparing
@@ -161,7 +146,7 @@ export class AuthService {
   }
 
   //////////sign-up
-  async signUp(name: string, email: string, password: string, photoUrl: any, location: string, activePrivateChats:any, memberInChannel:[]) {
+  async signUp(name: string, email: string, password: string, photoUrl: any) {
     await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -172,7 +157,7 @@ export class AuthService {
       });
   }
 
-  async executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel:[]) {
+  executeSignUp(userCredential: any, name: any, photoUrl: any) {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
@@ -194,21 +179,9 @@ export class AuthService {
       }
       this.firestoreService.addUser(user, name, photoUrl, this.googleAccount, activePrivateChats, memberInChannel, docId);
       this.firestoreService.addPrivateChat(user.uid);
+      this.router.navigate(['home']);
     }, 3500);
   }
-
-  // async checkLocationToPrepareData(location:string, activePrivateChats:any, userId:any) {
-  //   if (location == 'merge-accounts') {
-  //     this.isLoggedInForMerging = true;
-  //     this.googleAccount = true;
-  //   } else {
-  //     this.googleAccount = false;
-  //     this.router.navigate(['home']);
-  //   }
-  //   if (activePrivateChats == 0) {
-  //     activePrivateChats = [userId];
-  //   }
-  // }
 
   failedSignUp() {
     this.errorUnexpected = true;

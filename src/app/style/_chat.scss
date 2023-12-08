@@ -1,17 +1,18 @@
-:host {
-    display: flex;
-    flex-direction: column;
-    height: 100svh;
-}
-
 main {
     display: flex;
     flex-direction: column;
+}
+
+.chat__container {
+    // 338px == Height of header and input field + margins
+    height: calc(100svh - 338px);
     overflow-y: auto;
 }
 
 .message__wrapper {
     position: relative;
+    // padding: 10px 0;
+    // margin-top: 45px;
 }
 
 .message {
@@ -20,7 +21,7 @@ main {
     transition: 125ms ease-in-out;
     position: relative;
     padding: 10px 16px 0 16px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .message__self {
@@ -116,11 +117,6 @@ main {
 
         >span {
             white-space: nowrap;
-        }
-
-        .message__footer-count {
-            color: var(--color-blue-secondary-hover);
-            font-size: 18px;
         }
 
         .message__footer-last-timestamp {

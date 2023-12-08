@@ -1,4 +1,4 @@
-<app-header-mobile [parent]="'chat'"></app-header-mobile>
+<app-navbar-header-mobile></app-navbar-header-mobile>
 
 <app-chat-sub-header
   [type]="'channel'"
@@ -11,9 +11,9 @@
     [chatRecordId]="chatRecordId"
     [currentUser]="currentUser"
   ></app-chat-record>
-</main>
 
-<app-message-input
-  *ngIf="currentChannel"
-  [currentChatId]="currentChannel.chatRecord"
-></app-message-input>
+  <app-message-input
+    *ngIf="currentChannel"
+    [currentChatId]="currentChannel.chatRecord"
+  ></app-message-input>
+</main>

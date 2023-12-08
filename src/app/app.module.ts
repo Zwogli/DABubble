@@ -16,11 +16,11 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/general/sidenav/navbar/navbar.component';
-import { HeaderMobileComponent } from './components/reusable/header-mobile/header-mobile.component';
+import { NavbarHeaderMobileComponent } from './components/general/sidenav/navbar-header-mobile/navbar-header-mobile.component';
 import { NavbarPanelChannelsComponent } from './components/general/sidenav/navbar-panel-channels/navbar-panel-channels.component';
 import { NavbarPanelMessageComponent } from './components/general/sidenav/navbar-panel-message/navbar-panel-message.component';
 import { NavbarSearchbarComponent } from './components/general/sidenav/navbar-searchbar/navbar-searchbar.component';
@@ -46,7 +46,6 @@ import { DialogProfilMenuComponent } from './components/reusable/dialog-profil-m
 import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dialog-overlay.component';
 import { PrivateComponent } from './components/general/chats/private/private.component';
 import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat-record.component';
-import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +53,7 @@ import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-
     IntroComponent,
     ChannelComponent,
     NavbarComponent,
-    HeaderMobileComponent,
+    NavbarHeaderMobileComponent,
     NavbarPanelChannelsComponent,
     NavbarPanelMessageComponent,
     NavbarSearchbarComponent,
@@ -76,7 +75,6 @@ import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-
     ChatSubHeaderComponent,
     PrivateComponent,
     ChatRecordComponent,
-    SignInMergeAccountsComponent,
   ],
 
   imports: [

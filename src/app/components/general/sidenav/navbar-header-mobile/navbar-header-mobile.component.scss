@@ -1,0 +1,11 @@
+main{
+    padding: 0 1rem;
+    min-height: 80px;
+    background-color: var(--color-blue-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.avatar-small{
+    cursor: pointer;
+}
