@@ -61,6 +61,7 @@ export class FirestoreService {
   // auth
   currentSignUpData: any = [];
   currentUserData: any = [];
+  currentUserId!: any;
   currentSignUpId: any = (125478986565 * Math.random()).toFixed(0);
   existingEmail: number = 0;
   emailAlreadyExist = false;
@@ -206,11 +207,11 @@ export class FirestoreService {
     await setDoc(newMsgRef, this.getCleanJson(data, newMsgRef));
   }
 
-  async addUser(userObject: any, name: any, photoUrl: any, googleAccount: boolean, activePrivateChats:any, memberInChannel:any) {
-    await setDoc(doc(this.firestore, 'user', userObject?.uid), {
+  async addUser(userObject: any, name: any, photoUrl: any, googleAccount: boolean, activePrivateChats:any, memberInChannel:any, docId:any) {
+    await setDoc(doc(this.firestore, 'user', docId), {
       name: name,
       email: userObject?.email,
-      id: userObject?.uid,
+      id: docId,
       photoUrl: photoUrl,
       onlineStatus: true,
       memberInChannel: memberInChannel,
@@ -369,6 +370,8 @@ export class FirestoreService {
         (existingEmail) => {
           this.existingEmail = existingEmail.docs.length;
           if (existingEmail.docs.length == 1) {
+            const user = existingEmail.docs[0].data();
+            this.currentUserId = user['id'];
             this.emailAlreadyExist = true;
           } else {
             this.emailAlreadyExist = false;

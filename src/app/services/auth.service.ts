@@ -88,7 +88,7 @@ export class AuthService {
 
   googleSignUp(user:any) {
     this.googleAccount = true;
-    this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [], []);
+    this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [], [], user?.uid);
     this.firestoreService.addPrivateChat(user?.uid);
     this.router.navigate(['home']);
   }
@@ -97,7 +97,7 @@ export class AuthService {
     this.googleAccount = true;
     await this.firestoreService.getJsonOfCurrentData('user', user?.uid);
     await this.firestoreService.addCurrentUserData();
-    await this.firestoreService.addUser(user, this.firestoreService.currentUserData.name, this.firestoreService.currentUserData.photoUrl, this.googleAccount, this.firestoreService.currentUserData.activePrivateChats, this.firestoreService.currentUserData.memberInChannel);
+    await this.firestoreService.addUser(user, this.firestoreService.currentUserData.name, this.firestoreService.currentUserData.photoUrl, this.googleAccount, this.firestoreService.currentUserData.activePrivateChats, this.firestoreService.currentUserData.memberInChannel, this.firestoreService.currentUserData.id);
     this.firestoreService.addPrivateChat(user?.uid);
     this.router.navigate(['home']);
   }
@@ -149,7 +149,8 @@ export class AuthService {
   getCurrentUser() {
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
-        this.currentUserId = user.uid;
+        this.firestoreService.checkSignUpEmail(user?.email);
+        this.currentUserId = this.firestoreService.currentUserId;
         this.firestoreService.startSubUser(this.currentUserId);
         localStorage.setItem('userId', this.currentUserId);
       } else {
@@ -163,6 +164,7 @@ export class AuthService {
   async signUp(name: string, email: string, password: string, photoUrl: any, location: string, activePrivateChats:any, memberInChannel:[]) {
     await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
+        const user = userCredential.user;
         this.executeSignUp(userCredential, name, photoUrl, location, activePrivateChats, memberInChannel);
       })
       .catch((error) => {
@@ -174,20 +176,23 @@ export class AuthService {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
+      let docId = '';
       this.signUpError = false;
       this.dataError = false;
       //this.checkLocationToPrepareData(location, activePrivateChats, user?.uid);
       if (location == 'merge-accounts') {
         this.isLoggedInForMerging = true;
         this.googleAccount = true;
+        docId = this.firestoreService.currentUserData.id;
       } else {
         this.googleAccount = false;
+        docId = user?.uid;
         this.router.navigate(['home']);
       }
       if (activePrivateChats == 0) {
         activePrivateChats = [user?.uid];
       }
-      this.firestoreService.addUser(user, name, photoUrl, this.googleAccount, activePrivateChats, memberInChannel);
+      this.firestoreService.addUser(user, name, photoUrl, this.googleAccount, activePrivateChats, memberInChannel, docId);
       this.firestoreService.addPrivateChat(user.uid);
     }, 3500);
   }
