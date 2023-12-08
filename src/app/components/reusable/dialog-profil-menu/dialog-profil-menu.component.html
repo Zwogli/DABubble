@@ -1,19 +1,19 @@
 <div 
 class="overlay"
 (click)="closeDialogMenu()"
-*ngIf="showDialogProfilMenu"
+*ngIf="dialogService.showDialogProfilMenu$ | async"
 ></div>
 
 
 <div 
-[class.dialog__desktop]="showDialogProfilMenu && !mobileView" 
-[class.dialog__mobile]="mobileView" 
-[class.slide--up]="!showCloseAnimation && showDialogProfilMenu && mobileView"
-[class.slide--down]="showCloseAnimation && mobileView"
+[class.dialog__desktop]="(dialogService.showDialogProfilMenu$ | async) && !(responsiveService.mobileView$ | async)" 
+[class.dialog__mobile]="responsiveService.mobileView$ | async" 
+[class.slide--up]="!showCloseAnimation && (dialogService.showDialogProfilMenu$ | async) && (responsiveService.mobileView$ | async)"
+[class.slide--down]="showCloseAnimation && (responsiveService.mobileView$ | async)"
 >
 
     <div 
-    *ngIf="mobileView" 
+    *ngIf="responsiveService.mobileView$ | async" 
     (click)="closeDialogMenu()" 
     class="orientation">
         <div>

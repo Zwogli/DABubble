@@ -16,20 +16,13 @@ export class HeaderMobileComponent {
   @Input() parent!: string; 
   currentUser!: User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
-  mobileView: boolean = false;
-  private subscription: Subscription;
 
   constructor(
     private dialogService: DialogManagerService,
     private router: Router,
     private firestoreService: FirestoreService,
     public responsiveService: BreakpointObserverService, 
-    ) {
-      this.subscription = this.responsiveService.mobileView$.subscribe(
-        visible => {
-          this.mobileView = visible;
-        });
-    }
+    ) {}
     
   ngOnInit(){
       this.setCurrentUser();

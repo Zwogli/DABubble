@@ -14,8 +14,6 @@ import { DialogManagerService } from 'src/app/services/dialog-manager.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  private subscription: Subscription;
-  mobileView: boolean = false;
   currentUserId:any;
   
   constructor(
@@ -24,12 +22,7 @@ export class NavbarComponent {
     private dialogService: DialogManagerService,
     public responsiveService: BreakpointObserverService, 
     public dialog: MatDialog,
-    ){
-    this.subscription = this.responsiveService.mobileView$.subscribe(
-      visible => {
-        this.mobileView = visible;
-      });
-  }
+    ){}
 
   ngOnInit(){
   }

@@ -13,10 +13,7 @@ import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.
 })
 export class DialogNewChatComponent {
   @ViewChild('searchbarUser') searchbarUser!: ElementRef;
-  mobileView: boolean = false;
-  showDialogNewChat: boolean = false;
   showCloseAnimation:boolean = false;
-  private subscription: Subscription;
   currentUser!:User;
   allUsers!:User[];
   filteredUser:User[] = [];
@@ -31,16 +28,7 @@ export class DialogNewChatComponent {
     private firestoreService:FirestoreService,
     public dialogService: DialogManagerService,
     public responsiveService: BreakpointObserverService, 
-  ){
-    this.subscription = this.responsiveService.mobileView$.subscribe(
-      visible => {
-        this.mobileView = visible;
-      });
-    this.subscription = this.dialogService.showDialogNewChat$.subscribe(
-      visible => {
-        this.showDialogNewChat = visible;
-      });
-  }
+  ){}
   
 //<<<<<<<<<<<<<<<< subscribe >>>>>>>>>>>>
   ngOnInit() {
@@ -130,8 +118,8 @@ export class DialogNewChatComponent {
   }
 
 //<<<<<<<<<<<<<<<< manage dialog >>>>>>>>>>>>
-  closeDialognewChat(){
-    if(this.mobileView){
+  closeDialogNewChat(){
+    if(this.responsiveService.mobileView$.value){
       this.showCloseAnimation = true;
       this.closeAnimation();
     }else{

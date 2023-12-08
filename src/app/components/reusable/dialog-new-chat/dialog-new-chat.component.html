@@ -1,19 +1,19 @@
 <div 
 class="overlay" 
-(click)="closeDialognewChat()"
-*ngIf="showDialogNewChat"
+(click)="closeDialogNewChat()"
+*ngIf="dialogService.showDialogNewChat$ | async"
 ></div>
 
 <div 
-[class.dialog__desktop]="showDialogNewChat && !mobileView" 
-[class.dialog__mobile]="mobileView" 
-[class.slide--up]="!showCloseAnimation && showDialogNewChat && mobileView"
-[class.slide--down]="showCloseAnimation && mobileView"
+[class.dialog__desktop]="(dialogService.showDialogNewChat$ | async) && !(this.responsiveService.mobileView$ | async)" 
+[class.dialog__mobile]="this.responsiveService.mobileView$ | async" 
+[class.slide--up]="!showCloseAnimation && (dialogService.showDialogNewChat$ | async) && (this.responsiveService.mobileView$ | async)"
+[class.slide--down]="showCloseAnimation && (this.responsiveService.mobileView$ | async)"
 >
 
     <div 
-    (click)="closeDialognewChat()"
-    *ngIf="mobileView" 
+    (click)="closeDialogNewChat()"
+    *ngIf="this.responsiveService.mobileView$ | async" 
     class="orientation"
     >
         <div>
@@ -24,9 +24,9 @@ class="overlay"
     <div class="container__header">
         <span>Add User</span>
         <span 
-        (click)="closeDialognewChat()" 
+        (click)="closeDialogNewChat()" 
         class="material-icons-outlined close__element"
-        *ngIf="!mobileView"
+        *ngIf="!(this.responsiveService.mobileView$ | async)"
         > close </span>
     </div>
 

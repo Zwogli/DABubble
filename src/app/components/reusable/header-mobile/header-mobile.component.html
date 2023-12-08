@@ -1,16 +1,16 @@
 <!-- Header for sidenav -->
 <header 
 *ngIf="parent === 'navbar' || 'main'"
-[class.desktop]="!mobileView"
+[class.desktop]="!(responsiveService.mobileView$ | async)"
 >
   <img src="assets/img/logo_dabubble-mobile.png" alt="Logo_DABubble" />
 
-  <app-navbar-searchbar *ngIf="!mobileView"></app-navbar-searchbar>
+  <app-navbar-searchbar *ngIf="!(responsiveService.mobileView$ | async)"></app-navbar-searchbar>
 
   <div
   (click)="openMenu()" 
   class="header__profil">
-    <h1 *ngIf="currentUser && !mobileView">{{ currentUser.name }}</h1>
+    <h1 *ngIf="currentUser && !(responsiveService.mobileView$ | async)">{{ currentUser.name }}</h1>
 
     <img
       *ngIf="currentUser"
@@ -19,7 +19,7 @@
       alt="avatar"
     />
 
-    <mat-icon *ngIf="!mobileView">keyboard_arrow_down</mat-icon>
+    <mat-icon *ngIf="!(responsiveService.mobileView$ | async)">keyboard_arrow_down</mat-icon>
   </div>
 </header>
 

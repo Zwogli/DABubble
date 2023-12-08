@@ -14,7 +14,6 @@ import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.
   styleUrls: ['./dialog-new-channel.component.scss']
 })
 export class DialogNewChannelComponent {
-  private subscription: Subscription;
   private currentUserIsDestroyed$ = new Subject<boolean>();
   currentUser!:User;
   searchUserForm = new FormGroup({
@@ -24,26 +23,15 @@ export class DialogNewChannelComponent {
   });
   filteredUser:User[] = [];
   alreadyFiltered:boolean = false;
-  showDialogNewChannel: boolean = false;
   showCloseAnimation:boolean = false;
-  mobileView: boolean = false;
 
   constructor(
     private authService: AuthService,
     public firestoreService:FirestoreService,
-    private dialogService: DialogManagerService, 
-    public router: Router,
+    public dialogService: DialogManagerService, 
     public responsiveService: BreakpointObserverService, 
-  ){
-    this.subscription = this.dialogService.showDialogNewChannel$.subscribe(
-      visible => {
-        this.showDialogNewChannel = visible;
-      });
-    this.subscription = this.responsiveService.mobileView$.subscribe(
-      visible => {
-        this.mobileView = visible;
-      });
-  }
+    public router: Router,
+  ){}
   
   // sub currentUSer
     ngOnInit() {

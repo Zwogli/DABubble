@@ -1,12 +1,12 @@
 <div 
 class="overlay" 
 (click)="closeDialogCreateChannel()"
-*ngIf="!mobileView"
+*ngIf="!(responsiveService.mobileView$ | async)"
 ></div>
 
 <div
-[class.dialog--desktop]="!mobileView"
-[class.dialog--mobile]="mobileView"
+[class.dialog--desktop]="!(responsiveService.mobileView$ | async)"
+[class.dialog--mobile]="responsiveService.mobileView$ | async"
 >
 
     <header>
@@ -65,5 +65,5 @@ class="overlay"
 </div>
 
 <app-dialog-new-channel
-[class.dialog__newChannel--desktop]="!mobileView"
+[class.dialog__newChannel--desktop]="!(responsiveService.mobileView$ | async)"
 ></app-dialog-new-channel>

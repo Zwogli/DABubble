@@ -1,13 +1,13 @@
 <main>
 
   <app-navbar-searchbar 
-  *ngIf="mobileView" 
-  [class.mobile]="mobileView">
+  *ngIf="responsiveService.mobileView$ | async" 
+  [class.mobile]="responsiveService.mobileView$ | async">
   </app-navbar-searchbar>
 
   <div
   class="navbar__header"
-  *ngIf="!mobileView" >
+  *ngIf="!(responsiveService.mobileView$ | async)" >
     <div class="navbar__header--left">
       <img src="assets/img/workspace.png" alt="Logo of the current workspace" />
       <span>Code learning</span>
@@ -18,7 +18,7 @@
   </div>
 
   <button
-  *ngIf="mobileView"
+  *ngIf="responsiveService.mobileView$ | async"
   [routerLink]="'/home/' + 'newChat'"
   mat-fab
   color="primary"

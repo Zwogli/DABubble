@@ -6,10 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BreakpointObserverService {
-  mobileViewSubject = new BehaviorSubject<boolean>(false);
-  mobileView$: Observable<boolean> = this.mobileViewSubject.asObservable();
-  mobileView = false;
-
+  mobileView$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private breakpointService: BreakpointObserver,
@@ -19,10 +16,10 @@ export class BreakpointObserverService {
       Breakpoints.XSmall
     ])
     .subscribe((result) => {
-      this.mobileViewSubject.next(false);
+      this.mobileView$.next(false);
         if(result.matches){
-          this.mobileViewSubject.next(true);
+          this.mobileView$.next(true);
         }
-    })
+      })
   }
 }

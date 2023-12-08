@@ -12,7 +12,6 @@ import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.
   styleUrls: ['./dialog-add-channel.component.scss']
 })
 export class DialogAddChannelComponent {
-  private subscription: Subscription;
   createChannelForm = new FormGroup({
     channelNameForm: new FormControl('', [
       Validators.required,
@@ -21,24 +20,13 @@ export class DialogAddChannelComponent {
     ]),
   });
   err_hash:boolean = false
-  mobileView: boolean = false;
-  showDialogAddChannel: boolean = false;
 
   constructor(
     private authService: AuthService,
     public firestoreService: FirestoreService,
-    private dialogService: DialogManagerService,
+    public dialogService: DialogManagerService,
     public responsiveService: BreakpointObserverService,  
-    ){
-      this.subscription = this.dialogService.showDialogAddChannel$.subscribe(
-        visible => {
-          this.showDialogAddChannel = visible;
-      });
-      this.subscription = this.responsiveService.mobileView$.subscribe(
-        visible => {
-          this.mobileView = visible;
-      });
-    }
+    ){}
 
   get channelNameForm() {
     return this.createChannelForm.get('channelNameForm');
@@ -89,7 +77,6 @@ export class DialogAddChannelComponent {
   openUserSelection(){
     this.manageDescription();
     this.dialogService.showDialogNewChannel();
-    // this.dialogService.menuSlideUp('menuCreateChannel');
   }
 
   manageDescription(){

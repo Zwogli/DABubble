@@ -17,38 +17,13 @@ export class MainComponent {
   showDialogProfilMenu: boolean = false;
   showDialogAddChannel: boolean = false;
   showDialogNewChat: boolean = false;
-  private subscription: Subscription;
 
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
-    private dialogService: DialogManagerService,
+    public dialogService: DialogManagerService,
     public responsiveService: BreakpointObserverService, 
     public dialog: MatDialog,
-    ){
-      this.subscription = this.responsiveService.mobileView$.subscribe(
-        visible => {
-          this.mobileView = visible;
-        });
-      this.manageObservable();
-  }
+    ){}
 
-  manageObservable(){
-    this.manageDialogs();
-  }
-
-  manageDialogs(){
-    this.subscription = this.dialogService.showDialogAddChannel$.subscribe(
-      visible => {
-        this.showDialogAddChannel = visible;
-      });
-    this.subscription = this.dialogService.showDialogProfilMenu$.subscribe(
-      visible => {
-        this.showDialogProfilMenu = visible;
-      });
-    this.subscription = this.dialogService.showDialogNewChat$.subscribe(
-      visible => {
-        this.showDialogNewChat = visible;
-      });
-  }
 }

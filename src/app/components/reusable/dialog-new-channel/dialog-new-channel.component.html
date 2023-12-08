@@ -1,20 +1,20 @@
 <div
   class="overlay"
   (click)="closeDialogNewChannel()"
-  *ngIf="showDialogNewChannel"
+  *ngIf="dialogService.showDialogNewChannel$ | async"
 ></div>
 
 <div 
-[class.dialog__hide]="!showDialogNewChannel && !mobileView"
-[class.dialog__desktop]="showDialogNewChannel && !mobileView"
-[class.dialog__mobile]="mobileView"
-[class.slide--up]="showDialogNewChannel && mobileView"
-[class.slide--down]="!showDialogNewChannel && showCloseAnimation && mobileView"
+[class.dialog__hide]="!(dialogService.showDialogNewChannel$ | async) && !(responsiveService.mobileView$ | async)"
+[class.dialog__desktop]="(dialogService.showDialogNewChannel$ | async) && !(responsiveService.mobileView$ | async)"
+[class.dialog__mobile]="responsiveService.mobileView$ | async"
+[class.slide--up]="(dialogService.showDialogNewChannel$ | async) && (responsiveService.mobileView$ | async)"
+[class.slide--down]="!(dialogService.showDialogNewChannel$ | async) && showCloseAnimation && (responsiveService.mobileView$ | async)"
 >
   <div 
   class="orientation" 
   (click)="closeDialogNewChannel()" 
-  *ngIf="mobileView"
+  *ngIf="responsiveService.mobileView$ | async"
   >
     <div>
       <span></span>
@@ -26,7 +26,7 @@
     <span 
     (click)="closeDialogNewChannel()" 
     class="material-icons-outlined close__element"
-    *ngIf="!mobileView"
+    *ngIf="!(responsiveService.mobileView$ | async)"
     >
       close
     </span>

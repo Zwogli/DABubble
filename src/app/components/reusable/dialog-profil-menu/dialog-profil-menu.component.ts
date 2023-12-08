@@ -13,26 +13,14 @@ import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.
   styleUrls: ['./dialog-profil-menu.component.scss']
 })
 export class DialogProfilMenuComponent {
-  mobileView: boolean = false;
-  showDialogProfilMenu: boolean = false;
   showCloseAnimation:boolean = false;
-  private subscription: Subscription;
 
   constructor(
     private authService: AuthService,
-    private dialogService: DialogManagerService, 
+    public dialogService: DialogManagerService, 
     public dialog: MatDialog,
     public responsiveService: BreakpointObserverService, 
-    ) {
-      this.subscription = this.responsiveService.mobileView$.subscribe(
-        visible => {
-          this.mobileView = visible;
-        });
-      this.subscription = this.dialogService.showDialogProfilMenu$.subscribe(
-        visible => {
-          this.showDialogProfilMenu = visible;
-        });
-    }
+    ) {}
 
   openDialogProfil() {
     this.dialog.open(DialogProfilComponent);
@@ -45,7 +33,7 @@ export class DialogProfilMenuComponent {
 
 //<<<<<<<<<<<<<<<< manage dialog >>>>>>>>>>>>
   closeDialogMenu(){
-    if(this.mobileView){
+    if(this.responsiveService.mobileView$.value){
       this.showCloseAnimation = true;
       this.closeAnimation();
     }else{

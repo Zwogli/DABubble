@@ -5,36 +5,31 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DialogManagerService {
-  /** subjects */
-  toggleDialogProfilMenuSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  toggleDialogAddChannelSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  toggleDialogNewChannelSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  toggleDialogNewChatSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  /** observable */
-  showDialogProfilMenu$: Observable<boolean> = this.toggleDialogProfilMenuSubject.asObservable();
-  showDialogAddChannel$: Observable<boolean> = this.toggleDialogAddChannelSubject.asObservable();
-  showDialogNewChannel$: Observable<boolean> = this.toggleDialogNewChannelSubject.asObservable();
-  showDialogNewChat$: Observable<boolean> = this.toggleDialogNewChatSubject.asObservable();
+  /** behavior subject = store init values */
+  showDialogProfilMenu$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  showDialogAddChannel$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  showDialogNewChannel$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  showDialogNewChat$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() { }
 
   showDialogProfilMenu(){
-    const currentValue = this.toggleDialogProfilMenuSubject.value;
-    this.toggleDialogProfilMenuSubject.next(!currentValue);
+    const currentValue = this.showDialogProfilMenu$.value;
+    this.showDialogProfilMenu$.next(!currentValue);
   }
 
   showDialogAddChannel(){
-    const currentValue = this.toggleDialogAddChannelSubject.value;
-    this.toggleDialogAddChannelSubject.next(!currentValue);
+    const currentValue = this.showDialogAddChannel$.value;
+    this.showDialogAddChannel$.next(!currentValue);
   }
 
   showDialogNewChannel(){
-    const currentValue = this.toggleDialogNewChannelSubject.value;
-    this.toggleDialogNewChannelSubject.next(!currentValue);
+    const currentValue = this.showDialogNewChannel$.value;
+    this.showDialogNewChannel$.next(!currentValue);
   }
 
   showDialogNewChat(){
-    const currentValue = this.toggleDialogNewChatSubject.value;
-    this.toggleDialogNewChatSubject.next(!currentValue);
+    const currentValue = this.showDialogNewChat$.value;
+    this.showDialogNewChat$.next(!currentValue);
   }
 }

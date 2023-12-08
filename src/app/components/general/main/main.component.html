@@ -4,7 +4,7 @@
     <div class="content">
         
         <app-navbar
-        [class.navbar__desktop]="!mobileView">
+        [class.navbar__desktop]="!(responsiveService.mobileView$ | async)">
         </app-navbar>
 
         <div class="navbar__manager">
@@ -14,9 +14,9 @@
         </div>
 
         <div 
-        [class.posts__desktop]="!mobileView">
+        [class.posts__desktop]="!(responsiveService.mobileView$! | async)">
             <router-outlet 
-            *ngIf="!mobileView"
+            *ngIf="!(responsiveService.mobileView$! | async)"
             ></router-outlet>
         </div>
 
@@ -25,6 +25,6 @@
     
 </main>
 
-<app-dialog-profil-menu *ngIf="showDialogProfilMenu"></app-dialog-profil-menu>
-<app-dialog-add-channel *ngIf="showDialogAddChannel"></app-dialog-add-channel>
-<app-dialog-new-chat *ngIf="showDialogNewChat"></app-dialog-new-chat>
+<app-dialog-profil-menu *ngIf="dialogService.showDialogProfilMenu$ | async"></app-dialog-profil-menu>
+<app-dialog-add-channel *ngIf="dialogService.showDialogAddChannel$ | async"></app-dialog-add-channel>
+<app-dialog-new-chat *ngIf="dialogService.showDialogNewChat$ | async"></app-dialog-new-chat>
