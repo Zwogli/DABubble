@@ -7,7 +7,9 @@
         [class.navbar__desktop]="!(responsiveService.mobileView$ | async)">
         </app-navbar>
 
-        <div class="navbar__manager">
+        <div 
+        class="navbar__manager"
+        *ngIf="!(responsiveService.mobileView$ | async)">
             <div class="navbar__manager--img">
             </div>
             <p>close Workspace-Navigation</p>
