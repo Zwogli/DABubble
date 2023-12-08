@@ -20,7 +20,6 @@ import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/general/sidenav/navbar/navbar.component';
-import { NavbarHeaderMobileComponent } from './components/general/sidenav/navbar-header-mobile/navbar-header-mobile.component';
 import { NavbarPanelChannelsComponent } from './components/general/sidenav/navbar-panel-channels/navbar-panel-channels.component';
 import { NavbarPanelChatComponent } from './components/general/sidenav/navbar-panel-chat/navbar-panel-chat.component';
 import { NavbarSearchbarComponent } from './components/general/sidenav/navbar-searchbar/navbar-searchbar.component';
@@ -45,34 +44,35 @@ import { DialogProfilMenuComponent } from './components/reusable/dialog-profil-m
 import { PrivateComponent } from './components/general/chats/private/private.component';
 import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat-record.component';
 import { MainComponent } from './components/general/main/main.component';
+import { HeaderMobileComponent } from './components/reusable/header-mobile/header-mobile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IntroComponent,
-    ChannelComponent,
-    NavbarComponent,
-    NavbarHeaderMobileComponent,
-    NavbarPanelChannelsComponent,
-    NavbarPanelChatComponent,
-    NavbarSearchbarComponent,
     SignInComponent,
     SignUpComponent,
     ChooseAvatarComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    NavbarComponent,
+    NavbarPanelChannelsComponent,
+    NavbarPanelChatComponent,
+    NavbarSearchbarComponent,
     DialogProfilComponent,
     DialogProfilEditComponent,
-    ForgotPasswordComponent,
     DialogAddChannelComponent,
     DialogNewChannelComponent,
     DialogNewChatComponent,
     DialogProfilMenuComponent,
-    ResetPasswordComponent,
+    ChannelComponent,
     MessageInputComponent,
     ThreadComponent,
     ChatSubHeaderComponent,
     PrivateComponent,
     ChatRecordComponent,
     MainComponent,
+    HeaderMobileComponent,
   ],
 
   imports: [

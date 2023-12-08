@@ -66,6 +66,7 @@ export class FirestoreService {
   existingEmail: number = 0;
   emailAlreadyExist = false;
   // create channel
+  channelAlreadyExist:boolean = false;
   newChannelName:string = '';
   newChannelDescription:string = '';
   usersAsMemberChache: User[] = [];
@@ -256,6 +257,19 @@ export class FirestoreService {
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create new channel
 
+async checkChannelExist(channel: string) {
+  this.channelAlreadyExist = false;
+  let q = query(collection(this.firestore, 'channels'), 
+    where('name', '==', channel));
+  let querySnapshot = await getDocs(q);
+  querySnapshot.forEach((existChannel:any) => {
+    if (existChannel.data().name == channel) {
+      this.channelAlreadyExist = true;
+      console.error('Channel name exist already!');
+    } 
+  });
+}
+
   async getAllUser(){
     this.usersAsMemberChache = [];
     const collRef = collection(this.firestore, "user");
@@ -301,6 +315,11 @@ export class FirestoreService {
     await updateDoc(doc(this.firestore, 'user', user.id), {
       memberInChannel: newMembership,
     });
+  }
+
+  async setGetColl(){
+    const collRef = collection(this.firestore, "user");
+    return await getDocs(collRef);
   }
   
 //>>>>>>>>>>>>>>>>>>create new channel all user END

@@ -39,6 +39,7 @@ export class DialogProfilMenuComponent {
   }
 
   logout(){
+    this.closeDialogMenu();
     this.authService.signOut();
   }
 
