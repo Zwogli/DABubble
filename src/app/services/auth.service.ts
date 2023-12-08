@@ -207,6 +207,7 @@ export class AuthService {
   //   }
   //   if (activePrivateChats == 0) {
   //     activePrivateChats = [userId];
+  //     console.log('test');
   //   }
   // }
 
