@@ -31,8 +31,12 @@
 				<!-- 
 					elements for expansion-panel
 				-->
-				<div *ngFor="let channel of memberInChannelsArray" class="fix--space-left sort__elemts--row cursor__add">
-					<p [routerLink]="'/home/'+channel.id"> # {{ channel.name }} </p>
+				<div 
+				class="fix--space-left sort__elemts--row cursor__add"
+				*ngFor="let channel of memberInChannelsArray"
+				[routerLink]="'/home/'+channel.id" 
+				>
+					<p> #{{ channel.name }} </p>
 				</div>
 				
 				<!-- 

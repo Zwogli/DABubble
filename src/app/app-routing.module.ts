@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'home', component: MainComponent,
   
   children: [
-    { path: 'channel/:channelId', component: ChannelComponent },
+    { path: ':channelId', component: ChannelComponent },
     { path: 'thread/:msgId/:channelId', component: ThreadComponent },
   ]
   },
