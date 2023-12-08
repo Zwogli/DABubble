@@ -30,17 +30,25 @@ export class MainComponent {
         visible => {
           this.mobileView = visible;
         });
-      this.subscription = this.dialogService.showDialogAddChannel$.subscribe(
-        visible => {
-          this.showDialogAddChannel = visible;
-        });
-      this.subscription = this.dialogService.showDialogProfilMenu$.subscribe(
-        visible => {
-          this.showDialogProfilMenu = visible;
-        });
-      this.subscription = this.dialogService.showDialogNewChat$.subscribe(
-        visible => {
-          this.showDialogNewChat = visible;
-        });
+      this.manageObservable();
+  }
+
+  manageObservable(){
+    this.manageDialogs();
+  }
+
+  manageDialogs(){
+    this.subscription = this.dialogService.showDialogAddChannel$.subscribe(
+      visible => {
+        this.showDialogAddChannel = visible;
+      });
+    this.subscription = this.dialogService.showDialogProfilMenu$.subscribe(
+      visible => {
+        this.showDialogProfilMenu = visible;
+      });
+    this.subscription = this.dialogService.showDialogNewChat$.subscribe(
+      visible => {
+        this.showDialogNewChat = visible;
+      });
   }
 }

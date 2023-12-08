@@ -38,6 +38,36 @@ app-dialog-new-chat{
     position: unset;
 }
 
+.navbar__manager{
+    background-color: var(--color-white);
+    padding: 23px 16px;
+    width: calc(60px - 32px);
+    border-radius: 0 30px 30px 0;
+    filter: drop-shadow(4px 4px 4px var(--color-black-shadow));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: 10%;
+    &:hover{
+        color: var(--color-blue-primary-default);
+        .navbar__manager--img{
+            background-image: url(../../../../assets/icons/navigation-blue-hide.png);
+        }
+    }
+    &--img{
+        margin-bottom: .5rem;
+        width: 32px;
+        height: 32px;
+        background-image: url(../../../../assets/icons/Hide-navigation-black-hide.png);
+    }
+    p{
+        font-weight: 500;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+    }
+}
+
 .posts__desktop{
     margin: 1rem;
     width: 100dvw;
