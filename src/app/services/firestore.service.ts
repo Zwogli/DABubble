@@ -189,9 +189,10 @@ export class FirestoreService {
     return onSnapshot(query(collection(this.firestore, 'channels'),
         where('member', 'array-contains', this.currentUser.id)),
       (channelsArrays) => {
+        console.log('firestore', channelsArrays.docs);
         this.channelsArray = [];
-        channelsArrays.forEach((doc: any) => {
-          this.channelsArray.push(doc.data());
+        channelsArrays.forEach((channel: any) => {
+          this.channelsArray.push(channel.data());
         });
         this.channelsArraySubject.next(this.channelsArray);
       }

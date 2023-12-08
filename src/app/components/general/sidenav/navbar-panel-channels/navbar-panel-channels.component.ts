@@ -14,33 +14,19 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 
 export class NavbarPanelChannelsComponent {
   panelOpenState: boolean = false;
-  currentUserId: any;
   currentUser!: User;
   subCurrentUser!: User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
   memberInChannelsArray: Channel[] = [];
 
-  // unsubCurrentUser!: Unsubscribe;
-
-
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService
-  ){
-    this.currentUser = this.firestoreService.currentUser;
-  }
+  ){}
 
   ngOnInit(){
     this.setCurrentUser();
     this.setMemberInChannelArray();
-  }
-  
-  setMemberInChannelArray(){
-    this.firestoreService.channelsArray$
-    .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
-    .subscribe((channel: any) => {
-      this.memberInChannelsArray = channel;
-    });
   }
 
   ngOnDestroy() {
@@ -53,6 +39,14 @@ export class NavbarPanelChannelsComponent {
     .subscribe((user: User) => {
       this.currentUser = user;
     } )
+  }
+
+  setMemberInChannelArray(){
+    this.firestoreService.channelsArray$
+    .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
+    .subscribe((channel: any) => {
+      this.memberInChannelsArray = channel;
+    });
   }
 
   rotateArrow() {
