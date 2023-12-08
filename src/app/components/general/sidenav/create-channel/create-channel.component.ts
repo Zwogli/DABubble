@@ -42,20 +42,20 @@ export class CreateChannelComponent {
    * subscribe
    */
   ngOnInit() {
-    this.setAllChannels();
+    //this.setAllChannels();
   }
 
   ngOnDestroy() {
     this.allChannelsIsDestroyed$.next(true);
   }
 
-  setAllChannels() {
-    this.firestoreService.allChannels$
-      .pipe(takeUntil(this.allChannelsIsDestroyed$))
-      .subscribe((channels: any) => {
-        this.allChannels = channels;
-      });
-  }
+  // setAllChannels() {
+  //   this.firestoreService.allChannels$
+  //     .pipe(takeUntil(this.allChannelsIsDestroyed$))
+  //     .subscribe((channels: any) => {
+  //       this.allChannels = channels;
+  //     });
+  // }
 
   /**
    * check input
