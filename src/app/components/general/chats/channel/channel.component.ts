@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Unsubscribe } from '@angular/fire/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
+  Observable,
   Subject,
   Subscription,
+  Unsubscribable,
   takeUntil,
 } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
@@ -29,6 +32,7 @@ export class ChannelComponent implements OnInit {
   constructor(
     private fireService: FirestoreService,
     private route: ActivatedRoute,
+    private router: Router,
     private chatService: ChatService,
     public responsiveService: BreakpointObserverService, 
   ) {
@@ -40,7 +44,8 @@ export class ChannelComponent implements OnInit {
       });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
@@ -55,7 +60,7 @@ export class ChannelComponent implements OnInit {
         .then((doc: any) => {
           this.chatRecordId = doc.chatRecord;
           this.currentChannel = doc;
-          this.chatService.setChatRecordId(doc.chatRecord);
+          this.chatService.setChatRecordId(doc.chatRecord)
         });
     }
   }
@@ -69,10 +74,7 @@ export class ChannelComponent implements OnInit {
   }
 
   startThread(msg: Message) {
-    this.chatService.startThreadFromChannel(
-      msg.id,
-      this.currentChannel.id,
-      this.currentChannel.chatRecord
-    );
+    this.chatService.setLeadingMsg(msg);
+    this.router.navigate(['/thread/', msg.id, this.currentChannel.id]);
   }
 }

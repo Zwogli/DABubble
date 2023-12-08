@@ -34,6 +34,7 @@ class="overlay"
         <div class="container__search">
             <div class="input__label">
                 <input 
+                id="searchbar-newChat"
                 #searchbarUser
                 (click)="removeUser()"
                 (keyup)="searchForUser()"
@@ -50,6 +51,7 @@ class="overlay"
                 <!-- 
                     selected User 
                 -->
+                
                 <div 
                 *ngFor="let user of this.selectedUser"
                 class="container__user-Elements--selected" 
