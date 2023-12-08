@@ -38,12 +38,12 @@ export class ChatRecordComponent implements OnInit {
   ngOnInit() {
     this.chatService.chatRecordIdChanged$.subscribe((chatRecordId) => {
       this.chatRecordId = chatRecordId;
-      this.loadChatRecord();
+      //this.loadChatRecord();
     });
   }
 
   ngOnDestroy() {
-    this.fireService.unsubChatRecord();
+    //this.fireService.unsubChatRecord();
     this.componentIsDestroyed$.next(true);
     this.componentIsDestroyed$.complete();
   }
@@ -53,15 +53,15 @@ export class ChatRecordComponent implements OnInit {
     this.changeDetector.detectChanges();
   }
 
-  loadChatRecord() {
-    this.fireService.startSubChat(this.chatRecordId);
-    this.fireService.singleChatRecord$
-      .pipe(takeUntil(this.componentIsDestroyed$))
-      .subscribe((chat: Message[]) => {
-        this.chatRecord = chat;
-        // console.log('Messages recieved from service. ', chat);
-      });
-  }
+  // loadChatRecord() {
+  //   this.fireService.startSubChat(this.chatRecordId);
+  //   this.fireService.singleChatRecord$
+  //     .pipe(takeUntil(this.componentIsDestroyed$))
+  //     .subscribe((chat: Message[]) => {
+  //       this.chatRecord = chat;
+  //       // console.log('Messages recieved from service. ', chat);
+  //     });
+  // }
 
   openThread(msg: Message, event: any) {
     if (msg != this.selectedMsg) {
