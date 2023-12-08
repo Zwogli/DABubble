@@ -1,0 +1,27 @@
+<!-- Header for sidenav -->
+<header *ngIf="parent === 'navbar'">
+  <img src="assets/img/logo_dabubble-mobile.png" alt="Logo_DABubble" />
+  <img
+    (click)="openMenu()"
+    *ngIf="currentUser"
+    class="avatar-small"
+    src="{{ currentUser.photoUrl }}"
+    alt="avatar"
+  />
+</header>
+
+<!-- Header for channels, threads and private chats -->
+<header *ngIf="parent === 'chat'">
+  <div (click)="navigateBack()" class="logo__container">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+    <img src="assets/img/workspace.png" alt="Logo of the current workspace" />
+    <span>Code learning</span>
+  </div>
+  <img
+    (click)="openMenu()"
+    *ngIf="currentUser"
+    class="avatar-small"
+    src="{{ currentUser.photoUrl }}"
+    alt="avatar"
+  />
+</header>
