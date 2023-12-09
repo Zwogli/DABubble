@@ -38,6 +38,10 @@ app-dialog-new-chat{
     position: unset;
 }
 
+.navbar__desktop--toggle{
+    display: none
+}
+
 .navbar__manager{
     @include display_column_center;
     background-color: var(--color-white);
