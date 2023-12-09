@@ -54,6 +54,11 @@ btn
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 display
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+@mixin display_aCenter{
+  display: flex;
+  align-items: center;
+}
+
 @mixin display_center{
   display: flex;
   justify-content: center;
@@ -63,6 +68,11 @@ display
 @mixin display_column{
   display: flex;
   flex-direction: column;
+}
+
+@mixin display_column_center{
+  @include display_column;
+  align-items: center;
 }
 
 @mixin display_column_start{
@@ -140,3 +150,31 @@ overlay
   width: 100dvw;
   height: 100dvh;
 }
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+navbar panels
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+@mixin panel_titel{
+  @include display_aCenter;
+  gap: 0.5rem;
+  div {
+    @include display_aCenter;
+    gap: 0.5rem;
+  }
+}
+
+@mixin panel_header{
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+@mixin container-column{
+  @include display_column;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+@mixin item_orientation-left{
+  margin-left: calc(0.5rem);
+}
+

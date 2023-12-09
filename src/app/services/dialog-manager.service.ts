@@ -6,12 +6,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class DialogManagerService {
   /** behavior subject = store init values */
+  showNavbar$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   showDialogProfilMenu$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   showDialogAddChannel$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   showDialogNewChannel$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   showDialogNewChat$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() { }
+
+  showNavbar(){
+    const currentValue = this.showNavbar$.value;
+    this.showNavbar$.next(!currentValue);
+  }
 
   showDialogProfilMenu(){
     const currentValue = this.showDialogProfilMenu$.value;

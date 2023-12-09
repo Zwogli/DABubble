@@ -140,6 +140,7 @@ export class DialogNewChatComponent {
   closeAnimation(){
     if(this.showCloseAnimation){
       setTimeout(() => {
+        this.showCloseAnimation = false;
         this.dialogService.showDialogNewChat();
       }, 500);
     }

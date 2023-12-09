@@ -39,27 +39,37 @@ app-dialog-new-chat{
 }
 
 .navbar__manager{
+    @include display_column_center;
     background-color: var(--color-white);
-    padding: 23px 16px;
+    padding: 23px 8px;
     width: calc(60px - 32px);
+    height: 160px;
     border-radius: 0 30px 30px 0;
     filter: drop-shadow(4px 4px 4px var(--color-black-shadow));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     position: absolute;
     bottom: 10%;
+    z-index: 5;
+    cursor: pointer;
     &:hover{
         color: var(--color-blue-primary-default);
-        .navbar__manager--img{
+        .navbar__manager--img-close{
             background-image: url(../../../../assets/icons/navigation-blue-hide.png);
         }
+        .navbar__manager--img-open{
+            background-image: url(../../../../assets/icons/navigation-blue-show.png);
+        }
     }
-    &--img{
+    &--img-close{
         margin-bottom: .5rem;
         width: 32px;
         height: 32px;
         background-image: url(../../../../assets/icons/Hide-navigation-black-hide.png);
+    }
+    &--img-open{
+        margin-bottom: .5rem;
+        width: 32px;
+        height: 32px;
+        background-image: url(../../../../assets/icons/navigation-black-show.png);
     }
     p{
         font-weight: 500;
@@ -69,9 +79,9 @@ app-dialog-new-chat{
 }
 
 .posts__desktop{
+    background-color: var(--color-white);
     margin: 1rem;
     width: 100dvw;
     height: calc(100dvh - 2rem - 80px);
-    background-color: var(--color-white);
     border-radius: 30px;
 }

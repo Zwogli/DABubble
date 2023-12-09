@@ -1,10 +1,11 @@
+@import '../../../../style/variable.scss';
+
 main{
-  background-color: var(--color-white);
+  @include display_column;
+    background-color: var(--color-white);
     padding: 2rem 1rem 2rem 1rem;
     height: calc(100dvh - 80px - 4rem);
     position: relative;
-    display: flex;
-    flex-direction: column;
   }
   button{
     position: absolute;
@@ -26,14 +27,11 @@ app-menu-profil-mobile{
 }
 
 .navbar__header{
+  @include display_between_center;
   padding: 0 1rem 0 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 1rem;
   &--left{
-    display: flex;
-    align-items: center;
+    @include display_aCenter;
     gap: 1rem;
     span{
       cursor: default;
@@ -42,10 +40,8 @@ app-menu-profil-mobile{
     }
   }
   &--right{
+    @include display_center;
     padding: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-right: 3px;
 
     mat-icon{

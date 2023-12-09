@@ -1,7 +1,8 @@
+@import '../../../../style/variable.scss';
+
 main{
+    @include display_aCenter;
     position: relative;
-    display: flex;
-    align-items: center;
     input{
         padding: 8px 24px;
         width: 100%;
