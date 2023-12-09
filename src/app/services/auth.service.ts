@@ -71,13 +71,14 @@ export class AuthService {
     const user = userCredential.user;
     try {
       await this.firestoreService.checkSignUpEmail(user?.email);
+      const userId = this.firestoreService.currentUserId;
       if (!this.firestoreService.emailAlreadyExist) {
         this.googleSignUp(user);
       } else {
-        await this.firestoreService.checkIfGoogleAccount(user?.uid);
+        await this.firestoreService.checkIfGoogleAccount(userId);
 
         if (this.firestoreService.emailAlreadyExist && this.firestoreService.isGoogleAccount) {
-          this.googleSignIn(user);
+          this.googleSignIn(user, userId);
         }
         if (this.firestoreService.emailAlreadyExist && !this.firestoreService.isGoogleAccount) {
           this.prepareAccountLinking(user);
@@ -93,9 +94,9 @@ export class AuthService {
     this.router.navigate(['home']);
   }
 
-  async googleSignIn(user:any) {
+  async googleSignIn(user:any, userId:any) {
     this.googleAccount = true;
-    await this.firestoreService.getJsonOfCurrentData('user', user?.uid);
+    await this.firestoreService.getJsonOfCurrentData('user', userId);
     await this.firestoreService.addCurrentUserData();
     await this.firestoreService.addUser(user, this.firestoreService.currentUserData.name, this.firestoreService.currentUserData.photoUrl, this.googleAccount, this.firestoreService.currentUserData.activePrivateChats, this.firestoreService.currentUserData.memberInChannel, this.firestoreService.currentUserData.id);
     this.firestoreService.addPrivateChat(user?.uid);
