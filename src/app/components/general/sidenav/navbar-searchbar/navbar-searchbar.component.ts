@@ -15,7 +15,8 @@ export class NavbarSearchbarComponent {
   currentUser!:User;
   allUsers!:User[];
   allChannels!:Channel[];
-  searchCache: any[] = [];
+  searchCacheChannel: any[] = [];
+  searchCacheUser: any[] = [];
   private currentUserIsDestroyed$ = new Subject<boolean>();
 
   constructor(
@@ -67,16 +68,16 @@ export class NavbarSearchbarComponent {
     let value = this.searchbarNavbar.nativeElement.value;
     let searchedItem = value.slice(1).toLowerCase();
     let filterItem = value.slice(0,1);
-    this.searchCache = [];
+    this.searchCacheChannel = [];
+    this.searchCacheUser = [];
     if(this.isFiltered('#', filterItem, searchedItem)){
       this.searchForChannel(searchedItem);
     }else if(this.isFiltered('@', filterItem, searchedItem)){
       this.searchForUser(searchedItem);
-    }else{
-      console.log('Search for Message', value);
     }
-    console.log('Show searchCache', this.searchCache);
-    
+    // else{
+    //   console.log('Search for Message', value);
+    // }
   }
 
   isFiltered(selectedElem:string, filterItem:string, searchedItem:string){
@@ -95,7 +96,7 @@ export class NavbarSearchbarComponent {
     return this.allChannels.forEach((channel:Channel) => {
       let channelName = channel.name.toLowerCase();
       if(channelName.includes(searchedItem)){
-        this.searchCache.push(channel);
+        this.searchCacheChannel.push(channel);
       }
     })
   }
@@ -104,7 +105,7 @@ export class NavbarSearchbarComponent {
     return this.allUsers.forEach((user:User) => {
       let userName = user.name.toLowerCase();
       if(userName.includes(searchedItem)){
-        this.searchCache.push(user);
+        this.searchCacheUser.push(user);
       }
     })
   }

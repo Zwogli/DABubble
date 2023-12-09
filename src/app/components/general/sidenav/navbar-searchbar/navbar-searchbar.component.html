@@ -1,11 +1,35 @@
 <main class="element__margin--bottom">
-    <input 
-    #searchbarNavbar
-    (keyup)="searchFor()"
-    name="navbar--searchbar" 
-    type="text" 
-    placeholder="Go to...">
-    <label for="navbar--searchbar">
-        <span class="material-icons-outlined"> search </span>
-    </label>
+
+    <div class="searchbar">
+        <input 
+        #searchbarNavbar
+        (keyup)="searchFor()"
+        name="searchbar" 
+        type="text" 
+        placeholder="Go to...">
+        <label for="searchbar">
+            <span class="material-icons-outlined"> search </span>
+        </label>
+    </div>
+
+    <div class="container__result">
+
+        <div>
+            <span class="container__result--section">Channel:</span>
+            <!-- <div *ngIf="!(searchCacheChannel.length == null)"> -->
+                <div *ngFor="let channel of searchCacheChannel">
+                    <h1>{{ channel.name }}</h1>
+                </div>
+            <!-- </div> -->
+        </div>
+
+        <div>
+            <span class="container__result--section">User:</span>
+            <!-- <div *ngIf="!(searchCacheUser.length == null)"> -->
+                <div *ngFor="let user of searchCacheUser">
+                    <h1>{{ user.name }}</h1>
+                </div>
+            <!-- </div> -->
+        </div>
+    </div>
 </main>
