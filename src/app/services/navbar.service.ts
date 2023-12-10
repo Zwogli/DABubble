@@ -11,6 +11,8 @@ export class NavbarService {
   /** */
   toggleOverlayNewChatSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   showOverlayNewChat$: Observable<boolean> = this.toggleOverlayNewChatSubject.asObservable();
+  toggleOverlayNewChannelSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  showOverlayNewChannel$: Observable<boolean> = this.toggleOverlayNewChannelSubject.asObservable();
   selectedMenu:string = '';
 
   constructor() { }
@@ -41,6 +43,19 @@ export class NavbarService {
     activMenu?.classList.add('slide--up');
   }
 
+  manageOverlayNewChannel(menuId:string){
+    this.toggleOverlayNewChannel();
+    this.selectedMenu = menuId;
+    let activMenu: HTMLElement | null = document.getElementById(this.selectedMenu);
+    activMenu?.classList.remove('slide--down');
+    activMenu?.classList.add('slide--up');
+  }
+
+  toggleOverlayNewChannel(){
+    const currentValue = this.toggleOverlayNewChannelSubject.value;
+    this.toggleOverlayNewChannelSubject.next(!currentValue);
+  }
+
   toggleOverlayNewChat(){
     const currentValue = this.toggleOverlayNewChatSubject.value;
     this.toggleOverlayNewChatSubject.next(!currentValue);
@@ -49,5 +64,7 @@ export class NavbarService {
   toggleOverlay() {
     const currentValue = this.showMenuSubject.value; //behaviorSubject (complex object) you need showMenu.value for set init value
     this.showMenuSubject.next(!currentValue);  // next change the negated value
+    console.log(this.showMenuSubject);
+    
   }
 }

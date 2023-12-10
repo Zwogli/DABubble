@@ -28,6 +28,7 @@ import { MenuProfilMobileComponent } from './components/general/sidenav/menu-pro
 import { DialogProfilComponent } from './components/reusable/dialog-profil/dialog-profil.component';
 import { IntroComponent } from './components/general/auth/intro/intro.component';
 import { SignInComponent } from './components/general/auth/sign-in/sign-in.component';
+import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 
 import { ChannelComponent } from './components/general/chats/channel/channel.component';
 import { ThreadComponent } from './components/general/chats/thread/thread.component';
@@ -58,6 +59,7 @@ import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat
     NavbarPanelMessageComponent,
     NavbarSearchbarComponent,
     SignInComponent,
+    SignInMergeAccountsComponent,
     SignUpComponent,
     ChooseAvatarComponent,
     MenuProfilMobileComponent,

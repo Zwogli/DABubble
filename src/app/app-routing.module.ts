@@ -9,10 +9,12 @@ import { ForgotPasswordComponent } from './components/general/auth/forgot-passwo
 import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
 import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
 import { ThreadComponent } from './components/general/chats/thread/thread.component';
+import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 
 
 const routes: Routes = [
   { path: '', component: IntroComponent },
+  { path: 'sign-in-merge-accounts/:id', component: SignInMergeAccountsComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },

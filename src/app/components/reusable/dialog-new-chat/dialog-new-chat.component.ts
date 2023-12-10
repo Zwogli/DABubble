@@ -128,5 +128,14 @@ export class DialogNewChatComponent {
     }, 250);
     this.navbarService.menuSlideDown();
     this.removeUser();
+    this.clearIputField();
+  }
+
+  clearIputField(){
+    let inputSearchbarUser: any = document.getElementById('searchbar-newChat');
+    if(inputSearchbarUser != null){
+      inputSearchbarUser.value = null;
+      this.filteredUser = [];
+    }
   }
 }

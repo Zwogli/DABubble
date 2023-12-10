@@ -30,11 +30,11 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     await this.getIdFromUrl();
-    this.firestoreService.getJsonOfCurrentSignUpData(this.idFromUrl);
+    this.firestoreService.getJsonOfCurrentData('currentSignUpData', this.idFromUrl);
   }
 
   ngOnDestroy(): void {
-    this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
+    this.firestoreService.deleteCurrentData('currentSignUpData', this.idFromUrl);
     this.authService.errorUnexpected = false;
     this.authService.signUpError = false;
     this,this.authService.signUpSuccessfully = false;
@@ -76,11 +76,14 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
       this.firestoreService.currentSignUpData.name,
       this.firestoreService.currentSignUpData.email,
       this.firestoreService.currentSignUpData.password,
-      this.choosenAvatar
+      this.choosenAvatar,
+      'sign-up',
+      [],
+      [],
     );
     setTimeout(() => {
       if (this.authService.signUpSuccessfully) {
-        this.firestoreService.deleteCurrentSignUpData(this.idFromUrl);
+        this.firestoreService.deleteCurrentData('currentSignUpData', this.idFromUrl);
       }
     },3500)
 
