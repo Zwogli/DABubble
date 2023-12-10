@@ -10,10 +10,12 @@ import { ResetPasswordComponent } from './components/general/auth/reset-password
 // import { DialogAddChannelComponent } from './components/reusable/dialog-add-channel/dialog-add-channel.component';
 import { ThreadComponent } from './components/general/chats/thread/thread.component';
 import { MainComponent } from './components/general/main/main.component';
+import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 
 
 const routes: Routes = [
   { path: '', component: IntroComponent },
+  { path: 'sign-in-merge-accounts/:id', component: SignInMergeAccountsComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },

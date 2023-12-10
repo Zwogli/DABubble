@@ -1,6 +1,7 @@
 :host {
   height: 100%;
   display: block;
+  background: var(--color-blue-bg)
 }
 
 //intro animation
@@ -19,6 +20,17 @@
   img {
     z-index: 3;
   }
+}
+
+.block__intro-div {
+  display: flex;
+  justify-content: center;
+}
+
+.img-after-intro {
+  z-index: 10;
+  position: absolute;
+  top: 20px;
 }
 
 .block__intro--change-bg {

@@ -26,6 +26,7 @@ import { NavbarSearchbarComponent } from './components/general/sidenav/navbar-se
 import { DialogProfilComponent } from './components/reusable/dialog-profil/dialog-profil.component';
 import { IntroComponent } from './components/general/auth/intro/intro.component';
 import { SignInComponent } from './components/general/auth/sign-in/sign-in.component';
+import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 
 import { ChannelComponent } from './components/general/chats/channel/channel.component';
 import { ThreadComponent } from './components/general/chats/thread/thread.component';
@@ -51,6 +52,7 @@ import { HeaderMobileComponent } from './components/reusable/header-mobile/heade
     AppComponent,
     IntroComponent,
     SignInComponent,
+    SignInMergeAccountsComponent,
     SignUpComponent,
     ChooseAvatarComponent,
     ForgotPasswordComponent,
