@@ -68,16 +68,22 @@ export class NavbarSearchbarComponent {
     let value = this.searchbarNavbar.nativeElement.value;
     let searchedItem = value.slice(1).toLowerCase();
     let filterItem = value.slice(0,1);
-    this.searchCacheChannel = [];
-    this.searchCacheUser = [];
+    this.resetSearchCache();
     if(this.isFiltered('#', filterItem, searchedItem)){
       this.searchForChannel(searchedItem);
     }else if(this.isFiltered('@', filterItem, searchedItem)){
       this.searchForUser(searchedItem);
     }
+    console.log('search', this.searchCacheChannel , this.searchCacheUser);
+    
     // else{
     //   console.log('Search for Message', value);
     // }
+  }
+
+  resetSearchCache(){
+    this.searchCacheChannel = [];
+    this.searchCacheUser = [];
   }
 
   isFiltered(selectedElem:string, filterItem:string, searchedItem:string){

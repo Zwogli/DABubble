@@ -16,20 +16,24 @@
 
         <div>
             <span class="container__result--section">Channel:</span>
-            <!-- <div *ngIf="!(searchCacheChannel.length == null)"> -->
+                <span *ngIf="searchCacheChannel.length <= 0">
+                    No such entrys
+                </span>
+
                 <div *ngFor="let channel of searchCacheChannel">
                     <h1>{{ channel.name }}</h1>
                 </div>
-            <!-- </div> -->
         </div>
 
         <div>
             <span class="container__result--section">User:</span>
-            <!-- <div *ngIf="!(searchCacheUser.length == null)"> -->
+                <span *ngIf="searchCacheChannel.length <= 0">
+                    No such entrys
+                </span>
+                
                 <div *ngFor="let user of searchCacheUser"> 
                     <h1>{{ user.name }}</h1>
                 </div>
-            <!-- </div> -->
         </div>
     </div>
 </main>
