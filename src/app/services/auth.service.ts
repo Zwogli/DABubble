@@ -43,7 +43,7 @@ export class AuthService {
         if (location == 'merge-accounts') {
           this.isLoggedInForMerging = true;
         } else {
-          this.router.navigate(['home']);
+          this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
         }
 
       })
@@ -62,7 +62,7 @@ export class AuthService {
 
   guestSignIn() {
     this.signIn('guest@mail.com', 'guest_user123', 'guest');
-    this.router.navigate(['home']);
+    this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
   }
 
   //////////google authentication
@@ -91,7 +91,7 @@ export class AuthService {
     this.googleAccount = true;
     this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [], [], user?.uid);
     this.firestoreService.addPrivateChat(user?.uid);
-    this.router.navigate(['home']);
+    this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
   }
 
   async googleSignIn(user:any, userId:any) {
@@ -100,7 +100,7 @@ export class AuthService {
     await this.firestoreService.addCurrentUserData();
     await this.firestoreService.addUser(user, this.firestoreService.currentUserData.name, this.firestoreService.currentUserData.photoUrl, this.googleAccount, this.firestoreService.currentUserData.activePrivateChats, this.firestoreService.currentUserData.memberInChannel, this.firestoreService.currentUserData.id);
     this.firestoreService.addPrivateChat(user?.uid);
-    this.router.navigate(['home']);
+    this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
   }
 
   async prepareAccountLinking(user:any) {
@@ -120,7 +120,7 @@ export class AuthService {
         // Accounts successfully linked
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const user = result.user;
-        this.router.navigate(['home']);
+        this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
       })
       .catch((error) => {
       });
@@ -189,7 +189,7 @@ export class AuthService {
       } else {
         this.googleAccount = false;
         docId = user?.uid;
-        this.router.navigate(['home']);
+        this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
       }
       if (activePrivateChats == 0) {
         activePrivateChats = [user?.uid];

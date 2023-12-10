@@ -2,10 +2,10 @@
 
 main{
   @include display_column;
-    background-color: var(--color-white);
-    padding: 2rem 1rem 2rem 1rem;
-    height: calc(100dvh - 80px - 4rem);
-    position: relative;
+  background-color: var(--color-white);
+  padding: 2rem 1rem 2rem 1rem;
+  height: calc(100dvh - 80px - 4rem);
+  position: relative;
   }
   button{
     position: absolute;
