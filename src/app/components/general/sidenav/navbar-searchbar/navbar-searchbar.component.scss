@@ -56,6 +56,9 @@ main{
         font-weight: 700;
         margin-bottom: 0.5rem;
     }
+    &--empty{
+        color: var(--color-grey-primary-disable);
+    }
 }
 ::-webkit-input-placeholder{
     font-size: 17px;
@@ -73,18 +76,29 @@ main{
     display: flex;
     align-items: center;
     gap: 1rem;
+    cursor: pointer;
     p{
         margin: unset;
+    }
+    &:hover{
+        background-color: var(--color-blue-bg);
+        border-radius: 30px;
     }
   }
 
   .user__container--avatar {
-    height: 50px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
     position: relative;
+    &-icon{
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
     .onlinestatus {
-      height: 14px;
-      width: 14px;
+      height: 7px;
+      width: 7px;
   
       border: 2px solid var(--color-white);
       border-radius: 100%;
