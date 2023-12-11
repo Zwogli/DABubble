@@ -148,10 +148,10 @@ export class AuthService {
   }
 
   getCurrentUser() {
-    onAuthStateChanged(this.auth, (user) => {
-      console.log(user);
+    onAuthStateChanged(this.auth, async (user) => {
+      console.log('Login', user);
       if (user) {
-        this.firestoreService.checkSignUpEmail(user?.email);
+        await this.firestoreService.checkSignUpEmail(user?.email);
         this.currentUserId = this.firestoreService.currentUserId;
         this.firestoreService.startSubUser(this.currentUserId);
         localStorage.setItem('userId', this.currentUserId);
