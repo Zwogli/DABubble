@@ -57,7 +57,7 @@ export class NavbarSearchbarComponent {
   }
 
   setAllChannels() {
-    this.firestoreService.allChannelsSubject$
+    this.firestoreService.allChannels$
     .pipe(takeUntil(this.currentUserIsDestroyed$))
     .subscribe((channels: Channel[]) => {
       this.allChannels = channels;
@@ -73,7 +73,7 @@ export class NavbarSearchbarComponent {
     let filterItem = value.slice(0,1);
     this.searchbarActive = true;
     this.resetSearchCache();
-    if(value == null){
+    if(value.length == 0){
       this.searchbarActive = false;
     }
     if(this.isFiltered('#', filterItem, searchedItem)){
@@ -81,7 +81,7 @@ export class NavbarSearchbarComponent {
     }else if(this.isFiltered('@', filterItem, searchedItem)){
       this.searchForUser(searchedItem);
     }
-    console.log('search', this.searchCacheChannel , this.searchCacheUser.length);
+    console.log('search', this.allChannels);
     
     // else{
     //   console.log('Search for Message', value);
