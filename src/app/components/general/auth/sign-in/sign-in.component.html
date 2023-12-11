@@ -39,7 +39,7 @@
         <button
         class="btn__log-in"
         (click)="this.authService.signIn(userEmail.value, userPassword.value, 'sign-in')"
-        [disabled]="signInForm.invalid"
+        [disabled]="signInForm.invalid || this.authService.signUpSuccessfully"
         [class.btn-disabled]="signInForm.invalid"
         >Anmelden</button>
         <button class="btn__guest-log-in" (click)="this.authService.guestSignIn()">Gäste-Login</button>

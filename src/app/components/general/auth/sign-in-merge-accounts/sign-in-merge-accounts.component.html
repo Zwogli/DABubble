@@ -5,7 +5,10 @@
     <mat-card-content>
       <form class="example-form" [formGroup]="signInForm">
         <span class="sign-in__headline">Accounts verbinden</span>
-      <span class="sign-in__info-text">Wir haben festgestellt, dass für <p class="email">{{ this.firestoreService.currentUserData.email }}</p> bereits ein DABubble Account registriert ist. Bitte melde dich zunächst mit deinem Passwort und deiner Email Adresse an und anschließend mit deinem Google Account. Verwende jeweils die selbe E-Mail-Adresse, so können beide Accounts zusammengeführt werden und zukünftig kannst du dich mit beiden Anmeldemethoden einloggen.</span>
+      <span class="sign-in__info-text">Wir haben festgestellt, dass für <p class="email">{{ this.firestoreService.currentUserData.email }}</p>
+        bereits ein DABubble Konto existiert. Da du dich nun auch mit Google anmelden möchtest, werden wir dein bisheriges Konto mit
+        deinem Google Konto verbinden. Melde dich dafür bitte zunächst mit deinen regulären Anmeldedaten und anschließend mit deinem
+        Google Konto an. Zukünftig kannst du beide Anmeldemethoden verwenden. </span>
 
       <div class="block__input">
         <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="nameForm?.dirty || nameForm?.touched">person</mat-icon>
@@ -40,8 +43,8 @@
         <button
         class="btn__log-in"
         (click)="this.prepareSignUp(userName.value, userEmail.value, userPassword.value, 'merge-accounts')"
-        [disabled]="signInForm.invalid"
-        [class.btn-disabled]="signInForm.invalid"
+        [disabled]="signInForm.invalid || this.authService.signUpSuccessfully"
+        [class.btn-disabled]="signInForm.invalid || this.authService.signUpSuccessfully"
         >Anmelden & weiter zum Google Log-in</button>
       </div>
 
@@ -54,7 +57,9 @@
 
   <mat-card class="change-height" *ngIf="this.authService.isLoggedInForMerging">
     <span class="sign-in__headline">Accounts verbinden</span>
-    <span class="sign-in__info-text">Mit dem nächsten Klick sind beide Accounts miteinander verbunden.</span>
+    <span class="sign-in__info-text">Melde dich nun mit deinem Google Konto an, damit der Vorgang erfolgreich abgeschlossen werden kann.
+      <p class="email">Wichtig: Verwende bitte die selbe E-Mail-Adresse, die du auch für dein bisheriges DABubble Konto verwendet hast
+      ({{ this.firestoreService.currentUserData.email }})</p>.</span>
     <div class="block__google-log-in" (click)="prepareAccountLinking()">
       <img src="../../../../../assets/img/google-icon.png">
       <span>Mit Google anmelden & Accounts verbinden</span>
