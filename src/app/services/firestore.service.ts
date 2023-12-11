@@ -106,7 +106,6 @@ export class FirestoreService {
   }
 
   subCurrentUser(docId: string) {
-    debugger
     return onSnapshot(doc(this.firestore, 'user', docId), (doc: any) => {
       this.currentUser = doc.data();
       this.currentUserSubject.next(this.currentUser);
