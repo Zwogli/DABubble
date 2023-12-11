@@ -1,6 +1,42 @@
-<main>
-    <input name="navbar--searchbar" type="text" placeholder="Go to...">
-    <label for="navbar--searchbar">
-        <span class="material-icons-outlined"> search </span>
-    </label>
+<main 
+[class.element__margin--bottom]="responsiveService.mobileView$ | async">
+
+    <div class="searchbar">
+        <input 
+        #searchbarNavbar
+        (keyup)="searchFor()"
+        name="searchbar" 
+        type="text" 
+        placeholder="Go to...">
+        <label for="searchbar">
+            <span class="material-icons-outlined"> search </span>
+        </label>
+    </div>
+
+    <div 
+    class="container__result"
+    *ngIf="searchbarActive">
+
+        <div>
+            <span class="container__result--section">Channel:</span>
+                <span *ngIf="searchCacheChannel.length <= 0">
+                    No such entrys
+                </span>
+
+                <div *ngFor="let channel of searchCacheChannel">
+                    <h1>{{ channel.name }}</h1>
+                </div>
+        </div>
+
+        <div>
+            <span class="container__result--section">User:</span>
+                <span *ngIf="searchCacheChannel.length <= 0">
+                    No such entrys
+                </span>
+                
+                <div *ngFor="let user of searchCacheUser"> 
+                    <h1>{{ user.name }}</h1>
+                </div>
+        </div>
+    </div>
 </main>
