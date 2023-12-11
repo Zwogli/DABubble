@@ -5,7 +5,8 @@
         <input 
         #searchbarNavbar
         (keyup)="searchFor()"
-        name="searchbar" 
+        name="searchbar"
+        [(ngModel)]="searchterm" 
         type="text" 
         placeholder="Go to...">
         <label for="searchbar">
@@ -16,6 +17,11 @@
     <div 
     class="container__result"
     *ngIf="searchbarActive">
+
+        <div 
+        class="container__result--close"
+        (click)="searchbarActive = false; searchterm = ''" 
+        ><mat-icon>close</mat-icon></div>
 
         <div class="container__result--section">
             <span class="container__result--section-header">Channel:</span>

@@ -19,6 +19,7 @@ export class NavbarSearchbarComponent {
   searchbarActive:boolean = false;
   searchCacheChannel: any[] = [];
   searchCacheUser: any[] = [];
+  searchterm!:string;
   private currentUserIsDestroyed$ = new Subject<boolean>();
 
   constructor(
