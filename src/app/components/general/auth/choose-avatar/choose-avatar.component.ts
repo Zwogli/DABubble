@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ChooseAvatarComponent implements OnInit, OnDestroy {
   choosenAvatar: any = 0;
   public idFromUrl: any = '';
+  avatarIsChoosen = false;
 
   @ViewChild('unchoosenAvatar') unchoosenAvatar!: ElementRef;
 
@@ -38,6 +39,7 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
     this.authService.errorUnexpected = false;
     this.authService.signUpError = false;
     this,this.authService.signUpSuccessfully = false;
+    this.avatarIsChoosen = false;
   }
 
   async getIdFromUrl() {
@@ -49,6 +51,7 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
   chooseAvatar(avatarNr: number) {
     this.unchoosenAvatar.nativeElement.src = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
     this.choosenAvatar = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
+    this.avatarIsChoosen = true;
   }
 
 
@@ -60,6 +63,7 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
       const url = await uploadTask.ref.getDownloadURL();
       this.choosenAvatar = url;
       this.unchoosenAvatar.nativeElement.src = `${url}`;
+      this.avatarIsChoosen = true;
     }
   }
 
