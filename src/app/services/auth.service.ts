@@ -89,7 +89,7 @@ export class AuthService {
 
   googleSignUp(user:any) {
     this.googleAccount = true;
-    this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [], [], user?.uid);
+    this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [user?.uid], [], user?.uid);
     this.firestoreService.addPrivateChat(user?.uid);
     this.router.navigate(['home']);
   }
