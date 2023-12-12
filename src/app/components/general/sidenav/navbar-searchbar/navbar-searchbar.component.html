@@ -8,7 +8,7 @@
         name="searchbar"
         [(ngModel)]="searchterm" 
         type="text" 
-        placeholder="Go to...">
+        placeholder="Suche nach...">
         <label for="searchbar">
             <span class="material-icons-outlined"> search </span>
         </label>
@@ -28,7 +28,7 @@
                 <span 
                 *ngIf="(searchCacheChannel.length == 0)"
                 class="container__result--empty">
-                    No such entrys
+                    Keine Einträge gefunden
                 </span>
 
                 <div *ngFor="let channel of searchCacheChannel">
@@ -46,7 +46,7 @@
             <span 
             *ngIf="(searchCacheUser.length == 0)"
             class="container__result--empty">
-                No such entrys
+            Keine Einträge gefunden
             </span>
                 
             <div *ngFor="let user of searchCacheUser"> 

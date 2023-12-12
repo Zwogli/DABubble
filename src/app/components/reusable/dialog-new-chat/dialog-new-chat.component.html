@@ -22,7 +22,7 @@ class="overlay"
     </div>
 
     <div class="container__header">
-        <span>Add User</span>
+        <span>Leute hinzufügen</span>
         <span 
         (click)="closeDialogNewChat()" 
         class="material-icons-outlined close__element"
@@ -39,7 +39,7 @@ class="overlay"
                 (click)="removeUser()"
                 (keyup)="searchForUser()"
                 type="text" 
-                placeholder="Search user">
+                placeholder="Name eingeben">
 
                 <label 
                 *ngIf="this.isAlreadyInChat"
@@ -96,7 +96,7 @@ class="overlay"
         (click)="submitNewChat()"
         [disabled]="this.userSelected"
         [class.btn-disabled]="this.userSelected">
-            Add
+            Hinzufügen
         </button>
     </form>
 </div>

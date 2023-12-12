@@ -14,10 +14,10 @@
         *ngIf="!(responsiveService.mobileView$ | async)"
         >
             <div *ngIf="!(dialogService.showNavbar$ | async)" class="navbar__manager--img-open"></div>
-            <p *ngIf="!(dialogService.showNavbar$ | async)">open navigation</p>
+            <p *ngIf="!(dialogService.showNavbar$ | async)">öffne Menüleiste</p>
             
             <div *ngIf="dialogService.showNavbar$ | async" class="navbar__manager--img-close"></div>
-            <p *ngIf="dialogService.showNavbar$ | async">close navigation</p>
+            <p *ngIf="dialogService.showNavbar$ | async">schließe Menüleiste</p>
         </div>
 
         <div 

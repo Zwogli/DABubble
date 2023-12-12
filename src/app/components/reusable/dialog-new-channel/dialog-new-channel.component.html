@@ -22,13 +22,13 @@
   </div>
 
   <div class="container__header">
-    <span>Add User</span>
+    <span>Leute hinzufügen</span>
     <span 
     (click)="closeDialogNewChannel()" 
     class="material-icons-outlined close__element"
     *ngIf="!(responsiveService.mobileView$ | async)"
     >
-      close
+      schließen
     </span>
   </div>
 
@@ -43,8 +43,9 @@
         checked
       />
       <label for="radioAllUser"
-        >Add all members of
+        >Alle Mitglieder von
         <span>OfficeTeam</span>
+        hinzufügen
       </label>
     </div>
 
@@ -57,7 +58,7 @@
           value="single"
           (click)="showUserSearchbarNewChannel()"
         />
-        <label for="radioSingleUser">Add certain people</label>
+        <label for="radioSingleUser">Bestimmte Leute hinzufügen</label>
       </div>
 
       <form [formGroup]="searchUserForm">
@@ -74,7 +75,7 @@
             *ngIf="this.alreadyFiltered"
             for="searchbar-user"
             class="block__alert"
-            >*User already added</label
+            >*Person ist bereits in deiner Liste</label
           >
 
           <div
@@ -85,7 +86,7 @@
             "
           >
             <div *ngIf="searchInputForm?.errors?.['minlength']">
-              *Please use at least 2 characters.
+              *Bitte min. 2 Zeichen eingeben.
             </div>
           </div>
 
