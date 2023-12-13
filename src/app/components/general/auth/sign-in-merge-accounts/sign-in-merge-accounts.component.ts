@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SignInMergeAccountsComponent implements OnDestroy, OnInit {
   public idFromUrl: any = '';
+  gotData = false;
 
 
   signInForm = new FormGroup({
@@ -33,15 +34,15 @@ export class SignInMergeAccountsComponent implements OnDestroy, OnInit {
   async ngOnInit() {
     await this.getIdFromUrl();
     await this.firestoreService.getJsonOfCurrentData('currentUserData', this.idFromUrl);
-    console.log(this.firestoreService.currentUserData.email);
-    console.log('test');
   }
 
   ngOnDestroy(): void {
     this.authService.isLoggedInForMerging = false;
+    this.gotData = false;
   }
 
   prepareSignUp(name: string, email:string, password:string, location:string) {
+    this.gotData = true;
     this.authService.signUp(name, email, password, this.firestoreService.currentUserData.photoUrl, location, this.firestoreService.currentUserData.activePrivateChats, this.firestoreService.currentUserData.memberInChannel);
   }
 

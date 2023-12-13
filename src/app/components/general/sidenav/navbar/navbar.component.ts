@@ -17,11 +17,11 @@ export class NavbarComponent {
   showMainChat: boolean = false;
   private subscription: Subscription;
   currentUserId:any;
-  
+
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
-    private navbarService: NavbarService, 
+    private navbarService: NavbarService,
     public dialog: MatDialog,
     ){
       this.subscription = this.navbarService.showMenu$.subscribe(
@@ -31,8 +31,9 @@ export class NavbarComponent {
   }
 
   ngOnInit(){
+    this.authService.getCurrentUser();
   }
-  
+
   closeMenu(){
     setTimeout(() => {
       this.navbarService.toggleOverlay();

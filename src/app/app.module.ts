@@ -20,7 +20,6 @@ import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/general/sidenav/navbar/navbar.component';
-import { NavbarHeaderMobileComponent } from './components/general/sidenav/navbar-header-mobile/navbar-header-mobile.component';
 import { NavbarPanelChannelsComponent } from './components/general/sidenav/navbar-panel-channels/navbar-panel-channels.component';
 import { NavbarPanelMessageComponent } from './components/general/sidenav/navbar-panel-message/navbar-panel-message.component';
 import { NavbarSearchbarComponent } from './components/general/sidenav/navbar-searchbar/navbar-searchbar.component';
@@ -54,7 +53,6 @@ import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat
     IntroComponent,
     ChannelComponent,
     NavbarComponent,
-    NavbarHeaderMobileComponent,
     NavbarPanelChannelsComponent,
     NavbarPanelMessageComponent,
     NavbarSearchbarComponent,

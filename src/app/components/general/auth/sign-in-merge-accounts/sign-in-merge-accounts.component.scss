@@ -2,11 +2,11 @@
 @import "../sign-up/sign-up.component.scss";
 
 mat-card {
-  height: 580px !important;
+  height: 597px !important;
 }
 
 .change-height {
-  height: 265px !important;
+  height: 340px !important;
   justify-content: center;
 }
 
@@ -28,6 +28,7 @@ mat-card {
 
 .block__google-log-in {
   margin-top: 5px !important;
+  margin-bottom: 0 !important;
   img {
     height: 35px !important;
   }
@@ -36,4 +37,5 @@ mat-card {
 .email {
   color: var(--color-blue-primary-hover);
   margin: 0;
+  font-weight: 500;
 }
