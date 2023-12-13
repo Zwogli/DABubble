@@ -16,7 +16,7 @@ import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 })
 
 export class NavbarPanelChannelsComponent {
-  panelOpenState: boolean = false;
+  panelOpenState: boolean = true;
   currentUserId: any;
   currentUser!: User;
   subCurrentUser!: User;

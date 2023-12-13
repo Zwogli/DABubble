@@ -13,7 +13,7 @@ import { DialogManagerService } from 'src/app/services/dialog-manager.service';
   styleUrls: ['./navbar-panel-chat.component.scss']
 })
 export class NavbarPanelChatComponent {
-  panelOpenState: boolean = false;
+  panelOpenState: boolean = true;
   currentUserId: any;
   currentUser!: User;
   subCurrentUser!: User;
