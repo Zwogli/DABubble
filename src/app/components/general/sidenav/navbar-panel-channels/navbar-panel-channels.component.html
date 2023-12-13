@@ -36,7 +36,8 @@
 				<div 
 				class="fix--space-left sort__elemts--row cursor__add"
 				*ngFor="let channel of memberInChannelsArray"
-				[routerLink]="'/home/'+channel.id" 
+				[routerLink]="'/home/'+channel.id"
+				(click)="responsiveService.openPosts()"
 				>
 					<p> #{{ channel.name }} </p>
 				</div>

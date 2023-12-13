@@ -1,11 +1,15 @@
 <main>
-    <app-header-mobile></app-header-mobile>
+    <app-header-mobile 
+    *ngIf="!(responsiveService.mobileView$ | async) ||
+    (responsiveService.mobileView$ | async) && !responsiveService.togglePosts"
+    ></app-header-mobile>
 
     <div class="content">
         
         <app-navbar
         [class.navbar__desktop]="!(responsiveService.mobileView$ | async)"
         [class.navbar__desktop--toggle]="!(dialogService.showNavbar$ | async) && !(responsiveService.mobileView$ | async)"
+        [class.navbar__mobile--toggle]="(responsiveService.mobileView$ | async) && responsiveService.togglePosts"
         ></app-navbar>
 
         <div 
@@ -19,12 +23,12 @@
             <div *ngIf="dialogService.showNavbar$ | async" class="navbar__manager--img-close"></div>
             <p *ngIf="dialogService.showNavbar$ | async">schließe Menüleiste</p>
         </div>
-
+ 
         <div 
         [class.posts__desktop]="!(responsiveService.mobileView$! | async)"
         >
             <router-outlet 
-            *ngIf="!(responsiveService.mobileView$! | async)"
+            *ngIf="!(responsiveService.mobileView$! | async) || (responsiveService.mobileView$! | async) && responsiveService.togglePosts"
             ></router-outlet>
         </div>
 

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BreakpointObserverService {
   mobileView$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  togglePosts:boolean = false;
 
   constructor(
     private breakpointService: BreakpointObserver,
@@ -21,5 +22,13 @@ export class BreakpointObserverService {
           this.mobileView$.next(true);
         }
       })
+  }
+
+  openPosts(){
+    this.togglePosts = true;
+  }
+
+  closePosts(){
+    this.togglePosts = false;
   }
 }

@@ -45,7 +45,7 @@ export class HeaderMobileComponent {
     this.dialogService.showDialogProfilMenu();
   }
 
-  navigateBack() {
-    this.router.navigate(['/home/']);
-  }
+  // navigateBack() {
+  //   this.router.navigate(['/home/']);
+  // }
 }

@@ -25,7 +25,8 @@
 
 <!-- Header for channels, threads and private chats -->
 <header *ngIf="parent === 'chat'">
-  <div (click)="navigateBack()" class="logo__container">
+<!-- navigateBack() -->
+  <div (click)="responsiveService.closePosts()" class="logo__container">
     <mat-icon>keyboard_arrow_left</mat-icon>
     <img src="assets/img/workspace.png" alt="Logo of the current workspace" />
     <span>Code learning</span>

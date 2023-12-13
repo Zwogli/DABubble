@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { DialogManagerService } from 'src/app/services/dialog-manager.service';
+import { BreakpointObserverService } from 'src/app/services/breakpoint-observer.service';
 
 @Component({
   selector: 'app-navbar-panel-chat',
@@ -32,6 +33,7 @@ export class NavbarPanelChatComponent {
     private authService: AuthService,
     private firestoreService: FirestoreService,
     private dialogService: DialogManagerService,
+    public responsiveService: BreakpointObserverService,
   ){}
   
   ngOnInit(){

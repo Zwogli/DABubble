@@ -43,6 +43,10 @@ app-dialog-new-chat{
     display: none
 }
 
+.navbar__mobile--toggle{
+    display: none;
+}
+
 .navbar__manager{
     @include display_column_center;
     background-color: var(--color-white);

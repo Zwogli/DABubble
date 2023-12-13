@@ -34,7 +34,9 @@
 			<div 
 			*ngIf="privateChats[i]"
 			[routerLink]="'/home/' + privateChats[i].id" 
-			class="container__Elements--row">
+			class="container__Elements--row"
+			(click)="responsiveService.openPosts()"
+			>
 
 				<div class="user__container--avatar">
 					<img class="avatar-small" src="{{ chatUserData[i].photoUrl}}" alt="avatar">
