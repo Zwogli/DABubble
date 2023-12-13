@@ -37,18 +37,10 @@ export class NavbarPanelChannelsComponent {
     this.setMemberInChannelArray();
   }
   
-  setMemberInChannelArray(){
-    this.firestoreService.channelsArray$
-    .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
-    .subscribe((channel: any) => {
-      this.memberInChannelsArray = channel;
-    });
-  }
-
   ngOnDestroy() {
     this.currentUserIsDestroyed$.next(true);
   }
-  
+
   setCurrentUser() {
     this.firestoreService.currentUser$
     .pipe(takeUntil(this.currentUserIsDestroyed$))
@@ -57,11 +49,12 @@ export class NavbarPanelChannelsComponent {
     } )
   }
 
-  rotateArrow() {
-    const channelArrow: HTMLElement | null = document.getElementById(
-      `channel--arrow_drop_down`
-    );
-    channelArrow?.classList.toggle('rotate');
+  setMemberInChannelArray(){
+    this.firestoreService.channelsArray$
+    .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
+    .subscribe((channel: any) => {
+      this.memberInChannelsArray = channel;
+    });
   }
 
   openDialogNewChannel(){

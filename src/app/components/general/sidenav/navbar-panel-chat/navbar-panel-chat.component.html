@@ -1,15 +1,16 @@
 <mat-expansion-panel
-    hideToggle
+	hideToggle
     (opened)="panelOpenState = true"
     (closed)="panelOpenState = false"
   >
     <mat-expansion-panel-header>
-      <mat-panel-title (click)="rotateArrow()">
+      <mat-panel-title >
 
 		<div class="panel__titel--left">
 			<span
 			  id="directMessage--arrow_drop_down"
 			  class="material-icons-outlined rotate"
+			  [class.rotate]="!panelOpenState"
 			>
 			  arrow_drop_down
 			</span>

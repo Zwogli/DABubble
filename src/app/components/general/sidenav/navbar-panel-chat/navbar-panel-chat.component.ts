@@ -32,8 +32,7 @@ export class NavbarPanelChatComponent {
     private authService: AuthService,
     private firestoreService: FirestoreService,
     private dialogService: DialogManagerService,
-  ){
-  }
+  ){}
   
   ngOnInit(){
     this.setCurrentUser();
@@ -71,12 +70,5 @@ export class NavbarPanelChatComponent {
   
   openDialogNewChat(){
     this.dialogService.showDialogNewChat();
-  }
-
-  rotateArrow() {
-    const channelArrow: HTMLElement | null= document.getElementById(
-      `directMessage--arrow_drop_down`
-    );
-    channelArrow?.classList.toggle('rotate');
   }
 }

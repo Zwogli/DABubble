@@ -8,10 +8,11 @@
 			  class="container__element--spacebetween"
 			>
 	  
-			  <div class="panel__titel--left" (click)="rotateArrow()">
+			  <div class="panel__titel--left">
 				<span
 				  id="channel--arrow_drop_down"
 				  class="material-icons-outlined rotate"
+				  [class.rotate]="!panelOpenState"
 				>
 				  arrow_drop_down
 				</span>
