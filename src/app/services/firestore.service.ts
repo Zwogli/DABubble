@@ -40,6 +40,7 @@ export class FirestoreService {
   channelsArray: Channel[] = [];
   privateChats: Chat[] = [];
   chatUserData: User[] = [];
+  singleChatRecord: Message[] = [];
 
   // subject item
   private allUsersSubject = new BehaviorSubject<Array<User>>(this.allUsers);
@@ -48,6 +49,9 @@ export class FirestoreService {
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private privateChatsSubject = new BehaviorSubject<any>(this.privateChats);
   private chatUserDataSubject = new BehaviorSubject<any>(this.chatUserData);
+  private singleChatRecordSubject = new BehaviorSubject<any>(
+    this.singleChatRecord
+  );
 
   // observable item
   allUsers$ = this.allUsersSubject.asObservable();
@@ -56,10 +60,12 @@ export class FirestoreService {
   channelsArray$ = this.channelsArraySubject.asObservable();
   privateChats$ = this.privateChatsSubject.asObservable();
   chatUserData$ = this.chatUserDataSubject.asObservable();
+  singleChatRecord$ = this.singleChatRecordSubject.asObservable();
 
   // unsub item
   unsubCurrentUser!: Unsubscribe;
   unsubChatUser!: Unsubscribe;
+  unsubChatRecord!: Unsubscribe;
 
   // auth
   currentSignUpData: any = [];
@@ -82,6 +88,7 @@ export class FirestoreService {
 
   ngOnDestroy() {
     this.unsubCurrentUser();
+    this.unsubChatRecord();
   }
 
   async getSingleDoc(colId: string, docId: string) {
@@ -113,6 +120,7 @@ export class FirestoreService {
       this.getAllChannelsObservable();
       this.getChannelsFromCurrentUser();
       this.getChatsFromCurrentUser();
+      this.subAllChatsAsObservable();
     });
   }
 
@@ -133,6 +141,18 @@ export class FirestoreService {
   }
 
   getAllChannelsObservable(){
+    return onSnapshot(query(collection(this.firestore, 'channels')),
+      (channels) => {
+        this.allChannels = [];
+        channels.forEach((channel: any) => {
+          this.allChannels.push(channel.data()); 
+        });
+        this.allChannelsSubject.next(this.allChannels);
+      }
+    );
+  }
+
+  subAllChatsAsObservable(){
     return onSnapshot(query(collection(this.firestore, 'channels')),
       (channels) => {
         this.allChannels = [];
@@ -211,6 +231,28 @@ export class FirestoreService {
           this.channelsArray.push(doc.data());
         });
         this.channelsArraySubject.next(this.channelsArray);
+      }
+    );
+  }
+
+  //>>>>>>>>>>>>>>>>>>>>> manage msg´s
+
+  startSubChat(docId: string) {
+    this.unsubChatRecord = this.subChatRecord(docId);
+  }
+
+  subChatRecord(docId: string) {
+    return onSnapshot(
+      query(
+        collection(this.firestore, 'chatRecords', docId, 'messages'),
+        orderBy('sentAt')
+      ),
+      (docs: any) => {
+        this.singleChatRecord = [];
+        docs.forEach((doc: any) => {
+          this.singleChatRecord.push(doc.data());
+        });
+        this.singleChatRecordSubject.next(this.singleChatRecord);
       }
     );
   }
