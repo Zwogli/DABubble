@@ -34,6 +34,15 @@ mat-card {
   width: 120px;
   height: 120px !important;
   border-radius: 100%;
+  border: 8px solid var(--color-white);
+
+  &:hover {
+    border: 8px solid var(--color-grey-hover) !important;
+  }
+}
+
+.img-border-color {
+  border: 8px solid var(--color-blue-bg) !important;
 }
 
 .text__name {

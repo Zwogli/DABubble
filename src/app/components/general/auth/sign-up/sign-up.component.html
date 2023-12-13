@@ -58,7 +58,7 @@
           <button
           class="btn__log-in"
           (click)="this.authService.saveCurrentUserData(userName.value, userEmail.value, userPassword.value)"
-          [disabled]="signUpForm.invalid || this.firestoreService.emailAlreadyExist"
+          [disabled]="signUpForm.invalid"
           [class.btn-disabled]="signUpForm.invalid || this.firestoreService.emailAlreadyExist">Weiter
           </button>
         </div>

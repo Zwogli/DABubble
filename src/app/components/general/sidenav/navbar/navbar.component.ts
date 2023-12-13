@@ -15,7 +15,7 @@ import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 })
 export class NavbarComponent {
   currentUserId:any;
-  
+
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
@@ -25,5 +25,6 @@ export class NavbarComponent {
     ){}
 
   ngOnInit(){
+    this.authService.getCurrentUser();
   }
 }

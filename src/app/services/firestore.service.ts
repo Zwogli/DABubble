@@ -241,7 +241,6 @@ export class FirestoreService {
     .catch(
       (err) => {console.log(err)}
     );
-    console.log('Account wurde gelöscht');
   }
 
   async updateCurrentUserData(
