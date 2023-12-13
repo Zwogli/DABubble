@@ -21,8 +21,8 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./channel.component.scss'],
 })
 export class ChannelComponent implements OnInit {
-  private subscription: Subscription;
-  mobileView: boolean = false;
+  // private subscription: Subscription;
+  // mobileView: boolean = false;
   public currentUser!: User;
   public currentChannel!: Channel;
   public chatRecordId!: string;
@@ -38,10 +38,6 @@ export class ChannelComponent implements OnInit {
   ) {
     this.setCurrentUser();
     this.setChatRecordId();
-    this.subscription = this.responsiveService.mobileView$.subscribe(
-      visible => {
-        this.mobileView = visible;
-      });
   }
 
   ngOnInit() {

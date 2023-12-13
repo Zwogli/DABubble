@@ -1,6 +1,6 @@
 <app-header-mobile
 [parent]="'chat'"
-*ngIf="mobileView"
+*ngIf="responsiveService.mobileView$ | async"
 >
 </app-header-mobile>
 
