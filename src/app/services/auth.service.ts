@@ -35,6 +35,10 @@ export class AuthService {
     this.getCurrentUser();
   }
 
+  routerNavigate(){
+    this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
+  }
+
   //////////sign-in
   signIn(email: string, password: string, location:string) {
     signInWithEmailAndPassword(this.auth, email, password)
@@ -43,7 +47,8 @@ export class AuthService {
         if (location == 'merge-accounts') {
           this.isLoggedInForMerging = true;
         } else {
-          this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
+          this.routerNavigate();
+          // this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
         }
 
       })
@@ -62,7 +67,8 @@ export class AuthService {
 
   guestSignIn() {
     this.signIn('guest@mail.com', 'guest_user123', 'guest');
-    this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
+    this.routerNavigate();
+    // this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
   }
 
   //////////google authentication
@@ -91,7 +97,8 @@ export class AuthService {
     this.googleAccount = true;
     await this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [user?.uid], ['vIGUW5jmoxQQaKOf9AkD'], user?.uid);
     await this.firestoreService.addPrivateChat(user?.uid);
-    this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
+    this.routerNavigate();
+    // this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
   }
 
   async googleSignIn(user:any, userId:any) {
@@ -101,7 +108,8 @@ export class AuthService {
     await this.firestoreService.addUser(user, this.firestoreService.currentUserData.name, this.firestoreService.currentUserData.photoUrl, this.googleAccount, this.firestoreService.currentUserData.activePrivateChats, this.firestoreService.currentUserData.memberInChannel, this.firestoreService.currentUserData.id);
     this.firestoreService.addPrivateChat(user?.uid);
     this.firestoreService.deleteCurrentData('currentUserData', this.firestoreService.currentUserData.id);
-    this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
+    this.routerNavigate();
+    // this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
   }
 
   async prepareAccountLinking(user:any) {
@@ -121,7 +129,8 @@ export class AuthService {
         // Accounts successfully linked
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const user = result.user;
-        this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
+        this.routerNavigate();
+        // this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
       })
       .catch((error) => {
       });
@@ -190,7 +199,8 @@ export class AuthService {
       } else {
         this.googleAccount = false;
         docId = user?.uid;
-        this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
+        this.routerNavigate();
+        // this.router.navigate(['home/vIGUW5jmoxQQaKOf9AkD']);
       }
       if (activePrivateChats == 0) {
         activePrivateChats = [user?.uid];
