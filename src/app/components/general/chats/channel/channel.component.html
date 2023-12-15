@@ -5,7 +5,7 @@
   [channel]="currentChannel"
 ></app-chat-sub-header>
 
-<main>
+<main #chatContainer [scrollTop]="chatContainer.scrollHeight">
   <app-chat-record
     (startThread)="startThread($event)"
     [chatRecordId]="chatRecordId"

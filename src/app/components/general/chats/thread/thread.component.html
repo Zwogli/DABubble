@@ -32,7 +32,7 @@
   </div>
 </div>
 
-<main>
+<main #chatContainer [scrollTop]="chatContainer.scrollHeight">
   <app-chat-record
     [parentType]="'thread'"
     [chatRecordId]="chatRecordId"
