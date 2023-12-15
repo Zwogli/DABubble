@@ -175,7 +175,7 @@ export class AuthService {
       });
   }
 
-  async executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel:[]) {
+  async executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel: string[]) {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
