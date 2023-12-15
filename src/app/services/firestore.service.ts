@@ -225,6 +225,7 @@ export class FirestoreService {
     .catch(
       (err) => {console.log(err)}
     );
+    console.log('Account wurde gelöscht');
   }
 
   async updateCurrentUserData(
@@ -279,7 +280,7 @@ export class FirestoreService {
     this.usersAsMemberChache.filter((user) =>
       memberId.push(user.id));
     await setDoc(newChannelRef, this.getNewChannelCleanJson(uId, memberId));
-    //this.chatService.createNewChatRecord('channel', newChannelRef.id);
+    this.chatService.createNewChatRecord('channel', newChannelRef.id);
   }
 
   getNewChannelCleanJson(uId:string, memberId:string[]){
@@ -325,7 +326,7 @@ export class FirestoreService {
     await setDoc(newChatRef, this.getNewChatCleanJson(chatBetween, newChatRefId));
     this.updateUsersPrivatChat(selectedUser, newChatRefId);
     chatBetween= [];
-    //this.chatService.createNewChatRecord('private', newChatRef.id);
+    this.chatService.createNewChatRecord('private', newChatRef.id);
   }
 
   getCleanArrayChatBetween(chatBetween:string[], selectedUser:User){

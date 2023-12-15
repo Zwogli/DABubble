@@ -2,6 +2,7 @@
   #chatContainer
   [scrollTop]="chatContainer.scrollHeight"
   class="chat__container"
+  *ngIf="chatRecord"
 >
   <div
     *ngFor="let message of chatRecord; index as i"
@@ -10,7 +11,11 @@
   >
     <!-- ========== Date Pill ========== -->
     <div
-      *ngIf="message.sentAt && (isFirstMsgOfDay(message, i) || i == 0)"
+      *ngIf="
+        message.sentAt &&
+        (isFirstMsgOfDay(message, i) || i == 0) &&
+        parentType !== 'thread'
+      "
       [style.margin-top]="message == chatRecord[0] ? '45px' : '0'"
       class="chat__date-pill"
     >
@@ -59,7 +64,7 @@
           {{ message.message }}
         </p>
 
-        <div *ngIf="message.thread.id" class="message__footer">
+        <div *ngIf="message.thread.length > 0" class="message__footer">
           <span
             (click)="openThread(message, $event)"
             class="message__footer-count"
@@ -68,7 +73,7 @@
           <div class="message__footer-last-timestamp">
             <span>Letzte Antwort</span>
             <span>
-              {{ message.thread.lastAnswer.toDate() | date : "EEEE hh:mm" }}
+              {{ message.thread.lastAnswer.toDate() | date : "shortTime" }}
               Uhr</span
             >
           </div>
@@ -81,6 +86,7 @@
           <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
         </button>
         <button
+          *ngIf="message.thread.length <= 0 && parentType !== 'thread'"
           (click)="this.startThread.emit(message)"
           mat-icon-button
           aria-label="Icon button with a chat bubble"
@@ -88,6 +94,7 @@
           <mat-icon fontSet="material-icons-outlined">comment</mat-icon>
         </button>
         <button
+          *ngIf="message.sentById === currentUser.id"
           mat-icon-button
           aria-label="Icon button with vertical dots icon"
         >

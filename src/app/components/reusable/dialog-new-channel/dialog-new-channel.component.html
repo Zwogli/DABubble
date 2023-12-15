@@ -1,6 +1,4 @@
-<div id="overlay__newChannel" class="overlay" *ngIf="showOverlay" (click)="closeMenu()"></div>
-
-<div id="menuNewChannel" class="mobile__menu">
+<div id="menuCreateChannel" class="mobile__menu">
     <div (click)="closeMenu()" class="orientation">
         <div>
             <span></span>
@@ -20,7 +18,7 @@
             name="addOption"
             type="radio"
             value="all"
-            (click)="hideSearchbar()"
+            (click)="hideUserSearchbarNewChannel()"
             checked
             >
             <label for="radioAllUser">Add all members of 
@@ -36,7 +34,7 @@
                 name="addOption" 
                 type="radio"
                 value="single"
-                (click)="showSearchbar()"
+                (click)="showUserSearchbarNewChannel()"
                 >
                 <label for="radioSingleUser">Add certain people</label>
             </div>
@@ -45,25 +43,20 @@
                 <div id="new-channel-search-user" class="container__search hide">
                     <input 
                     id="searchbar-user"
-                    #inputSearchbarUser
                     (keyup)="searchForUser()"
-                    (click)="resetErrorMsg()"
                     formControlName="searchInputForm"
                     type="text" 
                     placeholder="Enter Name"
                     >
 
-                    <!-- 
-                        error msg
-                    -->
                     <label *ngIf="this.alreadyFiltered" for="searchbar-user" class="block__alert">*User already added</label>
-                    <!-- <div class="block__alert" *ngIf="searchInputForm?.invalid && (searchInputForm?.dirty || searchInputForm?.touched)">
-                        <div *ngIf="searchInputForm?.errors?.['minlength']">*Please use at least 2 characters.</div>
-                    </div> -->
 
-                    <!-- 
-                        render filtered User 
-                    -->
+                    <div class="block__alert" *ngIf="searchInputForm?.invalid && (searchInputForm?.dirty || searchInputForm?.touched)">
+                        <div *ngIf="searchInputForm?.errors?.['minlength']">*Please use at least 2 characters.</div>
+                    </div>
+
+<!-- render filtered User -->
+
                     <div id="filtered-user" 
                     class="container__filteredUser"
                     *ngIf="this.filteredUser.length >= 1"
@@ -73,46 +66,44 @@
                         class="container__user-Elements" 
                         (click)="addFilteredUser(user)"
                         >
-
                             <div class="container__user-Elements--avatar">
                                 <img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
                                 <span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
                             </div>
-                            <p>{{ user.name }}</p>
 
+                            <p>{{ user.name }}</p>
                         </div>
                     </div>
 
-                    <!-- 
-                        render added User 
-                    -->
+<!-- render added User -->
+
                     <div class="container__user">
                         <div id="added-user"
                         class="container__user-Elements"
                         *ngFor="let user of this.firestoreService.usersAsMemberChache">
-                        
+    
                             <div *ngIf="user != this.currentUser" class="container__user-Elements--avatar">
                                 <img class="avatar-small" src="{{ user.photoUrl }}" alt="avatar">
                                 <span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
                             </div>
-                            
+                        
                             <p *ngIf="user != this.currentUser">{{ user.name }}</p>
-                            
+                        
                             <span class="material-icons-outlined close__element"
                             (click)="removeUser(user)"
                             *ngIf="user != this.currentUser">
                              close 
                             </span>
-                        </div>
                     </div>
 
+                    </div>
                 </div>
             </form>
         </div>
 
         <div class="container__btn--right">
             <button
-            (click)="submitCreateChannel()"
+            (click)="createChannel()"
             class="btn__log-in"
             >
                 Create

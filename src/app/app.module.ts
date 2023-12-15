@@ -16,10 +16,11 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/general/sidenav/navbar/navbar.component';
+import { HeaderMobileComponent } from './components/reusable/header-mobile/header-mobile.component';
 import { NavbarPanelChannelsComponent } from './components/general/sidenav/navbar-panel-channels/navbar-panel-channels.component';
 import { NavbarPanelMessageComponent } from './components/general/sidenav/navbar-panel-message/navbar-panel-message.component';
 import { NavbarSearchbarComponent } from './components/general/sidenav/navbar-searchbar/navbar-searchbar.component';
@@ -27,7 +28,6 @@ import { MenuProfilMobileComponent } from './components/general/sidenav/menu-pro
 import { DialogProfilComponent } from './components/reusable/dialog-profil/dialog-profil.component';
 import { IntroComponent } from './components/general/auth/intro/intro.component';
 import { SignInComponent } from './components/general/auth/sign-in/sign-in.component';
-import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 
 import { ChannelComponent } from './components/general/chats/channel/channel.component';
 import { ThreadComponent } from './components/general/chats/thread/thread.component';
@@ -46,6 +46,7 @@ import { DialogProfilMenuComponent } from './components/reusable/dialog-profil-m
 import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dialog-overlay.component';
 import { PrivateComponent } from './components/general/chats/private/private.component';
 import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat-record.component';
+import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat
     IntroComponent,
     ChannelComponent,
     NavbarComponent,
+    HeaderMobileComponent,
     NavbarPanelChannelsComponent,
     NavbarPanelMessageComponent,
     NavbarSearchbarComponent,
@@ -75,6 +77,7 @@ import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat
     ChatSubHeaderComponent,
     PrivateComponent,
     ChatRecordComponent,
+    SignInMergeAccountsComponent,
   ],
 
   imports: [

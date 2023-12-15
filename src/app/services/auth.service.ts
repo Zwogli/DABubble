@@ -164,7 +164,7 @@ export class AuthService {
   }
 
   //////////sign-up
-  async signUp(name: string, email: string, password: string, photoUrl: any, location: string, activePrivateChats:any, memberInChannel:any) {
+  async signUp(name: string, email: string, password: string, photoUrl: any, location: string, activePrivateChats:any, memberInChannel: string[]) {
     await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -175,7 +175,7 @@ export class AuthService {
       });
   }
 
-  async executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel:any) {
+  async executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel:[]) {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
@@ -210,7 +210,6 @@ export class AuthService {
   //   }
   //   if (activePrivateChats == 0) {
   //     activePrivateChats = [userId];
-  //     console.log('test');
   //   }
   // }
 

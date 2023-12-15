@@ -1,33 +1,46 @@
-<!-- <app-navbar-header-mobile></app-navbar-header-mobile> -->
+<app-header-mobile [parent]="'chat'"></app-header-mobile>
 
-<app-chat-sub-header [type]="'thread'" [channel]="currentChannel"></app-chat-sub-header>
+<app-chat-sub-header
+  [type]="'thread'"
+  [channel]="currentChannel"
+></app-chat-sub-header>
+
+<div *ngIf="leadingMsg" class="message__wrapper">
+  <div class="message leading-msg">
+    <div class="message__avatar-container">
+      <img src="{{ leadingMsg.sentByPhotoUrl }}" alt="" />
+    </div>
+
+    <div class="message__content-container">
+      <div class="message__header">
+        <span class="message__header-name">{{ leadingMsg.sentByName }}</span>
+        <span *ngIf="leadingMsg.sentAt" class="message__header-time"
+          >{{ leadingMsg.sentAt.toDate() | date : "shortTime" }} Uhr</span
+        >
+      </div>
+
+      <p class="message__content">
+        {{ leadingMsg.message }}
+      </p>
+    </div>
+  </div>
+  <div class="thread__separator-container">
+    <span *ngIf="leadingMsg.thread.length > 0"
+      >{{ leadingMsg.thread.length }} Antworten</span
+    >
+    <div class="thread__separator-line"></div>
+  </div>
+</div>
 
 <main>
-  <section
-    #chatContainer
-    [scrollTop]="chatContainer.scrollHeight"
-    class="chat__container"
-  >
-    <div class="message__wrapper">
-      <div class="message">
-        <div class="message__avatar-container">
-          <img src="{{ leadingMsg.sentByPhotoUrl }}" alt="" />
-        </div>
-
-        <div class="message__content-container">
-          <div class="message__header">
-            <span class="message__header-name">{{ leadingMsg.sentByName }}</span>
-            <span *ngIf="leadingMsg.sentAt" class="message__header-time"
-              >{{ leadingMsg.sentAt.toDate() | date : "shortTime" }} Uhr</span
-            >
-          </div>
-
-          <p class="message__content">
-            {{ leadingMsg.message }}
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <app-message-input [currentChatId]="currentThreadId"></app-message-input>
+  <app-chat-record
+    [parentType]="'thread'"
+    [chatRecordId]="chatRecordId"
+    [currentUser]="currentUser"
+  ></app-chat-record>
 </main>
+
+<app-message-input
+  [currentChatId]="chatRecordId"
+  [parentChat]="'thread'"
+></app-message-input>

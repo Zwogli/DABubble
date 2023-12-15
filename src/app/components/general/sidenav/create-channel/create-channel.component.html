@@ -13,13 +13,14 @@
             <span class="sub-headline">Channel-name</span>
 
             <input
-            (keyup)="checkInputCreateChannel()"
+            (keyup)="inputCreateChannel()"
             formControlName="channelNameForm"
-            #inputCreateChannel
+            id="create-channel"
+            #createChannel
             type="text" 
             placeholder="# e.g. cooperation-projects">
             
-            <label *ngIf="this.channelAlreadyExist" for="create-channel" class="block__alert">*Channel name exists</label>
+            <label *ngIf="this.firestoreService.channelAlreadyExist" for="create-channel" class="block__alert">*Channel name exists</label>
             <label *ngIf="err_hash" for="create-channel" class="block__alert">*You forgot hashtag "#"</label>
 
             <div class="block__alert" *ngIf="channelNameForm?.invalid && (channelNameForm?.dirty || channelNameForm?.touched)">
@@ -35,16 +36,16 @@
         </div>
         <input 
         type="text"
-        #channelDescription
+        id="channel-desciption"
         placeholder="Space for your description">
 
 
         <div class="container__btn">
             <button 
             class="btn__submit"
-            (click)="submitNewChannel()"
-            [disabled]="createChannelForm.invalid || this.channelAlreadyExist || err_hash"
-            [class.btn-disabled]="createChannelForm.invalid || this.channelAlreadyExist || err_hash"
+            (click)="openUserSelection()"
+            [disabled]="createChannelForm.invalid || this.firestoreService.channelAlreadyExist || err_hash"
+            [class.btn-disabled]="createChannelForm.invalid || this.firestoreService.channelAlreadyExist || err_hash"
             >
             Create
             </button>
@@ -52,5 +53,5 @@
     </form>
 </main>
 
-<!-- <app-dialog-overlay *ngIf="showMenu"></app-dialog-overlay> -->
+<app-dialog-overlay *ngIf="showMenu"></app-dialog-overlay>
 <app-dialog-new-channel></app-dialog-new-channel>

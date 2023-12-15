@@ -1,7 +1,7 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -13,45 +13,30 @@ import { NavbarService } from 'src/app/services/navbar.service';
   styleUrls: ['./dialog-new-channel.component.scss']
 })
 export class DialogNewChannelComponent {
+  currentUser!:User;
+  private currentUserIsDestroyed$ = new Subject<boolean>();
   searchUserForm = new FormGroup({
     searchInputForm: new FormControl('', [
       Validators.minLength(2),
     ]),
   });
-  @ViewChild('inputSearchbarUser') inputSearchbarUser!: ElementRef;
-  allUsers!:User[];
-  alreadyFiltered:boolean = false;
-  currentUser!:User;
   filteredUser:User[] = [];
-  showOverlay: boolean = false;
-  private subscription: Subscription;
-  private currentUserIsDestroyed$ = new Subject<boolean>();
-  private allUsersIsDestroyed$ = new Subject<boolean>();
+  alreadyFiltered:boolean = false;
 
   constructor(
     private authService: AuthService,
     public firestoreService:FirestoreService,
     private navbarService: NavbarService, 
     public router: Router,
-  ){
-    this.subscription = this.navbarService.showOverlayNewChannel$.subscribe(
-      visible => {
-        this.showOverlay = visible;
-      });
-  }
+  ){}
   
-  /**
-   * sub currentUSer
-   */
-
-  ngOnInit() {
+  // sub currentUSer
+    ngOnInit() {
     this.setCurrentUser();
-    this.setAllUser();
   }
 
   ngOnDestroy() {
     this.currentUserIsDestroyed$.next(true);
-    this.allUsersIsDestroyed$.next(true);
   }
 
   setCurrentUser() {
@@ -62,22 +47,11 @@ export class DialogNewChannelComponent {
       });
   }
 
-  setAllUser() {
-    this.firestoreService.allUsers$
-      .pipe(takeUntil(this.allUsersIsDestroyed$))
-      .subscribe((users: any) => {
-        this.allUsers = users;
-      });
+  async createChannel(){
+    await this.selectionUserIntoChannel();
   }
 
-  /**
-   * manage selection
-   */
-  async submitCreateChannel(){
-    await this.manageAddUsers();
-  }
-
-  async manageAddUsers(){
+  async selectionUserIntoChannel(){
     let radio = document.querySelector('input[name="addOption"]:checked');
     if(this.isNotNull(radio)){
 
@@ -90,7 +64,7 @@ export class DialogNewChannelComponent {
         this.createNewChannel();
       }
     }else{
-      console.error('DABubble: No selection found');
+      console.error('You have not selected anything');
     }
   }
 
@@ -106,65 +80,54 @@ export class DialogNewChannelComponent {
     return selection.id == 'radioSingleUser';
   }
 
-  /**
-   * create channel
-   */
-
   async createNewChannel(){
     await this.firestoreService.addNewChannel(this.currentUser.id);
     await this.firestoreService.updateUsers();
     this.navbarService.toggleOverlay();
-    console.log('before route', this.firestoreService.newChannelRefId);
-    
     this.router.navigate(['home/', this.firestoreService.newChannelRefId]);
     this.resetVariables();
-    console.log('after reset', this.firestoreService.newChannelRefId);
   }
 
   resetVariables(){
-    this.filteredUser = [];
     this.firestoreService.usersAsMemberChache = [];
     this.firestoreService.newChannelRefId = '';
   }
   
-  /**
-   * manage searchbar
-   */
-
-  showSearchbar(){
-    let showContainerSearch: HTMLElement | null = document.getElementById('new-channel-search-user');
-    showContainerSearch?.classList.remove('hide');
-    this.resetSearchbarValue()
-  }
-
-  hideSearchbar(){
+  // show searchbar
+  hideUserSearchbarNewChannel(){
     let showContainerSearch: HTMLElement | null = document.getElementById('new-channel-search-user');
     showContainerSearch?.classList.add('hide');
-    this.resetSearchbarValue();
-    this.resetVariables();
+    this.resetUserSearch();
   }
 
-  resetSearchbarValue(){
+  resetUserSearch(){
     let inputSearchUser: any = document.getElementById('searchbar-user');
     if(inputSearchUser != null){
       inputSearchUser.value = null;
     }
+    this.filteredUser = [];
+    this.firestoreService.usersAsMemberChache = [];
+  }
+  
+  showUserSearchbarNewChannel(){
+    let showContainerSearch: HTMLElement | null = document.getElementById('new-channel-search-user');
+    showContainerSearch?.classList.remove('hide');
   }
 
-  /**
-   * filter searched user
-   */
-  
+  // filter searched user
   get searchInputForm() {
     return this.searchUserForm.get('searchInputForm');
   }
 
   async searchForUser(){
-    const inputValue:any = this.inputSearchbarUser.nativeElement.value;
-    const cleanValue = inputValue.toLowerCase();
+    const input:any = document.getElementById('searchbar-user');
+    let inputValue = input.value.toLowerCase();
+    let allUser:User[] = [];
+    const getColl = await this.firestoreService.setGetColl();
     this.filteredUser = [];
-    if(this.isCheckedMinLetter(cleanValue)){
-      this.filterAllUser(cleanValue);
+    if(this.isCheckedMinLetter(inputValue)){
+      this.getAllUser(allUser, getColl);
+      this.filterAllUser(allUser, inputValue);
     }
   }
 
@@ -172,28 +135,27 @@ export class DialogNewChannelComponent {
     return inputValue.length > 1
   }
 
-  filterAllUser(inputValue:string){
-    this.allUsers.forEach((user) => {
+  getAllUser(allUser:User[], getColl:any){
+    getColl.forEach((user:any) => {
+      allUser.push(user.data())
+    });
+  }
+
+  filterAllUser(allUser:User[], inputValue:string){
+    allUser.forEach((user) => {
       let userName = user.name.toLowerCase();
-      if(this.isFilteredUser(userName, inputValue)){
+      if(this.isFilteredUser(user ,userName, inputValue)){
         this.filteredUser.push(user);
       }
     })
   }
 
-  isFilteredUser(userName:any, inputValue:string){
+  isFilteredUser(user:User, userName:any, inputValue:string){
     return userName.includes(inputValue) && 
     !userName.includes(this.currentUser.name)
   }
 
-  /**
-   * add filtered user
-   */
-
-  resetErrorMsg(){
-    this.alreadyFiltered = false;
-  }
-
+  // push searched user
   addFilteredUser(user:User){
     const input:any = document.getElementById('searchbar-user');
     input.value = null;
@@ -207,9 +169,9 @@ export class DialogNewChannelComponent {
     }
   }
 
-  isAlreadyFiltered(filteredUser:User){
+  isAlreadyFiltered(user:User){
     this.firestoreService.usersAsMemberChache.forEach((user)=>{
-      if(user === filteredUser){
+      if(user === user){
         this.alreadyFiltered = true;
       }else{
         this.alreadyFiltered = false;
@@ -224,21 +186,16 @@ export class DialogNewChannelComponent {
     }
   }
 
-  /**
-   * manage overlay / menu 
-   */
-
   closeMenu() {
-    // todo fix overlay
     let radioBtnAll:any = document.getElementById('radioAllUser');
     let radioBtnSingle:any = document.getElementById('radioSingleUser');
     if(radioBtnSingle.checked = true){
       radioBtnSingle.checked = false;
       radioBtnAll.checked = true;
     }
-    this.hideSearchbar();
+    this.hideUserSearchbarNewChannel();
     setTimeout(() => {
-      this.navbarService.toggleOverlayNewChannel();
+      this.navbarService.toggleOverlay();
     }, 250);
     this.navbarService.menuSlideDown();
   }

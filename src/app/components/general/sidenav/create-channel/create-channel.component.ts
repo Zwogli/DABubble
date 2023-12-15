@@ -1,7 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Subject, Subscription, takeUntil } from 'rxjs';
-import { Channel } from 'src/app/models/channel.class';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
@@ -9,122 +8,85 @@ import { NavbarService } from 'src/app/services/navbar.service';
 @Component({
   selector: 'app-create-channel',
   templateUrl: './create-channel.component.html',
-  styleUrls: ['./create-channel.component.scss'],
+  styleUrls: ['./create-channel.component.scss']
 })
 export class CreateChannelComponent {
-  @ViewChild('inputCreateChannel') inputCreateChannel!: ElementRef;
-  @ViewChild('channelDescription') channelDescription!: ElementRef;
   private subscription: Subscription;
-  private allChannelsIsDestroyed$ = new Subject<boolean>();
   showMenu: boolean = false;
-  err_hash: boolean = false;
-  channelAlreadyExist: boolean = false;
+  err_hash:boolean = false
   createChannelForm = new FormGroup({
     channelNameForm: new FormControl('', [
       Validators.required,
       Validators.minLength(5),
-      Validators.maxLength(17),
+      Validators.maxLength(17)
     ]),
   });
-  allChannels: Channel[] = [];
 
   constructor(
     private authService: AuthService,
     public firestoreService: FirestoreService,
-    private navbarService: NavbarService
-  ) {
-    this.subscription = this.navbarService.showMenu$.subscribe((visible) => {
-      this.showMenu = visible;
-    });
-  }
-
-  /**
-   * subscribe
-   */
-  ngOnInit() {
-    //this.setAllChannels();
-  }
-
-  ngOnDestroy() {
-    this.allChannelsIsDestroyed$.next(true);
-  }
-
-  // setAllChannels() {
-  //   this.firestoreService.allChannels$
-  //     .pipe(takeUntil(this.allChannelsIsDestroyed$))
-  //     .subscribe((channels: any) => {
-  //       this.allChannels = channels;
-  //     });
-  // }
-
-  /**
-   * check input
-   */
+    private navbarService: NavbarService, 
+    ){
+      this.subscription = this.navbarService.showMenu$.subscribe(
+        visible => {
+          this.showMenu = visible;
+        });
+    }
 
   get channelNameForm() {
     return this.createChannelForm.get('channelNameForm');
   }
 
-  checkInputCreateChannel() {
-    const inputValue: any = this.inputCreateChannel.nativeElement.value;
-    let sliceFirstLetter = inputValue.slice(0, 1);
-    this.checkInput(inputValue, sliceFirstLetter);
+  inputCreateChannel(){
+    const input:any = document.getElementById('create-channel');
+    let inputValue = input.value;
+    let sliceFirstLetter = inputValue.slice(0,1);
+    this.checkInput(inputValue, sliceFirstLetter)
   }
 
-  checkInput(inputValue: string, sliceFirstLetter: string) {
-    if (this.isEmptyString(inputValue)) {
+  checkInput(inputValue:string, sliceFirstLetter:string){
+    if(this.isEmptyString(inputValue)){
       this.resetErrorMsg();
-    } else if (this.isMissedHashtag(sliceFirstLetter)) {
+    }else if(this.isMissedHashtag(sliceFirstLetter)){
       this.errorMsgMissedHashtag();
-    } else {
-      this.checkNewChannelName(inputValue);
+    }else{
+      this.createChannel(inputValue);
     }
   }
 
-  isEmptyString(value: string) {
+  isEmptyString(value:string){
     return value === '';
   }
 
-  resetErrorMsg() {
+  resetErrorMsg(){
     this.err_hash = false;
-    this.channelAlreadyExist = false;
+    this.firestoreService.channelAlreadyExist = false;
   }
 
-  isMissedHashtag(firstLetter: string) {
+  isMissedHashtag(firstLetter:string){
     return firstLetter != '#';
   }
 
-  errorMsgMissedHashtag() {
+  errorMsgMissedHashtag(){
     this.err_hash = true;
-    console.error('DABubble: Error forgot hashtag "#"');
+    console.error('Error forgot hashtag "#"');
   }
 
-  checkNewChannelName(value: string) {
+  createChannel(value:string){
     this.err_hash = false;
-    this.channelAlreadyExist = false;
-    let newChannelNameSliced = value.slice(1);
-    this.allChannels.forEach((channel) => {
-      let channelName = this.toLowerCase(channel.name);
-      let newChannelName = this.toLowerCase(newChannelNameSliced);
-      if (channelName === newChannelName) {
-        this.channelAlreadyExist = true;
-      } else {
-        this.firestoreService.newChannelName = newChannelNameSliced;
-      }
-    });
+    let newChannelName = value.slice(1);
+    this.firestoreService.checkChannelExist(newChannelName)
+    this.firestoreService.newChannelName = newChannelName;
   }
 
-  toLowerCase(name: string) {
-    return name.toLowerCase();
-  }
-
-  submitNewChannel() {
+  openUserSelection(){
     this.manageDescription();
-    this.navbarService.manageOverlayNewChannel('menuNewChannel');
+    this.navbarService.menuSlideUp('menuCreateChannel');
   }
 
-  manageDescription() {
-    let description: any = this.channelDescription.nativeElement.value;
-    this.firestoreService.newChannelDescription = description;
+  manageDescription(){
+    let desciptionInput: any = document.getElementById('channel-desciption');
+    let description = desciptionInput.value;
+    this.firestoreService.newChannelDescription = description
   }
 }
