@@ -4,6 +4,7 @@ import { Message } from 'src/app/models/message.class';
 import { chatTypes } from 'src/app/interfaces/chats/types';
 import { ChatService } from 'src/app/services/chat.service';
 
+
 @Component({
   selector: 'app-message-input',
   templateUrl: './message-input.component.html',
@@ -11,7 +12,7 @@ import { ChatService } from 'src/app/services/chat.service';
 })
 export class MessageInputComponent {
   public msgPayload!: string;
-  @Input() currentChatId!: string;
+  @Input() currentChatRecordId!: string;
   @Input() parentChat!: chatTypes;
 
   constructor(
@@ -19,16 +20,15 @@ export class MessageInputComponent {
     private chatService: ChatService
   ) {}
 
-
   /**
    * Sends the message to the corresponding chatRecord and checks if
    * the given chatRecord is for a thread or not. If so, the meta data
    * for the thread gets updated accordingly.
-   * 
+   *
    */
   sendMessage() {
     const data = new Message(this.setMsgData());
-    this.fireService.addMessage(this.currentChatId, data);
+    this.fireService.addMessage(this.currentChatRecordId, data);
     this.msgPayload = '';
     this.checkParentType();
   }
@@ -47,5 +47,14 @@ export class MessageInputComponent {
     if (this.parentChat === 'thread') {
       this.chatService.updateThreadMetaData();
     }
+  }
+
+  openFileUpload() {
+    document.getElementById('fileUpload')?.click();
+  }
+
+  onFileChange(event: any) {
+    const input = event.target.files;
+    console.log(input);
   }
 }
