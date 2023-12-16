@@ -3,7 +3,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/models/message.class';
 import { chatTypes } from 'src/app/interfaces/chats/types';
 import { ChatService } from 'src/app/services/chat.service';
-
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-message-input',
@@ -17,6 +17,7 @@ export class MessageInputComponent {
 
   constructor(
     private fireService: FirestoreService,
+    private storageService: StorageService,
     private chatService: ChatService
   ) {}
 
@@ -54,7 +55,13 @@ export class MessageInputComponent {
   }
 
   onFileChange(event: any) {
-    const input = event.target.files;
-    console.log(input);
+    const input = event.target;
+    let src = URL.createObjectURL(input.files[0]);
+    let thumbnail = document.getElementById('filePreview');
+
+    thumbnail?.setAttribute('src', src);
+    console.log(thumbnail);
+
+    // this.storageService.uploadFile(input, this.currentChatRecordId);
   }
 }
