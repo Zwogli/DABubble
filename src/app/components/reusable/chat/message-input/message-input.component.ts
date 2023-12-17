@@ -36,6 +36,7 @@ export class MessageInputComponent {
       this.fileToUpload
     );
     this.msgPayload = '';
+    this.toggleThumbnail();
     this.checkParentType();
   }
 
@@ -59,13 +60,24 @@ export class MessageInputComponent {
     document.getElementById('fileUpload')?.click();
   }
 
+  /**
+   * This function gets triggered when a file is selected via the
+   * html file input. Then sets a preview of the file to show in
+   * the text message field
+   *
+   * @param event - File input from HTML Node
+   */
   onFileChange(event: any) {
-    const input = event.target;
-    this.fileToUpload = input;
-    let src = URL.createObjectURL(input.files[0]);
-    let thumbnail = document.getElementById('filePreview');
+    this.fileToUpload = event.target;
+    let src = URL.createObjectURL(this.fileToUpload.files[0]);
+    this.toggleThumbnail(src);
+  }
 
-    thumbnail?.setAttribute('src', src);
-    console.log(thumbnail);
+  toggleThumbnail(src?: string) {
+    let thumbnail = document.getElementById('filePreview')!;
+
+    src
+      ? thumbnail.setAttribute('src', src)
+      : thumbnail.setAttribute('src', '');
   }
 }
