@@ -11,9 +11,10 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./message-input.component.scss'],
 })
 export class MessageInputComponent {
-  public msgPayload!: string;
   @Input() currentChatRecordId!: string;
   @Input() parentChat!: chatTypes;
+  public msgPayload!: string;
+  public fileToUpload!: any;
 
   constructor(
     private fireService: FirestoreService,
@@ -29,7 +30,11 @@ export class MessageInputComponent {
    */
   sendMessage() {
     const data = new Message(this.setMsgData());
-    this.fireService.addMessage(this.currentChatRecordId, data);
+    this.fireService.addMessage(
+      this.currentChatRecordId,
+      data,
+      this.fileToUpload
+    );
     this.msgPayload = '';
     this.checkParentType();
   }
@@ -56,12 +61,11 @@ export class MessageInputComponent {
 
   onFileChange(event: any) {
     const input = event.target;
+    this.fileToUpload = input;
     let src = URL.createObjectURL(input.files[0]);
     let thumbnail = document.getElementById('filePreview');
 
     thumbnail?.setAttribute('src', src);
     console.log(thumbnail);
-
-    // this.storageService.uploadFile(input, this.currentChatRecordId);
   }
 }
