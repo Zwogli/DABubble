@@ -18,7 +18,6 @@ export class MessageInputComponent {
 
   constructor(
     private fireService: FirestoreService,
-    private storageService: StorageService,
     private chatService: ChatService
   ) {}
 
@@ -29,6 +28,7 @@ export class MessageInputComponent {
    *
    */
   sendMessage() {
+    if (!this.msgPayload) return;
     const data = new Message(this.setMsgData());
     this.fireService.addMessage(
       this.currentChatRecordId,
