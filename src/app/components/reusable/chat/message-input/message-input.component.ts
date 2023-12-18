@@ -64,19 +64,32 @@ export class MessageInputComponent {
   /**
    * This function gets triggered when a file is selected via the
    * html file input. Then sets a preview of the file to show in
-   * the text message field
+   * the text message field. Just allows one attached file.
    *
    * @param event - File input from HTML Node
    */
   onFileChange(event: any) {
-    this.fileToUpload = event.target;
-    let src = URL.createObjectURL(this.fileToUpload.files[0]);
-    this.toggleThumbnail(src);
+    this.fileToUpload = event.target.files[0];
+    this.checkFileType();
+  }
+
+  /**
+   * The file input node is restricted to only accept images or pdf files.
+   * When further types should be accpeted. This function needs to be adjusted
+   * accordingly.
+   *
+   */
+  checkFileType() {
+    if (this.fileToUpload.type === 'application/pdf') {
+      this.toggleThumbnail('assets/img/pdf.png');
+    } else {
+      let src = URL.createObjectURL(this.fileToUpload);
+      this.toggleThumbnail(src);
+    }
   }
 
   toggleThumbnail(src?: string) {
     let thumbnail = document.getElementById('filePreview')!;
-
     src
       ? thumbnail.setAttribute('src', src)
       : thumbnail.setAttribute('src', '');

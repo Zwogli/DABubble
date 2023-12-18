@@ -9,7 +9,12 @@
     [ngClass]="fileToUpload ? 'd-block' : 'd-none'"
     class="file-upload__wrapper"
   >
-    <button (click)="cancelUpload()" mat-mini-fab color="warn" class="file-upload__cancel-btn">
+    <button
+      (click)="cancelUpload()"
+      mat-mini-fab
+      color="warn"
+      class="file-upload__cancel-btn"
+    >
       <mat-icon>close</mat-icon>
     </button>
     <img
@@ -30,6 +35,7 @@
         <input
           type="file"
           name=""
+          accept="image/*,.pdf"
           id="fileUpload"
           (change)="onFileChange($event)"
         />
