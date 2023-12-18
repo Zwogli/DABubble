@@ -5,12 +5,20 @@
     placeholder="Nachricht an #Placeholder"
   >
   </textarea>
-  <img
-    src=""
-    id="filePreview"
-    [ngClass]="fileToUpload ? 'file__thumbnail' : ''"
-    alt=""
-  />
+  <div
+    [ngClass]="fileToUpload ? 'd-block' : 'd-none'"
+    class="file-upload__wrapper"
+  >
+    <button (click)="cancelUpload()" mat-mini-fab color="warn" class="file-upload__cancel-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+    <img
+      src=""
+      id="filePreview"
+      [ngClass]="fileToUpload ? 'file-upload__thumbnail' : ''"
+      alt=""
+    />
+  </div>
 
   <div class="message-input__btn-container">
     <div class="btn-container__extra-btn-wrapper">

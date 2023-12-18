@@ -36,6 +36,7 @@ export class MessageInputComponent {
       this.fileToUpload
     );
     this.msgPayload = '';
+    this.fileToUpload = '';
     this.toggleThumbnail();
     this.checkParentType();
   }
@@ -79,5 +80,12 @@ export class MessageInputComponent {
     src
       ? thumbnail.setAttribute('src', src)
       : thumbnail.setAttribute('src', '');
+  }
+
+  cancelUpload() {
+    let input = <HTMLInputElement>document.getElementById('fileUpload');
+    input.value = '';
+    this.fileToUpload = '';
+    this.toggleThumbnail();
   }
 }

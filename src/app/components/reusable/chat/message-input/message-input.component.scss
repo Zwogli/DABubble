@@ -6,12 +6,27 @@
     display: none;
 }
 
-.file__thumbnail {
+.file-upload__wrapper {
+    position: relative;
+    width: fit-content;
+}
+
+.file-upload__thumbnail {
     height: 60px;
     width: 60px;
     border-radius: 8px;
     object-fit: cover;
-   box-shadow: 0 0 10px 2px rgba($color: #000000, $alpha: 0.3) ;
+    box-shadow: 0 0 10px 2px rgba($color: #000000, $alpha: 0.3);
+}
+
+.file-upload__cancel-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+
+    width: 24px;
+    height: 24px;
 }
 
 .message__input {
