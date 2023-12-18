@@ -6,15 +6,18 @@
     display: none;
 }
 
+.file__thumbnail {
+    height: 60px;
+    width: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+   box-shadow: 0 0 10px 2px rgba($color: #000000, $alpha: 0.3) ;
+}
+
 .message__input {
     display: flex;
     flex-direction: column;
     gap: 5px;
-
-    // position: fixed;
-    // bottom: 30px;
-    // left: 16px;
-    // right: 16px;
 
     padding: 20px;
 

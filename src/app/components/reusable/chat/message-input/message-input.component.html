@@ -5,7 +5,12 @@
     placeholder="Nachricht an #Placeholder"
   >
   </textarea>
-  <img src="" id="filePreview" alt="">
+  <img
+    src=""
+    id="filePreview"
+    [ngClass]="fileToUpload ? 'file__thumbnail' : ''"
+    alt=""
+  />
 
   <div class="message-input__btn-container">
     <div class="btn-container__extra-btn-wrapper">
