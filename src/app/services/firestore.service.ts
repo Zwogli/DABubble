@@ -310,6 +310,27 @@ export class FirestoreService {
     });
   }
 
+  getDefaultChannel() {
+    return doc(collection(this.firestore, 'channels'), 'vIGUW5jmoxQQaKOf9AkD');
+  }
+
+  async updateChannelMember(id:string) {
+    const unsubscribe = onSnapshot(this.getDefaultChannel(), ((list) => {
+      let defautlChannel: any = list.data();
+      defautlChannel['member'].push(id);
+      this.addMemberToDefaultChannel(defautlChannel);
+      unsubscribe();
+    }));
+  }
+
+  addMemberToDefaultChannel(defautlChannel: any) {
+     updateDoc(this.getDefaultChannel(), {
+      member: defautlChannel.member
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
   async setGetColl(){
     const collRef = collection(this.firestore, "user");
     return await getDocs(collRef);
