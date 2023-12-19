@@ -12,12 +12,12 @@
 
       <div class="block__input">
         <mat-icon class="material-icons-outlined mail-icon">person</mat-icon>
-        <input value="{{ this.firestoreService.currentUserData.name }}" placeholder="Name und Nachname" #userName>
+        <input value="{{ this.firestoreService.currentUserData.name }}" disabled placeholder="Name und Nachname" #userName>
       </div>
 
       <div class="block__input">
         <mat-icon class="material-icons-outlined mail-icon">mail</mat-icon>
-        <input type="email" value="{{ this.firestoreService.currentUserData.email }}" placeholder="beispielname@email.com" #userEmail>
+        <input type="email" value="{{ this.firestoreService.currentUserData.email }}" disabled placeholder="beispielname@email.com" #userEmail>
       </div>
 
       <div class="block__input">
