@@ -1,5 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { Storage, ref, uploadBytesResumable } from '@angular/fire/storage';
+import {
+  Storage,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -9,21 +14,35 @@ export class StorageService {
 
   constructor() {}
 
-  uploadFile(input: HTMLInputElement, chatRecordId: string, msgId: string) {
-    if (!input.files) return;
-
-    const files: FileList = input.files;
-
-    for (let i = 0; i < files.length; i++) {
-      const file = files.item(i);
-      if (file) {
-        const storageRef = ref(
-          this.storage,
-          `${chatRecordId}/${msgId}/${file.name}`
-        );
-        uploadBytesResumable(storageRef, file);
-        console.log('Uploaded: ', file);
+  /**
+   * This functions uploads the given file to the cloud storage in a directory that 
+   * can be referenced to the exact message document in the Firestore via the chatRecord
+   * Id. It then gets the needed Url to "download"/show the file in the template and
+   * stores it in the Message class.
+   * 
+   * @param input - Given file to be uploaded
+   * @param chatRecordId - Document ID for the chatRecord in Firestore 
+   * @param msgId - Document ID of the a message in Firestore
+   * @returns String with the url to the file in the Cloud Storage
+   */
+  async uploadFile(
+    input: HTMLInputElement,
+    chatRecordId: string,
+    msgId: string
+  ) {
+    if (!input.files) return '';
+    const file: File = input.files[0];
+    if (file) {
+      const url = `${chatRecordId}/${msgId}/${file.name}`;
+      const storageRef = ref(this.storage, url);
+      try {
+        await uploadBytesResumable(storageRef, file);
+        const downloadUrl = await getDownloadURL(ref(this.storage, url));
+        return downloadUrl;
+      } catch (error) {
+        return '';
       }
     }
+    return '';
   }
 }

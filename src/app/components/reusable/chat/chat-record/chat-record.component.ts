@@ -14,6 +14,7 @@ import { chatTypes } from 'src/app/interfaces/chats/types';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
 import { ChatService } from 'src/app/services/chat.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-chat-record',
@@ -31,11 +32,13 @@ export class ChatRecordComponent
   public selectedMsg!: Message | null;
   public today: Date = new Date();
   public chatRecord!: Message[];
+  public fileURL!: string;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
   constructor(
     private chatService: ChatService,
+    private storageService: StorageService,
     private changeDetector: ChangeDetectorRef,
     private route: ActivatedRoute
   ) {

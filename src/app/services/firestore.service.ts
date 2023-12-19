@@ -210,8 +210,11 @@ export class FirestoreService {
     );
 
     if (fileToUpload) {
-      data.file = `${docId}/${newMsgRef.id}`;
-      this.storageService.uploadFile(fileToUpload, docId, newMsgRef.id);
+      data.file = await this.storageService.uploadFile(
+        fileToUpload,
+        docId,
+        newMsgRef.id
+      );
     }
 
     await setDoc(newMsgRef, this.getCleanJson(data, newMsgRef));
