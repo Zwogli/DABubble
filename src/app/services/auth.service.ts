@@ -91,6 +91,8 @@ export class AuthService {
     this.googleAccount = true;
     await this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [user?.uid], ['vIGUW5jmoxQQaKOf9AkD'], user?.uid);
     await this.firestoreService.addPrivateChat(user?.uid);
+    await this.firestoreService.updateChannelMember(user?.uid);
+
     this.router.navigate(['home']);
   }
 
@@ -151,7 +153,6 @@ export class AuthService {
   getCurrentUser() {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
-        console.log('Current User wurde geladen', user);
         await this.firestoreService.checkSignUpEmail(user?.email);
         this.currentUserId = this.firestoreService.currentUserId;
         this.firestoreService.startSubUser(this.currentUserId);
@@ -190,6 +191,7 @@ export class AuthService {
       } else {
         this.googleAccount = false;
         docId = user?.uid;
+        this.firestoreService.updateChannelMember(docId);
         this.router.navigate(['home']);
       }
       if (activePrivateChats == 0) {
