@@ -17,7 +17,10 @@ export class StorageService {
     for (let i = 0; i < files.length; i++) {
       const file = files.item(i);
       if (file) {
-        const storageRef = ref(this.storage, `${chatRecordId}/${msgId}/${file.name}`);
+        const storageRef = ref(
+          this.storage,
+          `${chatRecordId}/${msgId}/${file.name}`
+        );
         uploadBytesResumable(storageRef, file);
         console.log('Uploaded: ', file);
       }

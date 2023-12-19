@@ -1,5 +1,3 @@
-import { serverTimestamp } from "@angular/fire/firestore";
-
 export class Message {
   id: string;
   message: string;
@@ -7,6 +5,7 @@ export class Message {
   sentByName: string;
   sentByPhotoUrl: string;
   sentAt: any;
+  file: string;
   thread: {
     id: string;
     length: number;
@@ -24,6 +23,7 @@ export class Message {
     this.sentByName = data.sentByName || '';
     this.sentByPhotoUrl = data.sentByPhotoUrl || '';
     this.sentAt = '';
+    this.file = '';
     this.thread = {
       id: '',
       length: 0,

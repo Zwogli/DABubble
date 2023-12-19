@@ -210,6 +210,7 @@ export class FirestoreService {
     );
 
     if (fileToUpload) {
+      data.file = `${docId}/${newMsgRef.id}`;
       this.storageService.uploadFile(fileToUpload, docId, newMsgRef.id);
     }
 
@@ -431,6 +432,7 @@ export class FirestoreService {
     return {
       id: doc.id,
       message: data.message,
+      file: data.file,
       sentById: data.sentById,
       sentByName: data.sentByName,
       sentByPhotoUrl: data.sentByPhotoUrl,

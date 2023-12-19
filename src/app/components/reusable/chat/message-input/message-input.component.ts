@@ -29,7 +29,7 @@ export class MessageInputComponent {
    */
   sendMessage() {
     if (!this.msgPayload) return;
-    const data = new Message(this.setMsgData());
+    const data = new Message(this.setMsgData());    
     this.fireService.addMessage(
       this.currentChatRecordId,
       data,
@@ -69,7 +69,7 @@ export class MessageInputComponent {
    * @param event - File input from HTML Node
    */
   onFileChange(event: any) {
-    this.fileToUpload = event.target.files[0];
+    this.fileToUpload = event.target;
     this.checkFileType();
   }
 
@@ -83,7 +83,7 @@ export class MessageInputComponent {
     if (this.fileToUpload.type === 'application/pdf') {
       this.toggleThumbnail('assets/img/pdf.png');
     } else {
-      let src = URL.createObjectURL(this.fileToUpload);
+      let src = URL.createObjectURL(this.fileToUpload.files[0]);
       this.toggleThumbnail(src);
     }
   }
