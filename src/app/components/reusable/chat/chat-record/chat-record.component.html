@@ -1,7 +1,4 @@
-<section
-  class="chat__container"
-  *ngIf="chatRecord"
->
+<section class="chat__container" *ngIf="chatRecord">
   <div
     *ngFor="let message of chatRecord; index as i"
     class="message__wrapper"
@@ -58,9 +55,12 @@
           >
         </div>
 
-        <p class="message__content">
-          {{ message.message }}
-        </p>
+        <div class="message__content-wrapper">
+          <img *ngIf="message.file" src="" alt="">
+          <p class="message__content">
+            {{ message.message }}
+          </p>
+        </div>
 
         <div *ngIf="message.thread.length > 0" class="message__footer">
           <span

@@ -30,6 +30,10 @@ main {
         flex-direction: row-reverse;
     }
 
+    .message__content-wrapper {
+        justify-content: flex-end;
+    }
+
     .message__content {
         background-color: var(--color-blue-primary-hover) !important;
         color: white;
@@ -99,6 +103,10 @@ main {
             font-size: 14px;
             color: var(--gray-text);
         }
+    }
+
+    .message__content-wrapper {
+        display: flex;
     }
 
     .message__content {

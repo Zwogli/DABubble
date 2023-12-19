@@ -1,8 +1,10 @@
 import {
+  AfterViewChecked,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -18,7 +20,9 @@ import { ChatService } from 'src/app/services/chat.service';
   templateUrl: './chat-record.component.html',
   styleUrls: ['./chat-record.component.scss'],
 })
-export class ChatRecordComponent implements OnInit {
+export class ChatRecordComponent
+  implements OnInit, OnDestroy, AfterViewChecked
+{
   @Input() chatRecordId!: string;
   @Input() currentUser!: User;
   @Input() parentType!: chatTypes;
