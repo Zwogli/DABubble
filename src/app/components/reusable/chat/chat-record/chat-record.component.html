@@ -55,9 +55,9 @@
           >
         </div>
 
-        <div class="message__content-wrapper">
-          <p class="message__content">
-            <img *ngIf="message.file" [src]="message.file" alt="" />
+        <div class="message__content-wrapper ">
+          <img *ngIf="message.file" [src]="message.file" alt="" />
+          <p class="">
             {{ message.message }}
           </p>
         </div>
