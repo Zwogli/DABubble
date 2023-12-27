@@ -63,3 +63,13 @@
         }
     }
 }
+
+.file-upload__container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-upload__file-name {
+    font-weight: bold;
+}

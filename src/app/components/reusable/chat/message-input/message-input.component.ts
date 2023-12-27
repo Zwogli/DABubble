@@ -3,7 +3,6 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/models/message.class';
 import { chatTypes } from 'src/app/interfaces/chats/types';
 import { ChatService } from 'src/app/services/chat.service';
-import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-message-input',
@@ -29,7 +28,7 @@ export class MessageInputComponent {
    */
   sendMessage() {
     if (!this.msgPayload) return;
-    const data = new Message(this.setMsgData());    
+    const data = new Message(this.setMsgData());
     this.fireService.addMessage(
       this.currentChatRecordId,
       data,
@@ -38,6 +37,7 @@ export class MessageInputComponent {
     this.msgPayload = '';
     this.fileToUpload = '';
     this.toggleThumbnail();
+    this.toggleFileName();
     this.checkParentType();
   }
 
@@ -80,10 +80,13 @@ export class MessageInputComponent {
    *
    */
   checkFileType() {
-    if (this.fileToUpload.type === 'application/pdf') {
+    const file = this.fileToUpload.files[0];
+
+    if (file.type === 'application/pdf') {
       this.toggleThumbnail('assets/img/pdf.png');
+      this.toggleFileName(file.name);
     } else {
-      let src = URL.createObjectURL(this.fileToUpload.files[0]);
+      let src = URL.createObjectURL(file);
       this.toggleThumbnail(src);
     }
   }
@@ -95,10 +98,16 @@ export class MessageInputComponent {
       : thumbnail.setAttribute('src', '');
   }
 
+  toggleFileName(name?: string) {
+    let fileName = document.getElementById('fileName')!;
+    name ? (fileName.innerHTML = name) : (fileName.innerHTML = '');
+  }
+
   cancelUpload() {
     let input = <HTMLInputElement>document.getElementById('fileUpload');
     input.value = '';
     this.fileToUpload = '';
     this.toggleThumbnail();
+    this.toggleFileName();
   }
 }
