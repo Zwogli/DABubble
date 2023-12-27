@@ -10,26 +10,34 @@ import { ChatService } from 'src/app/services/chat.service';
   styleUrls: ['./message-input.component.scss'],
 })
 export class MessageInputComponent {
-  public msgPayload!: string;
-  @Input() currentChatId!: string;
+  @Input() currentChatRecordId!: string;
   @Input() parentChat!: chatTypes;
+  public msgPayload!: string;
+  public fileToUpload!: any;
 
   constructor(
     private fireService: FirestoreService,
     private chatService: ChatService
   ) {}
 
-
   /**
    * Sends the message to the corresponding chatRecord and checks if
    * the given chatRecord is for a thread or not. If so, the meta data
    * for the thread gets updated accordingly.
-   * 
+   *
    */
   sendMessage() {
+    if (!this.msgPayload) return;
     const data = new Message(this.setMsgData());
-    this.fireService.addMessage(this.currentChatId, data);
+    this.fireService.addMessage(
+      this.currentChatRecordId,
+      data,
+      this.fileToUpload
+    );
     this.msgPayload = '';
+    this.fileToUpload = '';
+    this.toggleThumbnail();
+    this.toggleFileName();
     this.checkParentType();
   }
 
@@ -47,5 +55,59 @@ export class MessageInputComponent {
     if (this.parentChat === 'thread') {
       this.chatService.updateThreadMetaData();
     }
+  }
+
+  openFileUpload() {
+    document.getElementById('fileUpload')?.click();
+  }
+
+  /**
+   * This function gets triggered when a file is selected via the
+   * html file input. Then sets a preview of the file to show in
+   * the text message field. Just allows one attached file.
+   *
+   * @param event - File input from HTML Node
+   */
+  onFileChange(event: any) {
+    this.fileToUpload = event.target;
+    this.checkFileType();
+  }
+
+  /**
+   * The file input node is restricted to only accept images or pdf files.
+   * When further types should be accpeted. This function needs to be adjusted
+   * accordingly.
+   *
+   */
+  checkFileType() {
+    const file = this.fileToUpload.files[0];
+
+    if (file.type === 'application/pdf') {
+      this.toggleThumbnail('assets/img/pdf.png');
+      this.toggleFileName(file.name);
+    } else {
+      let src = URL.createObjectURL(file);
+      this.toggleThumbnail(src);
+    }
+  }
+
+  toggleThumbnail(src?: string) {
+    let thumbnail = document.getElementById('filePreview')!;
+    src
+      ? thumbnail.setAttribute('src', src)
+      : thumbnail.setAttribute('src', '');
+  }
+
+  toggleFileName(name?: string) {
+    let fileName = document.getElementById('fileName')!;
+    name ? (fileName.innerHTML = name) : (fileName.innerHTML = '');
+  }
+
+  cancelUpload() {
+    let input = <HTMLInputElement>document.getElementById('fileUpload');
+    input.value = '';
+    this.fileToUpload = '';
+    this.toggleThumbnail();
+    this.toggleFileName();
   }
 }

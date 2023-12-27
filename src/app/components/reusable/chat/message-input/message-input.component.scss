@@ -2,15 +2,37 @@
     margin: auto 16px 30px 16px;
 }
 
+#fileUpload {
+    display: none;
+}
+
+.file-upload__wrapper {
+    position: relative;
+    width: fit-content;
+}
+
+.file-upload__thumbnail {
+    height: 60px;
+    width: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 0 10px 2px rgba($color: #000000, $alpha: 0.3);
+}
+
+.file-upload__cancel-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+
+    width: 24px;
+    height: 24px;
+}
+
 .message__input {
     display: flex;
     flex-direction: column;
     gap: 5px;
-
-    // position: fixed;
-    // bottom: 30px;
-    // left: 16px;
-    // right: 16px;
 
     padding: 20px;
 
@@ -40,4 +62,14 @@
             gap: 5px;
         }
     }
+}
+
+.file-upload__container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-upload__file-name {
+    font-weight: bold;
 }
