@@ -64,11 +64,11 @@
             "
           ></div>
           <ng-template #isPicture>
-            <img [src]="message.file.url" alt="Picture send from a user" />
+            <img (click)="loadFile(message.file.url)" [src]="message.file.url" alt="Picture send from a user" />
           </ng-template>
           <ng-template #isPDF>
             <div class="message__file-wrapper-pdf" *ngIf="message.file.type">
-              <img src="assets/img/pdf.png" alt="Logo of PDF" />
+              <img (click)="loadFile(message.file.url)" src="assets/img/pdf.png" alt="Logo of PDF" />
               <span>{{ message.file.name }}</span>
             </div>
           </ng-template>

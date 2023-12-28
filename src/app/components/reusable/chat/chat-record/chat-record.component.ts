@@ -64,7 +64,9 @@ export class ChatRecordComponent
 
   ngAfterViewChecked() {
     // Prevents initial scroll-state on chat div to throw err
-    this.changeDetector.detectChanges();
+    setTimeout(() => {
+      this.changeDetector.detectChanges();
+    }, 500);
   }
 
   loadChatRecord() {
@@ -116,5 +118,9 @@ export class ChatRecordComponent
     } else {
       return false;
     }
+  }
+
+  loadFile(url: string) {
+    window.open(url, '_blank');
   }
 }
