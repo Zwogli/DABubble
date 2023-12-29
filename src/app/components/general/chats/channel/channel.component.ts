@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  Subject,
-  takeUntil,
-} from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
@@ -19,6 +16,7 @@ export class ChannelComponent implements OnInit {
   public currentUser!: User;
   public currentChannel!: Channel;
   public chatRecordId!: string;
+  private catchAttempts: number = 0;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
@@ -28,7 +26,7 @@ export class ChannelComponent implements OnInit {
     private chatService: ChatService
   ) {
     this.setCurrentUser();
-    this.setChatRecordId();
+    this.setChatRecordId('channels');
   }
 
   ngOnInit() {}
@@ -38,15 +36,33 @@ export class ChannelComponent implements OnInit {
     this.componentIsDestroyed$.complete();
   }
 
-  async setChatRecordId() {
+  /**
+   * This function gets the url channel id of wether a channel or private chat
+   * and searches for the corresponding document id of the chatRecord. On first
+   * attempt it searches through the channels and then through the private Chats.
+   *
+   * @param colId - String literal to define in which collection in the Firestore
+   *                the document should be searched for
+   */
+  async setChatRecordId(colId: 'channels' | 'privateChat') {
     const channelId = this.route.snapshot.paramMap.get('channelId');
     if (channelId) {
       await this.fireService
-        .getSingleDoc('channels', channelId)
+        .getSingleDoc(colId, channelId)
         .then((doc: any) => {
-          this.chatRecordId = doc.chatRecord;
-          this.currentChannel = doc;
-          this.chatService.setChatRecordId(doc.chatRecord);
+          if (doc.chatRecord) {
+            this.chatRecordId = doc.chatRecord;
+            this.currentChannel = doc;
+            this.chatService.setChatRecordId(doc.chatRecord);
+          } else {
+            console.log('Document holds no chatRecord id to reference to!');
+          }
+        })
+        .catch(() => {
+          if (this.catchAttempts === 0) {
+            this.catchAttempts++;
+            this.setChatRecordId('privateChat');
+          }
         });
     }
   }

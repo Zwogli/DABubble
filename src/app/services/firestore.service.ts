@@ -88,6 +88,7 @@ export class FirestoreService {
   async getSingleDoc(colId: string, docId: string) {
     const docSnap = await getDoc(doc(this.firestore, colId, docId));
     if (docSnap.exists()) {
+      console.log('Document found');
       return docSnap.data();
     } else {
       console.log('No such document found!');
@@ -335,25 +336,25 @@ export class FirestoreService {
     return doc(collection(this.firestore, 'channels'), 'vIGUW5jmoxQQaKOf9AkD');
   }
 
-  async updateChannelMember(id:string) {
-    const unsubscribe = onSnapshot(this.getDefaultChannel(), ((list) => {
+  async updateChannelMember(id: string) {
+    const unsubscribe = onSnapshot(this.getDefaultChannel(), (list) => {
       let defautlChannel: any = list.data();
       defautlChannel['member'].push(id);
       this.addMemberToDefaultChannel(defautlChannel);
       unsubscribe();
-    }));
+    });
   }
 
   addMemberToDefaultChannel(defautlChannel: any) {
-     updateDoc(this.getDefaultChannel(), {
-      member: defautlChannel.member
+    updateDoc(this.getDefaultChannel(), {
+      member: defautlChannel.member,
     }).catch((err) => {
       console.log(err);
-    })
+    });
   }
 
-  async setGetColl(){
-    const collRef = collection(this.firestore, "user");
+  async setGetColl() {
+    const collRef = collection(this.firestore, 'user');
     return await getDocs(collRef);
   }
 
