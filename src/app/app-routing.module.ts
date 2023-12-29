@@ -21,8 +21,7 @@ const routes: Routes = [
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   { path: 'home', component: NavbarComponent },
   { path: 'home/addChannel', component: CreateChannelComponent },
-  { path: 'home/channel/:channelId', component: ChannelComponent },
-  { path: 'home/private/:channelId', component: ChannelComponent },
+  { path: 'home/:type/:channelId', component: ChannelComponent },
   { path: 'thread/:msgId/:channelId', component: ThreadComponent },
 ];
 

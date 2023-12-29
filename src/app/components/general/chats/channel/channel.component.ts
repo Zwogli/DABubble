@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { chatTypes } from 'src/app/interfaces/chats/types';
 import { Channel } from 'src/app/models/channel.class';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
@@ -52,7 +53,7 @@ export class ChannelComponent implements OnInit {
         .then((doc: any) => {
           if (doc.chatRecord) {
             this.chatRecordId = doc.chatRecord;
-            this.currentChannel = doc;
+            this.currentChannel = doc;           
             this.chatService.setChatRecordId(doc.chatRecord);
           } else {
             console.log('Document holds no chatRecord id to reference to!');
