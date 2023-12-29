@@ -1,4 +1,4 @@
-import { Injectable, OnInit, inject } from '@angular/core';
+import { Injectable, OnDestroy, OnInit, inject } from '@angular/core';
 import { Message } from '../models/message.class';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -24,7 +24,7 @@ import { Unsubscribe } from '@angular/fire/auth';
 @Injectable({
   providedIn: 'root',
 })
-export class ChatService implements OnInit {
+export class ChatService implements OnInit, OnDestroy {
   firestore: Firestore = inject(Firestore);
 
   public leadingThreadMsg!: any;
@@ -146,7 +146,7 @@ export class ChatService implements OnInit {
   }
 
   /**
-   * This function creates a new chatRecord and takes several params 
+   * This function creates a new chatRecord and takes several params
    * to determine where the reference of the new chatRecord needs to
    * be stored
    *
@@ -270,5 +270,9 @@ export class ChatService implements OnInit {
     });
 
     this.setLeadingMsg(this.leadingThreadMsg.id, this.threadParentChatRecordId);
+  }
+
+  openFile(url: string) {
+    window.open(url, '_blank');
   }
 }

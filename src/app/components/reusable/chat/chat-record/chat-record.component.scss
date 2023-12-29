@@ -24,15 +24,3 @@
 
     background-color: var(--color-blue-border);
 }
-
-.message__content-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.message__file-wrapper-pdf {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}

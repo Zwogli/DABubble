@@ -121,6 +121,6 @@ export class ChatRecordComponent
   }
 
   loadFile(url: string) {
-    window.open(url, '_blank');
+    this.chatService.openFile(url);
   }
 }

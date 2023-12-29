@@ -93,4 +93,8 @@ export class ThreadComponent implements OnInit {
         this.leadingMsg = msg;
       });
   }
+
+  loadFile(url: string) {
+    this.chatService.openFile(url);
+  }
 }
