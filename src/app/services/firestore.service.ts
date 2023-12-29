@@ -266,6 +266,7 @@ export class FirestoreService {
       chatBetween: [uId],
       chatRecord: '',
     });
+    this.chatService.createNewChatRecord('private', uId);
   }
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create new channel
