@@ -160,7 +160,9 @@ export class ChatService implements OnInit, OnDestroy {
     chatRecordId?: string
   ) {
     const newChatRecordRef = doc(collection(this.firestore, 'chatRecords'));
-    await setDoc(newChatRecordRef, {});
+    await setDoc(newChatRecordRef, {
+      type: hostType,
+    });
 
     switch (hostType) {
       case 'channel':
@@ -233,7 +235,7 @@ export class ChatService implements OnInit, OnDestroy {
         this.leadingThreadMsg.id
       );
     }
-    this.router.navigate(['/home/', this.channelId]);
+    this.router.navigate(['/home/channel/', this.channelId]);
   }
 
   setChatRecordId(chatRecordId: string) {

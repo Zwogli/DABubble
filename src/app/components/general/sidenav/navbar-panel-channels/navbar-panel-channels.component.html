@@ -32,7 +32,7 @@
 					elements for expansion-panel
 				-->
 				<div *ngFor="let channel of memberInChannelsArray" class="fix--space-left sort__elemts--row cursor__add">
-					<p [routerLink]="'/home/'+channel.id"> # {{ channel.name }} </p>
+					<p [routerLink]="'/home/channel/'+channel.id"> # {{ channel.name }} </p>
 				</div>
 				
 				<!-- 
