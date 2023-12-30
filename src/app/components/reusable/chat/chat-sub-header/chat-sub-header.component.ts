@@ -56,10 +56,10 @@ export class ChatSubHeaderComponent implements OnInit, OnDestroy {
     this.chatService
       .getUserDataFromPrivateChat(channelId)
       .then((privateChat: DocumentData | undefined) => {
-        if (privateChat && this.currentUser) {
+        if (privateChat) {
           // Private Chat Document exists
           const chatBetween: string[] = privateChat['chatBetween'];
-          if (privateChat['id'] === this.currentUser.id) {
+          if (this.currentUser && privateChat['id'] === this.currentUser.id) {
             // Private Chat with yourself
             this.privateChatOpponentUser = this.currentUser;
             this.setAvatarConfigData();
