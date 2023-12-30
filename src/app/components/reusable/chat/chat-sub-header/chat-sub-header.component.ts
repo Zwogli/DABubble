@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Channel } from 'src/app/models/channel.class';
 import { ChatService } from 'src/app/services/chat.service';
-import { chatTypes } from 'src/app/interfaces/chats/types';
+import { AvatarConfig, chatTypes } from 'src/app/interfaces/chats/types';
 import { ActivatedRoute } from '@angular/router';
 import { DocumentData } from '@angular/fire/firestore';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -20,6 +20,7 @@ export class ChatSubHeaderComponent implements OnInit, OnDestroy {
   private currentUser!: User;
   public privateChatOpponentUser!: User;
   private componentIsDestroyed$ = new Subject<boolean>();
+  public privateChatAvatarConfig!: AvatarConfig;
 
   constructor(
     private chatService: ChatService,
@@ -55,13 +56,14 @@ export class ChatSubHeaderComponent implements OnInit, OnDestroy {
     this.chatService
       .getUserDataFromPrivateChat(channelId)
       .then((privateChat: DocumentData | undefined) => {
-        if (privateChat) {
+        if (privateChat && this.currentUser) {
           console.log('Private Chat found', privateChat);
 
           const chatBetween: string[] = privateChat['chatBetween'];
           if (privateChat['id'] === this.currentUser.id) {
             console.log('Private Chat with yourself');
             this.privateChatOpponentUser = this.currentUser;
+            this.setAvatarConfigData();
           } else {
             console.log('Private chat with someone else');
             const currentUserIndex = chatBetween.indexOf(this.currentUser.id);
@@ -71,12 +73,20 @@ export class ChatSubHeaderComponent implements OnInit, OnDestroy {
               .then((user: User | undefined) => {
                 if (user) {
                   this.privateChatOpponentUser = user;
+                  this.setAvatarConfigData();
                   console.log(this.privateChatOpponentUser);
                 }
               });
           }
         }
       });
+  }
+
+  setAvatarConfigData() {
+    this.privateChatAvatarConfig = {
+      user: this.privateChatOpponentUser,
+      showStatus: true,
+    };
   }
 
   navigateBack(): void {

@@ -1,0 +1,11 @@
+<div *ngIf="data.user" class="user__container--avatar">
+  <img
+    class="avatar-small"
+    [src]="data.user.photoUrl"
+    alt="Avatar of {{ data.user.name }}"
+  />
+  <span
+    *ngIf="data.showStatus"
+    class="onlinestatus onlinestatus--color-{{ data.user.onlineStatus }}"
+  ></span>
+</div>

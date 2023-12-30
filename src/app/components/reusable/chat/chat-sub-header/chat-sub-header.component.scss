@@ -5,6 +5,10 @@
     box-shadow: var(--shadow-subheader);
     padding: 10px 16px;
 
+    .private-header {
+        gap: 16px;
+    }
+
     button {
         height: 34px;
         width: 34px;

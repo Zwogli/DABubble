@@ -48,6 +48,7 @@ import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dia
 
 import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat-record.component';
 import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
+import { AvatarDisplayComponent } from './components/reusable/avatar-display/avatar-display.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-
     ChatSubHeaderComponent,
     ChatRecordComponent,
     SignInMergeAccountsComponent,
+    AvatarDisplayComponent,
   ],
 
   imports: [

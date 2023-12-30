@@ -32,8 +32,13 @@
 
 <!-- PRIVATE subheader -->
 <div *ngIf="mainType === 'private'" class="sub-header">
-  <div class="sub-header__title">
-    <span class="title__main"></span>
-    <span class="title__sub"></span>
+  <div class="sub-header__title private-header">
+    <app-avatar-display
+      *ngIf="privateChatAvatarConfig"
+      [data]="privateChatAvatarConfig"
+    ></app-avatar-display>
+    <span *ngIf="privateChatOpponentUser" class="title__main">{{
+      privateChatOpponentUser.name
+    }}</span>
   </div>
 </div>
