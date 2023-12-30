@@ -27,6 +27,8 @@ export class ChatRecordComponent
   @Input() currentUser!: User;
   @Input() parentType!: chatTypes;
   @Output('startThread') startThread: EventEmitter<any> = new EventEmitter();
+  @Output('chatRecordLength') chatRecordLength: EventEmitter<number> =
+    new EventEmitter();
 
   public selectedMsg!: Message | null;
   public today: Date = new Date();
@@ -76,6 +78,7 @@ export class ChatRecordComponent
         .pipe(takeUntil(this.componentIsDestroyed$))
         .subscribe((chat: Message[]) => {
           this.chatRecord = chat;
+          this.checkChatRecordLength();
         });
     } else {
       this.chatService.startSubChat(this.chatRecordId);
@@ -83,8 +86,13 @@ export class ChatRecordComponent
         .pipe(takeUntil(this.componentIsDestroyed$))
         .subscribe((chat: Message[]) => {
           this.chatRecord = chat;
+          this.checkChatRecordLength();
         });
     }
+  }
+
+  checkChatRecordLength() {
+    this.chatRecordLength.emit(this.chatRecord.length);
   }
 
   openThread(msg: Message, event: any) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
@@ -12,12 +12,12 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   templateUrl: './channel.component.html',
   styleUrls: ['./channel.component.scss'],
 })
-export class ChannelComponent implements OnInit {
+export class ChannelComponent implements OnInit, OnDestroy {
   public currentUser!: User;
   public currentChannel!: Channel;
   public chatRecordId!: string;
   private catchAttempts: number = 0;
-
+  public chatRecordLength!: number;
   private componentIsDestroyed$ = new Subject<boolean>();
 
   constructor(
@@ -52,7 +52,7 @@ export class ChannelComponent implements OnInit {
         .then((doc: any) => {
           if (doc.chatRecord) {
             this.chatRecordId = doc.chatRecord;
-            this.currentChannel = doc;           
+            this.currentChannel = doc;
             this.chatService.setChatRecordId(doc.chatRecord);
           } else {
             console.log('Document holds no chatRecord id to reference to!');
@@ -81,5 +81,9 @@ export class ChannelComponent implements OnInit {
       this.currentChannel.id,
       this.currentChannel.chatRecord
     );
+  }
+
+  setChatRecordLength(length: number) {
+    this.chatRecordLength = length;
   }
 }

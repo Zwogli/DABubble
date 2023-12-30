@@ -1,15 +1,15 @@
 <app-header-mobile [parent]="'chat'"></app-header-mobile>
 
-<app-chat-sub-header
-  [channel]="currentChannel"
-></app-chat-sub-header>
+<app-chat-sub-header [channel]="currentChannel"></app-chat-sub-header>
 
 <main #chatContainer [scrollTop]="chatContainer.scrollHeight">
   <app-chat-record
     (startThread)="startThread($event)"
+    (chatRecordLength)="setChatRecordLength($event)"
     [chatRecordId]="chatRecordId"
     [currentUser]="currentUser"
   ></app-chat-record>
+  <div *ngIf="chatRecordLength === 0"></div>
 </main>
 
 <app-message-input
