@@ -37,8 +37,9 @@
       *ngIf="privateChatAvatarConfig"
       [data]="privateChatAvatarConfig"
     ></app-avatar-display>
-    <span *ngIf="privateChatOpponentUser" class="title__main">{{
-      privateChatOpponentUser.name
-    }}</span>
+    <span *ngIf="privateChatOpponentUser" class="title__main"
+      >{{ privateChatOpponentUser.name }}
+      <span *ngIf="currentUser.id === privateChatOpponentUser.id">(Du)</span>
+    </span>
   </div>
 </div>

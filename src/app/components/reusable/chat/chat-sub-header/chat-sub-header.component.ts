@@ -16,10 +16,10 @@ import { User } from 'src/app/models/user.class';
 export class ChatSubHeaderComponent implements OnInit, OnDestroy {
   @Input() type!: chatTypes;
   @Input() channel!: Channel;
-  public mainType: string;
-  private currentUser!: User;
-  public privateChatOpponentUser!: User;
   private componentIsDestroyed$ = new Subject<boolean>();
+  public mainType: string;
+  public currentUser!: User;
+  public privateChatOpponentUser!: User;
   public privateChatAvatarConfig!: AvatarConfig;
 
   constructor(
@@ -57,15 +57,14 @@ export class ChatSubHeaderComponent implements OnInit, OnDestroy {
       .getUserDataFromPrivateChat(channelId)
       .then((privateChat: DocumentData | undefined) => {
         if (privateChat && this.currentUser) {
-          console.log('Private Chat found', privateChat);
-
+          // Private Chat Document exists
           const chatBetween: string[] = privateChat['chatBetween'];
           if (privateChat['id'] === this.currentUser.id) {
-            console.log('Private Chat with yourself');
+            // Private Chat with yourself
             this.privateChatOpponentUser = this.currentUser;
             this.setAvatarConfigData();
           } else {
-            console.log('Private chat with someone else');
+            // Private Chat with another User
             const currentUserIndex = chatBetween.indexOf(this.currentUser.id);
             chatBetween.splice(currentUserIndex, 1);
             this.fireService
@@ -74,7 +73,6 @@ export class ChatSubHeaderComponent implements OnInit, OnDestroy {
                 if (user) {
                   this.privateChatOpponentUser = user;
                   this.setAvatarConfigData();
-                  console.log(this.privateChatOpponentUser);
                 }
               });
           }
