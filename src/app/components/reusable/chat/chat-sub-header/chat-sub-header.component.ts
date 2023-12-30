@@ -51,6 +51,14 @@ export class ChatSubHeaderComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * This function only gets triggerd when the chat-sub-header is set for a private-chat.
+   * This gets determined by the URL Type. Then it gets the doc id of the private chat
+   * from the channelId in the URL and looks for the other User the chat is meant to be with.
+   * Validates if its the own Chat or with another user and proceeds to set the corresponding
+   * Chat partner in the privateChatOpponentUser variable.
+   *
+   */
   setChatPartner() {
     const channelId: string = this.route.snapshot.paramMap.get('channelId')!;
     this.chatService
@@ -80,6 +88,10 @@ export class ChatSubHeaderComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Mandatory to load the correct Avatar
+   *
+   */
   setAvatarConfigData() {
     this.privateChatAvatarConfig = {
       user: this.privateChatOpponentUser,
