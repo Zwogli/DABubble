@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Channel } from 'src/app/models/channel.class';
 import { ChatService } from 'src/app/services/chat.service';
 import { chatTypes } from 'src/app/interfaces/chats/types';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-chat-sub-header',
