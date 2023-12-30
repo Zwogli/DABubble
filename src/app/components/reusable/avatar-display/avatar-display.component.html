@@ -1,6 +1,6 @@
 <div *ngIf="data.user" class="user__container--avatar">
   <img
-    class="avatar-small"
+    class="avatar-{{ data.size }}"
     [src]="data.user.photoUrl"
     alt="Avatar of {{ data.user.name }}"
   />

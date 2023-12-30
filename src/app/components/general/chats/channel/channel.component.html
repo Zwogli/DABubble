@@ -20,7 +20,7 @@
     [currentUser]="currentUser"
   ></app-chat-record>
   <div *ngIf="chatRecordLength === 0">
-    <div>
+    <div class="placeholder__title-wrapper">
       <app-avatar-display
         *ngIf="privateChatOpponentUser"
         [data]=" {
@@ -31,6 +31,10 @@
       ></app-avatar-display>
       <span>{{ privateChatOpponentUser.name }}</span>
     </div>
+    <p>
+      Diese Unterhaltung findet nur zwischen
+      <span>@{{ privateChatOpponentUser.name }}</span> und dir statt.
+    </p>
   </div>
 </main>
 
