@@ -95,6 +95,37 @@ export class FirestoreService {
       return;
     }
   }
+
+  async getUserDoc(colId: string, docId: string) {
+    const userConverter = {
+      toFirestore: (user: User) => {
+        return {
+          name: user.name,
+          email: user.email,
+          id: user.id,
+          photoUrl: user.photoUrl,
+          onlineStatus: user.onlineStatus,
+          memberInChannel: user.memberInChannel,
+          activePrivateChats: user.activePrivateChats,
+        };
+      },
+      fromFirestore: (snapshot: any, options: any) => {
+        const data = snapshot.data(options);
+        return new User(data);
+      },
+    };
+    const docSnap = await getDoc(
+      doc(this.firestore, colId, docId).withConverter(userConverter)
+    );
+    if (docSnap.exists()) {
+      console.log('Document found');
+      return docSnap.data();
+    } else {
+      console.log('No such document found!');
+      return;
+    }
+  }
+
   async getSingleSubDoc(colId: string, docId: string) {
     const docSnap = await getDoc(
       doc(this.firestore, 'chatRecords', colId, 'messages', docId)

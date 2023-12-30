@@ -274,6 +274,17 @@ export class ChatService implements OnInit, OnDestroy {
     this.setLeadingMsg(this.leadingThreadMsg.id, this.threadParentChatRecordId);
   }
 
+  async getUserDataFromPrivateChat(docId: string) {
+    const docRef = doc(this.firestore, 'privateChat', docId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      return undefined;
+    }
+  }
+
   openFile(url: string) {
     window.open(url, '_blank');
   }
