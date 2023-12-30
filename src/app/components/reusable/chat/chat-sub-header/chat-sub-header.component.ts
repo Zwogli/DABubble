@@ -15,8 +15,7 @@ export class ChatSubHeaderComponent {
   public mainType: string;
 
   constructor(private chatService: ChatService, private route: ActivatedRoute) {
-    const channelId: string =
-      this.route.snapshot.paramMap.get('type')!;
+    const channelId: string = this.route.snapshot.paramMap.get('type')!;
     this.mainType = channelId;
     console.log(this.mainType);
   }

@@ -45,7 +45,7 @@ import { DialogNewChannelComponent } from './components/reusable/dialog-new-chan
 import { DialogNewChatComponent } from './components/reusable/dialog-new-chat/dialog-new-chat.component';
 import { DialogProfilMenuComponent } from './components/reusable/dialog-profil-menu/dialog-profil-menu.component';
 import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dialog-overlay.component';
-import { PrivateComponent } from './components/general/chats/private/private.component';
+
 import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat-record.component';
 import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 
@@ -76,7 +76,6 @@ import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-
     MessageInputComponent,
     ThreadComponent,
     ChatSubHeaderComponent,
-    PrivateComponent,
     ChatRecordComponent,
     SignInMergeAccountsComponent,
   ],
