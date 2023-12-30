@@ -88,10 +88,9 @@ export class FirestoreService {
   async getSingleDoc(colId: string, docId: string) {
     const docSnap = await getDoc(doc(this.firestore, colId, docId));
     if (docSnap.exists()) {
-      console.log('Document found');
       return docSnap.data();
     } else {
-      console.log('No such document found!');
+      console.log(`No Document: ${docId} not found in Collection: ${colId}`);
       return;
     }
   }
@@ -118,10 +117,9 @@ export class FirestoreService {
       doc(this.firestore, colId, docId).withConverter(userConverter)
     );
     if (docSnap.exists()) {
-      console.log('Document found');
       return docSnap.data();
     } else {
-      console.log('No such document found!');
+      console.log(`No Document: ${docId} not found in Collection: ${colId}`);
       return;
     }
   }

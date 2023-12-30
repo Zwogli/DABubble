@@ -1,5 +1,5 @@
 <!-- CHANNEL subheader -->
-<div *ngIf="mainType === 'channel'" class="sub-header">
+<div *ngIf="type === 'channel'" class="sub-header">
   <div *ngIf="channel" class="sub-header__title">
     <span class="title__main"
       ># {{ channel.name }}
@@ -31,7 +31,7 @@
 </div>
 
 <!-- PRIVATE subheader -->
-<div *ngIf="mainType === 'private'" class="sub-header">
+<div *ngIf="type === 'private'" class="sub-header">
   <div class="sub-header__title private-header">
     <app-avatar-display
       *ngIf="privateChatAvatarConfig"

@@ -2,7 +2,7 @@ import { Injectable, OnDestroy, OnInit, inject } from '@angular/core';
 import { Message } from '../models/message.class';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { chatTypes } from '../interfaces/chats/types';
+import { ChatTypes } from '../interfaces/chats/types';
 import {
   DocumentData,
   DocumentReference,
@@ -155,7 +155,7 @@ export class ChatService implements OnInit, OnDestroy {
    * @param {string} [chatRecordId] - Optional, just needed for threads to locate the specific message in a given chatRecord
    */
   async createNewChatRecord(
-    hostType: chatTypes,
+    hostType: ChatTypes,
     targetId: string,
     chatRecordId?: string
   ) {
@@ -225,7 +225,7 @@ export class ChatService implements OnInit, OnDestroy {
     });
   }
 
-  async navigateBack(src: chatTypes) {
+  async navigateBack(src: ChatTypes) {
     const msgThread = this.leadingThreadMsg.thread;
     if (src === 'thread' && msgThread.length === 0) {
       await this.deleteChatRecord(msgThread.id);

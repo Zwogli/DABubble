@@ -1,4 +1,4 @@
-<section class="chat__container" *ngIf="chatRecord && chatRecord.length > 0">
+<section class="chat__container" *ngIf="chatRecord">
   <div
     *ngFor="let message of chatRecord; index as i"
     class="message__wrapper"
@@ -118,10 +118,4 @@
   </div>
 </section>
 
-<section *ngIf="chatRecord && chatRecord.length === 0">
-<div *ngIf="parentType === 'channel'">Placeholder</div>
-<div *ngIf="parentType === 'private'">Placeholder</div>
-<div *ngIf="parentType === 'private'"></div>
 
-
-</section>

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/models/message.class';
-import { chatTypes } from 'src/app/interfaces/chats/types';
+import { ChatTypes } from 'src/app/interfaces/chats/types';
 import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { ChatService } from 'src/app/services/chat.service';
 })
 export class MessageInputComponent {
   @Input() currentChatRecordId!: string;
-  @Input() parentChat!: chatTypes;
+  @Input() parentChat!: ChatTypes;
   public msgPayload!: string;
   public fileToUpload!: any;
 

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { chatTypes } from 'src/app/interfaces/chats/types';
+import { ChatTypes } from 'src/app/interfaces/chats/types';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
 import { ChatService } from 'src/app/services/chat.service';
@@ -25,7 +25,7 @@ export class ChatRecordComponent
 {
   @Input() chatRecordId!: string;
   @Input() currentUser!: User;
-  @Input() parentType!: chatTypes;
+  @Input() parentType!: ChatTypes;
   @Output('startThread') startThread: EventEmitter<any> = new EventEmitter();
   @Output('chatRecordLength') chatRecordLength: EventEmitter<number> =
     new EventEmitter();
@@ -92,7 +92,9 @@ export class ChatRecordComponent
   }
 
   checkChatRecordLength() {
-    this.chatRecordLength.emit(this.chatRecord.length);
+    if (this.chatRecord) {
+      this.chatRecordLength.emit(this.chatRecord.length);
+    }
   }
 
   openThread(msg: Message, event: any) {
