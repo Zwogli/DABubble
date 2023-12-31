@@ -1,24 +1,47 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/models/message.class';
 import { ChatTypes } from 'src/app/interfaces/chats/types';
 import { ChatService } from 'src/app/services/chat.service';
+import { Channel } from 'src/app/models/channel.class';
+import { User } from 'src/app/models/user.class';
+import { Chat } from 'src/app/models/chat.class';
 
 @Component({
   selector: 'app-message-input',
   templateUrl: './message-input.component.html',
   styleUrls: ['./message-input.component.scss'],
 })
-export class MessageInputComponent {
+export class MessageInputComponent implements OnChanges {
   @Input() currentChatRecordId!: string;
   @Input() parentChat!: ChatTypes;
+  @Input() channel!: Channel;
+  @Input() privateChatOpponentUser!: User;
+
   public msgPayload!: string;
   public fileToUpload!: any;
+  public placeholderText!: string;
 
   constructor(
     private fireService: FirestoreService,
     private chatService: ChatService
   ) {}
+
+  ngOnChanges(): void {
+    this.setPlaceholder();
+  }
+
+  setPlaceholder() {
+    if (this.parentChat === 'thread') {
+      this.placeholderText = 'Antworten...';
+    } else if (this.channel.name) {
+      this.placeholderText = `Nachricht an #${this.channel.name}`;
+    } else if (this.privateChatOpponentUser !== this.fireService.currentUser) {
+      this.placeholderText = `Nachricht an ${this.privateChatOpponentUser.name}`;
+    } else {
+      this.placeholderText = 'Notiz für mich...';
+    }
+  }
 
   /**
    * Sends the message to the corresponding chatRecord and checks if

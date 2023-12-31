@@ -99,4 +99,6 @@
 <app-message-input
   *ngIf="currentChannel"
   [currentChatRecordId]="currentChannel.chatRecord"
+  [channel]="currentChannel"
+  [privateChatOpponentUser]="privateChatOpponentUser"
 ></app-message-input>
