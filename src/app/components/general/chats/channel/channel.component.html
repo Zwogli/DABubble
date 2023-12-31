@@ -33,6 +33,7 @@
       "
     >
     </ng-container>
+    <!-- Channel placeholder -->
     <ng-template #channelPlaceholder>
       <div class="placeholder__title-wrapper">
         <span class="placeholder__title--name">#</span>
@@ -46,6 +47,7 @@
       </p>
     </ng-template>
 
+    <!-- PrivateChat placeholder with another party -->
     <ng-template #privatePlaceholder>
       <div class="placeholder__title-wrapper">
         <app-avatar-display
@@ -68,6 +70,8 @@
         und dir statt.
       </p>
     </ng-template>
+
+    <!-- PrivateChat placeholder for myself -->
     <ng-template #privatePlaceholderSelf>
       <div class="placeholder__title-wrapper">
         <app-avatar-display
