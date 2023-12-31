@@ -4,9 +4,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -21,7 +23,7 @@ import { ChatService } from 'src/app/services/chat.service';
   styleUrls: ['./chat-record.component.scss'],
 })
 export class ChatRecordComponent
-  implements OnInit, OnDestroy, AfterViewChecked
+  implements OnInit, OnDestroy, AfterViewChecked, OnChanges
 {
   @Input() chatRecordId!: string;
   @Input() currentUser!: User;
@@ -59,6 +61,8 @@ export class ChatRecordComponent
       });
     }
   }
+
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
@@ -107,7 +111,7 @@ export class ChatRecordComponent
   }
 
   toggleMsgMenu(msg: Message) {
-    if (this.selectedMsg == msg) {
+    if (this.selectedMsg === msg) {
       this.selectedMsg = null;
     } else {
       this.selectedMsg = msg;
@@ -137,6 +141,10 @@ export class ChatRecordComponent
 
   openEditMsgMenu(event: any) {
     event.stopPropagation();
-    this.showEditMsgMenu = true;
+    this.toggleEditMsgMenu();
+  }
+
+  toggleEditMsgMenu() {
+    this.showEditMsgMenu = !this.showEditMsgMenu;
   }
 }

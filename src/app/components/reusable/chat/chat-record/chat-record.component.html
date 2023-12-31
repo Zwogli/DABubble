@@ -122,7 +122,10 @@
         >
           <mat-icon fontSet="material-icons-outlined">more_vert</mat-icon>
         </button>
-        <div *ngIf="showEditMsgMenu" class="message__menu--edit-msg">
+        <div
+          *ngIf="showEditMsgMenu && message.sentById === currentUser.id"
+          class="message__menu--edit-msg"
+        >
           <button mat-button>Nachricht bearbeiten</button>
         </div>
       </div>
