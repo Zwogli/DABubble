@@ -34,6 +34,7 @@ export class ChatRecordComponent
   public today: Date = new Date();
   public chatRecord!: Message[];
   public fileURL!: string;
+  public showEditMsgMenu: boolean = false;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
@@ -132,5 +133,10 @@ export class ChatRecordComponent
 
   loadFile(url: string) {
     this.chatService.openFile(url);
+  }
+
+  openEditMsgMenu(event: any) {
+    event.stopPropagation();
+    this.showEditMsgMenu = true;
   }
 }
