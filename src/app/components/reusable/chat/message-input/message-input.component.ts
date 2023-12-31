@@ -21,6 +21,7 @@ export class MessageInputComponent implements OnChanges {
   public msgPayload!: string;
   public fileToUpload!: any;
   public placeholderText!: string;
+  public fileName!: string;
 
   constructor(
     private fireService: FirestoreService,
@@ -122,8 +123,11 @@ export class MessageInputComponent implements OnChanges {
   }
 
   toggleFileName(name?: string) {
-    let fileName = document.getElementById('fileName')!;
-    name ? (fileName.innerHTML = name) : (fileName.innerHTML = '');
+    name ? (this.fileName = name) : (this.fileName = '');
+    // Shortens the name if too long
+    if (name && name.length > 20) {
+      this.fileName = name.substring(0, 20) + '...';
+    }
   }
 
   cancelUpload() {
