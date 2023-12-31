@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -12,7 +12,7 @@ import { NavbarService } from 'src/app/services/navbar.service';
   templateUrl: './dialog-new-channel.component.html',
   styleUrls: ['./dialog-new-channel.component.scss']
 })
-export class DialogNewChannelComponent {
+export class DialogNewChannelComponent implements OnInit, OnDestroy {
   currentUser!:User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
   searchUserForm = new FormGroup({
@@ -84,7 +84,7 @@ export class DialogNewChannelComponent {
     await this.firestoreService.addNewChannel(this.currentUser.id);
     await this.firestoreService.updateUsers();
     this.navbarService.toggleOverlay();
-    this.router.navigate(['home/', this.firestoreService.newChannelRefId]);
+    this.router.navigate(['home/channel/', this.firestoreService.newChannelRefId]);
     this.resetVariables();
   }
 
