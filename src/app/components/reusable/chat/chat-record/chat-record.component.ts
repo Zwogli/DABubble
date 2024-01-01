@@ -34,6 +34,7 @@ export class ChatRecordComponent
   public today: Date = new Date();
   public chatRecord!: Message[];
   public fileURL!: string;
+  public channelId!: string;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
@@ -43,6 +44,12 @@ export class ChatRecordComponent
     private route: ActivatedRoute
   ) {
     this.chatRecord = [];
+    // this.channelId = this.route.snapshot.paramMap.get('channelId')!;
+    this.route.queryParamMap.subscribe((p: any) => {
+      this.channelId = p['params'].channelID;
+      console.log(this.channelId);
+      console.log(this.chatRecordId, 'Chat-Record chatrecordID');
+    });
   }
 
   ngOnInit() {
@@ -97,13 +104,12 @@ export class ChatRecordComponent
     }
   }
 
-  openThread(msg: Message, event: any) {
-    if (msg != this.selectedMsg) {
-      event.stopPropagation();
-    }
-    const channelId = this.route.snapshot.paramMap.get('channelId')!;
-    this.chatService.openThread(msg, channelId);
-  }
+  // openThread(msg: Message, event: any) {
+  //   if (msg != this.selectedMsg) {
+  //     event.stopPropagation();
+  //   }
+  //   this.chatService.openThread(msg, channelId);
+  // }
 
   toggleMsgMenu(msg: Message) {
     if (this.selectedMsg == msg) {

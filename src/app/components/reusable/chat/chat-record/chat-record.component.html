@@ -64,11 +64,19 @@
             "
           ></div>
           <ng-template #isPicture>
-            <img (click)="loadFile(message.file.url)" [src]="message.file.url" alt="Picture send from a user" />
+            <img
+              (click)="loadFile(message.file.url)"
+              [src]="message.file.url"
+              alt="Picture send from a user"
+            />
           </ng-template>
           <ng-template #isPDF>
             <div class="message__file-wrapper-pdf" *ngIf="message.file.type">
-              <img (click)="loadFile(message.file.url)" src="assets/img/pdf.png" alt="Logo of PDF" />
+              <img
+                (click)="loadFile(message.file.url)"
+                src="assets/img/pdf.png"
+                alt="Logo of PDF"
+              />
               <span>{{ message.file.name }}</span>
             </div>
           </ng-template>
@@ -79,7 +87,7 @@
 
         <div *ngIf="message.thread.length > 0" class="message__footer">
           <span
-            (click)="openThread(message, $event)"
+            [customLink]="['thread', channelId, message.id]"
             class="message__footer-count"
             >{{ message.thread.length }} Antworten</span
           >
@@ -101,6 +109,7 @@
         <button
           *ngIf="message.thread.length <= 0 && parentType !== 'thread'"
           (click)="this.startThread.emit(message)"
+          [customLink]="['thread', channelId, message.id]"
           mat-icon-button
           aria-label="Icon button with a chat bubble"
         >
@@ -117,5 +126,3 @@
     </div>
   </div>
 </section>
-
-

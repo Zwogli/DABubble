@@ -3,6 +3,7 @@ import { Message } from '../models/message.class';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { ChatTypes } from '../interfaces/chats/types';
+import { Unsubscribe } from '@angular/fire/auth';
 import {
   DocumentData,
   DocumentReference,
@@ -19,7 +20,6 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
-import { Unsubscribe } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -66,6 +66,7 @@ export class ChatService implements OnInit, OnDestroy {
   }
 
   startSubChat(docId: string) {
+    console.log(docId, 'Chat-Service');
     this.unsubChatRecord = this.subChatRecord(docId);
   }
 
@@ -114,11 +115,6 @@ export class ChatService implements OnInit, OnDestroy {
     this.channelId = channelId;
     this.leadingThreadMsgId = msgId;
     await this.createNewChatRecord('thread', msgId, this.chatRecordId);
-    this.router.navigate(['/thread/', msgId, this.channelId]);
-  }
-
-  openThread(msg: Message, channelId: string) {
-    this.router.navigate(['/thread/', msg.id, channelId]);
   }
 
   /**

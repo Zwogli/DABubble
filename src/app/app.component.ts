@@ -20,6 +20,7 @@ export class AppComponent {
     this.rs.isTablet$.subscribe((val) => {
       console.log('Tablet', val);
     });
+    
     this.rs.isDesktop$.subscribe((val) => {
       console.log('Desktop', val);
     });

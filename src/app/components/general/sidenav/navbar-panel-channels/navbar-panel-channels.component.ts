@@ -25,7 +25,7 @@ export class NavbarPanelChannelsComponent {
 
   constructor(
     private authService: AuthService,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
   ){
     this.currentUser = this.firestoreService.currentUser;
   }

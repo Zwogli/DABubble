@@ -19,6 +19,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
 
   public currentUser!: User;
   public currentChannel!: Channel;
+  public currentChannelID!: string;
   public chatRecordId!: string;
   private catchAttempts: number = 0;
   public chatRecordLength!: number;
@@ -32,12 +33,21 @@ export class ChannelComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private chatService: ChatService
   ) {
-    this.mainType = this.route.snapshot.paramMap.get('type')!;
-    this.setCurrentUser();
-    this.setChatRecordId('channels');
+    this.route.queryParamMap.subscribe((p: any) => {
+      this.currentChannelID = p['params'].channelID;
+      this.mainType = this.route.snapshot.paramMap.get('type')!;
+      this.setChatRecordId('channels');
+      this.setCurrentUser();
+      console.log(this.chatRecordId, 'Channel chatRecordID'); 
+    });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.mainType = this.route.snapshot.paramMap.get('type')!;
+    this.setChatRecordId('channels');
+    this.setCurrentUser();
+    console.log(this.chatRecordId, 'Channel chatRecordID');
+  }
 
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
@@ -64,15 +74,15 @@ export class ChannelComponent implements OnInit, OnDestroy {
    *                the document should be searched for
    */
   async setChatRecordId(colId: 'channels' | 'privateChat') {
-    const channelId = this.route.snapshot.paramMap.get('channelId');
-    if (channelId) {
+    if (this.currentChannelID) {
       await this.fireService
-        .getSingleDoc(colId, channelId)
+        .getSingleDoc(colId, this.currentChannelID)
         .then((doc: any) => {
           if (doc.chatRecord) {
             this.chatRecordId = doc.chatRecord;
             this.currentChannel = doc;
             this.chatService.setChatRecordId(doc.chatRecord);
+            this.catchAttempts = 0;
           } else {
             console.log('Document holds no chatRecord id to reference to!');
           }
@@ -95,9 +105,8 @@ export class ChannelComponent implements OnInit, OnDestroy {
    *
    */
   setChatPartner() {
-    const channelId: string = this.route.snapshot.paramMap.get('channelId')!;
     this.chatService
-      .getUserDataFromPrivateChat(channelId)
+      .getUserDataFromPrivateChat(this.currentChannelID)
       .then((privateChat: DocumentData | undefined) => {
         if (this.currentUser && privateChat) {
           // Private Chat Document exists
@@ -122,18 +131,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
         }
       });
   }
-
-  /**
-   * Mandatory to load the correct Avatar
-   *
-   */
-  // setAvatarConfigData() {
-  //   this.privateChatAvatarConfig = {
-  //     user: this.privateChatOpponentUser,
-  //     showStatus: false,
-  //     size: 'small',
-  //   };
-  // }
 
   startThread(msg: Message) {
     this.chatService.startThreadFromChannel(

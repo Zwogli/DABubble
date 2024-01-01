@@ -88,6 +88,7 @@ export class FirestoreService {
   async getSingleDoc(colId: string, docId: string) {
     const docSnap = await getDoc(doc(this.firestore, colId, docId));
     if (docSnap.exists()) {
+      console.log(`Document: ${docId} found in Collection: ${colId}`);
       return docSnap.data();
     } else {
       console.log(`Document: ${docId} not found in Collection: ${colId}`);

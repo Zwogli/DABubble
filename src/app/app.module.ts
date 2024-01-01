@@ -49,6 +49,7 @@ import { DialogOverlayComponent } from './components/reusable/dialog-overlay/dia
 import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat-record.component';
 import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 import { AvatarDisplayComponent } from './components/reusable/avatar-display/avatar-display.component';
+import { CustomNavigationDirective } from './custom_directives/custom-navigation.directive';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { AvatarDisplayComponent } from './components/reusable/avatar-display/ava
     ChatRecordComponent,
     SignInMergeAccountsComponent,
     AvatarDisplayComponent,
+    CustomNavigationDirective,
   ],
 
   imports: [

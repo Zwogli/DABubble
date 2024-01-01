@@ -1,62 +1,69 @@
 <mat-expansion-panel
-    hideToggle
-    (opened)="panelOpenState = true"
-    (closed)="panelOpenState = false"
-  >
-    <mat-expansion-panel-header>
-      <mat-panel-title (click)="rotateArrow()">
+  hideToggle
+  (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false"
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title (click)="rotateArrow()">
+      <div class="panel__titel--left">
+        <span
+          id="directMessage--arrow_drop_down"
+          class="material-icons-outlined rotate"
+        >
+          arrow_drop_down
+        </span>
+        <div class="container__element--center">
+          <span class="material-icons-outlined"> account_circle </span>
+          <span class="panel__header--titel">Direct message</span>
+        </div>
+      </div>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
 
-		<div class="panel__titel--left">
-			<span
-			  id="directMessage--arrow_drop_down"
-			  class="material-icons-outlined rotate"
-			>
-			  arrow_drop_down
-			</span>
-			<div class="container__element--center">
-			  <span class="material-icons-outlined"> account_circle </span>
-			  <span class="panel__header--titel">Direct message</span>
-			</div>
-		</div>
-
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-
-    <div class="mat-expansion-panel__content container__elements--column">
-
-	<!-- 
+  <div class="mat-expansion-panel__content container__elements--column">
+    <!-- 
 		elements for expansion-panel
 		
 	-->
-		<div *ngFor="let user of chatUserData; index as i" class="fix--space-left sort__elemts--row cursor__add">
-			<div 
-			*ngIf="privateChats[i]"
-			[routerLink]="'/home/private/' + privateChats[i].id" 
-			class="container__Elemets--row">
+    <div
+      *ngFor="let user of chatUserData; index as i"
+      class="fix--space-left sort__elemts--row cursor__add"
+    >
+      <div
+        *ngIf="privateChats[i]"
+        [customLink]="['private', privateChats[i].id]"
+        class="container__Elemets--row"
+      >
+        <div class="user__container--avatar">
+          <img
+            class="avatar-small"
+            src="{{ chatUserData[i].photoUrl }}"
+            alt="avatar"
+          />
+          <span
+            class="onlinestatus onlinestatus--color-{{
+              chatUserData[i].onlineStatus
+            }}"
+          ></span>
+        </div>
 
-				<div class="user__container--avatar">
-					<img class="avatar-small" src="{{ chatUserData[i].photoUrl}}" alt="avatar">
-					<span class="onlinestatus onlinestatus--color-{{ chatUserData[i].onlineStatus }}"></span>
-				</div>
+        <p>
+          {{ chatUserData[i].name }}
+          <span *ngIf="chatUserData[i].id == currentUser.id">(You)</span>
+        </p>
+      </div>
+    </div>
 
-				<p>{{ chatUserData[i].name}}
-				<span *ngIf="chatUserData[i].id == currentUser.id">(You)</span>
-				</p>
-			</div>
-		</div>
-
-		<div 
-			(click)="toggleNewChat()"
-			class="fix--space-left sort__elemts--row cursor__add"
-		>
-			<div class="container--small">
-				<div class="circle__add--bg">
-					<span class="material-icons-outlined"> person_add </span>
-				</div>
-			</div>
-			<p> New Chat </p>
-		</div>
-
-	</div>
-
-  </mat-expansion-panel>
+    <div
+      (click)="toggleNewChat()"
+      class="fix--space-left sort__elemts--row cursor__add"
+    >
+      <div class="container--small">
+        <div class="circle__add--bg">
+          <span class="material-icons-outlined"> person_add </span>
+        </div>
+      </div>
+      <p>New Chat</p>
+    </div>
+  </div>
+</mat-expansion-panel>

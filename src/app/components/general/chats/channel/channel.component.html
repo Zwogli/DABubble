@@ -14,6 +14,7 @@
 
 <main #chatContainer [scrollTop]="chatContainer.scrollHeight">
   <app-chat-record
+    
     (startThread)="startThread($event)"
     (chatRecordLength)="setChatRecordLength($event)"
     [chatRecordId]="chatRecordId"
