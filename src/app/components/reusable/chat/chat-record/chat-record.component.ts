@@ -65,7 +65,10 @@ export class ChatRecordComponent
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    
+  }
 
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
