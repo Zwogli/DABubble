@@ -288,4 +288,17 @@ export class ChatService implements OnInit, OnDestroy {
   openFile(url: string) {
     window.open(url, '_blank');
   }
+
+  async updateMessage(chatRecrdId: string, msg: Message, content: string) {
+    const msgRef = doc(
+      this.firestore,
+      'chatRecords',
+      chatRecrdId,
+      'messages',
+      msg.id
+    );
+    await updateDoc(msgRef, {
+      message: content,
+    });
+  }
 }

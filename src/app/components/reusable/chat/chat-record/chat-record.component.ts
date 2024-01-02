@@ -164,6 +164,10 @@ export class ChatRecordComponent
     this.toggleMsgMenu(msg)
   }
 
+  saveEditMsg(msg: Message) {
+    this.chatService.updateMessage(this.chatRecordId, msg, this.editMsgPayload);
+  }
+
   stopPropagation(event: any) {
     event.stopPropagation();
   }
