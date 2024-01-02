@@ -106,7 +106,7 @@
           (click)="stopPropagation($event)"
         >
           <div>
-            <textarea name="" id=""> </textarea>
+            <textarea [(ngModel)]="editMsgPayload" customAutofocus name="" id=""> </textarea>
             <div class="message-input__btn-container">
               <button mat-icon-button aria-label="Icon button to select emotes">
                 <mat-icon fontSet="material-icons-outlined"
@@ -115,7 +115,7 @@
               </button>
 
               <div class="btn-container__extra-btn-wrapper">
-                <button mat-button>Abbrechen</button>
+                <button (click)="closeEditInput(message)" mat-button>Abbrechen</button>
                 <button mat-button>Speichern</button>
               </div>
             </div>

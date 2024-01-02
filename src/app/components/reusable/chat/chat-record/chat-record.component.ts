@@ -36,8 +36,10 @@ export class ChatRecordComponent
   public today: Date = new Date();
   public chatRecord!: Message[];
   public fileURL!: string;
+
   public showEditMsgMenu: boolean = false;
   public showEditMsgInput!: Message | null;
+  public editMsgPayload!: string;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
@@ -150,9 +152,14 @@ export class ChatRecordComponent
   }
 
   editMsg(msg: Message) {
-    console.log('Start editing');
-    this.showEditMsgInput = msg;
     this.toggleEditMsgMenu();
+    this.showEditMsgInput = msg;
+    this.editMsgPayload = msg.message;
+  }
+
+  closeEditInput(msg: Message) {
+    this.showEditMsgInput = null;
+    this.toggleMsgMenu(msg)
   }
 
   stopPropagation(event: any) {
