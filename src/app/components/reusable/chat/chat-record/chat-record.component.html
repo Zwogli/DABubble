@@ -99,6 +99,32 @@
             >
           </div>
         </div>
+        <!-- Edit Msg Text container -->
+        <div
+          *ngIf="message === showEditMsgInput"
+          class="message__edit-msg__input-container"
+          (click)="stopPropagation($event)"
+        >
+          <div>
+            <textarea name="" id=""> </textarea>
+            <div class="message-input__btn-container">
+              <button mat-icon-button aria-label="Icon button to select emotes">
+                <mat-icon fontSet="material-icons-outlined"
+                  >sentiment_satisfied</mat-icon
+                >
+              </button>
+
+              <div class="btn-container__extra-btn-wrapper">
+                <button mat-button>Abbrechen</button>
+                <button mat-button>Speichern</button>
+              </div>
+            </div>
+          </div>
+
+          <app-avatar-display
+            [data]="{ user: currentUser, showStatus: false, size: 'small' }"
+          ></app-avatar-display>
+        </div>
       </div>
 
       <!-- ========== Onclick/ onhover Menu ========== -->
@@ -126,7 +152,9 @@
           *ngIf="showEditMsgMenu && message.sentById === currentUser.id"
           class="message__menu--edit-msg"
         >
-          <button mat-button>Nachricht bearbeiten</button>
+          <button (click)="editMsg(message)" mat-button>
+            Nachricht bearbeiten
+          </button>
         </div>
       </div>
     </div>

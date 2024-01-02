@@ -69,3 +69,24 @@
         }
     }
 }
+
+.message__edit-msg__input-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 2;
+    background-color: aqua;
+}
+
+.message-input__btn-container {
+    display: flex;
+    justify-content: space-between;
+
+    .btn-container__extra-btn-wrapper {
+        display: flex;
+        gap: 5px;
+    }
+}

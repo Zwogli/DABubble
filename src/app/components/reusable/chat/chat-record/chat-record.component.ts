@@ -37,6 +37,7 @@ export class ChatRecordComponent
   public chatRecord!: Message[];
   public fileURL!: string;
   public showEditMsgMenu: boolean = false;
+  public showEditMsgInput!: Message | null;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
@@ -146,5 +147,15 @@ export class ChatRecordComponent
 
   toggleEditMsgMenu() {
     this.showEditMsgMenu = !this.showEditMsgMenu;
+  }
+
+  editMsg(msg: Message) {
+    console.log('Start editing');
+    this.showEditMsgInput = msg;
+    this.toggleEditMsgMenu();
+  }
+
+  stopPropagation(event: any) {
+    event.stopPropagation();
   }
 }
