@@ -81,6 +81,16 @@
     background-color: aqua;
 }
 
+.message__edit-msg__input-wrapper {
+    height: 100%;
+    width: 100%;
+
+    textarea {
+    
+        width: 80%;
+    }
+}
+
 .message-input__btn-container {
     display: flex;
     justify-content: space-between;

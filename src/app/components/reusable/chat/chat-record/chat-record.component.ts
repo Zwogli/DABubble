@@ -66,7 +66,6 @@ export class ChatRecordComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     
   }
 
