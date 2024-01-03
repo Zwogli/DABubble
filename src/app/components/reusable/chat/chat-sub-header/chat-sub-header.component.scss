@@ -1,3 +1,7 @@
+.pointer {
+    cursor: pointer;
+}
+
 .sub-header {
     display: flex;
     justify-content: space-between;
@@ -16,6 +20,7 @@
         border-radius: 50%;
         background-color: var(--color-blue-bg);
         border: none;
+        cursor: pointer;
     }
 
     mat-icon {
@@ -27,6 +32,7 @@
 
 .button__close {
     background-color: white !important;
+    cursor: pointer;
 
     mat-icon {
         font-size: 24px !important;
@@ -45,13 +51,13 @@
     border-radius: 30px;
 
     font-size: 20px;
-    cursor: pointer;
 
     .title__main {
         color: var(--Black, #000);
         font-size: 20px;
         font-family: var(--font-selection);
         font-weight: 700;
+
 
         mat-icon {
             text-align: center;

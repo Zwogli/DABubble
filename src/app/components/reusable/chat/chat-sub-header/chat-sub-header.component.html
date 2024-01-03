@@ -1,6 +1,6 @@
 <!-- CHANNEL subheader -->
 <div *ngIf="type === 'channel'" class="sub-header">
-  <div *ngIf="channel" class="sub-header__title">
+  <div *ngIf="channel" class="sub-header__title pointer">
     <span class="title__main"
       ># {{ channel.name }}
       <mat-icon>expand_more</mat-icon>
@@ -14,7 +14,7 @@
 
 <!-- THREAD subheader -->
 <div *ngIf="type === 'thread'" class="sub-header">
-  <div *ngIf="channel" class="sub-header__title">
+  <div *ngIf="channel" class="sub-header__title pointer">
     <span class="title__main">Thread</span>
     <span class="title__sub"># {{ channel.name }} </span>
   </div>

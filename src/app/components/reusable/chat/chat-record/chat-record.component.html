@@ -93,7 +93,7 @@
           >
           <div class="message__footer-last-timestamp">
             <span>Letzte Antwort</span>
-            <span>
+            <span *ngIf="message.thread.lastAnswer">
               {{ message.thread.lastAnswer.toDate() | date : "shortTime" }}
               Uhr</span
             >
