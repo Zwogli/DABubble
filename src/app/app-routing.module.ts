@@ -24,8 +24,8 @@ const mobileRoutes: Routes = [
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   { path: 'home', component: NavbarComponent },
   { path: 'home/addChannel', component: CreateChannelComponent },
-  { path: 'home/:type/:param', component: ChannelComponent },
-  { path: 'thread/:msgId/:channelId', component: ThreadComponent },
+  { path: 'chat/:type/', component: ChannelComponent },
+  { path: 'thread/', component: ThreadComponent },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
 
@@ -67,21 +67,21 @@ export class AppRoutingModule {
     this.rs.isMobile$.subscribe((val) => {
       if (val) {
         router.resetConfig(mobileRoutes);
-        console.log('Mobile Route config:', router.config);
+        // console.log('Mobile Route config:', router.config);
       }
     });
 
     this.rs.isTablet$.subscribe((val) => {
       if (val) {
         router.resetConfig(mobileRoutes);
-        console.log('Tablet Route config:', router.config);
+        // console.log('Tablet Route config:', router.config);
       }
     });
 
     this.rs.isDesktop$.subscribe((val) => {
       if (val) {
         router.resetConfig(desktopRoutes);
-        console.log('Desktop Route config:', router.config);
+        // console.log('Desktop Route config:', router.config);
       }
     });
   }

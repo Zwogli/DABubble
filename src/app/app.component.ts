@@ -13,16 +13,6 @@ export class AppComponent {
   // Auth gets instantiated to keep data from Fireservice
   // after manually reload of the page
   constructor(private auth: AuthService, public rs: ResponsiveService) {
-    this.rs.isMobile$.subscribe((val) => {
-      console.log('Mobile', val);
-    });
 
-    this.rs.isTablet$.subscribe((val) => {
-      console.log('Tablet', val);
-    });
-    
-    this.rs.isDesktop$.subscribe((val) => {
-      console.log('Desktop', val);
-    });
   }
 }

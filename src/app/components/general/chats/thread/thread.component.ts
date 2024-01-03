@@ -18,6 +18,7 @@ export class ThreadComponent implements OnInit {
 
   public chatRecordId!: string;
   public currentChannel!: Channel;
+  private currentChannelId!: string;
   public leadingMsg!: Message;
   public leadingMsgId!: string;
   public currentUser!: User;
@@ -49,17 +50,22 @@ export class ThreadComponent implements OnInit {
    *
    */
   async setCurrentChannel() {
-    const channelId = this.route.snapshot.paramMap.get('channelId');
-    if (channelId) {
-      this.chatService.channelId = channelId;
-      await this.fireService
-        .getSingleDoc('channels', channelId)
-        .then((doc: any) => {
-          this.currentChannel = doc;
-          this.parentChatRecordId = doc.chatRecord;
-          this.setChatRecordId();
-        });
-    }
+    // const channelId = this.route.snapshot.paramMap.get('channelId');
+    this.route.queryParamMap.subscribe(async (p: any) => {
+      let channelId = p['params'].channelID;
+      console.log(channelId, 'in thread');
+      
+      if (channelId) {
+        this.chatService.channelId = channelId;
+        await this.fireService
+          .getSingleDoc('channels', channelId)
+          .then((doc: any) => {
+            this.currentChannel = doc;
+            this.parentChatRecordId = doc.chatRecord;
+            this.setChatRecordId();
+          });
+      }
+    });
   }
 
   /**

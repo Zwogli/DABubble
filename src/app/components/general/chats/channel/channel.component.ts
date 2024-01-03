@@ -52,6 +52,8 @@ export class ChannelComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
     this.componentIsDestroyed$.complete();
+    console.log(this.route.snapshot);
+    
   }
 
   setCurrentUser() {

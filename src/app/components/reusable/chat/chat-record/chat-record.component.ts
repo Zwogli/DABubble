@@ -47,7 +47,7 @@ export class ChatRecordComponent
     // this.channelId = this.route.snapshot.paramMap.get('channelId')!;
     this.route.queryParamMap.subscribe((p: any) => {
       this.channelId = p['params'].channelID;
-      console.log(this.channelId);
+      console.log(this.channelId, 'ChannelId');
       console.log(this.chatRecordId, 'Chat-Record chatrecordID');
     });
   }
