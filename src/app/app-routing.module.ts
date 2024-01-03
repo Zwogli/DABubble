@@ -50,11 +50,11 @@ const desktopRoutes: Routes = [
     outlet: 'channel',
   },
   {
-    path: 'thread/:msgId/:channelId',
+    path: 'thread',
     component: ThreadComponent,
     outlet: 'thread',
   },
-  { path: '**', redirectTo: 'home/(channel:home/channel/vIGUW5jmoxQQaKOf9AkD)', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home/(channel:chat/channel/vIGUW5jmoxQQaKOf9AkD)', pathMatch: 'full' },
 ];
 
 @NgModule({

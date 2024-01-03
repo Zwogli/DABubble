@@ -132,6 +132,7 @@ main {
             max-width: 240px;
             max-height: 600px;
             border-radius: 0 10px 10px 10px;
+            cursor: pointer;
         }
 
         p {
@@ -150,6 +151,7 @@ main {
         .message__footer-count {
             color: var(--color-blue-secondary-hover);
             font-size: 18px;
+            cursor: pointer;
         }
 
         .message__footer-last-timestamp {

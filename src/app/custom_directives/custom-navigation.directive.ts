@@ -80,12 +80,16 @@ export class CustomNavigationDirective {
 
   navigateToThread() {
     if (this.isDesktop) {
+      console.log(
+        'Navigate Directive Thread Desktop',
+        this.mainChatID,
+        this.msgID
+      );
+
       this.router.navigateByUrl(
-        `/home(channel:home/channel/${this.mainChatID}//thread:thread/${this.msgID}/${this.mainChatID})`
+        `/home(channel:chat/channel//thread:thread)?channelID=${this.mainChatID}&msgID=${this.msgID}`
       );
     } else {
-      console.log('Navigate to thread');
-
       this.router.navigateByUrl(
         `thread?channelID=${this.mainChatID}&msgID=${this.msgID}`
       );
