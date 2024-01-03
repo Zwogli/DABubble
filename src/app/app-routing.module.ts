@@ -24,8 +24,8 @@ const mobileRoutes: Routes = [
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   { path: 'home', component: NavbarComponent },
   { path: 'home/addChannel', component: CreateChannelComponent },
-  { path: 'chat/:type/', component: ChannelComponent },
-  { path: 'thread/', component: ThreadComponent },
+  { path: 'chat/:type', component: ChannelComponent },
+  { path: 'thread', component: ThreadComponent },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
 

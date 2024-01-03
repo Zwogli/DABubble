@@ -64,7 +64,7 @@ export class CustomNavigationDirective {
         `/home(channel:chat/channel)?channelID=${this.mainChatID}`
       );
     } else {
-      this.router.navigateByUrl(`/chat/channel/?channelID=${this.mainChatID}`);
+      this.router.navigateByUrl(`/chat/channel?channelID=${this.mainChatID}`);
     }
   }
 
@@ -74,7 +74,7 @@ export class CustomNavigationDirective {
         `/home(channel:chat/private)?channelID=${this.mainChatID}`
       );
     } else {
-      this.router.navigateByUrl(`/home/private/?channelID=${this.mainChatID}`);
+      this.router.navigateByUrl(`/chat/private?channelID=${this.mainChatID}`);
     }
   }
 
@@ -87,7 +87,7 @@ export class CustomNavigationDirective {
       console.log('Navigate to thread');
 
       this.router.navigateByUrl(
-        `thread/?channelID=${this.mainChatID}&msgID=${this.msgID}`
+        `thread?channelID=${this.mainChatID}&msgID=${this.msgID}`
       );
     }
   }

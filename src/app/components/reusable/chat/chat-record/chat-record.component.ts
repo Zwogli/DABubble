@@ -43,26 +43,26 @@ export class ChatRecordComponent
     private changeDetector: ChangeDetectorRef,
     private route: ActivatedRoute
   ) {
-    this.chatRecord = [];
-    // this.channelId = this.route.snapshot.paramMap.get('channelId')!;
     this.route.queryParamMap.subscribe((p: any) => {
       this.channelId = p['params'].channelID;
-      console.log(this.channelId, 'ChannelId');
-      console.log(this.chatRecordId, 'Chat-Record chatrecordID');
     });
   }
 
   ngOnInit() {
     if (this.parentType === 'thread') {
-      this.chatService.threadChatRecordIdChanged$.subscribe((chatRecordId) => {
-        this.chatRecordId = chatRecordId;
-        this.loadChatRecord();
-      });
+      this.chatService.threadChatRecordIdChanged$
+        .pipe(takeUntil(this.componentIsDestroyed$))
+        .subscribe((chatRecordId) => {
+          this.chatRecordId = chatRecordId;
+          this.loadChatRecord();
+        });
     } else {
-      this.chatService.chatRecordIdChanged$.subscribe((chatRecordId) => {
-        this.chatRecordId = chatRecordId;
-        this.loadChatRecord();
-      });
+      this.chatService.chatRecordIdChanged$
+        .pipe(takeUntil(this.componentIsDestroyed$))
+        .subscribe((chatRecordId) => {
+          this.chatRecordId = chatRecordId;
+          this.loadChatRecord();
+        });
     }
   }
 

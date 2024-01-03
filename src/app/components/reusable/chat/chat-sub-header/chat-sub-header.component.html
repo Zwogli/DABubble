@@ -19,7 +19,11 @@
     <span class="title__sub"># {{ channel.name }} </span>
   </div>
 
-  <button [customLink]="['channel', channel.id]" class="button__close">
+  <button
+    *ngIf="channel"
+    [customLink]="['channel', channel.id]"
+    class="button__close"
+  >
     <mat-icon
       *ngIf="channel"
       fontSet="material-icons-outlined"

@@ -38,22 +38,15 @@ export class ChannelComponent implements OnInit, OnDestroy {
       this.mainType = this.route.snapshot.paramMap.get('type')!;
       this.setChatRecordId('channels');
       this.setCurrentUser();
-      console.log(this.chatRecordId, 'Channel chatRecordID'); 
+      console.log(this.chatRecordId, 'Channel chatRecordID');
     });
   }
 
-  ngOnInit() {
-    this.mainType = this.route.snapshot.paramMap.get('type')!;
-    this.setChatRecordId('channels');
-    this.setCurrentUser();
-    console.log(this.chatRecordId, 'Channel chatRecordID');
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
     this.componentIsDestroyed$.complete();
-    console.log(this.route.snapshot);
-    
   }
 
   setCurrentUser() {
