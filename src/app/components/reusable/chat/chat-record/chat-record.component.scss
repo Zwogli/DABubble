@@ -88,12 +88,19 @@
 }
 
 .message__edit-msg__input-wrapper {
-    height: 100%;
     width: 100%;
 
-    textarea {
+    .message_edit-msg_input {
+        display: flex;
+        height: -webkit-fill-available;
+        overflow-y: scroll;
 
-        width: 80%;
+
+        textarea {
+            width: 98%;
+            border: none;
+            outline: none;
+        }
     }
 }
 

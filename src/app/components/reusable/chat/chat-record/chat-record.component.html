@@ -104,17 +104,19 @@
           (click)="stopPropagation($event)"
         >
           <div class="message__edit-msg__input-wrapper">
-            <textarea
-              [(ngModel)]="editMsgPayload"
-              customAutofocus
-              name="editMsgInput"
-              matInput
-              cdkTextareaAutosize
-              #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="2"
-              cdkAutosizeMaxRows="4"
-            >
-            </textarea>
+            <div class="message_edit-msg_input">
+              <textarea
+                [(ngModel)]="editMsgPayload"
+                customAutofocus
+                name="editMsgInput"
+                matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="2"
+            
+              >
+              </textarea>
+            </div>
             <div class="message-input__btn-container">
               <button mat-icon-button aria-label="Icon button to select emotes">
                 <mat-icon fontSet="material-icons-outlined"
@@ -126,7 +128,9 @@
                 <button (click)="closeEditInput(message)" mat-button>
                   Abbrechen
                 </button>
-                <button (click)="saveEditMsg(message)" mat-button>Speichern</button>
+                <button (click)="saveEditMsg(message)" mat-button>
+                  Speichern
+                </button>
               </div>
             </div>
           </div>
