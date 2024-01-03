@@ -14,7 +14,6 @@
 
 <main #chatContainer [scrollTop]="chatContainer.scrollHeight">
   <app-chat-record
-    
     (startThread)="startThread($event)"
     (chatRecordLength)="setChatRecordLength($event)"
     [chatRecordId]="chatRecordId"
@@ -24,6 +23,7 @@
   <!-- Placeholder for empty chat record -->
   <div class="placeholder__container" *ngIf="chatRecordLength === 0">
     <ng-container
+      *ngIf="privateChatOpponentUser"
       [ngTemplateOutlet]="
         mainType === 'channel'
           ? channelPlaceholder

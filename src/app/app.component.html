@@ -1,6 +1,13 @@
-  <router-outlet></router-outlet>
+<router-outlet></router-outlet>
 
-  <router-outlet *ngIf="rs.isDesktop$ | async" id="channelOutlet" name="channel"></router-outlet>
-  <router-outlet *ngIf="rs.isDesktop$ | async" id="threadOutlet" name="thread"></router-outlet>
+<router-outlet
+  *ngIf="rs.isDesktop$ | async"
+  id="channelOutlet"
+  name="channel"
+></router-outlet>
 
-<!-- <router-outlet class="aside-right"></router-outlet> -->
+<router-outlet
+  *ngIf="rs.isDesktop$ | async"
+  id="threadOutlet"
+  name="thread"
+></router-outlet>

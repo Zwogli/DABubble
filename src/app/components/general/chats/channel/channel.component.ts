@@ -38,7 +38,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
       this.mainType = this.route.snapshot.paramMap.get('type')!;
       this.setChatRecordId('channels');
       this.setCurrentUser();
-      console.log(this.chatRecordId, 'Channel chatRecordID');
     });
   }
 
