@@ -50,11 +50,10 @@ export class ThreadComponent implements OnInit {
    *
    */
   async setCurrentChannel() {
-    // const channelId = this.route.snapshot.paramMap.get('channelId');
     this.route.queryParamMap.subscribe(async (p: any) => {
       let channelId = p['params'].channelID;
       console.log(channelId, 'in thread');
-      
+
       if (channelId) {
         this.chatService.channelId = channelId;
         await this.fireService
@@ -74,17 +73,19 @@ export class ThreadComponent implements OnInit {
    * in this certain way.
    *
    */
-  async setChatRecordId() {
-    const msgId = this.route.snapshot.paramMap.get('msgId');
-    if (msgId) {
-      await this.fireService
-        .getSingleSubDoc(this.currentChannel.chatRecord, msgId)
-        .then((doc: any) => {
-          this.chatRecordId = doc.thread.id;
-          this.chatService.setThreadChatRecordId(doc.thread.id);
-          this.setLeadingMsg(msgId);
-        });
-    }
+  setChatRecordId() {
+    this.route.queryParamMap.subscribe(async (p: any) => {
+      let msgId = p['params'].msgID;
+      if (msgId) {
+        await this.fireService
+          .getSingleSubDoc(this.currentChannel.chatRecord, msgId)
+          .then((doc: any) => {
+            this.chatRecordId = doc.thread.id;
+            this.chatService.setThreadChatRecordId(doc.thread.id);
+            this.setLeadingMsg(msgId);
+          });
+      }
+    });
   }
 
   async setLeadingMsg(msgId: string) {
