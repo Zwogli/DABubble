@@ -77,8 +77,14 @@
     left: 0;
     right: 0;
 
+    display: flex;
+    gap: 20px;
+    transition: 125ms ease-in-out;
+    padding: 10px 16px 34px 16px;
+    // margin-bottom: 24px;
+
     z-index: 2;
-    background-color: aqua;
+    background-color: var(--color-blue-bg);
 }
 
 .message__edit-msg__input-wrapper {
@@ -86,7 +92,7 @@
     width: 100%;
 
     textarea {
-    
+
         width: 80%;
     }
 }

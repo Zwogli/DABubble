@@ -80,9 +80,7 @@
               <span>{{ message.file.name }}</span>
             </div>
           </ng-template>
-          <p>
-            {{ message.message }}
-          </p>
+          <p>{{ message.message }}</p>
         </div>
 
         <div *ngIf="message.thread.length > 0" class="message__footer">
@@ -113,8 +111,8 @@
               matInput
               cdkTextareaAutosize
               #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="1"
-              cdkAutosizeMaxRows="5"
+              cdkAutosizeMinRows="2"
+              cdkAutosizeMaxRows="4"
             >
             </textarea>
             <div class="message-input__btn-container">

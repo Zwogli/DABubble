@@ -65,9 +65,7 @@ export class ChatRecordComponent
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
@@ -161,11 +159,12 @@ export class ChatRecordComponent
 
   closeEditInput(msg: Message) {
     this.showEditMsgInput = null;
-    this.toggleMsgMenu(msg)
+    this.toggleMsgMenu(msg);
   }
 
   saveEditMsg(msg: Message) {
     this.chatService.updateMessage(this.chatRecordId, msg, this.editMsgPayload);
+    this.closeEditInput(msg);
   }
 
   stopPropagation(event: any) {
