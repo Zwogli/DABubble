@@ -61,7 +61,7 @@ export class AuthService {
   }
 
   guestSignIn() {
-    this.signIn('guest@mail.com', 'guest_user123', 'guest');
+    this.signIn('guest@mail.com', 'guest_User123', 'guest');
     this.router.navigate(['home']);
   }
 
