@@ -65,33 +65,23 @@ export class ResponsiveService {
 
   changeToDesktopUrl(channelType: string, channelID: string, msgID?: string) {
     if (msgID) {
-     
-        this.router.navigateByUrl(
-          `/home(channel:chat/${channelType}//thread:thread)?channelID=${channelID}&msgID=${msgID}`
-        );
-     
+      this.router.navigateByUrl(
+        `/home(channel:chat/${channelType}//thread:thread)?channelID=${channelID}&msgID=${msgID}`
+      );
     } else {
-      
-        this.router.navigateByUrl(
-          `/home(channel:chat/${channelType})?channelID=${channelID}`
-        );
-      
+      this.router.navigateByUrl(
+        `/home(channel:chat/${channelType})?channelID=${channelID}`
+      );
     }
   }
 
   changeToMobileUrl(channelType: string, channelID: string, msgID?: string) {
     if (msgID) {
-      setTimeout(() => {
-        this.router.navigateByUrl(
-          `/thread?channelID=${channelID}&msgID=${msgID}`
-        );
-      }, 200);
+      this.router.navigateByUrl(
+        `/thread?channelID=${channelID}&msgID=${msgID}`
+      );
     } else {
-      setTimeout(() => {
-        this.router.navigateByUrl(
-          `/chat/${channelType}?channelID=${channelID}`
-        );
-      }, 200);
+      this.router.navigateByUrl(`/chat/${channelType}?channelID=${channelID}`);
     }
   }
 }
