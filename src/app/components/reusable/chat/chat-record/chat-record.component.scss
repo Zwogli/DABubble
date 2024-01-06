@@ -81,8 +81,7 @@
     gap: 15px;
     transition: 125ms ease-in-out;
     padding: 10px 16px 10px 16px;
-    // margin-bottom: 24px;
-
+    
     z-index: 2;
     background-color: var(--color-blue-bg);
 }
@@ -96,10 +95,11 @@
     background-color: white;
     width: 100%;
 
-    @media only screen and (max-width: 450px) {
-        // padding: 5px;
-        // border-radius: 5px;
+    &:focus-within {
+        border-color: var(--color-blue-primary-default);
+    }
 
+    @media only screen and (max-width: 450px) {
         button {
             padding: 6px 12px !important;
         }
@@ -134,5 +134,9 @@
     .btn-container__extra-btn-wrapper {
         display: flex;
         gap: 5px;
+
+        mat-icon {
+            margin: 0;
+        }
     }
 }

@@ -16,6 +16,7 @@ import { ChatTypes } from 'src/app/interfaces/chats/types';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
 import { ChatService } from 'src/app/services/chat.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-chat-record',
@@ -47,6 +48,7 @@ export class ChatRecordComponent
   constructor(
     private chatService: ChatService,
     private changeDetector: ChangeDetectorRef,
+    public rs: ResponsiveService,
     private route: ActivatedRoute
   ) {
     this.route.queryParamMap.subscribe((p: any) => {

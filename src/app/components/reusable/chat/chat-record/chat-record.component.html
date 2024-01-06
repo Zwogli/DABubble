@@ -124,20 +124,41 @@
               </button>
 
               <div class="btn-container__extra-btn-wrapper">
-                <button
-                  (click)="closeEditInput(message)"
-                  class="text-btn-stroked"
-                  mat-stroked-button
-                >
-                  Abbrechen
-                </button>
-                <button
-                  (click)="saveEditMsg(message)"
-                  class="text-btn-flat"
-                  mat-flat-button
-                >
-                  Speichern
-                </button>
+                <ng-container
+                  *ngIf="rs.isMobile$ | async; then smallBtn; else bigBtn"
+                ></ng-container>
+                <ng-template #bigBtn>
+                  <button
+                    (click)="closeEditInput(message)"
+                    class="text-btn-stroked"
+                    mat-stroked-button
+                  >
+                    Abbrechen
+                  </button>
+                  <button
+                    (click)="saveEditMsg(message)"
+                    class="text-btn-flat"
+                    mat-flat-button
+                  >
+                    Speichern
+                  </button>
+                </ng-template>
+                <ng-template #smallBtn>
+                  <button
+                    (click)="closeEditInput(message)"
+                    class="text-btn-stroked"
+                    mat-stroked-button
+                  >
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                  <button
+                    (click)="saveEditMsg(message)"
+                    class="text-btn-flat"
+                    mat-flat-button
+                  >
+                    <mat-icon>save</mat-icon>
+                  </button>
+                </ng-template>
               </div>
             </div>
           </div>
