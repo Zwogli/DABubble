@@ -4,9 +4,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -21,7 +23,7 @@ import { ChatService } from 'src/app/services/chat.service';
   styleUrls: ['./chat-record.component.scss'],
 })
 export class ChatRecordComponent
-  implements OnInit, OnDestroy, AfterViewChecked
+  implements OnInit, OnDestroy, AfterViewChecked, OnChanges
 {
   @Input() chatRecordId!: string;
   @Input() currentUser!: User;
@@ -35,6 +37,10 @@ export class ChatRecordComponent
   public chatRecord!: Message[];
   public fileURL!: string;
   public channelId!: string;
+
+  public showEditMsgMenu: boolean = false;
+  public showEditMsgInput!: Message | null;
+  public editMsgPayload!: string;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
@@ -65,6 +71,8 @@ export class ChatRecordComponent
         });
     }
   }
+
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
@@ -112,7 +120,7 @@ export class ChatRecordComponent
   // }
 
   toggleMsgMenu(msg: Message) {
-    if (this.selectedMsg == msg) {
+    if (this.selectedMsg === msg) {
       this.selectedMsg = null;
     } else {
       this.selectedMsg = msg;
@@ -138,5 +146,34 @@ export class ChatRecordComponent
 
   loadFile(url: string) {
     this.chatService.openFile(url);
+  }
+
+  openEditMsgMenu(event: any) {
+    event.stopPropagation();
+    this.toggleEditMsgMenu();
+  }
+
+  toggleEditMsgMenu() {
+    this.showEditMsgMenu = !this.showEditMsgMenu;
+  }
+
+  editMsg(msg: Message) {
+    this.toggleEditMsgMenu();
+    this.showEditMsgInput = msg;
+    this.editMsgPayload = msg.message;
+  }
+
+  closeEditInput(msg: Message) {
+    this.showEditMsgInput = null;
+    this.toggleMsgMenu(msg);
+  }
+
+  saveEditMsg(msg: Message) {
+    this.chatService.updateMessage(this.chatRecordId, msg, this.editMsgPayload);
+    this.closeEditInput(msg);
+  }
+
+  stopPropagation(event: any) {
+    event.stopPropagation();
   }
 }

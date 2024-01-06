@@ -50,6 +50,8 @@ import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat
 import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 import { AvatarDisplayComponent } from './components/reusable/avatar-display/avatar-display.component';
 import { CustomNavigationDirective } from './custom_directives/custom-navigation.directive';
+import { CustomAutofocusDirective } from './custom_directives/custom-autofocus.directive';
+import { TextareaAutoresizeDirective } from './custom_directives/textarea-autoresize.directive';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,8 @@ import { CustomNavigationDirective } from './custom_directives/custom-navigation
     SignInMergeAccountsComponent,
     AvatarDisplayComponent,
     CustomNavigationDirective,
+    CustomAutofocusDirective,
+    TextareaAutoresizeDirective,
   ],
 
   imports: [

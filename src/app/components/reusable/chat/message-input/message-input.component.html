@@ -2,6 +2,7 @@
   <!-- Msg Input -->
   <textarea
     [(ngModel)]="msgPayload"
+    name="msgInput"
     type="text"
     placeholder="{{ placeholderText }}"
   >
@@ -41,7 +42,6 @@
       >
         <input
           type="file"
-          name=""
           accept="image/*,.pdf"
           id="fileUpload"
           (change)="onFileChange($event)"
@@ -67,7 +67,9 @@
         mat-icon-button
         aria-label="Icon button to send the message"
       >
-        <mat-icon class="message-input__send-btn" fontSet="material-icons">send</mat-icon>
+        <mat-icon class="message-input__send-btn" fontSet="material-icons"
+          >send</mat-icon
+        >
       </button>
     </div>
   </div>
