@@ -22,6 +22,7 @@
   <button
     *ngIf="channel"
     [customLink]="['channel', channel.id]"
+    (click)="navigateBack()"
     class="button__close"
   >
     <mat-icon

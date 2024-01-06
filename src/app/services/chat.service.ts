@@ -230,7 +230,6 @@ export class ChatService implements OnInit, OnDestroy {
         this.leadingThreadMsg.id
       );
     }
-    this.router.navigate(['/home/channel/', this.channelId]);
   }
 
   setChatRecordId(chatRecordId: string) {
