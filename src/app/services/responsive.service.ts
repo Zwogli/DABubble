@@ -1,6 +1,6 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, Subject, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { PRIMARY_OUTLET, Router, UrlTree } from '@angular/router';
 
 @Injectable({
