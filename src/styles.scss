@@ -83,11 +83,6 @@ body {
   height: 100%;
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
 button {
   font-family: var(--font-selection);
 }
@@ -99,6 +94,20 @@ app-create-channel {
   overflow-y: hidden;
   width: 100dvw;
   height: 100dvh;
+}
+
+.text-btn-stroked {
+  padding: 12px 25px !important;
+  color: var(--color-blue-primary-default) !important;
+  border-color: var(--color-blue-primary-default) !important;
+  border-radius: 50px !important;
+}
+
+.text-btn-flat {
+  padding: 12px 25px !important;
+  color: white !important;
+  background-color: var(--color-blue-primary-default) !important;
+  border-radius: 50px !important;
 }
 
 .d-none {

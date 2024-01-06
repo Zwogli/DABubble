@@ -72,15 +72,15 @@
 
 .message__edit-msg__input-container {
     position: absolute;
-    top: 0;
+    top: -30px;
     bottom: 0;
     left: 0;
     right: 0;
 
     display: flex;
-    gap: 20px;
+    gap: 15px;
     transition: 125ms ease-in-out;
-    padding: 10px 16px 34px 16px;
+    padding: 10px 16px 10px 16px;
     // margin-bottom: 24px;
 
     z-index: 2;
@@ -88,16 +88,33 @@
 }
 
 .message__edit-msg__input-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid var(--color-blue-border);
+    border-radius: 10px;
+    background-color: white;
     width: 100%;
+
+    @media only screen and (max-width: 450px) {
+        // padding: 5px;
+        // border-radius: 5px;
+
+        button {
+            padding: 6px 12px !important;
+        }
+    }
 
     .message_edit-msg_input {
         display: flex;
-        height: -webkit-fill-available;
         overflow-y: scroll;
-
+        flex-grow: 1;
 
         textarea {
             width: 98%;
+            height: 100%;
+            background-color: transparent;
+
             border: none;
             outline: none;
         }
@@ -107,6 +124,12 @@
 .message-input__btn-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
+    button {
+        display: flex;
+        align-items: center;
+    }
 
     .btn-container__extra-btn-wrapper {
         display: flex;

@@ -113,7 +113,6 @@
                 cdkTextareaAutosize
                 #autosize="cdkTextareaAutosize"
                 cdkAutosizeMinRows="2"
-            
               >
               </textarea>
             </div>
@@ -125,10 +124,18 @@
               </button>
 
               <div class="btn-container__extra-btn-wrapper">
-                <button (click)="closeEditInput(message)" mat-button>
+                <button
+                  (click)="closeEditInput(message)"
+                  class="text-btn-stroked"
+                  mat-stroked-button
+                >
                   Abbrechen
                 </button>
-                <button (click)="saveEditMsg(message)" mat-button>
+                <button
+                  (click)="saveEditMsg(message)"
+                  class="text-btn-flat"
+                  mat-flat-button
+                >
                   Speichern
                 </button>
               </div>
