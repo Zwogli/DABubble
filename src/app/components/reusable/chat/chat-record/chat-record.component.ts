@@ -9,6 +9,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -16,6 +17,7 @@ import { ChatTypes } from 'src/app/interfaces/chats/types';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
 import { ChatService } from 'src/app/services/chat.service';
+import { EmojiPickerService } from 'src/app/services/emoji-picker.service';
 import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
@@ -26,6 +28,8 @@ import { ResponsiveService } from 'src/app/services/responsive.service';
 export class ChatRecordComponent
   implements OnInit, OnDestroy, AfterViewChecked, OnChanges
 {
+  emojiService: EmojiPickerService = inject(EmojiPickerService);
+
   @Input() chatRecordId!: string;
   @Input() currentUser!: User;
   @Input() parentType!: ChatTypes;
@@ -41,7 +45,7 @@ export class ChatRecordComponent
 
   public showEditMsgMenu: boolean = false;
   public showEditMsgInput!: Message | null;
-  public editMsgPayload!: string;
+  public editMsgPayload: string = '';
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
@@ -173,6 +177,10 @@ export class ChatRecordComponent
   saveEditMsg(msg: Message) {
     this.chatService.updateMessage(this.chatRecordId, msg, this.editMsgPayload);
     this.closeEditInput(msg);
+  }
+
+  addEmoji(event: any) {
+    this.editMsgPayload += event.emoji.native;
   }
 
   stopPropagation(event: any) {

@@ -1,12 +1,23 @@
 <div class="message__input">
+  <emoji-mart
+    *ngIf="emojiService.isOpenMain"
+    class="emoji-picker"
+    [darkMode]="false"
+    (emojiClick)="addEmoji($event)"
+    [perLine]="7"
+    [isNative]="true"
+    [emojiTooltip]="true"
+    [emoji]="''"
+  ></emoji-mart>
+
   <!-- Msg Input -->
   <textarea
     [(ngModel)]="msgPayload"
     name="msgInput"
+    id="msgInput"
     type="text"
     placeholder="{{ placeholderText }}"
-  >
-  </textarea>
+  ></textarea>
 
   <!-- File Preview -->
   <div class="file-upload__container">
@@ -51,7 +62,11 @@
 
       <mat-divider [vertical]="true"></mat-divider>
 
-      <button mat-icon-button aria-label="Icon button to select emotes">
+      <button
+        (click)="emojiService.toggleEmojiPicker('Main')"
+        mat-icon-button
+        aria-label="Icon button to select emotes"
+      >
         <mat-icon fontSet="material-icons-outlined"
           >sentiment_satisfied</mat-icon
         >

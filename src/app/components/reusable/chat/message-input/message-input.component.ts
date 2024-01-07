@@ -1,11 +1,17 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  inject,
+} from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/models/message.class';
 import { ChatTypes } from 'src/app/interfaces/chats/types';
 import { ChatService } from 'src/app/services/chat.service';
 import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
-import { Chat } from 'src/app/models/chat.class';
+import { EmojiPickerService } from 'src/app/services/emoji-picker.service';
+
 
 @Component({
   selector: 'app-message-input',
@@ -13,12 +19,14 @@ import { Chat } from 'src/app/models/chat.class';
   styleUrls: ['./message-input.component.scss'],
 })
 export class MessageInputComponent implements OnChanges {
+  emojiService: EmojiPickerService = inject(EmojiPickerService);
+
   @Input() currentChatRecordId!: string;
   @Input() parentChat!: ChatTypes;
   @Input() channel!: Channel;
   @Input() privateChatOpponentUser!: User;
 
-  public msgPayload!: string;
+  public msgPayload: string = '';
   public fileToUpload!: any;
   public placeholderText!: string;
   public fileName!: string;
@@ -26,7 +34,9 @@ export class MessageInputComponent implements OnChanges {
   constructor(
     private fireService: FirestoreService,
     private chatService: ChatService
-  ) {}
+  ) {
+  
+  }
 
   ngOnChanges(): void {
     this.setPlaceholder();
@@ -136,5 +146,12 @@ export class MessageInputComponent implements OnChanges {
     this.fileToUpload = '';
     this.toggleThumbnail();
     this.toggleFileName();
+  }
+
+  addEmoji(event: any) {
+    console.log('Emoji picked: ', event);
+    console.log(event.emoji.native);
+    this.msgPayload += event.emoji.native;
+    document.getElementById('msgInput')!.focus();
   }
 }
