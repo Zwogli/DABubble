@@ -126,6 +126,7 @@ export class ChatRecordComponent
   // }
 
   toggleMsgMenu(msg: Message) {
+    this.showEditMsgMenu = false;
     if (this.selectedMsg === msg) {
       this.selectedMsg = null;
     } else {

@@ -42,6 +42,8 @@
         message__menuOpened: message === selectedMsg
       }"
       (click)="toggleMsgMenu(message)"
+      (mouseenter)="toggleMsgMenu(message)"
+      (mouseleave)="toggleMsgMenu(message)"
     >
       <div class="message__avatar-container">
         <img src="{{ message.sentByPhotoUrl }}" alt="" />
@@ -145,7 +147,7 @@
                 ></ng-container>
                 <ng-template #bigBtn>
                   <button
-                    (click)="closeEditInput(message)"
+                    (click)="closeEditInput(message); emojiService.isOpenEdit = false"
                     class="text-btn-stroked"
                     mat-stroked-button
                   >
