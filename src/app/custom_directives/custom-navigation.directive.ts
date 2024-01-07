@@ -91,6 +91,6 @@ export class CustomNavigationDirective {
   }
 
   startThread() {
-    console.log('thread');
+    // console.log('thread');
   }
 }

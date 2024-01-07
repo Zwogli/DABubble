@@ -31,31 +31,31 @@ export class ResponsiveService {
     const msgID: string = tree.queryParams['msgID'];
     let channelType: string;
 
-    console.log('msgID from RS', msgID);
+    // console.log('msgID from RS', msgID);
     if (!msgID) {
       channelType = this.getChannelType(tree, val);
-      console.log('After Return: ', channelType);
+      // console.log('After Return: ', channelType);
     } else {
       channelType = 'channel';
     }
 
     if (val && channelID) {
-      console.log('change to Desktop');
+      // console.log('change to Desktop');
       this.changeToDesktopUrl(channelType, channelID, msgID);
     } else {
-      console.log('change to mobile');
+      // console.log('change to mobile');
       this.changeToMobileUrl(channelType, channelID, msgID);
     }
   }
 
   getChannelType(tree: UrlTree, val: boolean): string {
-    console.log(val);
+    // console.log(val);
     if (val) {
-      console.log(tree);
+      // console.log(tree);
       const type = tree.root.children[PRIMARY_OUTLET].segments[1].path;
       return type;
     } else if (val === false) {
-      console.log(tree);
+      // console.log(tree);
       const type = tree.root.children['channel'].segments[1].path;
       return type;
     } else {
