@@ -66,7 +66,6 @@ export class ChatService implements OnInit, OnDestroy {
   }
 
   startSubChat(docId: string) {
-    console.log(docId, 'Chat-Service');
     this.unsubChatRecord = this.subChatRecord(docId);
   }
 

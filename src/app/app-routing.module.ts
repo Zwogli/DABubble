@@ -68,28 +68,28 @@ export class AppRoutingModule {
       if (val) {
         router.resetConfig(mobileRoutes);
         this.rs.changeRoutes(!val);
-        console.log('Mobile Route config:', router.config);
+        // console.log('Mobile Route config:', router.config);
       }
     });
 
     this.rs.isTablet$.subscribe((val) => {
-      console.log('Tablet in routing', val);
+      // console.log('Tablet in routing', val);
 
       if (val) {
         router.resetConfig(mobileRoutes);
-        console.log('Tablet Route config:', router.config);
-        console.log('Change routes');
+        // console.log('Tablet Route config:', router.config);
+        // console.log('Change routes');
         this.rs.changeRoutes(!val);
       }
     });
 
     this.rs.isDesktop$.subscribe((val) => {
-      console.log('Desktop in routing', val);
+      // console.log('Desktop in routing', val);
 
       if (val) {
         router.resetConfig(desktopRoutes);
-        console.log('Desktop Route config:', router.config);
-        console.log('Change routes');
+        // console.log('Desktop Route config:', router.config);
+        // console.log('Change routes');
         this.rs.changeRoutes(val);
       }
     });
