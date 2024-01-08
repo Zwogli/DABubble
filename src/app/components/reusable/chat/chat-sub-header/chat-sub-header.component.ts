@@ -22,7 +22,7 @@ import { collection, getDocs } from '@angular/fire/firestore';
 })
 export class ChatSubHeaderComponent implements OnInit, OnChanges, OnDestroy {
   rs: ResponsiveService = inject(ResponsiveService);
-
+  fireService: FirestoreService = inject(FirestoreService);
   @Input() type!: string;
   @Input() channel!: Channel;
   @Input() privateChatOpponentUser!: User;
@@ -33,10 +33,7 @@ export class ChatSubHeaderComponent implements OnInit, OnChanges, OnDestroy {
   public currentUser!: User;
   public isDesktop!: boolean;
 
-  constructor(
-    private chatService: ChatService,
-    public fireService: FirestoreService
-  ) {
+  constructor(private chatService: ChatService) {
     this.rs.isDesktop$
       .pipe(takeUntil(this.componentIsDestroyed$))
       .subscribe((val) => {
