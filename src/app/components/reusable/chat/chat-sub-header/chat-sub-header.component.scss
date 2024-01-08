@@ -24,7 +24,7 @@
     }
 
     mat-icon {
-        font-size: 18px !important;
+        font-size: 1rem !important;
         height: 18px;
         width: 18px;
     }
@@ -35,7 +35,7 @@
     cursor: pointer;
 
     mat-icon {
-        font-size: 24px !important;
+        font-size: 1.333rem !important;
         height: 24px;
         width: 24px;
     }
@@ -50,11 +50,11 @@
 
     border-radius: 30px;
 
-    font-size: 20px;
+    font-size: 1.111rem;
 
     .title__main {
         color: var(--Black, #000);
-        font-size: 20px;
+        font-size: 1.111rem;
         font-family: var(--font-selection);
         font-weight: 700;
 
@@ -62,19 +62,49 @@
         mat-icon {
             text-align: center;
             font-weight: 700;
-            font-size: 20px;
+            font-size: 1.111rem;
         }
     }
 
     .title__sub {
         color: var(--color-blue-primary-hover);
-        font-size: 14px;
+        font-size: 0.778rem;
         margin-left: 5px;
     }
 
     &:hover {
         background-color: antiquewhite;
     }
+}
 
+.subheader__icon-container {
+    display: flex;
+    align-items: center;
+}
 
+.subheader__avatar-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    margin-right: 20px;
+    padding: 2px;
+    border-radius: 36px;
+
+    background-color: aquamarine;
+}
+
+.subheader__avatar-wrapper {
+    display: flex;
+    align-items: center;
+
+    app-avatar-display {
+        position: relative;
+        margin-inline: auto;
+    }
+}
+
+.member__counter {
+    font-weight: bold;
+    font-size: 1.111rem;
 }

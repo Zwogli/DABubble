@@ -10,10 +10,10 @@ import { Channel } from 'src/app/models/channel.class';
 import { ChatService } from 'src/app/services/chat.service';
 import { AvatarConfig } from 'src/app/interfaces/chats/types';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { Subject, last, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { ResponsiveService } from 'src/app/services/responsive.service';
-import { collection, getDocs } from '@angular/fire/firestore';
+
 
 @Component({
   selector: 'app-chat-sub-header',

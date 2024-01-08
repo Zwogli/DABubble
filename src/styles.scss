@@ -53,6 +53,14 @@ body {
   font-family: var(--font-selection);
 }
 
+.avatar-xsmall {
+  width: 34px;
+  height: 34px;
+  border: 2px solid white;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
 .avatar-small {
   width: 50px;
   height: 50px;

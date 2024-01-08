@@ -3,6 +3,7 @@
     class="avatar-{{ data.size }}"
     [src]="data.user.photoUrl"
     alt="Avatar of {{ data.user.name }}"
+    referrerpolicy="no-referrer"
   />
   <span
     *ngIf="data.showStatus"
