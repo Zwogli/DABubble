@@ -289,16 +289,15 @@ form {
 
 
 @media(min-width: 500px) {
-  .block__input {
-    width: 80%;
-  }
-
-  .block__google-log-in {
-    width: calc(80% - 64px);
-  }
-
   form {
     padding: 0 34px;
+  }
+}
+
+
+@media(min-width: 600px) {
+  mat-card {
+    width: calc(70% - 32px);
   }
 }
 
@@ -312,9 +311,31 @@ form {
 
 @media(min-width: 700px) {
   mat-card {
-    width: calc(80% - 32px);
+    width: calc(60% - 32px);
   }
 }
+
+
+@media(min-width: 900px) {
+  mat-card {
+    width: calc(50% - 32px);
+  }
+}
+
+
+@media(min-width:1100px) {
+  mat-card {
+    width: calc(40% - 32px);
+  }
+}
+
+
+@media(min-width:1370px) {
+  mat-card {
+    width: 500px;
+  }
+}
+
 
 
 //responsive for smaller devices

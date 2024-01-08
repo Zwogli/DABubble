@@ -1,5 +1,5 @@
 <div [class.block__intro--change-bg]="animationToTop" [class.block__intro]="!introIsDone" class="block__intro-div">
-  <div *ngIf="!introIsDone" [class.block__headline--move-top]="animationToTop" class="block__headline">
+  <div *ngIf="!introIsDone" [class.animation-to-top-mobile]="animationToTop && !this.isDesktop" [class.animation-to-top-desktop]="animationToTop && this.isDesktop" class="block__headline">
     <img [class.img--move-left]="animationToLeft && !animationToTop" src="assets/img/logo.png" />
     <div [class.hide-box--move-left]="animationToLeft" [class.hide-box--d-none]="animationToTop" class="hide-box"></div>
     <span [class.headline--move-right]="animationToRight && !animationToTop"

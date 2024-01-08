@@ -25,6 +25,7 @@
 .block__intro-div {
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .img-after-intro {
@@ -40,9 +41,9 @@
 .block__headline {
   display: flex;
   align-items: center;
-  position: relative;
   justify-content: center;
   z-index: 10;
+  position: absolute;
 }
 
 .width-unset {
@@ -109,8 +110,12 @@
   }
 }
 
-.block__headline--move-top {
+.animation-to-top-mobile {
   animation: BlockHeadlineMoveTop 500ms ease-in-out forwards;
+}
+
+.animation-to-top-desktop {
+  animation: BlockHeadlineMoveTopDesktop 500ms ease-in-out forwards;
 }
 
 @keyframes BlockHeadlineMoveTop {
@@ -128,6 +133,26 @@
   }
   100% {
     transform: translateY(-280px);
+    opacity: unset;
+  }
+}
+
+@keyframes BlockHeadlineMoveTopDesktop {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
+  }
+
+  100% {
+    transform: translate(-480px, -320px);
     opacity: unset;
   }
 }
