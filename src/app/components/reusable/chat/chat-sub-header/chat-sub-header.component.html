@@ -7,9 +7,19 @@
     </span>
   </div>
 
-  <button aria-label="Icon button with a person add icon">
-    <mat-icon fontSet="material-icons-outlined">person_add</mat-icon>
-  </button>
+  <div>
+    <div *ngIf="isDesktop">
+      <div *ngFor="let member of fireService.channelMember | async">
+        <app-avatar-display
+          [data]="{ user: member, showStatus: false, size: 'small' }"
+        ></app-avatar-display>
+      </div>
+      <span>{{ (fireService.channelMember | async)?.length }}</span>
+    </div>
+    <button aria-label="Icon button with a person add icon">
+      <mat-icon fontSet="material-icons-outlined">person_add</mat-icon>
+    </button>
+  </div>
 </div>
 
 <!-- THREAD subheader -->
