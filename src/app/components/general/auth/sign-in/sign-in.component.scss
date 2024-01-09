@@ -31,6 +31,10 @@ mat-icon {
   color: var(--color-grey-primary-disable);
 }
 
+// .margin-desktop {
+//   margin-left: 130px;
+// }
+
 form {
   display: flex;
   flex-direction: column;
@@ -237,6 +241,12 @@ form {
       cursor: pointer;
     }
   }
+}
+
+.create-account-desktop {
+  // margin-top: 0 !important;
+  // margin-left: 30px !important;
+  display: none;
 }
 
 .block__alert-email {
