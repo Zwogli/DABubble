@@ -52,7 +52,6 @@ export class ThreadComponent implements OnInit {
   async setCurrentChannel() {
     this.route.queryParamMap.subscribe(async (p: any) => {
       let channelId = p['params'].channelID;
-      console.log(channelId, 'in thread');
 
       if (channelId) {
         this.chatService.channelId = channelId;
