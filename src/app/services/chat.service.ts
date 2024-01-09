@@ -291,8 +291,20 @@ export class ChatService implements OnInit, OnDestroy {
       'messages',
       msg.id
     );
-    await updateDoc(msgRef, {
-      message: content,
-    });
+    if (!msg.file.url) {
+      await updateDoc(msgRef, {
+        message: content,
+        'file.name': '',
+        'file.type': '',
+        'file.url': '',
+      });
+    } else {
+      await updateDoc(msgRef, {
+        message: content,
+        'file.name': msg.file.name,
+        'file.type': msg.file.type,
+        'file.url': msg.file.url,
+      });
+    }
   }
 }

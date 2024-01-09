@@ -42,6 +42,7 @@ export class ChatRecordComponent
   public showEditMsgMenu: boolean = false;
   public showEditMsgInput!: Message | null;
   public editMsgPayload!: string;
+  private deletedFileDataCache!: { url: string; type: string; name: string } | null;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
@@ -167,12 +168,29 @@ export class ChatRecordComponent
 
   closeEditInput(msg: Message) {
     this.showEditMsgInput = null;
+    if (this.deletedFileDataCache) {
+      msg.file = this.deletedFileDataCache;
+    }
     this.toggleMsgMenu(msg);
   }
 
+  removeFileFromMsg(msg: Message) {
+    this.deletedFileDataCache = msg.file;
+    msg.file = {
+      url: '',
+      name: '',
+      type: '',
+    };
+  }
+
   saveEditMsg(msg: Message) {
-    this.chatService.updateMessage(this.chatRecordId, msg, this.editMsgPayload.trim());
+    this.chatService.updateMessage(
+      this.chatRecordId,
+      msg,
+      this.editMsgPayload.trim()
+    );
     this.closeEditInput(msg);
+    this.deletedFileDataCache = null;
   }
 
   stopPropagation(event: any) {

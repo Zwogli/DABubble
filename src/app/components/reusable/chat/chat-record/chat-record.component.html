@@ -116,6 +116,16 @@
               >
               </textarea>
             </div>
+            <div *ngIf="message.file.url" class="msg-edit__input--file-wrapper">
+              <ng-container
+                *ngIf="
+                  message.file.url && message.file.type !== 'application/pdf';
+                  then isPicture;
+                  else isPDF
+                "
+              ></ng-container>
+              <button (click)="removeFileFromMsg(message)" mat-flat-button color="warn">Delete File</button>
+            </div>
             <div class="message-input__btn-container">
               <button mat-icon-button aria-label="Icon button to select emotes">
                 <mat-icon fontSet="material-icons-outlined"
