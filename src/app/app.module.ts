@@ -52,6 +52,8 @@ import { AvatarDisplayComponent } from './components/reusable/avatar-display/ava
 import { CustomNavigationDirective } from './custom_directives/custom-navigation.directive';
 import { CustomAutofocusDirective } from './custom_directives/custom-autofocus.directive';
 import { TextareaAutoresizeDirective } from './custom_directives/textarea-autoresize.directive';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @NgModule({
   declarations: [
@@ -87,7 +89,7 @@ import { TextareaAutoresizeDirective } from './custom_directives/textarea-autore
     CustomAutofocusDirective,
     TextareaAutoresizeDirective,
   ],
-
+  
   imports: [
     BrowserModule,
     FormsModule,
@@ -102,6 +104,8 @@ import { TextareaAutoresizeDirective } from './custom_directives/textarea-autore
     AngularFireAuthModule,
     AngularFireStorageModule,
     BrowserAnimationsModule,
+    EmojiComponent,
+    PickerComponent,
     LayoutModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],

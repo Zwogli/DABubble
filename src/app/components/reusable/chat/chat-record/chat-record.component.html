@@ -42,6 +42,8 @@
         message__menuOpened: message === selectedMsg
       }"
       (click)="toggleMsgMenu(message)"
+      (mouseenter)="toggleMsgMenu(message)"
+      (mouseleave)="toggleMsgMenu(message)"
     >
       <div class="message__avatar-container">
         <img src="{{ message.sentByPhotoUrl }}" alt="" />
@@ -141,7 +143,23 @@
               </button>
             </div>
             <div class="message-input__btn-container">
-              <button mat-icon-button aria-label="Icon button to select emotes">
+              <emoji-mart
+                *ngIf="emojiService.isOpenEdit"
+                class="emoji-picker-edit"
+                [darkMode]="false"
+                (emojiClick)="addEmoji($event)"
+                [perLine]="7"
+                [isNative]="true"
+                [virtualize]="true"
+                [emojiTooltip]="true"
+                [emoji]="''"
+              ></emoji-mart>
+
+              <button
+                (click)="emojiService.toggleEmojiPicker('Edit')"
+                mat-icon-button
+                aria-label="Icon button to select emotes"
+              >
                 <mat-icon fontSet="material-icons-outlined"
                   >sentiment_satisfied</mat-icon
                 >
@@ -153,7 +171,7 @@
                 ></ng-container>
                 <ng-template #bigBtn>
                   <button
-                    (click)="closeEditInput(message)"
+                    (click)="closeEditInput(message); emojiService.isOpenEdit = false"
                     class="text-btn-stroked"
                     mat-stroked-button
                   >
