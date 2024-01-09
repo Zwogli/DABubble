@@ -80,7 +80,15 @@
               <span>{{ message.file.name }}</span>
             </div>
           </ng-template>
-          <p>{{ message.message }}</p>
+          <ng-container
+            *ngIf="message.message; then msgText; else noMsgText"
+          ></ng-container>
+          <ng-template #msgText>
+            <p>{{ message.message }}</p>
+          </ng-template>
+          <ng-template #noMsgText>
+            <p *ngIf="!message.file.url">[[ Nachricht wurde gelöscht ]]</p>
+          </ng-template>
         </div>
 
         <div *ngIf="message.thread.length > 0" class="message__footer">
@@ -124,7 +132,13 @@
                   else isPDF
                 "
               ></ng-container>
-              <button (click)="removeFileFromMsg(message)" mat-flat-button color="warn">Delete File</button>
+              <button
+                (click)="removeFileFromMsg(message)"
+                mat-flat-button
+                color="warn"
+              >
+                Delete File
+              </button>
             </div>
             <div class="message-input__btn-container">
               <button mat-icon-button aria-label="Icon button to select emotes">

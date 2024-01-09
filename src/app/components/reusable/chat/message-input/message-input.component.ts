@@ -18,7 +18,7 @@ export class MessageInputComponent implements OnChanges {
   @Input() channel!: Channel;
   @Input() privateChatOpponentUser!: User;
 
-  public msgPayload!: string;
+  public msgPayload: string = '';
   public fileToUpload!: any;
   public placeholderText!: string;
   public fileName!: string;
@@ -51,7 +51,7 @@ export class MessageInputComponent implements OnChanges {
    *
    */
   sendMessage() {
-    if (!this.msgPayload) return;
+    if (!this.msgPayload && !this.fileToUpload) return;
     const data = new Message(this.setMsgData());
     this.fireService.addMessage(
       this.currentChatRecordId,
