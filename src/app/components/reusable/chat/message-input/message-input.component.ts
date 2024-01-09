@@ -68,7 +68,7 @@ export class MessageInputComponent implements OnChanges {
   setMsgData() {
     const user = this.fireService.currentUser;
     return {
-      message: this.msgPayload,
+      message: this.msgPayload.trim(),
       sentById: user.id,
       sentByName: user.name,
       sentByPhotoUrl: user.photoUrl,

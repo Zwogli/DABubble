@@ -171,7 +171,7 @@ export class ChatRecordComponent
   }
 
   saveEditMsg(msg: Message) {
-    this.chatService.updateMessage(this.chatRecordId, msg, this.editMsgPayload);
+    this.chatService.updateMessage(this.chatRecordId, msg, this.editMsgPayload.trim());
     this.closeEditInput(msg);
   }
 
