@@ -26,6 +26,7 @@ import { Channel } from '../models/channel.class';
 import { Chat } from '../models/chat.class';
 import { ChatService } from './chat.service';
 import { StorageService } from './storage.service';
+import { userConverter } from '../interfaces/firestore/converter';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +48,7 @@ export class FirestoreService {
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private privateChatsSubject = new BehaviorSubject<any>(this.privateChats);
   private chatUserDataSubject = new BehaviorSubject<any>(this.chatUserData);
+  public channelMember = new BehaviorSubject<Array<User>>([]);
 
   // observable item
   allUsers$ = this.allUsersSubject.asObservable();
@@ -58,6 +60,7 @@ export class FirestoreService {
   // unsub item
   unsubCurrentUser!: Unsubscribe;
   unsubChatUser!: Unsubscribe;
+  unsubChannelMember!: Unsubscribe;
 
   // auth
   currentSignUpData: any = [];
@@ -83,6 +86,7 @@ export class FirestoreService {
 
   ngOnDestroy() {
     this.unsubCurrentUser();
+    this.unsubChannelMember();
   }
 
   async getSingleDoc(colId: string, docId: string) {
@@ -96,23 +100,6 @@ export class FirestoreService {
   }
 
   async getUserDoc(colId: string, docId: string) {
-    const userConverter = {
-      toFirestore: (user: User) => {
-        return {
-          name: user.name,
-          email: user.email,
-          id: user.id,
-          photoUrl: user.photoUrl,
-          onlineStatus: user.onlineStatus,
-          memberInChannel: user.memberInChannel,
-          activePrivateChats: user.activePrivateChats,
-        };
-      },
-      fromFirestore: (snapshot: any, options: any) => {
-        const data = snapshot.data(options);
-        return new User(data);
-      },
-    };
     const docSnap = await getDoc(
       doc(this.firestore, colId, docId).withConverter(userConverter)
     );
@@ -146,8 +133,29 @@ export class FirestoreService {
     });
   }
 
+  subChannelMember(userIds: string[]) {
+    const q = query(
+      collection(this.firestore, 'user').withConverter(userConverter),
+      where('id', 'in', userIds)
+    );
+
+    return onSnapshot(q, (querySnapshot) => {
+      const member: User[] = [];
+      querySnapshot.forEach((doc) => {
+        member.push(doc.data());
+      });
+      this.channelMember.next(member);
+    });
+  }
+
   startSubUser(docId: string) {
     this.unsubCurrentUser = this.subCurrentUser(docId);
+  }
+
+  startSubChannelMember(userIds: string[]) {
+    if (userIds) {
+      this.unsubChannelMember = this.subChannelMember(userIds);
+    }
   }
 
   getAllUserObservable() {

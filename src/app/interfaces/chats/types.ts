@@ -5,5 +5,5 @@ export type ChatTypes = 'channel' | 'thread' | 'private';
 export interface AvatarConfig {
   user: User;
   showStatus: boolean;
-  size: 'small' | 'medium' | 'large';
+  size: 'xsmall' | 'small' | 'medium' | 'large';
 }
