@@ -7,9 +7,27 @@
     </span>
   </div>
 
-  <button aria-label="Icon button with a person add icon">
-    <mat-icon fontSet="material-icons-outlined">person_add</mat-icon>
-  </button>
+  <div class="subheader__icon-container">
+    <div *ngIf="isDesktop" class="subheader__avatar-container">
+      <div class="subheader__avatar-wrapper">
+        <app-avatar-display
+          *ngFor="
+            let member of fireService.channelMember | async;
+            let i = index
+          "
+          [ngStyle]="{ 'right.px': i * 14 }"
+          class="subheader__member-avatar"
+          [data]="{ user: member, showStatus: false, size: 'xsmall' }"
+        ></app-avatar-display>
+      </div>
+      <span class="member__counter">{{
+        (fireService.channelMember | async)!.length
+      }}</span>
+    </div>
+    <button aria-label="Icon button with a person add icon">
+      <mat-icon fontSet="material-icons-outlined">person_add</mat-icon>
+    </button>
+  </div>
 </div>
 
 <!-- THREAD subheader -->
@@ -22,6 +40,7 @@
   <button
     *ngIf="channel"
     [customLink]="['channel', channel.id]"
+    (click)="navigateBack()"
     class="button__close"
   >
     <mat-icon

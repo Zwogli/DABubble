@@ -4,9 +4,12 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
+  inject,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,6 +17,8 @@ import { ChatTypes } from 'src/app/interfaces/chats/types';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
 import { ChatService } from 'src/app/services/chat.service';
+import { EmojiPickerService } from 'src/app/services/emoji-picker.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-chat-record',
@@ -21,8 +26,10 @@ import { ChatService } from 'src/app/services/chat.service';
   styleUrls: ['./chat-record.component.scss'],
 })
 export class ChatRecordComponent
-  implements OnInit, OnDestroy, AfterViewChecked
+  implements OnInit, OnDestroy, AfterViewChecked, OnChanges
 {
+  emojiService: EmojiPickerService = inject(EmojiPickerService);
+
   @Input() chatRecordId!: string;
   @Input() currentUser!: User;
   @Input() parentType!: ChatTypes;
@@ -36,11 +43,18 @@ export class ChatRecordComponent
   public fileURL!: string;
   public channelId!: string;
 
+  public showEditMsgMenu: boolean = false;
+  public showEditMsgInput!: Message | null;
+  private deletedFileDataCache!: { url: string; type: string; name: string } | null;
+  public editMsgPayload: string = '';
+
+
   private componentIsDestroyed$ = new Subject<boolean>();
 
   constructor(
     private chatService: ChatService,
     private changeDetector: ChangeDetectorRef,
+    public rs: ResponsiveService,
     private route: ActivatedRoute
   ) {
     this.route.queryParamMap.subscribe((p: any) => {
@@ -65,6 +79,8 @@ export class ChatRecordComponent
         });
     }
   }
+
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
@@ -112,7 +128,8 @@ export class ChatRecordComponent
   // }
 
   toggleMsgMenu(msg: Message) {
-    if (this.selectedMsg == msg) {
+    this.showEditMsgMenu = false;
+    if (this.selectedMsg === msg) {
       this.selectedMsg = null;
     } else {
       this.selectedMsg = msg;
@@ -138,5 +155,55 @@ export class ChatRecordComponent
 
   loadFile(url: string) {
     this.chatService.openFile(url);
+  }
+
+  openEditMsgMenu(event: any) {
+    event.stopPropagation();
+    this.toggleEditMsgMenu();
+  }
+
+  toggleEditMsgMenu() {
+    this.showEditMsgMenu = !this.showEditMsgMenu;
+  }
+
+  editMsg(msg: Message) {
+    this.toggleEditMsgMenu();
+    this.showEditMsgInput = msg;
+    this.editMsgPayload = msg.message;
+  }
+
+  closeEditInput(msg: Message) {
+    this.showEditMsgInput = null;
+    if (this.deletedFileDataCache) {
+      msg.file = this.deletedFileDataCache;
+    }
+    this.toggleMsgMenu(msg);
+  }
+
+  removeFileFromMsg(msg: Message) {
+    this.deletedFileDataCache = msg.file;
+    msg.file = {
+      url: '',
+      name: '',
+      type: '',
+    };
+  }
+
+  saveEditMsg(msg: Message) {
+    this.chatService.updateMessage(
+      this.chatRecordId,
+      msg,
+      this.editMsgPayload.trim()
+    );
+    this.closeEditInput(msg);
+    this.deletedFileDataCache = null;
+  }
+
+  addEmoji(event: any) {
+    this.editMsgPayload += event.emoji.native;
+  }
+
+  stopPropagation(event: any) {
+    event.stopPropagation();
   }
 }

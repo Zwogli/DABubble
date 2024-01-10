@@ -70,27 +70,6 @@ main {
     }
 }
 
-.message__menu {
-    position: absolute;
-    left: 10%;
-    top: 0;
-    transform: translateY(-50%);
-
-    display: flex;
-    gap: 5px;
-
-    padding: 3px 15px;
-
-    background-color: white;
-
-    border: 1px solid var(--color-blue-border);
-    border-radius: 30px 30px 0 30px;
-
-    button:hover {
-        color: var(--color-blue-primary-hover);
-    }
-}
-
 .message__avatar-container {
 
     img {
@@ -137,11 +116,13 @@ main {
 
         p {
             margin: 0;
+            white-space: pre-wrap;
         }
     }
 
     .message__footer {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 20px;
 
         >span {
@@ -150,8 +131,12 @@ main {
 
         .message__footer-count {
             color: var(--color-blue-secondary-hover);
-            font-size: 18px;
+            font-size: 1rem;
             cursor: pointer;
+
+            &:hover {
+                font-weight: bold;
+            }
         }
 
         .message__footer-last-timestamp {

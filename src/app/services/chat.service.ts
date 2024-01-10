@@ -66,7 +66,6 @@ export class ChatService implements OnInit, OnDestroy {
   }
 
   startSubChat(docId: string) {
-    console.log(docId, 'Chat-Service');
     this.unsubChatRecord = this.subChatRecord(docId);
   }
 
@@ -231,7 +230,6 @@ export class ChatService implements OnInit, OnDestroy {
         this.leadingThreadMsg.id
       );
     }
-    this.router.navigate(['/home/channel/', this.channelId]);
   }
 
   setChatRecordId(chatRecordId: string) {
@@ -283,5 +281,30 @@ export class ChatService implements OnInit, OnDestroy {
 
   openFile(url: string) {
     window.open(url, '_blank');
+  }
+
+  async updateMessage(chatRecrdId: string, msg: Message, content: string) {
+    const msgRef = doc(
+      this.firestore,
+      'chatRecords',
+      chatRecrdId,
+      'messages',
+      msg.id
+    );
+    if (!msg.file.url) {
+      await updateDoc(msgRef, {
+        message: content,
+        'file.name': '',
+        'file.type': '',
+        'file.url': '',
+      });
+    } else {
+      await updateDoc(msgRef, {
+        message: content,
+        'file.name': msg.file.name,
+        'file.type': msg.file.type,
+        'file.url': msg.file.url,
+      });
+    }
   }
 }

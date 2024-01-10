@@ -50,6 +50,10 @@ import { ChatRecordComponent } from './components/reusable/chat/chat-record/chat
 import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 import { AvatarDisplayComponent } from './components/reusable/avatar-display/avatar-display.component';
 import { CustomNavigationDirective } from './custom_directives/custom-navigation.directive';
+import { CustomAutofocusDirective } from './custom_directives/custom-autofocus.directive';
+import { TextareaAutoresizeDirective } from './custom_directives/textarea-autoresize.directive';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @NgModule({
   declarations: [
@@ -82,8 +86,10 @@ import { CustomNavigationDirective } from './custom_directives/custom-navigation
     SignInMergeAccountsComponent,
     AvatarDisplayComponent,
     CustomNavigationDirective,
+    CustomAutofocusDirective,
+    TextareaAutoresizeDirective,
   ],
-
+  
   imports: [
     BrowserModule,
     FormsModule,
@@ -98,6 +104,8 @@ import { CustomNavigationDirective } from './custom_directives/custom-navigation
     AngularFireAuthModule,
     AngularFireStorageModule,
     BrowserAnimationsModule,
+    EmojiComponent,
+    PickerComponent,
     LayoutModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'de-DE' }],

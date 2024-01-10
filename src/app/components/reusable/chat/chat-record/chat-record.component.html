@@ -42,6 +42,8 @@
         message__menuOpened: message === selectedMsg
       }"
       (click)="toggleMsgMenu(message)"
+      (mouseenter)="toggleMsgMenu(message)"
+      (mouseleave)="toggleMsgMenu(message)"
     >
       <div class="message__avatar-container">
         <img src="{{ message.sentByPhotoUrl }}" alt="" />
@@ -80,9 +82,15 @@
               <span>{{ message.file.name }}</span>
             </div>
           </ng-template>
-          <p>
-            {{ message.message }}
-          </p>
+          <ng-container
+            *ngIf="message.message; then msgText; else noMsgText"
+          ></ng-container>
+          <ng-template #msgText>
+            <p>{{ message.message }}</p>
+          </ng-template>
+          <ng-template #noMsgText>
+            <p *ngIf="!message.file.url">[[ Nachricht wurde gelöscht ]]</p>
+          </ng-template>
         </div>
 
         <div *ngIf="message.thread.length > 0" class="message__footer">
@@ -98,6 +106,108 @@
               Uhr</span
             >
           </div>
+        </div>
+        <!-- Edit Msg Text container -->
+        <div
+          *ngIf="message === showEditMsgInput"
+          class="message__edit-msg__input-container"
+          (click)="stopPropagation($event)"
+        >
+          <div class="message__edit-msg__input-wrapper">
+            <div class="message_edit-msg_input">
+              <textarea
+                [(ngModel)]="editMsgPayload"
+                customAutofocus
+                name="editMsgInput"
+                matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="2"
+              >
+              </textarea>
+            </div>
+            <div *ngIf="message.file.url" class="msg-edit__input--file-wrapper">
+              <ng-container
+                *ngIf="
+                  message.file.url && message.file.type !== 'application/pdf';
+                  then isPicture;
+                  else isPDF
+                "
+              ></ng-container>
+              <button
+                (click)="removeFileFromMsg(message)"
+                mat-flat-button
+                color="warn"
+              >
+                Delete File
+              </button>
+            </div>
+            <div class="message-input__btn-container">
+              <emoji-mart
+                *ngIf="emojiService.isOpenEdit"
+                class="emoji-picker-edit"
+                [darkMode]="false"
+                (emojiClick)="addEmoji($event)"
+                [perLine]="7"
+                [isNative]="true"
+                [virtualize]="true"
+                [emojiTooltip]="true"
+                [emoji]="''"
+              ></emoji-mart>
+
+              <button
+                (click)="emojiService.toggleEmojiPicker('Edit')"
+                mat-icon-button
+                aria-label="Icon button to select emotes"
+              >
+                <mat-icon fontSet="material-icons-outlined"
+                  >sentiment_satisfied</mat-icon
+                >
+              </button>
+
+              <div class="btn-container__extra-btn-wrapper">
+                <ng-container
+                  *ngIf="rs.isMobile$ | async; then smallBtn; else bigBtn"
+                ></ng-container>
+                <ng-template #bigBtn>
+                  <button
+                    (click)="closeEditInput(message); emojiService.isOpenEdit = false"
+                    class="text-btn-stroked"
+                    mat-stroked-button
+                  >
+                    Abbrechen
+                  </button>
+                  <button
+                    (click)="saveEditMsg(message)"
+                    class="text-btn-flat"
+                    mat-flat-button
+                  >
+                    Speichern
+                  </button>
+                </ng-template>
+                <ng-template #smallBtn>
+                  <button
+                    (click)="closeEditInput(message)"
+                    class="text-btn-stroked"
+                    mat-stroked-button
+                  >
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                  <button
+                    (click)="saveEditMsg(message)"
+                    class="text-btn-flat"
+                    mat-flat-button
+                  >
+                    <mat-icon>save</mat-icon>
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+          <app-avatar-display
+            [data]="{ user: currentUser, showStatus: false, size: 'small' }"
+          ></app-avatar-display>
         </div>
       </div>
 
@@ -118,10 +228,19 @@
         <button
           *ngIf="message.sentById === currentUser.id"
           mat-icon-button
+          (click)="openEditMsgMenu($event)"
           aria-label="Icon button with vertical dots icon"
         >
           <mat-icon fontSet="material-icons-outlined">more_vert</mat-icon>
         </button>
+        <div
+          *ngIf="showEditMsgMenu && message.sentById === currentUser.id"
+          class="message__menu--edit-msg"
+        >
+          <button (click)="editMsg(message)" mat-button>
+            Nachricht bearbeiten
+          </button>
+        </div>
       </div>
     </div>
   </div>
