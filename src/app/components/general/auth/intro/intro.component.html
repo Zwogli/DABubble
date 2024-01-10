@@ -1,7 +1,8 @@
 <div
   [class.block__intro--change-bg]="animationToTop"
   [class.block__intro]="!introIsDone"
-  [class.justify-content-start]="animationToTop && !this.isDesktop"
+  [class.justify-content-start]="animationToTop"
+  [class.position-unset]="animationToTop || introIsDone && this.isDesktop"
   class="block__intro-div"
 >
   <div
@@ -38,13 +39,14 @@
 
   <img
     *ngIf="introIsDone"
+    [class.img-position-desktop]="this.isDesktop && animationToTop || introIsDone"
     class="img-after-intro"
-    src="../../../../../assets/img/logo+text.png"
+    src="../../../../../assets/img/logo-text.png"
   />
 
   <app-sign-in *ngIf="animationToTop || introIsDone"></app-sign-in>
 
-  <div *ngIf="this.isDesktop && animationToTop" class="create-account-desktop block__create-account">
+  <div *ngIf="this.isDesktop && animationToTop || introIsDone" class="intro-create-account-desktop block__create-account">
     <span>Neu bei DABubble?</span>
     <button routerLink="/sign-up">Konto erstellen</button>
   </div>

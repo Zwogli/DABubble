@@ -40,10 +40,20 @@
   justify-content: start !important;
 }
 
+.position-unset {
+  position: unset !important;
+}
+
 .img-after-intro {
   z-index: 10;
   position: absolute;
   top: 20px;
+  height: 72px;
+}
+
+.img-position-desktop {
+  left: 5%;
+  top: 5%;
 }
 
 .block__intro--change-bg {
@@ -253,12 +263,12 @@
   margin-left: 16px;
 }
 
-.create-account-desktop {
+.intro-create-account-desktop {
   display: flex;
   flex-direction: column;
   top: 5%;
   position: absolute;
-  right: 4%;
+  right: 5%;
   z-index: 100;
   margin-top: 0 !important;
 
@@ -271,5 +281,17 @@
       background-color: unset;
       color: var(--color-blue-primary-default);
     }
+  }
+}
+
+
+@media(max-width:1372px) {
+  .intro-create-account-desktop {
+    display: none;
+  }
+
+  .img-position-desktop {
+    left: unset;
+    top: 20px;
   }
 }

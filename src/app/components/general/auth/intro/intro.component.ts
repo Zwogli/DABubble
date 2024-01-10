@@ -25,14 +25,14 @@ export class IntroComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.loadLoadingAmounts();
+    this.loadLoadingAmounts();
     if (this.playedIntroAmount[0] == 0) {
       this.introIsDone = false;
       this.runAnimation();
     } else {
       this.introIsDone = true;
     }
-    //this.countLoading();
+    this.countLoading();
   }
 
   /**
