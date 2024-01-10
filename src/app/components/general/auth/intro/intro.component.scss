@@ -6,12 +6,6 @@
   background: var(--color-blue-bg);
 }
 
-.position-create-account-desktop {
-  // flex-direction: unset !important;
-  // align-items: unset !important;
-  // justify-content: center;
-}
-
 //intro animation
 
 .block__intro {
@@ -40,6 +34,10 @@
   display: flex;
   justify-content: center;
   position: relative;
+}
+
+.justify-content-start {
+  justify-content: start !important;
 }
 
 .img-after-intro {
@@ -79,12 +77,25 @@
   z-index: 2;
 }
 
-.img-bigger-for-desktop {
-  height: 150px !important;
+.animate-smaller {
+  animation: AnimateLogoSmaller 500ms ease-in-out forwards;
 }
 
-.become-smaller-desktop {
-  height: 72px !important;
+@keyframes AnimateLogoSmaller {
+  0% {
+    height: 188px;
+    width: 188px;
+  }
+
+  50% {
+    height: 130px;
+    width: 130px;
+  }
+
+  100% {
+    height: 72px !important;
+    width: 72px;
+  }
 }
 
 @keyframes LogoMoveLeft {
@@ -209,7 +220,7 @@
   100% {
     transform: translateY(0%);
     opacity: unset;
-    top: 9%;
+    top: 3%;
   }
 }
 

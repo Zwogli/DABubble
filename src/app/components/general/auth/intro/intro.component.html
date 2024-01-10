@@ -1,6 +1,7 @@
 <div
   [class.block__intro--change-bg]="animationToTop"
   [class.block__intro]="!introIsDone"
+  [class.justify-content-start]="animationToTop && !this.isDesktop"
   class="block__intro-div"
 >
   <div
@@ -12,8 +13,7 @@
     <img
       [class.img--move-left]="animationToLeft && !animationToTop"
       [class.img--move-left-desktop]="animationToLeft && !animationToTop && this.isDesktop"
-      [class.img-bigger-for-desktop]="this.isDesktop"
-      [class.become-smaller-desktop]="animationToTop && this.isDesktop"
+      [class.animate-smaller]="animationToTop && this.isDesktop"
       [class.img-small]="!this.isDesktop"
       src="assets/img/logo-intro.png"
     />
@@ -42,7 +42,7 @@
     src="../../../../../assets/img/logo+text.png"
   />
 
-  <app-sign-in *ngIf="animationToTop || introIsDone" [class.position-create-account-desktop]="this.isDesktop"></app-sign-in>
+  <app-sign-in *ngIf="animationToTop || introIsDone"></app-sign-in>
 
   <div *ngIf="this.isDesktop && animationToTop" class="create-account-desktop block__create-account">
     <span>Neu bei DABubble?</span>

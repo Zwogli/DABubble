@@ -10,7 +10,7 @@ mat-card {
   display: flex;
   align-items: center;
   width: calc(100% - 32px);
-  margin: 105px 16px 0 16px;
+  margin: 120px 16px 0 16px;
   height: 493px;
   z-index: 1;
   padding: 15px;
@@ -343,6 +343,7 @@ form {
 @media(min-width:1370px) {
   mat-card {
     width: 500px;
+    margin: 16px;
   }
 }
 
