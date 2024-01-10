@@ -41,6 +41,7 @@ export class FirestoreService {
   channelsArray: Channel[] = [];
   privateChats: Chat[] = [];
   chatUserData: User[] = [];
+  public channelMember!: User[];
 
   // subject item
   private allUsersSubject = new BehaviorSubject<Array<User>>(this.allUsers);
@@ -48,7 +49,7 @@ export class FirestoreService {
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private privateChatsSubject = new BehaviorSubject<any>(this.privateChats);
   private chatUserDataSubject = new BehaviorSubject<any>(this.chatUserData);
-  public channelMember = new BehaviorSubject<Array<User>>([]);
+  public channelMemberSubject = new BehaviorSubject<Array<User>>([]);
 
   // observable item
   allUsers$ = this.allUsersSubject.asObservable();
@@ -140,11 +141,12 @@ export class FirestoreService {
     );
 
     return onSnapshot(q, (querySnapshot) => {
-      const member: User[] = [];
+      const members: User[] = [];
       querySnapshot.forEach((doc) => {
-        member.push(doc.data());
+        members.push(doc.data());
       });
-      this.channelMember.next(member);
+      this.channelMemberSubject.next(members);
+      this.channelMember = members;
     });
   }
 

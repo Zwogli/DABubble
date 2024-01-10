@@ -54,6 +54,7 @@ import { CustomAutofocusDirective } from './custom_directives/custom-autofocus.d
 import { TextareaAutoresizeDirective } from './custom_directives/textarea-autoresize.directive';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { DialogChannelMemberComponent } from './components/reusable/dialogs/dialog-channel-member/dialog-channel-member.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
     CustomNavigationDirective,
     CustomAutofocusDirective,
     TextareaAutoresizeDirective,
+    DialogChannelMemberComponent,
   ],
   
   imports: [

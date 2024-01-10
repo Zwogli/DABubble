@@ -1,0 +1,8 @@
+<div *ngIf="data">
+  <div *ngFor="let member of members">
+    <app-avatar-display
+      [data]="{ user: member, showStatus: true, size: 'small' }"
+    ></app-avatar-display>
+    <p>{{ member.name }}</p>
+  </div>
+</div>

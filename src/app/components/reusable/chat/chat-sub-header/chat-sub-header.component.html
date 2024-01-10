@@ -8,11 +8,11 @@
   </div>
 
   <div class="subheader__icon-container">
-    <div *ngIf="isDesktop" class="subheader__avatar-container">
+    <div *ngIf="isDesktop" class="subheader__avatar-container" (click)="openMemberDialog()">
       <div class="subheader__avatar-wrapper">
         <app-avatar-display
           *ngFor="
-            let member of fireService.channelMember | async;
+            let member of fireService.channelMemberSubject | async;
             let i = index
           "
           [ngStyle]="{ 'right.px': i * 14 }"
@@ -21,7 +21,7 @@
         ></app-avatar-display>
       </div>
       <span class="member__counter">{{
-        (fireService.channelMember | async)!.length
+        (fireService.channelMemberSubject | async)!.length
       }}</span>
     </div>
     <button aria-label="Icon button with a person add icon">
