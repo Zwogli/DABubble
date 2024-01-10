@@ -359,6 +359,12 @@ form {
   .btn__guest-log-in, .btn__log-in {
     padding: 12px;
   }
+}
 
+@media(max-width: 300px) {
+  mat-card {
+    width: calc(100% - 16px);
+    margin: 120px 8px 0 8px;
 
+  }
 }

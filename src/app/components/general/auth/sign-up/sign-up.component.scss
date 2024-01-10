@@ -153,17 +153,6 @@ mat-card {
     color: var(--color-blue-primary-hover);
   }
 
-  // input[type=checkbox]:disabled + label:before {
-  //   transform: scale(1);
-  //   border-color: #aaa;
-  // }
-
-  // input[type=checkbox]:checked:disabled + label:before {
-  //   transform: scale(1);
-  //   background-color: #bfb;
-  //   border-color: #bfb;
-  // }
-
   span {
     width: 100%;
     display: flex;
@@ -177,4 +166,28 @@ mat-card {
   /*------------------------------------*\
 
   \*------------------------------------*/
+}
+
+
+@media(max-width: 330px) {
+  .block__icon-arrow-back {
+    left: -8px;
+  }
+
+  .icon__arrow-back {
+    font-size:20px;
+    margin-top: 1px;
+  }
+}
+
+
+@media(max-width: 300px) {
+  .block__icon-arrow-back {
+    left: -13px;
+  }
+
+  .icon__arrow-back {
+    font-size:17px;
+    margin-top: 3px;
+  }
 }
