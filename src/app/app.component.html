@@ -1,6 +1,11 @@
   <div
   [class.view__desktop]="rs.isDesktop$ | async"
   >
+
+    <app-header-mobile
+    *ngIf="rs.isDesktop$ | async"
+    ></app-header-mobile>
+
     <router-outlet></router-outlet>
     
     <router-outlet
@@ -16,4 +21,5 @@
       name="thread"
       class="thread"
     ></router-outlet>
+
   </div>

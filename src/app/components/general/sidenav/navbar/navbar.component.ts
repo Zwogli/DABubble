@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-navbar',
@@ -23,6 +24,7 @@ export class NavbarComponent {
     private firestoreService: FirestoreService,
     private navbarService: NavbarService,
     public dialog: MatDialog,
+    public rs: ResponsiveService
     ){
       this.subscription = this.navbarService.showMenu$.subscribe(
         visible => {

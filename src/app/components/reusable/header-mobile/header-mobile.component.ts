@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavbarService } from 'src/app/services/navbar.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-header-mobile',
@@ -20,6 +21,7 @@ export class HeaderMobileComponent {
     private navbarService: NavbarService,
     private router: Router,
     private firestoreService: FirestoreService,
+    public rs: ResponsiveService
     ) {    }
     
   ngOnInit(){

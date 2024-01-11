@@ -1,9 +1,15 @@
-<app-header-mobile [parent]="'navbar'"></app-header-mobile>
+<app-header-mobile 
+*ngIf="!(rs.isDesktop$ | async)"
+[parent]="'navbar'"
+></app-header-mobile>
 
 <main>
-  <app-navbar-searchbar></app-navbar-searchbar>
+  <app-navbar-searchbar
+  *ngIf="!(rs.isDesktop$ | async)"
+  ></app-navbar-searchbar>
 
   <button
+    *ngIf="!(rs.isDesktop$ | async)"
     [routerLink]="'/home/' + 'newChat'"
     mat-fab
     color="primary"
