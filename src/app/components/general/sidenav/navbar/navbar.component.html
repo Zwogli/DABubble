@@ -3,7 +3,9 @@
 [parent]="'navbar'"
 ></app-header-mobile>
 
-<main>
+<main
+[class.view__desktop-main]="rs.isDesktop$ | async"
+>
   <app-navbar-searchbar
   *ngIf="!(rs.isDesktop$ | async)"
   ></app-navbar-searchbar>

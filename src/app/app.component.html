@@ -1,25 +1,29 @@
+<div class="main">
+
+  
+  <app-header-mobile
+  *ngIf="rs.isDesktop$ | async"
+  ></app-header-mobile>
+  
   <div
   [class.view__desktop]="rs.isDesktop$ | async"
   >
-
-    <app-header-mobile
-    *ngIf="rs.isDesktop$ | async"
-    ></app-header-mobile>
-
     <router-outlet></router-outlet>
-    
+  
     <router-outlet
-      *ngIf="rs.isDesktop$ | async"
-      id="channelOutlet"
-      name="channel"
-      class="chat"
-    ></router-outlet>
-    
-    <router-outlet
-      *ngIf="rs.isDesktop$ | async"
-      id="threadOutlet"
-      name="thread"
-      class="thread"
+    *ngIf="rs.isDesktop$ | async"
+    id="channelOutlet"
+    name="channel"
+    class="chat"
     ></router-outlet>
 
+    <router-outlet
+    *ngIf="rs.isDesktop$ | async"
+    id="threadOutlet"
+    name="thread"
+    class="thread"
+    ></router-outlet>
+  
   </div>
+
+</div>
