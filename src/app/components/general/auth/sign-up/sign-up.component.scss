@@ -170,9 +170,31 @@ mat-card {
 
 
 //responsive for smaller devices
+@media(max-width: 400px) {
+  .block__alert-name {
+    top: 141px;
+  }
+
+  .block__alert-email {
+    top: 207px !important;
+  }
+
+  .block__alert-password {
+    top: 271px !important;
+  }
+
+  .block__error-checkbox {
+    top: 310px;
+  }
+}
+
 @media(max-width: 350px) {
   .block__input-checkbox {
     margin-left: 15px;
+  }
+
+  .block__error-checkbox {
+    left: 9px;
   }
 }
 
@@ -184,6 +206,24 @@ mat-card {
   .icon__arrow-back {
     font-size:20px;
     margin-top: 1px;
+  }
+}
+
+@media(max-width: 320px) {
+  .block__alert-name {
+    top: 161px;
+  }
+
+  .block__alert-email {
+    top: 226px !important;
+  }
+
+  .block__alert-password {
+    top: 290px !important;
+  }
+
+  .block__error-checkbox {
+    top: 328px;
   }
 }
 
@@ -206,5 +246,23 @@ mat-card {
     input[type=checkbox] + label:before {
       margin-top: 2.5px;
     }
+  }
+}
+
+
+//responsive for bigger devices
+@media(min-width: 465px) {
+  .block__error {
+    margin-top: 0;
+  }
+}
+
+@media(min-width: 500px) {
+  .block__alert-name {
+    left: 52px;
+  }
+
+  .block__error-checkbox {
+    left: 52px;
   }
 }
