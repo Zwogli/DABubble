@@ -267,10 +267,10 @@ form {
 
 .block__error {
   position: absolute;
-  top: 434px;
+  top: 427px;
   color: var(--color-purple-error);
   font-size: 0.667rem;
-  left: 49px;
+  left: 18px;
   line-height: 120%;
 }
 
@@ -285,6 +285,13 @@ form {
 }
 
 //responsive for bigger devices
+@media(min-width: 410px) {
+  .block__error {
+    top: 438px;
+    min-width: 340px;
+  }
+}
+
 @media(min-width: 450px) {
   :host {
     display: flex;
@@ -297,10 +304,24 @@ form {
   }
 }
 
+@media(min-width: 465px) {
+  .block__error {
+    position: unset !important;
+    margin-top: 5px;
+  }
+}
 
 @media(min-width: 500px) {
   form {
     padding: 0 34px;
+  }
+
+  .block__alert-email {
+    left: 52px;
+  }
+
+  .block__alert-password {
+    left: 52px;
   }
 }
 
@@ -361,10 +382,35 @@ form {
   }
 }
 
+@media(max-width: 400px) {
+  .block__alert-email {
+    top: 142px;
+  }
+
+  .block__alert-password {
+    top: 207px;
+  }
+}
+
 @media(max-width: 300px) {
   mat-card {
     width: calc(100% - 16px);
     margin: 120px 8px 0 8px;
 
+  }
+}
+
+@media(max-width: 280px) {
+  .block__alert-email {
+    top: 161px;
+  }
+
+  .block__alert-password {
+    top: 226px;
+  }
+
+  .block__error {
+    top: 441px;
+    font-size: 0.55rem;
   }
 }

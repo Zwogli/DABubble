@@ -15,7 +15,7 @@
   flex-direction: column;
 
   img {
-    height: 60px;
+    height: 72px;
   }
 }
 
@@ -169,6 +169,13 @@ mat-card {
 }
 
 
+//responsive for smaller devices
+@media(max-width: 350px) {
+  .block__input-checkbox {
+    margin-left: 15px;
+  }
+}
+
 @media(max-width: 330px) {
   .block__icon-arrow-back {
     left: -8px;
@@ -189,5 +196,15 @@ mat-card {
   .icon__arrow-back {
     font-size:17px;
     margin-top: 3px;
+  }
+
+  .block__input-checkbox {
+    font-size: 0.65rem;
+  }
+
+  .block__input-checkbox {
+    input[type=checkbox] + label:before {
+      margin-top: 2.5px;
+    }
   }
 }
