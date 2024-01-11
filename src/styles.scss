@@ -1,6 +1,7 @@
 @import './app/style/theme-dabubble.scss';
 @import './assets/fonts/nunito/font-nunito.scss';
 @import './app/style/material-design.scss';
+@import '@ctrl/ngx-emoji-mart/picker';
 
 /* You can add global styles to this file, and also import other style files */
 :root {
@@ -51,6 +52,14 @@ html {
 body {
   margin: 0;
   font-family: var(--font-selection);
+}
+
+.avatar-xsmall {
+  width: 34px;
+  height: 34px;
+  border: 2px solid white;
+  border-radius: 100%;
+  cursor: pointer;
 }
 
 .avatar-small {
@@ -116,4 +125,10 @@ app-create-channel {
 
 .d-block {
   display: block;
+}
+
+@media(max-width:400px) {
+  html {
+    font-size: 16px;
+  }
 }

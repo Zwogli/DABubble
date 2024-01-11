@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card [class.margin-desktop]="this.isDesktop">
   <mat-card-content>
     <form class="example-form" [formGroup]="signInForm">
       <span class="sign-in__headline">Anmeldung</span>
@@ -52,7 +52,7 @@
   </mat-card-content>
 </mat-card>
 
-<div class="block__create-account">
+<div [class.create-account-desktop]="this.isDesktop" class="block__create-account">
   <span>Neu bei DABubble?</span>
   <button routerLink="/sign-up">Konto erstellen</button>
 </div>

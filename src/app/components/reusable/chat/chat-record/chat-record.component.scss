@@ -1,4 +1,6 @@
 @import 'src/app/style/_chat.scss';
+@import 'src/app/style/_emoji-picker.scss';
+
 
 .chat__date-pill {
     display: flex;
@@ -81,7 +83,7 @@
     gap: 15px;
     transition: 125ms ease-in-out;
     padding: 10px 16px 10px 16px;
-    
+
     z-index: 2;
     background-color: var(--color-blue-bg);
 }
@@ -138,5 +140,22 @@
         mat-icon {
             margin: 0;
         }
+    }
+}
+
+.msg-edit__input--file-wrapper {
+    display: flex;
+    object-fit: cover;
+    max-width: 200px;
+    overflow: hidden;
+
+    button {
+        white-space: nowrap;
+        border-radius: 30px;
+        align-self: center;
+    }
+
+    img {
+        max-width: 200px;
     }
 }

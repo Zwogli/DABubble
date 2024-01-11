@@ -42,6 +42,8 @@
         message__menuOpened: message === selectedMsg
       }"
       (click)="toggleMsgMenu(message)"
+      (mouseenter)="toggleMsgMenu(message)"
+      (mouseleave)="toggleMsgMenu(message)"
     >
       <div class="message__avatar-container">
         <img src="{{ message.sentByPhotoUrl }}" alt="" />
@@ -80,7 +82,15 @@
               <span>{{ message.file.name }}</span>
             </div>
           </ng-template>
-          <p>{{ message.message }}</p>
+          <ng-container
+            *ngIf="message.message; then msgText; else noMsgText"
+          ></ng-container>
+          <ng-template #msgText>
+            <p>{{ message.message }}</p>
+          </ng-template>
+          <ng-template #noMsgText>
+            <p *ngIf="!message.file.url">[[ Nachricht wurde gelöscht ]]</p>
+          </ng-template>
         </div>
 
         <div *ngIf="message.thread.length > 0" class="message__footer">
@@ -116,8 +126,40 @@
               >
               </textarea>
             </div>
+            <div *ngIf="message.file.url" class="msg-edit__input--file-wrapper">
+              <ng-container
+                *ngIf="
+                  message.file.url && message.file.type !== 'application/pdf';
+                  then isPicture;
+                  else isPDF
+                "
+              ></ng-container>
+              <button
+                (click)="removeFileFromMsg(message)"
+                mat-flat-button
+                color="warn"
+              >
+                Delete File
+              </button>
+            </div>
             <div class="message-input__btn-container">
-              <button mat-icon-button aria-label="Icon button to select emotes">
+              <emoji-mart
+                *ngIf="emojiService.isOpenEdit"
+                class="emoji-picker-edit"
+                [darkMode]="false"
+                (emojiClick)="addEmoji($event)"
+                [perLine]="7"
+                [isNative]="true"
+                [virtualize]="true"
+                [emojiTooltip]="true"
+                [emoji]="''"
+              ></emoji-mart>
+
+              <button
+                (click)="emojiService.toggleEmojiPicker('Edit')"
+                mat-icon-button
+                aria-label="Icon button to select emotes"
+              >
                 <mat-icon fontSet="material-icons-outlined"
                   >sentiment_satisfied</mat-icon
                 >
@@ -129,7 +171,7 @@
                 ></ng-container>
                 <ng-template #bigBtn>
                   <button
-                    (click)="closeEditInput(message)"
+                    (click)="closeEditInput(message); emojiService.isOpenEdit = false"
                     class="text-btn-stroked"
                     mat-stroked-button
                   >
