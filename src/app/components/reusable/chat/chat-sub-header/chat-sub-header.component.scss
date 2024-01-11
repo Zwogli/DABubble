@@ -6,8 +6,12 @@
     display: flex;
     justify-content: space-between;
 
+    background-color: var(--color-white);
     box-shadow: var(--shadow-subheader);
     padding: 10px 16px;
+
+    position: relative;
+    z-index: 1;
 
     .private-header {
         gap: 16px;
@@ -123,4 +127,11 @@
 
     margin-left: -20px;
     font-size: 1.111rem;
+}
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+responsive
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.view__desktop-sub-header{
+    border-radius: 30px 30px 0 0;
 }

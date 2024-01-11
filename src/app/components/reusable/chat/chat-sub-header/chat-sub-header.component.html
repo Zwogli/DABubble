@@ -1,5 +1,9 @@
 <!-- CHANNEL subheader -->
-<div *ngIf="type === 'channel'" class="sub-header">
+<div 
+*ngIf="type === 'channel'"
+[class.view__desktop-sub-header]="rs.isDesktop$ | async" 
+class="sub-header"
+>
   <div *ngIf="channel" class="sub-header__title pointer">
     <span class="title__main"
       ># {{ channel.name }}

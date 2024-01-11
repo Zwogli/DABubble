@@ -1,6 +1,5 @@
 <div class="main">
 
-  
   <app-header-mobile
   *ngIf="rs.isDesktop$ | async"
   ></app-header-mobile>
@@ -14,7 +13,6 @@
     *ngIf="rs.isDesktop$ | async"
     id="channelOutlet"
     name="channel"
-    class="chat"
     ></router-outlet>
 
     <router-outlet

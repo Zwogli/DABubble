@@ -17,7 +17,9 @@
 </header>
 
 <!-- Header for channels, threads and private chats -->
-<header *ngIf="parent === 'chat'">
+<header 
+*ngIf="(parent === 'chat') && !(rs.isDesktop$ | async)"
+>
   <div (click)="navigateBack()" class="logo__container">
     <mat-icon>keyboard_arrow_left</mat-icon>
     <img src="assets/img/workspace.png" alt="Logo of the current workspace" />
