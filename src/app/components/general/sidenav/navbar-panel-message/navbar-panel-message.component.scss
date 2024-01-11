@@ -25,6 +25,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 1rem;
 }
 .element--blue {
   color: #535af1;
@@ -97,7 +98,6 @@ material design
 .mat-expansion-panel__content {
   margin-left: 24px;
   display: flex;
-  gap: 1.5rem;
 }
 .mat-expansion-panel:not([class*="mat-elevation-z"]) {
   box-shadow: unset;
