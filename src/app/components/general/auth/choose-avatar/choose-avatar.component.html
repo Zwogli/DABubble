@@ -43,7 +43,7 @@
           </button>
         </div>
 
-        <div class="block__error" *ngIf="this.authService.errorUnexpected">
+        <div class="block__error-sign-up" *ngIf="this.authService.errorUnexpected">
           *Ein unerwarteter Fehler ist aufgetreten. Bitte
           kehre zur vorherigen Seite zurück und führe den Registrierungsprozess noch einmal aus.
         </div>
@@ -54,9 +54,4 @@
 
     </mat-card-content>
   </mat-card>
-
-  <div *ngIf="this.isDesktop" class="block__imprint-data">
-    <span>Impressum</span>
-    <span>Datenschutz</span>
-  </div>
 </div>
