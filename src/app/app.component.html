@@ -1,13 +1,19 @@
-  <router-outlet></router-outlet>
-  
-  <router-outlet
-    *ngIf="rs.isDesktop$ | async"
-    id="channelOutlet"
-    name="channel"
-  ></router-outlet>
-  
-  <router-outlet
-    *ngIf="rs.isDesktop$ | async"
-    id="threadOutlet"
-    name="thread"
-  ></router-outlet>
+  <div
+  [class.view__desktop]="rs.isDesktop$ | async"
+  >
+    <router-outlet></router-outlet>
+    
+    <router-outlet
+      *ngIf="rs.isDesktop$ | async"
+      id="channelOutlet"
+      name="channel"
+      class="chat"
+    ></router-outlet>
+    
+    <router-outlet
+      *ngIf="rs.isDesktop$ | async"
+      id="threadOutlet"
+      name="thread"
+      class="thread"
+    ></router-outlet>
+  </div>
