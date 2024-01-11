@@ -4,7 +4,8 @@
 :host {
   height: 100%;
   background-color: var(--color-blue-bg);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .block__sign-up {
@@ -158,3 +159,46 @@ input[type="file"] {
     transform: translateX(0px);
   }
 }
+
+
+//responsive for smaller devices
+@media(max-width: 400px) {
+  .block__icon-arrow-back {
+    top: -2px !important;
+  }
+}
+
+@media(max-width: 350px) {
+  .block__upload-img {
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: 0;
+
+    span {
+      margin-bottom: 5px;
+    }
+  }
+
+  .block__img-box {
+    img {
+      margin-right: 3px;
+      width: 38px;
+      height: 38px;
+    }
+  }
+}
+
+@media(max-width: 300px) {
+  .block__upload-img {
+    align-items: center;
+  }
+
+  .text__choose-avatar {
+    text-align: center;
+  }
+
+  .btn__log-in {
+    margin-right: 0;
+  }
+}
+

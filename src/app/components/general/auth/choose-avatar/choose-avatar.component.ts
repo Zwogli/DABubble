@@ -10,6 +10,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { ActivatedRoute } from '@angular/router';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-choose-avatar',
@@ -21,6 +22,7 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
   avatarIsChoosen = false;
   public idFromUrl: any = '';
   userWillCloseWindow = false;
+  isDesktop!:boolean;
 
   @ViewChild('unchoosenAvatar') unchoosenAvatar!: ElementRef;
 
@@ -28,8 +30,17 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private fireStorage: AngularFireStorage,
     public firestoreService: FirestoreService,
-    private Route: ActivatedRoute
-  ) {}
+    private Route: ActivatedRoute,
+    private rs: ResponsiveService
+  ) {
+    this.rs.isDesktop$.subscribe((val) => {
+      if (val) {
+        this.isDesktop = true;
+      } else {
+        this.isDesktop = false;
+      }
+    });
+  }
 
   async ngOnInit() {
     await this.getIdFromUrl();
