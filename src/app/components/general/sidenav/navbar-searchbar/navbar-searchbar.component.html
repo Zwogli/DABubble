@@ -1,4 +1,6 @@
-<main class="element__margin--bottom">
+<main class="element__margin--bottom"
+[class.element__margin--bottom]="!(rs.isDesktop$ | async)"
+>
     <input name="navbar--searchbar" type="text" placeholder="Go to...">
     <label for="navbar--searchbar">
         <span class="material-icons-outlined"> search </span>

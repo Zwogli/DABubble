@@ -4,6 +4,7 @@
 
   <app-navbar-searchbar
   *ngIf="rs.isDesktop$ | async"
+  [class.view__desktop-searchbar]="rs.isDesktop$ | async"
   ></app-navbar-searchbar>
 
   <img
