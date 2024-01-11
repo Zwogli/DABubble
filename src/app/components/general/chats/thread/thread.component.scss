@@ -1,5 +1,12 @@
 @import 'src/app/style/_chat.scss';
 
+.main{
+    display: flex;
+    flex-direction: column;
+    height: 100svh;
+    background-color: var(--color-white);
+}
+
 .leading-msg {
     margin: 0;
 }
@@ -20,4 +27,13 @@
     height: 1px;
     width: 100%;
     background-color: var(--color-blue-border);
+}
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+responsive
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.view__desktop-main{
+    margin: 1rem 1rem 1rem 0;
+    border-radius: 30px;
+    height: calc(100svh - 80px - 2rem);
 }

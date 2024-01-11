@@ -6,6 +6,7 @@ import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-thread',
@@ -28,7 +29,8 @@ export class ThreadComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fireService: FirestoreService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    public rs: ResponsiveService
   ) {
     this.setCurrentUser();
     this.setCurrentChannel();

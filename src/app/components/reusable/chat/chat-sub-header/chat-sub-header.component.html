@@ -35,7 +35,11 @@ class="sub-header"
 </div>
 
 <!-- THREAD subheader -->
-<div *ngIf="type === 'thread'" class="sub-header">
+<div 
+*ngIf="type === 'thread'"
+[class.view__desktop-sub-header]="rs.isDesktop$ | async" 
+class="sub-header"
+>
   <div *ngIf="channel" class="sub-header__title pointer">
     <span class="title__main">Thread</span>
     <span class="title__sub"># {{ channel.name }} </span>
@@ -58,7 +62,11 @@ class="sub-header"
 </div>
 
 <!-- PRIVATE subheader -->
-<div *ngIf="type === 'private'" class="sub-header">
+<div 
+*ngIf="type === 'private'"
+[class.view__desktop-sub-header]="rs.isDesktop$ | async"  
+class="sub-header"
+>
   <div class="sub-header__title private-header">
     <app-avatar-display
       *ngIf="privateChatAvatarConfig"
