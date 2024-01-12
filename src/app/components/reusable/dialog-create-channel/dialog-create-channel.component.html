@@ -28,7 +28,7 @@ class="overlay"
             id="create-channel"
             #createChannel
             type="text" 
-            placeholder="# e.g. cooperation-projects"
+            placeholder="# z.B. Kooperationsprojekte"
             >
             
             <label *ngIf="this.firestoreService.channelAlreadyExist" for="create-channel" class="block__alert">*Channel Name Existiert bereits.</label>
@@ -48,7 +48,7 @@ class="overlay"
         <input 
         type="text"
         id="channel-description"
-        placeholder="Space for your description">
+        placeholder="Dein Text hier">
 
 
         <div class="container__btn">
