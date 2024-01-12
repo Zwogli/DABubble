@@ -132,7 +132,7 @@ input[type="file"] {
   position: absolute;
   color: white;
   background-color: var(--color-blue-primary-default);
-  bottom: 5px;
+  bottom: 16px;
   right: 16px;
   border-bottom-left-radius: 20px;
   border-top-left-radius: 20px;
@@ -229,6 +229,14 @@ input[type="file"] {
       border: 5px solid var(--color-grey-hover) !important;
   }
     }
+  }
+}
+
+@media(min-width: 1372px) {
+  .img-after-intro {
+    position: absolute;
+    top: 70px;
+    left: 70px;
   }
 }
 
