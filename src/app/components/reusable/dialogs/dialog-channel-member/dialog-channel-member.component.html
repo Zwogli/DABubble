@@ -1,8 +1,20 @@
-<div *ngIf="data">
-  <div *ngFor="let member of members">
+<div class="dialog__headline-container">
+  <h2 class="dialog__headline">Mitglieder</h2>
+  <mat-icon class="dialog__headline-close">close</mat-icon>
+</div>
+
+<div *ngIf="data" class="dialog__container">
+  <div *ngFor="let member of members" class="dialog__member-wrapper">
     <app-avatar-display
       [data]="{ user: member, showStatus: true, size: 'small' }"
     ></app-avatar-display>
     <p>{{ member.name }}</p>
+  </div>
+
+  <div class="dialog__member-wrapper">
+    <button mat-icon-button>
+      <mat-icon fontSet="material-icons-outlined">person_add</mat-icon>
+    </button>
+    <p>Mitglieder hinzufügen</p>
   </div>
 </div>
