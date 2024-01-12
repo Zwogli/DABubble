@@ -9,7 +9,7 @@
 [class.dialog__desktop]="(dialogService.showDialogNewChannel$ | async) && (rs.isDesktop$ | async)"
 [class.dialog__mobile]="(rs.isMobile$ | async) || (rs.isTablet$ | async)"
 [class.slide--up]="(dialogService.showDialogNewChannel$ | async) && (rs.isMobile$ | async) || (rs.isTablet$ | async)"
-[class.slide--down]="!(dialogService.showDialogNewChannel$ | async) && showCloseAnimation && (rs.isMobile$ | async) || (rs.isTablet$ | async)"
+[class.slide--down]="showCloseAnimation && !(dialogService.showDialogNewChannel$ | async) && (rs.isMobile$ | async) || (rs.isTablet$ | async)"
 >
   <div 
   class="orientation" 

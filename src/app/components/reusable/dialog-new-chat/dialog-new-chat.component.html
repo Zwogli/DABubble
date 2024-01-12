@@ -1,26 +1,45 @@
-<div id="overlay__newChat" class="overlay" *ngIf="showOverlay" (click)="closeMenu()"></div>
+<div 
+class="overlay" 
+(click)="closeDialogNewChat()"
+*ngIf="dialogService.showDialogNewChat$ | async"
+></div>
 
-<div id="menuNewChat" class="mobile__menu">
-    <div (click)="closeMenu()" class="orientation">
+<div 
+[class.dialog__desktop]="(rs.isDesktop$ | async)" 
+[class.dialog__mobile]="((rs.isMobile$ | async) || (rs.isTablet$))" 
+[class.slide--up]="!showCloseAnimation && (dialogService.showDialogNewChat$ | async) && (rs.isMobile$ | async) || (rs.isTablet$ | async)"
+[class.slide--down]="showCloseAnimation && (rs.isMobile$ | async) || (rs.isTablet$ | async)"
+>
+
+    <div 
+    (click)="closeDialogNewChat()"
+    *ngIf="(rs.isMobile$ | async) || (rs.isTablet$)" 
+    class="orientation"
+    >
         <div>
             <span></span>
         </div>
     </div>
 
     <div class="container__header">
-        <span>Add User</span>
-        <span (click)="closeMenu()" class="material-icons-outlined close__element"> close </span>
+        <span>Leute hinzufügen</span>
+        <span 
+        (click)="closeDialogNewChat()" 
+        class="material-icons-outlined close__element"
+        *ngIf="(rs.isDesktop$ | async)"
+        > close </span>
     </div>
 
     <form class="search-user-form">
         <div class="container__search">
             <div class="input__label">
                 <input 
+                id="searchbar-newChat"
                 #searchbarUser
                 (click)="removeUser()"
                 (keyup)="searchForUser()"
                 type="text" 
-                placeholder="Search user">
+                placeholder="Name eingeben">
 
                 <label 
                 *ngIf="this.isAlreadyInChat"
@@ -29,7 +48,10 @@
                 *User chat already open
                 </label>
 
-                <!-- selected User -->
+                <!-- 
+                    selected User 
+                -->
+                
                 <div 
                 *ngFor="let user of this.selectedUser"
                 class="container__user-Elements--selected" 
@@ -47,10 +69,9 @@
 
             </div>
 
-
-
-            <!-- render filtered User -->
-
+            <!-- 
+                render filtered User 
+            -->
             <div id="filtered-user" 
             class="container__filteredUser"
             *ngIf="this.filteredUser.length >= 1"
@@ -75,7 +96,7 @@
         (click)="submitNewChat()"
         [disabled]="this.userSelected"
         [class.btn-disabled]="this.userSelected">
-            Add
+            Hinzufügen
         </button>
     </form>
 </div>
