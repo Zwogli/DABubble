@@ -19,6 +19,10 @@ mat-card {
   position: relative;
 }
 
+mat-card-content {
+  width: 90%;
+}
+
 .sign-in__headline {
   width: 80% !important;
   text-align: center;
@@ -162,13 +166,17 @@ input[type="file"] {
 
 
 //responsive for smaller devices
+@media(max-width: 410px) {
+  .btn__log-in {
+    padding: 12px 25px;
+  }
+}
+
 @media(max-width: 400px) {
   .block__icon-arrow-back {
     top: -2px !important;
   }
-}
 
-@media(max-width: 350px) {
   .block__upload-img {
     flex-direction: column;
     align-items: start;
@@ -199,6 +207,22 @@ input[type="file"] {
 
   .btn__log-in {
     margin-right: 0;
+    margin-top: 8px;
+  }
+}
+
+
+//responsive for bigger devices
+@media(min-width: 500px) {
+  mat-card {
+    height: 551px !important;
+  }
+
+  .block__img-box {
+    img {
+      width: 50px;
+      height: 50px;
+    }
   }
 }
 
