@@ -1,20 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-dialog-new-channel',
   templateUrl: './dialog-new-channel.component.html',
   styleUrls: ['./dialog-new-channel.component.scss']
 })
-export class DialogNewChannelComponent implements OnInit, OnDestroy {
-  currentUser!:User;
+export class DialogNewChannelComponent {
   private currentUserIsDestroyed$ = new Subject<boolean>();
+  currentUser!:User;
   searchUserForm = new FormGroup({
     searchInputForm: new FormControl('', [
       Validators.minLength(2),
@@ -22,11 +23,13 @@ export class DialogNewChannelComponent implements OnInit, OnDestroy {
   });
   filteredUser:User[] = [];
   alreadyFiltered:boolean = false;
+  showCloseAnimation:boolean = false;
 
   constructor(
     private authService: AuthService,
     public firestoreService:FirestoreService,
-    private navbarService: NavbarService, 
+    public dialogService: DialogManagerService, 
+    public rs: ResponsiveService, 
     public router: Router,
   ){}
   
@@ -83,8 +86,9 @@ export class DialogNewChannelComponent implements OnInit, OnDestroy {
   async createNewChannel(){
     await this.firestoreService.addNewChannel(this.currentUser.id);
     await this.firestoreService.updateUsers();
-    this.navbarService.toggleOverlay();
-    this.router.navigate(['home/channel/', this.firestoreService.newChannelRefId]);
+    this.closeDialogNewChannel();
+    this.dialogService.showDialogAddChannel();
+    this.router.navigate(['home/', this.firestoreService.newChannelRefId]);
     this.resetVariables();
   }
 
@@ -186,7 +190,7 @@ export class DialogNewChannelComponent implements OnInit, OnDestroy {
     }
   }
 
-  closeMenu() {
+  closeDialogNewChannel(){
     let radioBtnAll:any = document.getElementById('radioAllUser');
     let radioBtnSingle:any = document.getElementById('radioSingleUser');
     if(radioBtnSingle.checked = true){
@@ -194,9 +198,7 @@ export class DialogNewChannelComponent implements OnInit, OnDestroy {
       radioBtnAll.checked = true;
     }
     this.hideUserSearchbarNewChannel();
-    setTimeout(() => {
-      this.navbarService.toggleOverlay();
-    }, 250);
-    this.navbarService.menuSlideDown();
+    this.showCloseAnimation = true;
+    this.dialogService.showDialogNewChannel();
   }
 }
