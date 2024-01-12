@@ -119,6 +119,19 @@ app-create-channel {
   border-radius: 50px !important;
 }
 
+.btn__icon-wo-bg {
+
+  &:hover {
+    background-color: var(--color-blue-bg) !important;
+    color: var(--color-blue-secondary-hover) !important;
+  }
+}
+
+.btn__icon-wo-bg__focus {
+  background-color: var(--color-blue-bg) !important;
+  color: var(--color-blue-secondary-hover) !important;
+}
+
 .d-none {
   display: none;
 }
