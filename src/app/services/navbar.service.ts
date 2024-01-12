@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { DialogManagerService } from './dialog-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,9 @@ export class NavbarService {
   showOverlayNewChat$: Observable<boolean> = this.toggleOverlayNewChatSubject.asObservable();
   selectedMenu:string = '';
 
-  constructor() { }
+  constructor(
+    private dialogService: DialogManagerService,
+  ) { }
 
   menuSlideUp(selectedMenu:string){
     this.selectedMenu = selectedMenu;

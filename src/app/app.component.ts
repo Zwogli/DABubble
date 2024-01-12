@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { ResponsiveService } from './services/responsive.service';
+import { DialogManagerService } from './services/dialog-manager.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,9 @@ export class AppComponent {
 
   // Auth gets instantiated to keep data from Fireservice
   // after manually reload of the page
-  constructor(private auth: AuthService, public rs: ResponsiveService) {
-
-  }
+  constructor(
+    private auth: AuthService, 
+    public rs: ResponsiveService, 
+    // public dialogService: DialogManagerService,
+    ) {}
 }
