@@ -37,6 +37,7 @@ export class FirestoreService {
 
   // variable item to observe
   allUsers!: User[];
+  allChannels!: Channel[];
   currentUser!: User;
   channelsArray: Channel[] = [];
   privateChats: Chat[] = [];
@@ -44,6 +45,7 @@ export class FirestoreService {
 
   // subject item
   private allUsersSubject = new BehaviorSubject<Array<User>>(this.allUsers);
+  private allChannelsSubject = new BehaviorSubject<Array<Channel>>(this.allChannels);
   private currentUserSubject = new BehaviorSubject<User>(this.currentUser);
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private privateChatsSubject = new BehaviorSubject<any>(this.privateChats);
@@ -52,6 +54,7 @@ export class FirestoreService {
 
   // observable item
   allUsers$ = this.allUsersSubject.asObservable();
+  allChannels$ = this.allChannelsSubject.asObservable();
   currentUser$ = this.currentUserSubject.asObservable();
   channelsArray$ = this.channelsArraySubject.asObservable();
   privateChats$ = this.privateChatsSubject.asObservable();
@@ -128,6 +131,7 @@ export class FirestoreService {
       this.currentUser = doc.data();
       this.currentUserSubject.next(this.currentUser);
       this.getAllUserObservable();
+      this.getAllChannelsObservable();
       this.getChannelsFromCurrentUser();
       this.getChatsFromCurrentUser();
     });
@@ -166,6 +170,18 @@ export class FirestoreService {
       });
       this.allUsersSubject.next(this.allUsers);
     });
+  }
+
+  getAllChannelsObservable(){
+    return onSnapshot(query(collection(this.firestore, 'channels')),
+      (channels) => {
+        this.allChannels = [];
+        channels.forEach((channel: any) => {
+          this.allChannels.push(channel.data()); 
+        });
+        this.allChannelsSubject.next(this.allChannels);
+      }
+    );
   }
 
   //>>>>>>>>>>>>>>>>>>>>>read chats from user
