@@ -67,7 +67,7 @@
         (click)="emojiService.toggleEmojiPicker('Main')"
         mat-icon-button
         class="btn__icon-wo-bg"
-        [ngClass]="emojiService.isOpenMain ? 'btn__icon-wo-bg__focus' : ''"
+        [ngClass]="emojiService.openEmojiPicker === 'Main' ? 'btn__icon-wo-bg__focus' : ''"
         aria-label="Icon button to select emotes"
       >
         <mat-icon fontSet="material-icons-outlined"
