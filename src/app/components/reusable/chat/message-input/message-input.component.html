@@ -1,6 +1,6 @@
 <div class="message__input">
   <emoji-mart
-    *ngIf="emojiService.isOpenMain"
+    *ngIf="emojiService.openEmojiPicker === 'Main'"
     class="emoji-picker"
     [darkMode]="false"
     (emojiClick)="addEmoji($event)"
