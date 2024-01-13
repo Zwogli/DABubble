@@ -1,7 +1,7 @@
 <div class="main">
 
   <app-header-mobile
-  *ngIf="rs.isDesktop$ | async"
+  *ngIf="(rs.isDesktop$ | async) && (firestoreService.currentUser$ | async)"
   ></app-header-mobile>
   
   <div
@@ -26,6 +26,5 @@
   </div>
 
   <app-dialog-manager></app-dialog-manager>
-  <!-- <app-dialog-create-channel *ngIf="dialogService.showDialogAddChannel$ | async"></app-dialog-create-channel> -->
 
 </div>
