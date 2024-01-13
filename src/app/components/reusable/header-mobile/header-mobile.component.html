@@ -1,19 +1,26 @@
 <!-- Header for sidenav -->
-<header *ngIf="parent !== 'chat'">
+<header 
+*ngIf="(parent === 'navbar' || 'main') && (rs.isDesktop$ | async)"
+[class.desktop]="(rs.isDesktop$ | async)"
+>
   <img src="assets/img/logo_dabubble-mobile.png" alt="Logo_DABubble" />
 
-  <app-navbar-searchbar
-  *ngIf="rs.isDesktop$ | async"
-  [class.view__desktop-searchbar]="rs.isDesktop$ | async"
-  ></app-navbar-searchbar>
+  <app-navbar-searchbar *ngIf="(rs.isDesktop$ | async)"></app-navbar-searchbar>
 
-  <img
-    (click)="openMenu()"
-    *ngIf="currentUser"
-    class="avatar-small"
-    src="{{ currentUser.photoUrl }}"
-    alt="avatar"
-  />
+  <div
+  (click)="openMenu()" 
+  class="header__profil">
+    <h1 *ngIf="currentUser && (rs.isDesktop$ | async)">{{ currentUser.name }}</h1>
+
+    <img
+      *ngIf="currentUser"
+      class="avatar-small"
+      src="{{ currentUser.photoUrl }}"
+      alt="avatar"
+    />
+
+    <mat-icon *ngIf="(rs.isDesktop$ | async)">keyboard_arrow_down</mat-icon>
+  </div>
 </header>
 
 <!-- Header for channels, threads and private chats -->

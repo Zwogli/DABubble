@@ -1,5 +1,21 @@
-<div id="menu" class="mobile__menu">
-    <div (click)="closeMenu()" class="orientation">
+<div 
+class="overlay"
+(click)="closeDialogMenu()"
+*ngIf="dialogService.showDialogProfilMenu$ | async"
+></div>
+
+
+<div 
+[class.dialog__desktop]="(dialogService.showDialogProfilMenu$ | async) && (rs.isDesktop$ | async)" 
+[class.dialog__mobile]="(rs.isMobile$ | async) || (rs.isTablet$) && !(rs.isDesktop$ | async)" 
+[class.slide--up]="!showCloseAnimation && (dialogService.showDialogProfilMenu$ | async) && (rs.isMobile$ | async) || (rs.isTablet$ | async)"
+[class.slide--down]="showCloseAnimation && (rs.isMobile$ | async)  || (rs.isTablet$ | async)"
+>
+
+    <div 
+    *ngIf="(rs.isMobile$ | async) || (rs.isTablet$ | async)" 
+    (click)="closeDialogMenu()" 
+    class="orientation">
         <div>
             <span></span>
         </div>
@@ -12,6 +28,6 @@
 
     <button (click)="logout()" class="btn__select">
         <span class="material-icons-outlined"> logout </span>
-        <span class="button__txt"> Log out </span>
+        <span class="button__txt"> Ausloggen </span>
     </button>
 </div>

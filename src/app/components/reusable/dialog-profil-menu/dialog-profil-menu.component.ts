@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 import { DialogProfilComponent } from '../../reusable/dialog-profil/dialog-profil.component';
-import { Subscription } from 'rxjs';
+import { ResponsiveService } from 'src/app/services/responsive.service';
+
 
 @Component({
   selector: 'app-dialog-profil-menu',
@@ -11,11 +12,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./dialog-profil-menu.component.scss']
 })
 export class DialogProfilMenuComponent {
+  showCloseAnimation:boolean = false;
 
   constructor(
     private authService: AuthService,
-    private navbarService: NavbarService, 
+    public dialogService: DialogManagerService, 
     public dialog: MatDialog,
+    public rs: ResponsiveService,
     ) {}
 
   openDialogProfil() {
@@ -23,14 +26,25 @@ export class DialogProfilMenuComponent {
   }
 
   logout(){
-    this.navbarService.toggleOverlay();
+    this.closeDialogMenu();
     this.authService.signOut();
   }
 
-  closeMenu() {
-    setTimeout(() => {
-      this.navbarService.toggleOverlay();
-    }, 250);
-    this.navbarService.menuSlideDown();
+//<<<<<<<<<<<<<<<< manage dialog >>>>>>>>>>>>
+  closeDialogMenu(){
+    if(this.rs.isMobile$ || this.rs.isTablet$){
+      this.showCloseAnimation = true;
+      this.closeAnimation();
+    }else{
+      this.dialogService.showDialogProfilMenu();
+    }
+  }
+
+  closeAnimation(){
+    if(this.showCloseAnimation){
+      setTimeout(() => {
+        this.dialogService.showDialogProfilMenu();
+      }, 500);
+    }
   }
 }
