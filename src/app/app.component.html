@@ -1,7 +1,8 @@
 <div class="main">
 
   <app-header-mobile
-  *ngIf="(rs.isDesktop$ | async) && (firestoreService.currentUser$ | async)"
+  *ngIf="(rs.isDesktop$ && firestoreService.currentUser$) | async"
+  parent="'main'"
   ></app-header-mobile>
   
   <div
