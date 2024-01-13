@@ -95,18 +95,34 @@
         </div>
 
         <!-- Message Footer -->
-        <div *ngIf="message.thread.length > 0" class="message__footer">
-          <span
-            [customLink]="['thread', channelId, message.id]"
-            class="message__footer-count"
-            >{{ message.thread.length }} Antworten</span
+        <div *ngIf="message.thread.length > 0">
+          
+          <!-- Reactions -->
+          <div
+            *ngIf="message.reactions"
+            class="message__footer-reaction-container"
           >
-          <div class="message__footer-last-timestamp">
-            <span>Letzte Antwort</span>
-            <span *ngIf="message.thread.lastAnswer">
-              {{ message.thread.lastAnswer.toDate() | date : "shortTime" }}
-              Uhr</span
+            <span *ngFor="let reaction of message.reactions">
+              <p>{{ reaction.url }}</p>
+              <span>{{ reaction.user.length }}</span>
+              <span *ngFor="let name of reaction.user">{{ name.name }}</span>
+            </span>
+          </div>
+
+          <!-- Thread Answers -->
+          <div class="message__footer">
+            <span
+              [customLink]="['thread', channelId, message.id]"
+              class="message__footer-count"
+              >{{ message.thread.length }} Antworten</span
             >
+            <div class="message__footer-last-timestamp">
+              <span>Letzte Antwort</span>
+              <span *ngIf="message.thread.lastAnswer">
+                {{ message.thread.lastAnswer.toDate() | date : "shortTime" }}
+                Uhr</span
+              >
+            </div>
           </div>
         </div>
 
@@ -274,7 +290,9 @@
         "
         class="emoji-picker-reaction"
         [darkMode]="false"
-        (emojiClick)="addEmoji($event)"
+        (emojiClick)="
+          emojiService.addReaction(currentUser, chatRecordId, message, $event)
+        "
         [perLine]="7"
         [isNative]="true"
         [virtualize]="true"
