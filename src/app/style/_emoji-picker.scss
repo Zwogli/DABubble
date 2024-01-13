@@ -12,3 +12,10 @@
         transform: translate(5%, 55%);
     }
 }
+
+.emoji-picker-reaction {
+    position: absolute;
+    left: 10%;
+    top: 36px;
+    z-index: 4;
+}

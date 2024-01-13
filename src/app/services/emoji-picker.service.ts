@@ -4,16 +4,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class EmojiPickerService {
-  public isOpenMain: boolean = false;
-  public isOpenEdit: boolean = false;
+  public openEmojiPicker: 'Main' | 'Edit' | 'Reaction' | '' = '';
 
   constructor() {}
 
-  toggleEmojiPicker(target: 'Main' | 'Edit') {
-    if (target === 'Main') {
-      this.isOpenMain = !this.isOpenMain;
+  toggleEmojiPicker(target: 'Main' | 'Edit' | 'Reaction') {
+    if (this.openEmojiPicker === target) {
+      this.openEmojiPicker = '';
     } else {
-      this.isOpenEdit = !this.isOpenEdit;
+      this.openEmojiPicker = target;
     }
   }
 }
