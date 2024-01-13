@@ -94,6 +94,7 @@
           </ng-template>
         </div>
 
+        <!-- Message Footer -->
         <div *ngIf="message.thread.length > 0" class="message__footer">
           <span
             [customLink]="['thread', channelId, message.id]"
@@ -160,6 +161,12 @@
               <button
                 (click)="emojiService.toggleEmojiPicker('Edit')"
                 mat-icon-button
+                class="btn__icon-wo-bg"
+                [ngClass]="
+                  emojiService.openEmojiPicker === 'Edit'
+                    ? 'btn__icon-wo-bg__focus'
+                    : ''
+                "
                 aria-label="Icon button to select emotes"
               >
                 <mat-icon fontSet="material-icons-outlined"
@@ -222,6 +229,11 @@
           (click)="
             emojiService.toggleEmojiPicker('Reaction');
             toggleReactionOnMsg(message)
+          "
+          [ngClass]="
+            emojiService.openEmojiPicker === 'Reaction'
+              ? 'btn__icon-wo-bg__focus'
+              : ''
           "
           mat-icon-button
           aria-label="Icon button with a emoji add icon"

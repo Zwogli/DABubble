@@ -13,7 +13,8 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { ResponsiveService } from 'src/app/services/responsive.service';
-
+import { MatDialog } from '@angular/material/dialog';
+import { DialogChannelMemberComponent } from '../../dialogs/dialog-channel-member/dialog-channel-member.component';
 
 @Component({
   selector: 'app-chat-sub-header',
@@ -33,7 +34,7 @@ export class ChatSubHeaderComponent implements OnInit, OnChanges, OnDestroy {
   public currentUser!: User;
   public isDesktop!: boolean;
 
-  constructor(private chatService: ChatService) {
+  constructor(private chatService: ChatService, public dialog: MatDialog) {
     this.rs.isDesktop$
       .pipe(takeUntil(this.componentIsDestroyed$))
       .subscribe((val) => {
@@ -65,6 +66,12 @@ export class ChatSubHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   loadChannelMember() {
     this.fireService.startSubChannelMember(this.channel.member);
+  }
+
+  openMemberDialog() {
+    this.dialog.open(DialogChannelMemberComponent, {
+      data: this.fireService.channelMember,
+    });
   }
 
   navigateBack(): void {

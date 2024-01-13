@@ -54,6 +54,7 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { DialogCreateChannelComponent } from './components/reusable/dialog-create-channel/dialog-create-channel.component';
 import { DialogManagerComponent } from './components/general/dialog-manager/dialog-manager.component';
+import { DialogChannelMemberComponent } from './components/reusable/dialogs/dialog-channel-member/dialog-channel-member.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { DialogManagerComponent } from './components/general/dialog-manager/dial
     TextareaAutoresizeDirective,
     DialogCreateChannelComponent,
     DialogManagerComponent,
+    DialogChannelMemberComponent,
   ],
   
   imports: [

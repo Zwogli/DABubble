@@ -49,6 +49,7 @@
       <button
         (click)="openFileUpload()"
         mat-icon-button
+        class="btn__icon-wo-bg"
         aria-label="Icon button to add data files to the message"
       >
         <input
@@ -65,13 +66,19 @@
       <button
         (click)="emojiService.toggleEmojiPicker('Main')"
         mat-icon-button
+        class="btn__icon-wo-bg"
+        [ngClass]="emojiService.isOpenMain ? 'btn__icon-wo-bg__focus' : ''"
         aria-label="Icon button to select emotes"
       >
         <mat-icon fontSet="material-icons-outlined"
           >sentiment_satisfied</mat-icon
         >
       </button>
-      <button mat-icon-button aria-label="Icon button to link another user">
+      <button
+        mat-icon-button
+        aria-label="Icon button to link another user"
+        class="btn__icon-wo-bg"
+      >
         <mat-icon fontSet="material-icons-outlined">alternate_email</mat-icon>
       </button>
     </div>
@@ -80,6 +87,7 @@
       <button
         (click)="sendMessage()"
         mat-icon-button
+        class="btn__icon-wo-bg"
         aria-label="Icon button to send the message"
       >
         <mat-icon class="message-input__send-btn" fontSet="material-icons"
