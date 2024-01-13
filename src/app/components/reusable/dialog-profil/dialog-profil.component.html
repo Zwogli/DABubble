@@ -27,10 +27,12 @@
         </div>
     
         <div class="dialog__content--email">
-            <span class="material-icons-outlined"> email </span>
+            <span class="material-icons-outlined dialog__content--email-icon"> email </span>
             <div class="container__email">
                 <span class="container__email--headline"> E-Mail-Address </span>
-                <span class="container__email--data"> {{ currentUser.email }} </span>
+                <a 
+                class="container__email--data"
+                href= "mailto:{{ currentUser.email }}"> {{ currentUser.email }} </a>
             </div>
         </div>
     </div>
