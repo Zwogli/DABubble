@@ -163,17 +163,23 @@
 .message__footer-reaction-container {
     display: flex;
     justify-content: flex-start;
+    gap: 4px;
     margin-bottom: 8px;
 }
 
 .message__reaction-pill {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 
     padding: 5px 10px;
     border-radius: 20px;
     border: 1px solid var(--color-blue-border);
+    cursor: pointer;
+
+    &:hover {
+        border: 1px solid var(--color-blue-primary-default);
+    }
 
     p {
         margin: 0;

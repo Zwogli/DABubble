@@ -95,28 +95,37 @@
         </div>
 
         <!-- Message Footer -->
-        <div *ngIf="message.thread.length > 0">
+        <div>
           <!-- Reactions -->
           <div
             *ngIf="message.reactions"
             class="message__footer-reaction-container"
           >
             <!-- Pill -->
-            <span
-              class="message__reaction-pill"
-              *ngFor="let reaction of message.reactions"
-            >
-              <p class="reaction__emoji">{{ reaction.url }}</p>
-              <span>{{ reaction.user.length }}</span>
-              <!-- Modal -->
-              <div class="reaction__detail-modal-container">
-                <span *ngFor="let name of reaction.user">{{ name.name }}</span>
-              </div>
-            </span>
+            <ng-container *ngFor="let reaction of message.reactions">
+              <span
+                class="message__reaction-pill"
+                *ngIf="reaction.user.length > 0"
+                (click)="
+                  emojiService.addReaction(currentUser, chatRecordId, message, {
+                    emoji: { id: reaction.id, url: reaction.url }
+                  })
+                "
+              >
+                <p class="reaction__emoji">{{ reaction.url }}</p>
+                <span>{{ reaction.user.length }}</span>
+                <!-- Modal -->
+                <div class="reaction__detail-modal-container">
+                  <span *ngFor="let name of reaction.user">{{
+                    name.name
+                  }}</span>
+                </div>
+              </span>
+            </ng-container>
           </div>
 
           <!-- Thread Answers -->
-          <div class="message__footer">
+          <div *ngIf="message.thread.length > 0" class="message__footer">
             <span
               [customLink]="['thread', channelId, message.id]"
               class="message__footer-count"
