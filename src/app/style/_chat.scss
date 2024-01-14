@@ -57,6 +57,10 @@ main {
             border-radius: 10px 0 10px 10px !important;
         }
     }
+
+    .message__footer-reaction-container {
+        justify-content: flex-end;
+    }
 }
 
 .message__menuOpened {

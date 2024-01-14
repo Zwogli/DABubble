@@ -186,6 +186,7 @@ export class AuthService {
         // User is signed out
         this.currentUserId = '';
         this.isLoggedIn = false;
+        
       }
     });
   }

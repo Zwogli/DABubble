@@ -96,16 +96,22 @@
 
         <!-- Message Footer -->
         <div *ngIf="message.thread.length > 0">
-          
           <!-- Reactions -->
           <div
             *ngIf="message.reactions"
             class="message__footer-reaction-container"
           >
-            <span *ngFor="let reaction of message.reactions">
-              <p>{{ reaction.url }}</p>
+            <!-- Pill -->
+            <span
+              class="message__reaction-pill"
+              *ngFor="let reaction of message.reactions"
+            >
+              <p class="reaction__emoji">{{ reaction.url }}</p>
               <span>{{ reaction.user.length }}</span>
-              <span *ngFor="let name of reaction.user">{{ name.name }}</span>
+              <!-- Modal -->
+              <div class="reaction__detail-modal-container">
+                <span *ngFor="let name of reaction.user">{{ name.name }}</span>
+              </div>
             </span>
           </div>
 
