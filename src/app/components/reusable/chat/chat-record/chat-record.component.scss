@@ -179,13 +179,21 @@
     border: 1px solid var(--color-blue-border);
     cursor: pointer;
 
-    &:hover {
+    &:has(.reaction__pill-wrapper:hover) {
         border: 1px solid var(--color-blue-primary-default);
     }
 
     p {
         margin: 0;
     }
+}
+
+.reaction__pill-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+
 }
 
 .reaction__emoji {

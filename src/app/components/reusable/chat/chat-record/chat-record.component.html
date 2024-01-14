@@ -112,11 +112,15 @@
                     emoji: { id: reaction.id, url: reaction.url }
                   })
                 "
-                (mouseenter)="showModal(reaction.id)"
-                (mouseleave)="hideModal(reaction.id)"
               >
-                <p class="reaction__emoji">{{ reaction.url }}</p>
-                <span>{{ reaction.user.length }}</span>
+                <div
+                class="reaction__pill-wrapper"
+                  (mouseenter)="showReactionModal(reaction.id)"
+                  (mouseleave)="hideReactionModal(reaction.id)"
+                >
+                  <p class="reaction__emoji">{{ reaction.url }}</p>
+                  <span>{{ reaction.user.length }}</span>
+                </div>
                 <!-- Modal -->
                 <div
                   [id]="reaction.id"
