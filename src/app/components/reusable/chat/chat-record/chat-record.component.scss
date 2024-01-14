@@ -214,6 +214,10 @@
         font-weight: bold;
     }
 
+    &:first-child {
+        font-size: 1.333rem;
+    }
+
     &:last-child {
         white-space: nowrap;
     }

@@ -126,11 +126,17 @@
                   <div>
                     <span
                       class="reaction__user-name"
-                      *ngFor="let name of reaction.user"
-                      >{{ name.name }}</span
+                      *ngFor="let name of reaction.user; let last = last"
                     >
+                      {{ name.name }}
+                      <p *ngIf="!last">und</p>
+                    </span>
                   </div>
-                  <span>hat reagiert</span>
+                  <ng-container
+                    *ngIf="reaction.user.length > 1; then multi; else solo"
+                  ></ng-container>
+                  <ng-template #multi><span>haben reagiert</span></ng-template>
+                  <ng-template #solo><span>hat reagiert</span></ng-template>
                 </div>
               </span>
             </ng-container>
