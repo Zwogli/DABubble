@@ -107,18 +107,30 @@
                 class="message__reaction-pill"
                 *ngIf="reaction.user.length > 0"
                 (click)="
+                  stopPropagation($event);
                   emojiService.addReaction(currentUser, chatRecordId, message, {
                     emoji: { id: reaction.id, url: reaction.url }
                   })
                 "
+                (mouseenter)="showModal(reaction.id)"
+                (mouseleave)="hideModal(reaction.id)"
               >
                 <p class="reaction__emoji">{{ reaction.url }}</p>
                 <span>{{ reaction.user.length }}</span>
                 <!-- Modal -->
-                <div class="reaction__detail-modal-container">
-                  <span *ngFor="let name of reaction.user">{{
-                    name.name
-                  }}</span>
+                <div
+                  [id]="reaction.id"
+                  class="reaction__detail-modal-container"
+                >
+                  <span>{{ reaction.url }}</span>
+                  <div>
+                    <span
+                      class="reaction__user-name"
+                      *ngFor="let name of reaction.user"
+                      >{{ name.name }}</span
+                    >
+                  </div>
+                  <span>hat reagiert</span>
                 </div>
               </span>
             </ng-container>
