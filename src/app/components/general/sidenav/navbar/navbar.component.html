@@ -8,6 +8,7 @@
 >
   <app-navbar-searchbar
   *ngIf="!(rs.isDesktop$ | async)"
+  [class.element__margin--bottom]="(rs.isMobile$|async) || (rs.isTablet$|async)"
   ></app-navbar-searchbar>
 
   <button
