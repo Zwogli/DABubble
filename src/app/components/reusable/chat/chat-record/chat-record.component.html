@@ -46,7 +46,11 @@
       (mouseleave)="toggleMsgMenu(message)"
     >
       <div class="message__avatar-container">
-        <img src="{{ message.sentByPhotoUrl }}" alt="" />
+        <img
+          referrerpolicy="no-referrer"
+          src="{{ message.sentByPhotoUrl }}"
+          alt=""
+        />
       </div>
 
       <div class="message__content-container">
@@ -114,7 +118,7 @@
                 "
               >
                 <div
-                class="reaction__pill-wrapper"
+                  class="reaction__pill-wrapper"
                   (mouseenter)="showReactionModal(reaction.id)"
                   (mouseleave)="hideReactionModal(reaction.id)"
                 >
