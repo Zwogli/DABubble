@@ -1,19 +1,16 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
-  selector: 'app-create-channel',
-  templateUrl: './create-channel.component.html',
-  styleUrls: ['./create-channel.component.scss']
+  selector: 'app-dialog-create-channel',
+  templateUrl: './dialog-create-channel.component.html',
+  styleUrls: ['./dialog-create-channel.component.scss']
 })
-export class CreateChannelComponent {
-  private subscription: Subscription;
-  showMenu: boolean = false;
-  err_hash:boolean = false
+export class DialogCreateChannelComponent {
   createChannelForm = new FormGroup({
     channelNameForm: new FormControl('', [
       Validators.required,
@@ -21,17 +18,14 @@ export class CreateChannelComponent {
       Validators.maxLength(17)
     ]),
   });
+  err_hash:boolean = false
 
   constructor(
     private authService: AuthService,
     public firestoreService: FirestoreService,
-    private navbarService: NavbarService, 
-    ){
-      this.subscription = this.navbarService.showMenu$.subscribe(
-        visible => {
-          this.showMenu = visible;
-        });
-    }
+    public dialogService: DialogManagerService,
+    public rs: ResponsiveService,  
+    ){}
 
   get channelNameForm() {
     return this.createChannelForm.get('channelNameForm');
@@ -81,12 +75,17 @@ export class CreateChannelComponent {
 
   openUserSelection(){
     this.manageDescription();
-    this.navbarService.menuSlideUp('menuCreateChannel');
+    this.dialogService.showDialogNewChannel();
   }
 
   manageDescription(){
-    let desciptionInput: any = document.getElementById('channel-desciption');
+    let desciptionInput: any = document.getElementById('channel-description');
     let description = desciptionInput.value;
     this.firestoreService.newChannelDescription = description
+  }
+
+  closeDialogCreateChannel(){
+    this.resetErrorMsg();
+    this.dialogService.showDialogAddChannel();
   }
 }

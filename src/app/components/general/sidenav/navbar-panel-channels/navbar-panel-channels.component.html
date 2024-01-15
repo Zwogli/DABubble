@@ -38,9 +38,9 @@
 				<!-- 
 					add channel element
 				-->				
-				<div [routerLink]="'/home/' + 'addChannel'" class="fix--space-left sort__elemts--row cursor__add">
+				<div (click)="openDialogNewChannel()" class="fix--space-left sort__elemts--row cursor__add">
 					<span class="material-icons-outlined element--blue"> add_circle </span>
-					<p class="element--blue">Add Channel</p>
+					<p class="element--blue">Channel hinzufügen</p>
 				</div>
 
 		  </div>

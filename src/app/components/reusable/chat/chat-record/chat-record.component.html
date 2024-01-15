@@ -43,7 +43,7 @@
       }"
       (click)="toggleMsgMenu(message)"
       (mouseenter)="toggleMsgMenu(message)"
-      (mouseleave)="toggleMsgMenu(message)"
+      (mouseleave)="toggleMsgMenu(message); closeReaction()"
     >
       <div class="message__avatar-container">
         <img src="{{ message.sentByPhotoUrl }}" alt="" />
@@ -58,6 +58,7 @@
         </div>
 
         <div class="message__content-wrapper">
+          <!-- Display File if present -->
           <div
             *ngIf="
               message.file.url && message.file.type !== 'application/pdf';
@@ -93,6 +94,7 @@
           </ng-template>
         </div>
 
+        <!-- Message Footer -->
         <div *ngIf="message.thread.length > 0" class="message__footer">
           <span
             [customLink]="['thread', channelId, message.id]"
@@ -107,6 +109,7 @@
             >
           </div>
         </div>
+
         <!-- Edit Msg Text container -->
         <div
           *ngIf="message === showEditMsgInput"
@@ -144,7 +147,7 @@
             </div>
             <div class="message-input__btn-container">
               <emoji-mart
-                *ngIf="emojiService.isOpenEdit"
+                *ngIf="emojiService.openEmojiPicker === 'Edit'"
                 class="emoji-picker-edit"
                 [darkMode]="false"
                 (emojiClick)="addEmoji($event)"
@@ -158,6 +161,12 @@
               <button
                 (click)="emojiService.toggleEmojiPicker('Edit')"
                 mat-icon-button
+                class="btn__icon-wo-bg"
+                [ngClass]="
+                  emojiService.openEmojiPicker === 'Edit'
+                    ? 'btn__icon-wo-bg__focus'
+                    : ''
+                "
                 aria-label="Icon button to select emotes"
               >
                 <mat-icon fontSet="material-icons-outlined"
@@ -171,7 +180,10 @@
                 ></ng-container>
                 <ng-template #bigBtn>
                   <button
-                    (click)="closeEditInput(message); emojiService.isOpenEdit = false"
+                    (click)="
+                      closeEditInput(message);
+                      emojiService.toggleEmojiPicker('Edit')
+                    "
                     class="text-btn-stroked"
                     mat-stroked-button
                   >
@@ -213,7 +225,19 @@
 
       <!-- ========== Onclick/ onhover Menu ========== -->
       <div *ngIf="selectedMsg === message" class="message__menu">
-        <button mat-icon-button aria-label="Icon button with a emoji add icon">
+        <button
+          (click)="
+            emojiService.toggleEmojiPicker('Reaction');
+            toggleReactionOnMsg(message)
+          "
+          [ngClass]="
+            emojiService.openEmojiPicker === 'Reaction'
+              ? 'btn__icon-wo-bg__focus'
+              : ''
+          "
+          mat-icon-button
+          aria-label="Icon button with a emoji add icon"
+        >
           <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
         </button>
         <button
@@ -242,6 +266,21 @@
           </button>
         </div>
       </div>
+      <!-- Emoji Picker -->
+      <emoji-mart
+        *ngIf="
+          emojiService.openEmojiPicker === 'Reaction' &&
+          reactionPickerOnMsg == message
+        "
+        class="emoji-picker-reaction"
+        [darkMode]="false"
+        (emojiClick)="addEmoji($event)"
+        [perLine]="7"
+        [isNative]="true"
+        [virtualize]="true"
+        [emojiTooltip]="true"
+        [emoji]="''"
+      ></emoji-mart>
     </div>
   </div>
 </section>

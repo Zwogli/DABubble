@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Unsubscribe } from '@angular/fire/auth';
 import { takeUntil ,  Subject } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -26,6 +26,7 @@ export class NavbarPanelChannelsComponent {
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
+    public dialogService: DialogManagerService,
   ){
     this.currentUser = this.firestoreService.currentUser;
   }
@@ -60,5 +61,9 @@ export class NavbarPanelChannelsComponent {
       `channel--arrow_drop_down`
     );
     channelArrow?.classList.toggle('rotate');
+  }
+
+  openDialogNewChannel(){
+    this.dialogService.showDialogAddChannel();
   }
 }

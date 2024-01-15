@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MenuProfilMobileComponent } from '../../general/sidenav/menu-profil-mobile/menu-profil-mobile.component';
 import { User } from 'src/app/models/user.class';
 import { Subject, takeUntil } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { user } from '@angular/fire/auth';
 import { AuthService } from 'src/app/services/auth.service';
+import { DialogProfilComponent } from '../dialog-profil/dialog-profil.component';
 
 @Component({
   selector: 'app-dialog-profil-edit',
@@ -33,7 +32,8 @@ export class DialogProfilEditComponent {
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
-    public dialogRef: MatDialogRef<MenuProfilMobileComponent>,
+    public dialogRef: MatDialogRef<DialogProfilComponent>,
+    // public dialogRef: MatDialogRef<MenuProfilMobileComponent>,
     ) {}
 
     ngOnInit() {

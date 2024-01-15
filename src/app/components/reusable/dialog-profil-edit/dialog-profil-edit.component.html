@@ -2,7 +2,7 @@
 
     <header>
         <h2> 
-            <span> Edit your Profil </span>  
+            <span> Dein Profil bearbeiten </span>  
             <span (click)="onNoClick()" class="material-icons-outlined close__element"> close </span>
         </h2>
     </header>
@@ -17,7 +17,7 @@
             <div class="dialog__content--name">
                 <div class="dialog__content--name-headline">
                     <span class="material-icons-outlined"> account_circle </span>
-                    <span class="dialog__content--name-headline-txt"> Full name </span>
+                    <span class="dialog__content--name-headline-txt"> Vollständiger Name </span>
                 </div>
 
                 <div class="dialog__content--input">
@@ -38,7 +38,7 @@
             <div class="dialog__content--email">
                 <div class="dialog__content--email-headline">
                     <span class="material-icons-outlined"> email </span>
-                    <span class="dialog__content--email-headline-txt"> E-Mail-Address </span>
+                    <span class="dialog__content--email-headline-txt"> E-Mail-Adresse </span>
                 </div>
 
                 <div class="dialog__content--input">
@@ -62,14 +62,14 @@
                 <button
                     (click)="onNoClick()" 
                     class="dialog__btn--cancel"> 
-                    Cancel 
+                    Abbrechen 
                 </button>
                 <button 
                     class="dialog__btn--save"
                     [disabled]="updateUserForm.invalid"
                     [class.btn-disabled]="updateUserForm.invalid"
                     (click)="updateCurrentUserData(userName.value, userEmail.value)"> 
-                    Save 
+                    Speichern 
                 </button>
             </div>
         </div>

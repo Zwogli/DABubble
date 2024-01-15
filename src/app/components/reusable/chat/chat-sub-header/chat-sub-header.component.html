@@ -1,5 +1,9 @@
 <!-- CHANNEL subheader -->
-<div *ngIf="type === 'channel'" class="sub-header">
+<div 
+*ngIf="type === 'channel'"
+[class.view__desktop-sub-header]="rs.isDesktop$ | async" 
+class="sub-header"
+>
   <div *ngIf="channel" class="sub-header__title pointer">
     <span class="title__main"
       ># {{ channel.name }}
@@ -8,11 +12,11 @@
   </div>
 
   <div class="subheader__icon-container">
-    <div *ngIf="isDesktop" class="subheader__avatar-container">
+    <div *ngIf="isDesktop" class="subheader__avatar-container" (click)="openMemberDialog()">
       <div class="subheader__avatar-wrapper">
         <app-avatar-display
           *ngFor="
-            let member of fireService.channelMember | async;
+            let member of fireService.channelMemberSubject | async;
             let i = index
           "
           [ngStyle]="{ 'right.px': i * 14 }"
@@ -21,7 +25,7 @@
         ></app-avatar-display>
       </div>
       <span class="member__counter">{{
-        (fireService.channelMember | async)!.length
+        (fireService.channelMemberSubject | async)!.length
       }}</span>
     </div>
     <button aria-label="Icon button with a person add icon">
@@ -31,7 +35,11 @@
 </div>
 
 <!-- THREAD subheader -->
-<div *ngIf="type === 'thread'" class="sub-header">
+<div 
+*ngIf="type === 'thread'"
+[class.view__desktop-sub-header]="rs.isDesktop$ | async" 
+class="sub-header"
+>
   <div *ngIf="channel" class="sub-header__title pointer">
     <span class="title__main">Thread</span>
     <span class="title__sub"># {{ channel.name }} </span>
@@ -54,7 +62,11 @@
 </div>
 
 <!-- PRIVATE subheader -->
-<div *ngIf="type === 'private'" class="sub-header">
+<div 
+*ngIf="type === 'private'"
+[class.view__desktop-sub-header]="rs.isDesktop$ | async"  
+class="sub-header"
+>
   <div class="sub-header__title private-header">
     <app-avatar-display
       *ngIf="privateChatAvatarConfig"

@@ -1,4 +1,10 @@
 @import 'src/app/style/_chat.scss';
+.main{
+    display: flex;
+    flex-direction: column;
+    height: 100svh;
+    background-color: var(--color-white);
+}
 
 .placeholder__container {
     display: flex;
@@ -31,4 +37,13 @@
 
 app-avatar-display {
     margin-bottom: -20px;
+}
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+responsive
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+.view__desktop-main{
+    margin: 1rem;
+    border-radius: 30px;
+    height: calc(100svh - 80px - 2rem);
 }

@@ -4,8 +4,8 @@ import { BehaviorSubject, Subject, Subscription, of, takeUntil } from 'rxjs';
 import { Chat } from 'src/app/models/chat.class';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { NavbarService } from 'src/app/services/navbar.service';
 
 @Component({
   selector: 'app-navbar-panel-message',
@@ -32,7 +32,7 @@ export class NavbarPanelMessageComponent {
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
-    private navbarService: NavbarService,
+    private dialogService: DialogManagerService,
   ){
   }
   
@@ -69,15 +69,15 @@ export class NavbarPanelMessageComponent {
       this.chatUserData = chatUser;
     } )
   }
-  
-  toggleNewChat(){
-    this.navbarService.manageOverlayNewChat('menuNewChat');
-  }
 
   rotateArrow() {
     const channelArrow: HTMLElement | null= document.getElementById(
       `directMessage--arrow_drop_down`
     );
     channelArrow?.classList.toggle('rotate');
+  }
+
+  openDialogNewChat(){
+    this.dialogService.showDialogNewChat();
   }
 }

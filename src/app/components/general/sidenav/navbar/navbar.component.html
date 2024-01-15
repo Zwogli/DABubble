@@ -1,9 +1,17 @@
-<app-header-mobile [parent]="'navbar'"></app-header-mobile>
+<app-header-mobile 
+*ngIf="!(rs.isDesktop$ | async)"
+[parent]="'navbar'"
+></app-header-mobile>
 
-<main>
-  <app-navbar-searchbar></app-navbar-searchbar>
+<main
+[class.view__desktop-main]="rs.isDesktop$ | async"
+>
+  <app-navbar-searchbar
+  *ngIf="!(rs.isDesktop$ | async)"
+  ></app-navbar-searchbar>
 
   <button
+    *ngIf="!(rs.isDesktop$ | async)"
     [routerLink]="'/home/' + 'newChat'"
     mat-fab
     color="primary"
@@ -17,7 +25,3 @@
     <app-navbar-panel-message></app-navbar-panel-message>
   </article>
 </main>
-
-<app-dialog-overlay *ngIf="showMenu"></app-dialog-overlay>
-<app-dialog-profil-menu></app-dialog-profil-menu>
-<app-dialog-new-chat></app-dialog-new-chat>

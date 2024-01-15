@@ -3,7 +3,8 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-dialog-new-chat',
@@ -12,8 +13,7 @@ import { NavbarService } from 'src/app/services/navbar.service';
 })
 export class DialogNewChatComponent {
   @ViewChild('searchbarUser') searchbarUser!: ElementRef;
-  showOverlay: boolean = false;
-  private subscription: Subscription;
+  showCloseAnimation:boolean = false;
   currentUser!:User;
   allUsers!:User[];
   filteredUser:User[] = [];
@@ -26,13 +26,9 @@ export class DialogNewChatComponent {
   constructor(
     private authService: AuthService,
     private firestoreService:FirestoreService,
-    public navbarService: NavbarService,
-  ){
-    this.subscription = this.navbarService.showOverlayNewChat$.subscribe(
-      visible => {
-        this.showOverlay = visible;
-      });
-  }
+    public dialogService: DialogManagerService,
+    public rs: ResponsiveService, 
+  ){}
   
 //<<<<<<<<<<<<<<<< subscribe >>>>>>>>>>>>
   ngOnInit() {
@@ -121,12 +117,32 @@ export class DialogNewChatComponent {
     })
   }
 
-//<<<<<<<<<<<<<<<< manage overlay/menu >>>>>>>>>>>>
-  closeMenu() {
-    setTimeout(() => {
-      this.navbarService.toggleOverlayNewChat();
-    }, 250);
-    this.navbarService.menuSlideDown();
+//<<<<<<<<<<<<<<<< manage dialog >>>>>>>>>>>>
+  closeDialogNewChat(){
+    if(this.rs.isMobile$ || this.rs.isTablet$){
+      this.showCloseAnimation = true;
+      this.closeAnimation();
+    }else{
+      this.dialogService.showDialogNewChat();
+    }
     this.removeUser();
+    this.clearIputField();
+  }
+
+  clearIputField(){
+    let inputSearchbarUser: any = document.getElementById('searchbar-newChat');
+    if(inputSearchbarUser != null){
+      inputSearchbarUser.value = null;
+      this.filteredUser = [];
+    }
+  }
+
+  closeAnimation(){
+    if(this.showCloseAnimation){
+      setTimeout(() => {
+        this.showCloseAnimation = false;
+        this.dialogService.showDialogNewChat();
+      }, 500);
+    }
   }
 }

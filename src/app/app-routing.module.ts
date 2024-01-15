@@ -7,7 +7,7 @@ import { ChooseAvatarComponent } from './components/general/auth/choose-avatar/c
 import { NavbarComponent } from './components/general/sidenav/navbar/navbar.component';
 import { ForgotPasswordComponent } from './components/general/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/general/auth/reset-password/reset-password.component';
-import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
+// import { CreateChannelComponent } from './components/general/sidenav/create-channel/create-channel.component';
 import { ThreadComponent } from './components/general/chats/thread/thread.component';
 import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 import { ResponsiveService } from './services/responsive.service';
@@ -23,7 +23,7 @@ const mobileRoutes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   { path: 'home', component: NavbarComponent },
-  { path: 'home/addChannel', component: CreateChannelComponent },
+  // { path: 'home/addChannel', component: CreateChannelComponent },
   { path: 'chat/:type', component: ChannelComponent },
   { path: 'thread', component: ThreadComponent },
   { path: '**', redirectTo: '/home', pathMatch: 'full' },
@@ -40,7 +40,7 @@ const desktopRoutes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   { path: 'home', component: NavbarComponent },
-  { path: 'home/addChannel', component: CreateChannelComponent },
+  // { path: 'home/addChannel', component: CreateChannelComponent },
   {
     path: 'chat/:type',
     component: ChannelComponent,

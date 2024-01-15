@@ -45,9 +45,14 @@ export class ChatRecordComponent
 
   public showEditMsgMenu: boolean = false;
   public showEditMsgInput!: Message | null;
-  private deletedFileDataCache!: { url: string; type: string; name: string } | null;
+  private deletedFileDataCache!: {
+    url: string;
+    type: string;
+    name: string;
+  } | null;
   public editMsgPayload: string = '';
 
+  public reactionPickerOnMsg!: Message;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
@@ -119,13 +124,6 @@ export class ChatRecordComponent
       this.chatRecordLength.emit(this.chatRecord.length);
     }
   }
-
-  // openThread(msg: Message, event: any) {
-  //   if (msg != this.selectedMsg) {
-  //     event.stopPropagation();
-  //   }
-  //   this.chatService.openThread(msg, channelId);
-  // }
 
   toggleMsgMenu(msg: Message) {
     this.showEditMsgMenu = false;
@@ -201,6 +199,14 @@ export class ChatRecordComponent
 
   addEmoji(event: any) {
     this.editMsgPayload += event.emoji.native;
+  }
+
+  toggleReactionOnMsg(msg: Message) {
+      this.reactionPickerOnMsg = msg;
+  }
+
+  closeReaction() {
+    this.emojiService.openEmojiPicker = '';
   }
 
   stopPropagation(event: any) {

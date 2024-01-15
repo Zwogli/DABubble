@@ -1,4 +1,9 @@
-<app-header-mobile [parent]="'chat'"></app-header-mobile>
+<div
+class="main"
+[class.view__desktop-main]="rs.isDesktop$ | async"
+>
+
+<app-header-mobile *ngIf="!(rs.isDesktop$ | async)" [parent]="'chat'"></app-header-mobile>
 
 <app-chat-sub-header
   *ngIf="mainType"
@@ -103,3 +108,5 @@
   [channel]="currentChannel"
   [privateChatOpponentUser]="privateChatOpponentUser"
 ></app-message-input>
+
+</div>
