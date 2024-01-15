@@ -29,8 +29,13 @@ mat-card-content {
   top: 330px !important;
 }
 
+.block__input-password {
+  position: relative;
+  width: 100%;
+}
+
 .block__alert-password {
-  top: 417px !important;
+  top: 42px !important;
 }
 
 .block__google-log-in {
@@ -75,6 +80,11 @@ mat-card-content {
   mat-card-content {
     width: 90%;
   }
+
+  .block__alert-password {
+    left: 20px;
+    top: 45px !important;
+  }
 }
 
 @media(min-width: 600px) {
@@ -104,6 +114,12 @@ mat-card-content {
 @media(min-width: 1000px) {
   mat-card {
     width: 475px;
+  }
+}
+
+@media(min-width: 1920px) {
+  .img-after-intro {
+    left: calc(100% - 1920px);
   }
 }
 

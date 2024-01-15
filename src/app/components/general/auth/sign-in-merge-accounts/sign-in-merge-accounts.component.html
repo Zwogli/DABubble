@@ -20,12 +20,14 @@
         <input type="email" value="{{ this.firestoreService.currentUserData.email }}" disabled placeholder="beispielname@email.com" #userEmail>
       </div>
 
-      <div class="block__input">
-        <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="passwordForm?.dirty || passwordForm?.touched">lock</mat-icon>
-        <input formControlName="passwordForm" type="password" placeholder="Passwort" #userPassword>
-      </div>
-      <div class="block__alert-password" *ngIf="passwordForm?.invalid && (passwordForm?.dirty || passwordForm?.touched)">
-        <div *ngIf="passwordForm?.errors?.['required']">*Bitte gib ein Passwort ein.</div>
+      <div class="block__input-password">
+        <div class="block__input">
+          <mat-icon class="material-icons-outlined mail-icon" [class.icon-color-black]="passwordForm?.dirty || passwordForm?.touched">lock</mat-icon>
+          <input formControlName="passwordForm" type="password" placeholder="Passwort" #userPassword>
+        </div>
+        <div class="block__alert-password" *ngIf="passwordForm?.invalid && (passwordForm?.dirty || passwordForm?.touched)">
+          <div *ngIf="passwordForm?.errors?.['required']">*Bitte gib ein Passwort ein.</div>
+        </div>
       </div>
 
       <span class="sign-in__forgot-password" routerLink="/forgot-password">Passwort vergessen?</span>

@@ -35,6 +35,7 @@ export class SignUpComponent implements OnDestroy {
   });
 
   constructor(public authService: AuthService, public firestoreService: FirestoreService, public rs: ResponsiveService) {
+    console.log(this.firestoreService.emailAlreadyExist);
     this.rs.isDesktop$.subscribe((val) => {
       if (val) {
         this.isDesktop = true;
