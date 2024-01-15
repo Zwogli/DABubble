@@ -284,7 +284,7 @@
   }
 }
 
-
+//responsive for smaller devices
 @media(max-width:1372px) {
   .intro-create-account-desktop {
     display: none;
@@ -293,6 +293,18 @@
   .img-position-desktop {
     left: unset;
     top: 20px;
+  }
+}
+
+
+//responsive for bigger devices
+@media(min-width: 1920px) {
+  .intro-create-account-desktop {
+    right: calc(100% - 1920px);
+  }
+
+  .img-position-desktop {
+    left: calc(100% - 1920px);
   }
 }
 

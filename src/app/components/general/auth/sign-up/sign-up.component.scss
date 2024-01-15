@@ -19,6 +19,12 @@
   }
 }
 
+.logo-desktop-position {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+
 mat-card {
   margin: 30px 16px 0 16px !important;
   height: 431px !important;
@@ -179,6 +185,10 @@ mat-card {
     top: 207px !important;
   }
 
+  .error-email-exist {
+    top: 207px !important;
+  }
+
   .block__alert-password {
     top: 271px !important;
   }
@@ -200,12 +210,17 @@ mat-card {
 
 @media(max-width: 330px) {
   .block__icon-arrow-back {
-    left: -8px;
+    left: -12px;
   }
 
   .icon__arrow-back {
     font-size:20px;
-    margin-top: 1px;
+    margin-top: 2px;
+    margin-left: 2px;
+  }
+
+  .block__imprint-data {
+    width: 180px;
   }
 }
 
@@ -215,6 +230,10 @@ mat-card {
   }
 
   .block__alert-email {
+    top: 226px !important;
+  }
+
+  .error-email-exist {
     top: 226px !important;
   }
 
@@ -262,7 +281,17 @@ mat-card {
     left: 52px;
   }
 
+  .error-email-exist {
+    left: 52px;
+  }
+
   .block__error-checkbox {
     left: 52px;
+  }
+}
+
+@media(min-width: 1920px) {
+  .logo-desktop-position {
+    left: calc(100% - 1920px);
   }
 }

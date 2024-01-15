@@ -284,6 +284,22 @@ form {
   }
 }
 
+.block__imprint-data {
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+  margin: 30px 0;
+
+  span {
+    font-size: 0.833rem;
+    color: var(--color-blue-primary-hover);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
 //responsive for bigger devices
 @media(min-width: 410px) {
   .block__error {
@@ -379,6 +395,10 @@ form {
 
   .btn__guest-log-in, .btn__log-in {
     padding: 12px;
+  }
+
+  .img-after-intro {
+    height: 68px !important;
   }
 }
 

@@ -4,6 +4,7 @@ import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,6 +12,7 @@ import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
   styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnDestroy {
+  isDesktop!:boolean;
   signUpForm = new FormGroup({
     nameForm: new FormControl('', [
       Validators.required,
@@ -32,7 +34,16 @@ export class SignUpComponent implements OnDestroy {
     checkboxForm: new FormControl(),
   });
 
-  constructor(public authService: AuthService, public firestoreService: FirestoreService) {}
+  constructor(public authService: AuthService, public firestoreService: FirestoreService, public rs: ResponsiveService) {
+    console.log(this.firestoreService.emailAlreadyExist);
+    this.rs.isDesktop$.subscribe((val) => {
+      if (val) {
+        this.isDesktop = true;
+      } else {
+        this.isDesktop = false;
+      }
+    });
+  }
 
 
   ngOnDestroy(): void {
