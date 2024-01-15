@@ -43,7 +43,7 @@
       }"
       (click)="toggleMsgMenu(message)"
       (mouseenter)="toggleMsgMenu(message)"
-      (mouseleave)="toggleMsgMenu(message); closeReaction()"
+      (mouseleave)="toggleMsgMenu(message)"
     >
       <div class="message__avatar-container">
         <img src="{{ message.sentByPhotoUrl }}" alt="" />
@@ -333,6 +333,7 @@
         [perLine]="7"
         [isNative]="true"
         [virtualize]="true"
+        [virtualizeOffset]="100"
         [emojiTooltip]="true"
         [emoji]="''"
       ></emoji-mart>
