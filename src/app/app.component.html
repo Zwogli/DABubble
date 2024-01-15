@@ -1,7 +1,7 @@
 <div class="wrapper">
 
   <app-header-mobile
-  *ngIf="(rs.isDesktop$ && firestoreService.currentUser$) | async"
+  *ngIf="(rs.isDesktop$|async) && auth.isHeaderVisible"
   parent="'main'"
   ></app-header-mobile>
   

@@ -15,7 +15,7 @@ export class AppComponent {
   // Auth gets instantiated to keep data from Fireservice
   // after manually reload of the page
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     public firestoreService: FirestoreService, 
     public rs: ResponsiveService, 
     ) {}
