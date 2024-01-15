@@ -28,7 +28,7 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private fireStorage: AngularFireStorage,
     public firestoreService: FirestoreService,
-    private Route: ActivatedRoute
+    private Route: ActivatedRoute,
   ) {}
 
   async ngOnInit() {

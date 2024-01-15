@@ -4,7 +4,8 @@
 :host {
   height: 100%;
   background-color: var(--color-blue-bg);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .block__sign-up {
@@ -15,7 +16,11 @@
 mat-card {
   height: 533px !important;
   padding: 15px !important;
-  position: unset;
+  position: relative;
+}
+
+mat-card-content {
+  width: 90%;
 }
 
 .sign-in__headline {
@@ -109,7 +114,7 @@ input[type="file"] {
   padding: 6px 10px !important;
 }
 
-.block__error {
+.block__error-sign-up {
   font-size: 0.667rem !important;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
@@ -118,22 +123,22 @@ input[type="file"] {
   right: 0 !important;
   bottom: 0 !important;
   padding: 10px 20px;
-  width: calc(100% - 40px);
   background-color: var(--color-blue-bg);
   min-height: 60px;
+  position: absolute;
 }
 
 .block__sign-up-successfull {
   position: absolute;
   color: white;
   background-color: var(--color-blue-primary-default);
-  bottom: 5px;
+  bottom: 16px;
   right: 16px;
   border-bottom-left-radius: 20px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   font-size: 1rem;
-  padding: 10px;
+  padding: 20px;
   transform: translateX(2000px);
 }
 
@@ -158,3 +163,86 @@ input[type="file"] {
     transform: translateX(0px);
   }
 }
+
+
+//responsive for smaller devices
+@media(max-width: 410px) {
+  .btn__log-in {
+    padding: 12px 25px;
+  }
+}
+
+@media(max-width: 400px) {
+  .block__icon-arrow-back {
+    top: -2px !important;
+  }
+
+  .block__upload-img {
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: 0;
+
+    span {
+      margin-bottom: 5px;
+    }
+  }
+
+  .block__img-box {
+    img {
+      margin-right: 3px;
+      width: 38px;
+      height: 38px;
+    }
+  }
+}
+
+@media(max-width: 300px) {
+  .block__upload-img {
+    align-items: center;
+  }
+
+  .text__choose-avatar {
+    text-align: center;
+  }
+
+  .btn__log-in {
+    margin-right: 0;
+    margin-top: 8px;
+  }
+}
+
+
+//responsive for bigger devices
+@media(min-width: 500px) {
+  mat-card {
+    height: 551px !important;
+  }
+
+  .block__img-box {
+    height: 65px;
+    img {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--color-white);
+
+      &:hover {
+      border: 5px solid var(--color-grey-hover) !important;
+  }
+    }
+  }
+}
+
+@media(min-width: 1372px) {
+  .img-after-intro {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+  }
+}
+
+@media(min-width: 1920px) {
+  .img-after-intro {
+    left: calc(100% - 1920px);
+  }
+}
+

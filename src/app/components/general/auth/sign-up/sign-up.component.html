@@ -1,5 +1,5 @@
 <div class="block__sign-up">
-  <img src="../../../../assets/img/logo-text.png">
+  <img [class.logo-desktop-position]="this.isDesktop" class="img-after-intro" src="../../../../assets/img/logo-text.png">
 
   <mat-card>
     <mat-card-content>
@@ -73,4 +73,10 @@
     </form>
     </mat-card-content>
   </mat-card>
+
+  <div class="block__imprint-data">
+    <span>Impressum</span>
+    <span>Datenschutz</span>
+  </div>
+
 </div>
