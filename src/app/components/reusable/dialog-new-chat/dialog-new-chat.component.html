@@ -6,14 +6,14 @@ class="overlay"
 
 <div 
 [class.dialog__desktop]="(rs.isDesktop$ | async)" 
-[class.dialog__mobile]="((rs.isMobile$ | async) || (rs.isTablet$))" 
-[class.slide--up]="!showCloseAnimation && (dialogService.showDialogNewChat$ | async) && (rs.isMobile$ | async) || (rs.isTablet$ | async)"
-[class.slide--down]="showCloseAnimation && (rs.isMobile$ | async) || (rs.isTablet$ | async)"
+[class.dialog__mobile]="(rs.isMobile$|async) || (rs.isTablet$|async)" 
+[class.slide--up]="!showCloseAnimation && (dialogService.showDialogNewChat$ | async) && ((rs.isMobile$ | async) || (rs.isTablet$ | async))"
+[class.slide--down]="showCloseAnimation && ((rs.isMobile$ | async) || (rs.isTablet$ | async))"
 >
 
     <div 
     (click)="closeDialogNewChat()"
-    *ngIf="(rs.isMobile$ | async) || (rs.isTablet$)" 
+    *ngIf="(rs.isMobile$ | async) || (rs.isTablet$|async)"
     class="orientation"
     >
         <div>
@@ -21,7 +21,7 @@ class="overlay"
         </div>
     </div>
 
-    <div class="container__header">
+    <div class="container__header" [class.element__margin--bottom]="(rs.isDesktop$|async)">
         <span>Leute hinzufügen</span>
         <span 
         (click)="closeDialogNewChat()" 
