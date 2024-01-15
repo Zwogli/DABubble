@@ -89,7 +89,7 @@ export class AuthService {
 
   async googleSignUp(user:any) {
     this.googleAccount = true;
-    await this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [user?.uid], ['vIGUW5jmoxQQaKOf9AkD'], user?.uid);
+    await this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [user?.uid], ['82C9Qh2AsibAiC6Ehti2'], user?.uid);
     await this.firestoreService.addPrivateChat(user?.uid);
     await this.firestoreService.updateChannelMember(user?.uid);
 
