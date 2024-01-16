@@ -119,25 +119,38 @@
               >
                 <div
                   class="reaction__pill-wrapper"
-                  (mouseenter)="showReactionModal(reaction.id)"
-                  (mouseleave)="hideReactionModal(reaction.id)"
+                  (mouseenter)="showReactionModal(reaction.id, message.id)"
+                  (mouseleave)="hideReactionModal(reaction.id, message.id)"
                 >
                   <p class="reaction__emoji">{{ reaction.url }}</p>
                   <span>{{ reaction.user.length }}</span>
                 </div>
                 <!-- Modal -->
                 <div
-                  [id]="reaction.id"
+                  [id]="reaction.id+message.id"
                   class="reaction__detail-modal-container"
                 >
                   <span>{{ reaction.url }}</span>
                   <div>
                     <span
                       class="reaction__user-name"
-                      *ngFor="let name of reaction.user; let last = last"
+                      *ngFor="
+                        let name of reaction.user;
+                        let last = last;
+                        let i = index
+                      "
                     >
-                      {{ name.name }}
-                      <p *ngIf="!last">und</p>
+                      <p *ngIf="reaction.user.length > 1 && last">und</p>
+                      <span>
+                        {{ name.name
+                        }}<span
+                          *ngIf="
+                            reaction.user.length > 2 &&
+                            i < reaction.user.length - 2
+                          "
+                          >,</span
+                        >
+                      </span>
                     </span>
                   </div>
                   <ng-container

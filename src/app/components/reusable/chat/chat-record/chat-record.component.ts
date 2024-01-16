@@ -213,13 +213,13 @@ export class ChatRecordComponent
     event.stopPropagation();
   }
 
-  showReactionModal(id: string) {
-    const pill = document.getElementById(id);
+  showReactionModal(id: string, msgId: string) {
+    const pill = document.getElementById(id+msgId);
     (pill as HTMLDivElement).style.opacity = '100';
   }
 
-  hideReactionModal(id: string) {
-    const pill = document.getElementById(id);
+  hideReactionModal(id: string, msgId: string) {
+    const pill = document.getElementById(id+msgId);
     (pill as HTMLDivElement).style.opacity = '0';
   }
 }
