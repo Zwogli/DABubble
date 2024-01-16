@@ -26,6 +26,7 @@ export class AuthService {
   currentUserId: string = '';
   googleAccount = false;
   isLoggedInForMerging = false;
+  isHeaderVisible:boolean = false;
 
   constructor(
     public router: Router,
@@ -43,6 +44,7 @@ export class AuthService {
         if (location == 'merge-accounts') {
           this.isLoggedInForMerging = true;
         } else {
+          this.toogleDesktopHeader();
           this.router.navigate(['home']);
         }
 
@@ -62,6 +64,7 @@ export class AuthService {
 
   guestSignIn() {
     this.signIn('guest@mail.com', 'guest_User123', 'guest');
+    this.toogleDesktopHeader();
     this.router.navigate(['home']);
   }
 
@@ -92,7 +95,7 @@ export class AuthService {
     await this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [user?.uid], ['82C9Qh2AsibAiC6Ehti2'], user?.uid);
     await this.firestoreService.addPrivateChat(user?.uid);
     await this.firestoreService.updateChannelMember(user?.uid);
-
+    this.toogleDesktopHeader();
     this.router.navigate(['home']);
   }
 
@@ -102,6 +105,7 @@ export class AuthService {
     await this.firestoreService.addCurrentUserData();
     await this.firestoreService.addUser(user, this.firestoreService.currentUserData.name, this.firestoreService.currentUserData.photoUrl, this.googleAccount, this.firestoreService.currentUserData.activePrivateChats, this.firestoreService.currentUserData.memberInChannel, this.firestoreService.currentUserData.id);
     this.firestoreService.deleteCurrentData('currentUserData', this.firestoreService.currentUserData.id);
+    this.toogleDesktopHeader();
     this.router.navigate(['home']);
   }
 
@@ -122,6 +126,7 @@ export class AuthService {
         // Accounts successfully linked
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const user = result.user;
+        this.toogleDesktopHeader();
         this.router.navigate(['home']);
       })
       .catch((error) => {
@@ -130,6 +135,7 @@ export class AuthService {
 
   //////////sign-out
   signOut() {
+    this.toogleDesktopHeader();
     signOut(this.auth)
       .then(() => {
         // Sign-out successful.
@@ -191,6 +197,7 @@ export class AuthService {
         this.googleAccount = false;
         docId = user?.uid;
         this.firestoreService.updateChannelMember(docId);
+        this.toogleDesktopHeader();
         this.router.navigate(['home']);
       }
       if (activePrivateChats == 0) {
@@ -233,5 +240,13 @@ export class AuthService {
       .catch((error) => {
         this.sendMailError = true;
       });
+  }
+
+  toogleDesktopHeader(){
+    if(this.isHeaderVisible){
+      this.isHeaderVisible = false;
+    }else{
+      this.isHeaderVisible = true;
+    }
   }
 }
