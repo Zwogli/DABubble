@@ -12,6 +12,7 @@ import { ThreadComponent } from './components/general/chats/thread/thread.compon
 import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-merge-accounts/sign-in-merge-accounts.component';
 import { ResponsiveService } from './services/responsive.service';
 import { ImprintComponent } from './components/general/auth/imprint/imprint.component';
+import { PrivacyPolicyComponent } from './components/general/auth/privacy-policy/privacy-policy.component';
 
 const mobileRoutes: Routes = [
   { path: '', component: IntroComponent },
@@ -24,6 +25,7 @@ const mobileRoutes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   { path: 'imprint', component: ImprintComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'home', component: NavbarComponent },
   // { path: 'home/addChannel', component: CreateChannelComponent },
   { path: 'chat/:type', component: ChannelComponent },
@@ -42,6 +44,7 @@ const desktopRoutes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'choose-avatar/:id', component: ChooseAvatarComponent },
   { path: 'imprint', component: ImprintComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'home', component: NavbarComponent },
   // { path: 'home/addChannel', component: CreateChannelComponent },
   {
