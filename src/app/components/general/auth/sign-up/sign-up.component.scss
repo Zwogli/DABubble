@@ -290,6 +290,16 @@ mat-card {
   }
 }
 
+@media(min-width: 1370px) {
+  .block__sign-up {
+    justify-content: start;
+  }
+
+  mat-card {
+    margin: 10% 16px 0 16px !important;
+  }
+}
+
 @media(min-width: 1920px) {
   .logo-desktop-position {
     left: calc(100% - 1920px);
