@@ -64,7 +64,6 @@ export class AuthService {
 
   guestSignIn() {
     this.signIn('guest@mail.com', 'guest_User123', 'guest');
-    this.toogleDesktopHeader();
     this.router.navigate(['home']);
   }
 
