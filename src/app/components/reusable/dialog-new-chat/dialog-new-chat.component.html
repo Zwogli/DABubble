@@ -6,7 +6,7 @@ class="overlay"
 
 <div 
 [class.dialog__desktop]="(rs.isDesktop$ | async)" 
-[class.dialog__mobile]="(rs.isMobile$|async) || (rs.isTablet$|async)" 
+[class.dialog__mobile]="((rs.isMobile$|async) || (rs.isTablet$|async))" 
 [class.slide--up]="!showCloseAnimation && (dialogService.showDialogNewChat$ | async) && ((rs.isMobile$ | async) || (rs.isTablet$ | async))"
 [class.slide--down]="showCloseAnimation && ((rs.isMobile$ | async) || (rs.isTablet$ | async))"
 >

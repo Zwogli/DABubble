@@ -20,6 +20,7 @@ export class DialogNewChatComponent {
   selectedUser:User[] = [];
   userSelected:boolean = true;
   isAlreadyInChat:boolean = false;
+  windowWidth:number = window.innerWidth;
   private currentUserIsDestroyed$ = new Subject<boolean>();
   private allUsersIsDestroyed$ = new Subject<boolean>();
 
@@ -119,7 +120,7 @@ export class DialogNewChatComponent {
 
 //<<<<<<<<<<<<<<<< manage dialog >>>>>>>>>>>>
   closeDialogNewChat(){
-    if(this.rs.isMobile$ || this.rs.isTablet$){
+    if(this.windowWidth < 1370.02){
       this.showCloseAnimation = true;
       this.closeAnimation();
     }else{
