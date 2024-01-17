@@ -26,7 +26,7 @@ export class AuthService {
   currentUserId: string = '';
   googleAccount = false;
   isLoggedInForMerging = false;
-  isHeaderVisible:boolean = false;
+  public isLoggedIn:boolean = false;
 
   constructor(
     public router: Router,
@@ -36,7 +36,6 @@ export class AuthService {
     this.getCurrentUser();
   }
 
-  //////////sign-in
   signIn(email: string, password: string, location:string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
@@ -44,7 +43,6 @@ export class AuthService {
         if (location == 'merge-accounts') {
           this.isLoggedInForMerging = true;
         } else {
-          this.toogleDesktopHeader();
           this.router.navigate(['home']);
         }
 
@@ -64,7 +62,6 @@ export class AuthService {
 
   guestSignIn() {
     this.signIn('guest@mail.com', 'guest_User123', 'guest');
-    this.toogleDesktopHeader();
     this.router.navigate(['home']);
   }
 
@@ -95,7 +92,6 @@ export class AuthService {
     await this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [user?.uid], ['vIGUW5jmoxQQaKOf9AkD'], user?.uid);
     await this.firestoreService.addPrivateChat(user?.uid);
     await this.firestoreService.updateChannelMember(user?.uid);
-    this.toogleDesktopHeader();
     this.router.navigate(['home']);
   }
 
@@ -105,7 +101,6 @@ export class AuthService {
     await this.firestoreService.addCurrentUserData();
     await this.firestoreService.addUser(user, this.firestoreService.currentUserData.name, this.firestoreService.currentUserData.photoUrl, this.googleAccount, this.firestoreService.currentUserData.activePrivateChats, this.firestoreService.currentUserData.memberInChannel, this.firestoreService.currentUserData.id);
     this.firestoreService.deleteCurrentData('currentUserData', this.firestoreService.currentUserData.id);
-    this.toogleDesktopHeader();
     this.router.navigate(['home']);
   }
 
@@ -126,7 +121,6 @@ export class AuthService {
         // Accounts successfully linked
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const user = result.user;
-        this.toogleDesktopHeader();
         this.router.navigate(['home']);
       })
       .catch((error) => {
@@ -135,7 +129,6 @@ export class AuthService {
 
   //////////sign-out
   signOut() {
-    this.toogleDesktopHeader();
     signOut(this.auth)
       .then(() => {
         // Sign-out successful.
@@ -162,9 +155,11 @@ export class AuthService {
         this.currentUserId = this.firestoreService.currentUserId;
         this.firestoreService.startSubUser(this.currentUserId);
         localStorage.setItem('userId', this.currentUserId);
+        this.isLoggedIn = true;
       } else {
         // User is signed out
         this.currentUserId = '';
+        this.isLoggedIn = false;
       }
     });
   }
@@ -197,7 +192,6 @@ export class AuthService {
         this.googleAccount = false;
         docId = user?.uid;
         this.firestoreService.updateChannelMember(docId);
-        this.toogleDesktopHeader();
         this.router.navigate(['home']);
       }
       if (activePrivateChats == 0) {
@@ -242,11 +236,4 @@ export class AuthService {
       });
   }
 
-  toogleDesktopHeader(){
-    if(this.isHeaderVisible){
-      this.isHeaderVisible = false;
-    }else{
-      this.isHeaderVisible = true;
-    }
-  }
 }
