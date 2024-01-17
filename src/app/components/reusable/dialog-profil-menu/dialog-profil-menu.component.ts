@@ -31,20 +31,20 @@ export class DialogProfilMenuComponent {
   }
 
 //<<<<<<<<<<<<<<<< manage dialog >>>>>>>>>>>>
-  closeDialogMenu(){
-    if(this.rs.isMobile$ || this.rs.isTablet$){
-      this.showCloseAnimation = true;
-      this.closeAnimation();
-    }else{
-      this.dialogService.showDialogProfilMenu();
-    }
+closeDialogMenuWithAnimation(){
+    this.showCloseAnimation = true;
+    this.closeAnimation();
   }
 
   closeAnimation(){
     if(this.showCloseAnimation){
       setTimeout(() => {
-        this.dialogService.showDialogProfilMenu();
+        this.closeDialogMenu();
       }, 500);
     }
+  }
+
+  closeDialogMenu(){
+    this.dialogService.showDialogProfilMenu();
   }
 }
