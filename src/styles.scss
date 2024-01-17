@@ -146,6 +146,26 @@ app-create-channel {
   }
 }
 
+@media(min-width:2560px) {
+  body {
+    display: flex;
+    justify-content: center;
+    background-color: var(--color-blue-bg)
+  }
+  app-intro, 
+  app-imprint, 
+  app-privacy-policy,
+  app-forgot-password,
+  app-reset-password,
+  app-sign-in,
+  app-sign-in-merge-accounts,
+  app-sign-up,
+  app-choose-avatar
+  {
+    left: 0;
+  }
+}
+
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 animation dialog
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/

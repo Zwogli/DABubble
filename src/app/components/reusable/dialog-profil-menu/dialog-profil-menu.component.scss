@@ -79,3 +79,9 @@ menu-profil
     font-weight: 600;
   }
 }
+
+  @media(min-width: 2560px) {
+    .dialog__desktop{
+      right: calc(((100% - 2560px) / 2) + 1rem );
+    }
+  }

@@ -8,3 +8,9 @@
 .view__desktop{
     display: flex;
 }
+
+@media(min-width:2560px) {
+    .wrapper {
+      width: 2560px;
+    }
+  }
