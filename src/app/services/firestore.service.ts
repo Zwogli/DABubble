@@ -179,7 +179,7 @@ export class FirestoreService {
       (channels) => {
         this.allChannels = [];
         channels.forEach((channel: any) => {
-          this.allChannels.push(channel.data()); 
+          this.allChannels.push(channel.data());
         });
         this.allChannelsSubject.next(this.allChannels);
       }
@@ -389,7 +389,7 @@ export class FirestoreService {
   }
 
   getDefaultChannel() {
-    return doc(collection(this.firestore, 'channels'), 'vIGUW5jmoxQQaKOf9AkD');
+    return doc(collection(this.firestore, 'channels'), '82C9Qh2AsibAiC6Ehti2');
   }
 
   async updateChannelMember(id: string) {

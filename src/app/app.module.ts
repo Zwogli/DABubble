@@ -55,6 +55,8 @@ import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { DialogCreateChannelComponent } from './components/reusable/dialog-create-channel/dialog-create-channel.component';
 import { DialogManagerComponent } from './components/general/dialog-manager/dialog-manager.component';
 import { DialogChannelMemberComponent } from './components/reusable/dialogs/dialog-channel-member/dialog-channel-member.component';
+import { ImprintComponent } from './components/general/auth/imprint/imprint.component';
+import { PrivacyPolicyComponent } from './components/general/auth/privacy-policy/privacy-policy.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +92,8 @@ import { DialogChannelMemberComponent } from './components/reusable/dialogs/dial
     DialogCreateChannelComponent,
     DialogManagerComponent,
     DialogChannelMemberComponent,
+    ImprintComponent,
+    PrivacyPolicyComponent,
   ],
   
   imports: [
