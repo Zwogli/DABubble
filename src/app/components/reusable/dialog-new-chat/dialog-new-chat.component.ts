@@ -13,7 +13,7 @@ import { ResponsiveService } from 'src/app/services/responsive.service';
 })
 export class DialogNewChatComponent {
   @ViewChild('searchbarUser') searchbarUser!: ElementRef;
-  showCloseAnimation:boolean = false;
+  public showCloseAnimation:boolean = false;
   currentUser!:User;
   allUsers!:User[];
   filteredUser:User[] = [];
