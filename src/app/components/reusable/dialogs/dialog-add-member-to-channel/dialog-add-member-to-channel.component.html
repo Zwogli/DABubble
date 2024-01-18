@@ -19,6 +19,14 @@
       (keyup)="searchService.searchForUser(searchInput.value)"
       type="text"
     />
+    <div>
+      <div *ngFor="let user of searchService.matchedUsers"  class="dialog__member-wrapper">
+        <app-avatar-display
+          [data]="{ user: user, showStatus: true, size: 'xsmall' }"
+        ></app-avatar-display>
+        <p>{{ user.name }}</p>
+      </div>
+    </div>
   </div>
 
   <button

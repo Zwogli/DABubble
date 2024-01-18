@@ -6,7 +6,6 @@ import {
   query,
   where,
 } from '@angular/fire/firestore';
-import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +35,8 @@ export class SearchServiceService {
       );
 
       const querySnapshot = await getDocs(q);
+      // Reset cache for every new entry so no filtering is needed,
+      // when user backspaces in the input 
       this.matchedUsers = [];
       querySnapshot.forEach((doc) => {
         console.log(doc.data());
