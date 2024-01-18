@@ -37,7 +37,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
   ) {
     this.route.queryParamMap.subscribe((p: any) => {
       this.currentChannelID = p['params'].channelID;
-      this.mainType = this.route.snapshot.paramMap.get('type')!;
+      this.mainType = this.route.snapshot.paramMap.get('type')!;      
       this.setChatRecordId('channels');
       this.setCurrentUser();
     });

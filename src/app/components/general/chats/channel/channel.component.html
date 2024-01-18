@@ -27,7 +27,7 @@
   <!-- Placeholder for empty chat record -->
   <div class="placeholder__container" *ngIf="chatRecordLength === 0">
     <ng-container
-      *ngIf="privateChatOpponentUser"
+      *ngIf="privateChatOpponentUser || mainType === 'channel'"
       [ngTemplateOutlet]="
         mainType === 'channel'
           ? channelPlaceholder
