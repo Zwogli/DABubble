@@ -12,15 +12,35 @@
   </div>
 
   <div class="dialog__search-input-container">
-    <input
-      #searchInput
-      class="dialog__search-input"
-      placeholder="Name eingeben"
-      (keyup)="searchService.searchForUser(searchInput.value)"
-      type="text"
-    />
+    <ng-container
+      [ngTemplateOutlet]="!userIsSelected ? input : selectedUserTemp"
+    ></ng-container>
+    <ng-template #input>
+      <input
+        #searchInput
+        class="dialog__search-input"
+        placeholder="Name eingeben"
+        (keyup)="searchService.searchForUser(searchInput.value)"
+        type="text"
+      />
+    </ng-template>
+    <ng-template #selectedUserTemp>
+      <div class="dialog__selected-user-container">
+        <div class="dialog__selected-user-wrapper">
+          <app-avatar-display
+            [data]="{ user: selectedUser, showStatus: true, size: 'xsmall' }"
+          ></app-avatar-display>
+          <p>{{ selectedUser.name }}</p>
+          <mat-icon>close</mat-icon>
+        </div>
+      </div>
+    </ng-template>
     <div>
-      <div *ngFor="let user of searchService.matchedUsers"  class="dialog__member-wrapper">
+      <div
+        *ngFor="let user of searchService.matchedUsers"
+        class="dialog__member-wrapper"
+        (click)="selectUser(user)"
+      >
         <app-avatar-display
           [data]="{ user: user, showStatus: true, size: 'xsmall' }"
         ></app-avatar-display>

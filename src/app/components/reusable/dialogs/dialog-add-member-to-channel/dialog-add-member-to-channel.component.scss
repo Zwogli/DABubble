@@ -92,3 +92,39 @@
         cursor: pointer;
     }
 }
+
+.dialog__selected-user-container {
+    padding: 6px;
+    justify-content: flex-start;
+
+    border-radius: 30px;
+    border: 1px solid var(--color-blue-border);
+}
+
+.dialog__selected-user-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    width: fit-content;
+
+    padding: 4px 16px;
+
+    border-radius: 30px;
+    background-color: var(--color-blue-bg);
+
+    mat-icon {
+        padding: 4px;
+        border-radius: 100%;
+        cursor: pointer;
+
+        &:hover {
+            outline: 2px solid white;
+            color: var(--color-blue-secondary-hover);
+        }
+    }
+
+    p {
+        margin: 0;
+    }
+}

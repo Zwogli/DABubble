@@ -5,6 +5,7 @@ import { ChatService } from 'src/app/services/chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { SearchServiceService } from 'src/app/services/search-service.service';
+import { User } from 'src/app/models/user.class';
 
 @Component({
   selector: 'app-dialog-add-member-to-channel',
@@ -18,6 +19,7 @@ export class DialogAddMemberToChannelComponent {
 
   public currentChannel!: any;
   public userIsSelected: boolean = false;
+  public selectedUser!: User;
 
   constructor(
     public dialogRef: MatDialogRef<ChatSubHeaderComponent>,
@@ -30,6 +32,11 @@ export class DialogAddMemberToChannelComponent {
         channelId
       );
     });
+  }
+
+  selectUser(user: User) {
+    this.selectedUser = user;
+    this.userIsSelected = true;
   }
 
   closeDialog() {
