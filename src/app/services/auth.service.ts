@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   //////////sign-in
-  signIn(email: string, password: string, location:string) {
+  signIn(email: string, password: string, location: string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         this.logInError = false;
@@ -47,7 +47,6 @@ export class AuthService {
           this.toogleDesktopHeader();
           this.router.navigate(['home']);
         }
-
       })
       .catch((error) => {
         this.logInError = true;
@@ -70,7 +69,9 @@ export class AuthService {
 
   //////////google authentication
   async googleAuthentication() {
-    const userCredential = await this.afAuth.signInWithPopup(new GoogleAuthProvider());
+    const userCredential = await this.afAuth.signInWithPopup(
+      new GoogleAuthProvider()
+    );
     const user = userCredential.user;
     try {
       await this.firestoreService.checkSignUpEmail(user?.email);
@@ -80,17 +81,23 @@ export class AuthService {
       } else {
         await this.firestoreService.checkIfGoogleAccount(userId);
 
-        if (this.firestoreService.emailAlreadyExist && this.firestoreService.isGoogleAccount) {
+        if (
+          this.firestoreService.emailAlreadyExist &&
+          this.firestoreService.isGoogleAccount
+        ) {
           this.googleSignIn(user, userId);
         }
-        if (this.firestoreService.emailAlreadyExist && !this.firestoreService.isGoogleAccount) {
+        if (
+          this.firestoreService.emailAlreadyExist &&
+          !this.firestoreService.isGoogleAccount
+        ) {
           this.prepareAccountLinking(user);
         }
       }
     } catch {}
   }
 
-  async googleSignUp(user:any) {
+  async googleSignUp(user: any) {
     this.googleAccount = true;
     await this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [user?.uid], ['82C9Qh2AsibAiC6Ehti2'], user?.uid);
     await this.firestoreService.addPrivateChat(user?.uid);
@@ -99,7 +106,7 @@ export class AuthService {
     this.router.navigate(['home']);
   }
 
-  async googleSignIn(user:any, userId:any) {
+  async googleSignIn(user: any, userId: any) {
     this.googleAccount = true;
     await this.firestoreService.getJsonOfCurrentData('user', userId);
     await this.firestoreService.addCurrentUserData();
@@ -109,7 +116,7 @@ export class AuthService {
     this.router.navigate(['home']);
   }
 
-  async prepareAccountLinking(user:any) {
+  async prepareAccountLinking(user: any) {
     await this.firestoreService.getJsonOfCurrentData('user', user?.uid);
     this.afAuth.signOut();
     await user?.delete();
@@ -129,8 +136,7 @@ export class AuthService {
         this.toogleDesktopHeader();
         this.router.navigate(['home']);
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   }
 
   //////////sign-out
@@ -143,8 +149,7 @@ export class AuthService {
         localStorage.removeItem('userId');
         this.router.navigateByUrl('');
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   }
 
   //////////data preparing
@@ -170,18 +175,40 @@ export class AuthService {
   }
 
   //////////sign-up
-  async signUp(name: string, email: string, password: string, photoUrl: any, location: string, activePrivateChats:any, memberInChannel: string[]) {
+  async signUp(
+    name: string,
+    email: string,
+    password: string,
+    photoUrl: any,
+    location: string,
+    activePrivateChats: any,
+    memberInChannel: string[]
+  ) {
     await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        this.executeSignUp(userCredential, name, photoUrl, location, activePrivateChats, memberInChannel);
+        this.executeSignUp(
+          userCredential,
+          name,
+          photoUrl,
+          location,
+          activePrivateChats,
+          memberInChannel
+        );
       })
       .catch((error) => {
         this.failedSignUp();
       });
   }
 
-  async executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel: string[]) {
+  async executeSignUp(
+    userCredential: any,
+    name: any,
+    photoUrl: any,
+    location: any,
+    activePrivateChats: any,
+    memberInChannel: string[]
+  ) {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
@@ -203,7 +230,15 @@ export class AuthService {
       if (activePrivateChats == 0) {
         activePrivateChats = [user?.uid];
       }
-      this.firestoreService.addUser(user, name, photoUrl, this.googleAccount, activePrivateChats, memberInChannel, docId);
+      this.firestoreService.addUser(
+        user,
+        name,
+        photoUrl,
+        this.googleAccount,
+        activePrivateChats,
+        memberInChannel,
+        docId
+      );
       this.firestoreService.addPrivateChat(user.uid);
     }, 3500);
   }

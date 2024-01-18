@@ -7,3 +7,14 @@ export interface AvatarConfig {
   showStatus: boolean;
   size: 'xsmall' | 'small' | 'medium' | 'large';
 }
+
+interface ReactionUser {
+  id: string;
+  name: string;
+}
+
+export interface ReactionEmoji {
+  id: string;
+  url: string;
+  user: ReactionUser[];
+}

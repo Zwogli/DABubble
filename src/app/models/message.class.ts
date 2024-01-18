@@ -15,9 +15,10 @@ export class Message {
     length: number;
     lastAnswer: any;
   };
-  reactedBy: {
+  reactions: {
     id: string;
-    emoteUrl: string;
+    url: string;
+    user: { id: string; name: string }[];
   }[];
 
   constructor(data: any) {
@@ -37,6 +38,6 @@ export class Message {
       length: 0,
       lastAnswer: '',
     };
-    this.reactedBy = [];
+    this.reactions = [];
   }
 }

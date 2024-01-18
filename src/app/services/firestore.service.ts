@@ -519,7 +519,7 @@ export class FirestoreService {
       sentByPhotoUrl: data.sentByPhotoUrl,
       sentAt: serverTimestamp(),
       thread: data.thread,
-      reactedBy: data.reactedBy,
+      reactions: data.reactions,
     };
   }
 

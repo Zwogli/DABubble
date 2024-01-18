@@ -202,7 +202,7 @@ export class ChatRecordComponent
   }
 
   toggleReactionOnMsg(msg: Message) {
-      this.reactionPickerOnMsg = msg;
+    this.reactionPickerOnMsg = msg;
   }
 
   closeReaction() {
@@ -211,5 +211,15 @@ export class ChatRecordComponent
 
   stopPropagation(event: any) {
     event.stopPropagation();
+  }
+
+  showReactionModal(id: string, msgId: string) {
+    const pill = document.getElementById(id+msgId);
+    (pill as HTMLDivElement).style.opacity = '100';
+  }
+
+  hideReactionModal(id: string, msgId: string) {
+    const pill = document.getElementById(id+msgId);
+    (pill as HTMLDivElement).style.opacity = '0';
   }
 }

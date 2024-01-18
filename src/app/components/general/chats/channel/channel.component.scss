@@ -11,7 +11,9 @@
     flex-direction: column;
     gap: 24px;
 
+    height: 100%;
     padding: 16px;
+    justify-content: flex-end;
 }
 
 .placeholder__title-wrapper {
