@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { SearchServiceService } from 'src/app/services/search-service.service';
 import { User } from 'src/app/models/user.class';
+import { doc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-dialog-add-member-to-channel',
@@ -50,7 +51,7 @@ export class DialogAddMemberToChannelComponent {
     this.showError = false;
   }
 
-  addUserToChannel() {}
+
 
   closeDialog() {
     this.searchService.matchedUsers = [];

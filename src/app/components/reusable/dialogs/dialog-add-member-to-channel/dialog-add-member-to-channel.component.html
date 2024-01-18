@@ -58,7 +58,7 @@
     class="dialog__add-btn text-btn-flat"
     [disabled]="(showError && userIsSelected) || !userIsSelected"
     [ngClass]="userIsSelected && !showError ? 'enabled' : 'disabled'"
-    (click)="addUserToChannel()"
+    (click)="searchService.addUserToChannel(selectedUser, currentChannel)"
   >
     Hinzufügen
   </button>

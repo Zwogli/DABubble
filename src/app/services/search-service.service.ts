@@ -1,11 +1,16 @@
 import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
+  arrayUnion,
   collection,
+  doc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
+import { User } from '../models/user.class';
+import { Channel } from '../models/channel.class';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +41,7 @@ export class SearchServiceService {
 
       const querySnapshot = await getDocs(q);
       // Reset cache for every new entry so no filtering is needed,
-      // when user backspaces in the input 
+      // when user backspaces in the input
       this.matchedUsers = [];
       querySnapshot.forEach((doc) => {
         console.log(doc.data());
@@ -53,5 +58,17 @@ export class SearchServiceService {
       });
       console.log(this.matchedUsers);
     }
+  }
+
+  async addUserToChannel(user: User, channel: Channel) {
+    const userRef = doc(this.firestore, 'user', user.id);
+    const channelRef = doc(this.firestore, 'channels', channel.id);
+
+    await updateDoc(userRef, {
+      memberInChannel: arrayUnion(channel.id),
+    });
+    await updateDoc(channelRef, {
+      member: arrayUnion(user.id),
+    });
   }
 }
