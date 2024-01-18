@@ -1,30 +1,29 @@
-<div
-class="main"
-[class.view__desktop-main]="rs.isDesktop$ | async"
->
+<div class="main" [class.view__desktop-main]="rs.isDesktop$ | async">
+  <app-header-mobile
+    *ngIf="!(rs.isDesktop$ | async)"
+    [parent]="'chat'"
+  ></app-header-mobile>
 
-<app-header-mobile *ngIf="!(rs.isDesktop$ | async)" [parent]="'chat'"></app-header-mobile>
-
-<app-chat-sub-header
-  *ngIf="mainType"
-  [type]="mainType"
-  [channel]="currentChannel"
-  [privateChatOpponentUser]="privateChatOpponentUser"
-  [privateChatAvatarConfig]="{
+  <app-chat-sub-header
+    *ngIf="mainType"
+    [type]="mainType"
+    [channel]="currentChannel"
+    [privateChatOpponentUser]="privateChatOpponentUser"
+    [privateChatAvatarConfig]="{
     user: this.privateChatOpponentUser,
     showStatus: true,
     size: 'small',
   }"
-></app-chat-sub-header>
+  ></app-chat-sub-header>
 
-<main #chatContainer [scrollTop]="chatContainer.scrollHeight">
-  <app-chat-record
-    (startThread)="startThread($event)"
-    (chatRecordLength)="setChatRecordLength($event)"
-    [chatRecordId]="chatRecordId"
-    [currentUser]="currentUser"
-  ></app-chat-record>
-
+  <main #chatContainer [scrollTop]="chatContainer.scrollHeight">
+    <app-chat-record
+      (startThread)="startThread($event)"
+      (chatRecordLength)="setChatRecordLength($event)"
+      [chatRecordId]="chatRecordId"
+      [currentUser]="currentUser"
+    ></app-chat-record>
+  </main>
   <!-- Placeholder for empty chat record -->
   <div class="placeholder__container" *ngIf="chatRecordLength === 0">
     <ng-container
@@ -59,10 +58,10 @@ class="main"
         <app-avatar-display
           *ngIf="privateChatOpponentUser"
           [data]=" {
-            user: this.privateChatOpponentUser,
-            showStatus: false,
-            size: 'medium',
-          }"
+          user: this.privateChatOpponentUser,
+          showStatus: false,
+          size: 'medium',
+        }"
         ></app-avatar-display>
         <span class="placeholder__title--name">{{
           privateChatOpponentUser.name
@@ -83,10 +82,10 @@ class="main"
         <app-avatar-display
           *ngIf="privateChatOpponentUser"
           [data]=" {
-        user: this.privateChatOpponentUser,
-        showStatus: false,
-        size: 'medium',
-      }"
+      user: this.privateChatOpponentUser,
+      showStatus: false,
+      size: 'medium',
+    }"
         ></app-avatar-display>
         <span class="placeholder__title--name"
           >{{ privateChatOpponentUser.name }} (Du)</span
@@ -100,13 +99,11 @@ class="main"
       </p>
     </ng-template>
   </div>
-</main>
 
-<app-message-input
-  *ngIf="currentChannel"
-  [currentChatRecordId]="currentChannel.chatRecord"
-  [channel]="currentChannel"
-  [privateChatOpponentUser]="privateChatOpponentUser"
-></app-message-input>
-
+  <app-message-input
+    *ngIf="currentChannel"
+    [currentChatRecordId]="currentChannel.chatRecord"
+    [channel]="currentChannel"
+    [privateChatOpponentUser]="privateChatOpponentUser"
+  ></app-message-input>
 </div>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -10,12 +10,16 @@ import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider, signOut, linkWithPopup } from '@angular/fire/auth';
+import { ResponsiveService } from './responsive.service';
+import { take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   auth: any = getAuth();
+  rs: ResponsiveService = inject(ResponsiveService);
+
   signUpError = false;
   signUpSuccessfully = false;
   emailSended = false;
@@ -26,7 +30,8 @@ export class AuthService {
   currentUserId: string = '';
   googleAccount = false;
   isLoggedInForMerging = false;
-  public isLoggedIn:boolean = false;
+  public isLoggedIn: boolean = false;
+  private defaultChannel: string = '82C9Qh2AsibAiC6Ehti2';
 
   constructor(
     public router: Router,
@@ -36,16 +41,16 @@ export class AuthService {
     this.getCurrentUser();
   }
 
-  signIn(email: string, password: string, location:string) {
+  //////////sign-in
+  signIn(email: string, password: string, location: string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         this.logInError = false;
         if (location == 'merge-accounts') {
           this.isLoggedInForMerging = true;
         } else {
-          this.router.navigate(['home']);
+          this.redirectToLandingPage();
         }
-
       })
       .catch((error) => {
         this.logInError = true;
@@ -62,12 +67,15 @@ export class AuthService {
 
   guestSignIn() {
     this.signIn('guest@mail.com', 'guest_User123', 'guest');
-    this.router.navigate(['home']);
+
+    this.redirectToLandingPage();
   }
 
   //////////google authentication
   async googleAuthentication() {
-    const userCredential = await this.afAuth.signInWithPopup(new GoogleAuthProvider());
+    const userCredential = await this.afAuth.signInWithPopup(
+      new GoogleAuthProvider()
+    );
     const user = userCredential.user;
     try {
       await this.firestoreService.checkSignUpEmail(user?.email);
@@ -77,34 +85,60 @@ export class AuthService {
       } else {
         await this.firestoreService.checkIfGoogleAccount(userId);
 
-        if (this.firestoreService.emailAlreadyExist && this.firestoreService.isGoogleAccount) {
+        if (
+          this.firestoreService.emailAlreadyExist &&
+          this.firestoreService.isGoogleAccount
+        ) {
           this.googleSignIn(user, userId);
         }
-        if (this.firestoreService.emailAlreadyExist && !this.firestoreService.isGoogleAccount) {
+        if (
+          this.firestoreService.emailAlreadyExist &&
+          !this.firestoreService.isGoogleAccount
+        ) {
           this.prepareAccountLinking(user);
         }
       }
     } catch {}
   }
 
-  async googleSignUp(user:any) {
+  async googleSignUp(user: any) {
     this.googleAccount = true;
-    await this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [user?.uid], ['82C9Qh2AsibAiC6Ehti2'], user?.uid);
+    await this.firestoreService.addUser(
+      user,
+      user?.displayName,
+      user?.photoURL,
+      this.googleAccount,
+      [user?.uid],
+      [this.defaultChannel],
+      user?.uid
+    );
     await this.firestoreService.addPrivateChat(user?.uid);
     await this.firestoreService.updateChannelMember(user?.uid);
-    this.router.navigate(['home']);
+
+    this.redirectToLandingPage();
   }
 
-  async googleSignIn(user:any, userId:any) {
+  async googleSignIn(user: any, userId: any) {
     this.googleAccount = true;
     await this.firestoreService.getJsonOfCurrentData('user', userId);
     await this.firestoreService.addCurrentUserData();
-    await this.firestoreService.addUser(user, this.firestoreService.currentUserData.name, this.firestoreService.currentUserData.photoUrl, this.googleAccount, this.firestoreService.currentUserData.activePrivateChats, this.firestoreService.currentUserData.memberInChannel, this.firestoreService.currentUserData.id);
-    this.firestoreService.deleteCurrentData('currentUserData', this.firestoreService.currentUserData.id);
-    this.router.navigate(['home']);
+    await this.firestoreService.addUser(
+      user,
+      this.firestoreService.currentUserData.name,
+      this.firestoreService.currentUserData.photoUrl,
+      this.googleAccount,
+      this.firestoreService.currentUserData.activePrivateChats,
+      this.firestoreService.currentUserData.memberInChannel,
+      this.firestoreService.currentUserData.id
+    );
+    this.firestoreService.deleteCurrentData(
+      'currentUserData',
+      this.firestoreService.currentUserData.id
+    );
+    this.redirectToLandingPage();
   }
 
-  async prepareAccountLinking(user:any) {
+  async prepareAccountLinking(user: any) {
     await this.firestoreService.getJsonOfCurrentData('user', user?.uid);
     this.afAuth.signOut();
     await user?.delete();
@@ -121,10 +155,10 @@ export class AuthService {
         // Accounts successfully linked
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const user = result.user;
-        this.router.navigate(['home']);
+
+        this.redirectToLandingPage();
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   }
 
   //////////sign-out
@@ -136,8 +170,7 @@ export class AuthService {
         localStorage.removeItem('userId');
         this.router.navigateByUrl('');
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   }
 
   //////////data preparing
@@ -154,29 +187,54 @@ export class AuthService {
         await this.firestoreService.checkSignUpEmail(user?.email);
         this.currentUserId = this.firestoreService.currentUserId;
         this.firestoreService.startSubUser(this.currentUserId);
+        this.firestoreService.setOnlineStatus(this.currentUserId, 'online');
         localStorage.setItem('userId', this.currentUserId);
         this.isLoggedIn = true;
       } else {
         // User is signed out
         this.currentUserId = '';
         this.isLoggedIn = false;
+        const docId = localStorage.getItem('userId');
+        this.firestoreService.setOnlineStatus(docId, 'offline');
       }
     });
   }
 
   //////////sign-up
-  async signUp(name: string, email: string, password: string, photoUrl: any, location: string, activePrivateChats:any, memberInChannel: string[]) {
+  async signUp(
+    name: string,
+    email: string,
+    password: string,
+    photoUrl: any,
+    location: string,
+    activePrivateChats: any,
+    memberInChannel: string[]
+  ) {
     await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        this.executeSignUp(userCredential, name, photoUrl, location, activePrivateChats, memberInChannel);
+        this.executeSignUp(
+          userCredential,
+          name,
+          photoUrl,
+          location,
+          activePrivateChats,
+          memberInChannel
+        );
       })
       .catch((error) => {
         this.failedSignUp();
       });
   }
 
-  async executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats:any, memberInChannel: string[]) {
+  async executeSignUp(
+    userCredential: any,
+    name: any,
+    photoUrl: any,
+    location: any,
+    activePrivateChats: any,
+    memberInChannel: string[]
+  ) {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
@@ -192,12 +250,21 @@ export class AuthService {
         this.googleAccount = false;
         docId = user?.uid;
         this.firestoreService.updateChannelMember(docId);
-        this.router.navigate(['home']);
+
+        this.redirectToLandingPage();
       }
       if (activePrivateChats == 0) {
         activePrivateChats = [user?.uid];
       }
-      this.firestoreService.addUser(user, name, photoUrl, this.googleAccount, activePrivateChats, memberInChannel, docId);
+      this.firestoreService.addUser(
+        user,
+        name,
+        photoUrl,
+        this.googleAccount,
+        activePrivateChats,
+        memberInChannel,
+        docId
+      );
       this.firestoreService.addPrivateChat(user.uid);
     }, 3500);
   }
@@ -208,7 +275,7 @@ export class AuthService {
   //     this.googleAccount = true;
   //   } else {
   //     this.googleAccount = false;
-  //     this.router.navigate(['home']);
+  //     this.redirectToLandingPage();
   //   }
   //   if (activePrivateChats == 0) {
   //     activePrivateChats = [userId];
@@ -236,4 +303,15 @@ export class AuthService {
       });
   }
 
+  redirectToLandingPage() {
+    this.rs.isDesktop$.pipe(take(1)).subscribe((val) => {
+      if (val) {
+        this.router.navigateByUrl(
+          `/home(channel:chat/channel)?channelID=${this.defaultChannel}`
+        );
+      } else {
+        this.router.navigate(['home']);
+      }
+    });
+  }
 }
