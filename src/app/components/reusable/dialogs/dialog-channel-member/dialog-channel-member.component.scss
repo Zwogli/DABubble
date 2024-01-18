@@ -24,7 +24,7 @@
 .dialog__container {
     display: flex;
     flex-direction: column;
-    gap: 21px;
+    gap: 4px;
 
     max-height: 250px;
     overflow-y: auto;
@@ -65,6 +65,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    padding: 4px;
 
     border-radius: 30px;
 

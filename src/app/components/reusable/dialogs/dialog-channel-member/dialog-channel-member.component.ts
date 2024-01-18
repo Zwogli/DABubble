@@ -29,6 +29,8 @@ export class DialogChannelMemberComponent {
   }
 
   openAddMemberDialog() {
-    this.dialog.open(DialogAddMemberToChannelComponent);
+    this.dialog.open(DialogAddMemberToChannelComponent, {
+      width: '430px',
+    });
   }
 }

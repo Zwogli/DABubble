@@ -38,7 +38,7 @@
         (fireService.channelMemberSubject | async)!.length
       }}</span>
     </div>
-    <button aria-label="Icon button with a person add icon">
+    <button (click)="openAddMemberDialog()" aria-label="Icon button with a person add icon">
       <mat-icon fontSet="material-icons-outlined">person_add</mat-icon>
     </button>
   </div>

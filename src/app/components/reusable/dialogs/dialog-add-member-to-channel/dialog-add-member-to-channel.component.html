@@ -1,1 +1,31 @@
-<p>dialog-add-member-to-channel works!</p>
+<div class="dialog__container">
+  <div class="dialog__headline-container">
+    <div class="dialog__headline-wrapper">
+      <h2 class="dialog__headline">Leute hinzufügen</h2>
+      <mat-icon (click)="closeDialog()" class="dialog__headline-close"
+        >close</mat-icon
+      >
+    </div>
+    <div *ngIf="currentChannel" class="channel-name">
+      # {{ currentChannel.name }}
+    </div>
+  </div>
+
+  <div class="dialog__search-input-container">
+    <input
+      #searchInput
+      class="dialog__search-input"
+      placeholder="Name eingeben"
+      type="text"
+    />
+  </div>
+
+  <button
+    mat-button
+    class="dialog__add-btn text-btn-flat"
+    [disabled]="!userIsSelected"
+    [ngClass]="userIsSelected ? 'enabled' : 'disabled'"
+  >
+    Hinzufügen
+  </button>
+</div>

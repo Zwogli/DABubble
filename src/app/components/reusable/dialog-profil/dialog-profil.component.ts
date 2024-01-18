@@ -20,7 +20,7 @@ export class DialogProfilComponent {
     private authService: AuthService,
     private firestoreService: FirestoreService,
     public dialogRef: MatDialogRef<DialogProfilEditComponent>,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -45,7 +45,9 @@ export class DialogProfilComponent {
   }
 
   openDialogProfilEdit() {
-    this.dialog.open(DialogProfilEditComponent);
+    this.dialog.open(DialogProfilEditComponent, {
+      width: '350px',
+    });
     this.onNoClick();
   }
 }

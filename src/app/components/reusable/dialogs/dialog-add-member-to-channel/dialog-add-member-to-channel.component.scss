@@ -1,0 +1,73 @@
+.dialog__container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px;
+}
+
+.dialog__headline-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dialog__headline-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dialog__headline {
+    font-size: 1.333rem;
+    margin: 0;
+}
+
+.dialog__headline-close {
+
+    cursor: pointer;
+    border-radius: 100%;
+    padding: 8px;
+    transition: 125ms ease-in-out;
+
+    &:hover {
+        color: var(--color-blue-secondary-hover);
+        background-color: var(--color-blue-bg);
+    }
+}
+
+.channel-name {
+    color: var(--color-blue-primary-hover);
+}
+
+.dialog__search-input-container {
+    display: flex;
+}
+
+.dialog__search-input {
+    width: 100%;
+    border: 1px solid var(--color-blue-border);
+    border-radius: 30px;
+    padding: 16px;
+    font-size: 1rem;
+
+    &:focus {
+        outline: none;
+        border: 1px solid var(--color-blue-primary-hover);
+    }
+}
+
+.dialog__add-btn {
+    align-self: flex-end;
+
+    border: none;
+}
+
+.disabled {
+    background-color: var(--color-grey-primary-disable) !important;
+}
+
+.enabled {
+
+    &:hover {
+        background-color: var(--color-blue-primary-hover) !important;
+    }
+}
