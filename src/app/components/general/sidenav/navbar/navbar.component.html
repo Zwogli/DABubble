@@ -4,6 +4,7 @@
 ></app-header-mobile>
 
 <main
+*ngIf="(dialogService.showNavbar$ | async)"
 [class.view__desktop-main]="rs.isDesktop$ | async"
 >
   <app-navbar-searchbar
