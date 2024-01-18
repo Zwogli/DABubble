@@ -43,10 +43,14 @@
       }"
       (click)="toggleMsgMenu(message)"
       (mouseenter)="toggleMsgMenu(message)"
-      (mouseleave)="toggleMsgMenu(message); closeReaction()"
+      (mouseleave)="toggleMsgMenu(message)"
     >
       <div class="message__avatar-container">
-        <img src="{{ message.sentByPhotoUrl }}" alt="" />
+        <img
+          referrerpolicy="no-referrer"
+          src="{{ message.sentByPhotoUrl }}"
+          alt=""
+        />
       </div>
 
       <div class="message__content-container">
@@ -95,18 +99,84 @@
         </div>
 
         <!-- Message Footer -->
-        <div *ngIf="message.thread.length > 0" class="message__footer">
-          <span
-            [customLink]="['thread', channelId, message.id]"
-            class="message__footer-count"
-            >{{ message.thread.length }} Antworten</span
+        <div>
+          <!-- Reactions -->
+          <div
+            *ngIf="message.reactions"
+            class="message__footer-reaction-container"
           >
-          <div class="message__footer-last-timestamp">
-            <span>Letzte Antwort</span>
-            <span *ngIf="message.thread.lastAnswer">
-              {{ message.thread.lastAnswer.toDate() | date : "shortTime" }}
-              Uhr</span
+            <!-- Pill -->
+            <ng-container *ngFor="let reaction of message.reactions">
+              <span
+                class="message__reaction-pill"
+                *ngIf="reaction.user.length > 0"
+                (click)="
+                  stopPropagation($event);
+                  emojiService.addReaction(currentUser, chatRecordId, message, {
+                    emoji: { id: reaction.id, url: reaction.url }
+                  })
+                "
+              >
+                <div
+                  class="reaction__pill-wrapper"
+                  (mouseenter)="showReactionModal(reaction.id, message.id)"
+                  (mouseleave)="hideReactionModal(reaction.id, message.id)"
+                >
+                  <p class="reaction__emoji">{{ reaction.url }}</p>
+                  <span>{{ reaction.user.length }}</span>
+                </div>
+                <!-- Modal -->
+                <div
+                  [id]="reaction.id+message.id"
+                  class="reaction__detail-modal-container"
+                >
+                  <span>{{ reaction.url }}</span>
+                  <div>
+                    <span
+                      class="reaction__user-name"
+                      *ngFor="
+                        let name of reaction.user;
+                        let last = last;
+                        let i = index
+                      "
+                    >
+                      <p *ngIf="reaction.user.length > 1 && last">und</p>
+                      <span>
+                        {{ name.name
+                        }}<span
+                          *ngIf="
+                            reaction.user.length > 2 &&
+                            i < reaction.user.length - 2
+                          "
+                          >,</span
+                        >
+                      </span>
+                    </span>
+                  </div>
+                  <ng-container
+                    *ngIf="reaction.user.length > 1; then multi; else solo"
+                  ></ng-container>
+                  <ng-template #multi><span>haben reagiert</span></ng-template>
+                  <ng-template #solo><span>hat reagiert</span></ng-template>
+                </div>
+              </span>
+            </ng-container>
+          </div>
+
+          <!-- Thread Answers -->
+          <div *ngIf="message.thread.length > 0" class="message__footer">
+            <span
+              [customLink]="['thread', channelId, message.id]"
+              class="message__footer-count"
+              >{{ message.thread.length }} Antworten</span
             >
+            <div class="message__footer-last-timestamp">
+              <span>Letzte Antwort</span>
+              <span *ngIf="message.thread.lastAnswer">
+                {{ message.thread.lastAnswer.toDate() | date : "shortTime" }}
+                Uhr</span
+              >
+            </div>
           </div>
         </div>
 
@@ -274,10 +344,13 @@
         "
         class="emoji-picker-reaction"
         [darkMode]="false"
-        (emojiClick)="addEmoji($event)"
+        (emojiClick)="
+          emojiService.addReaction(currentUser, chatRecordId, message, $event)
+        "
         [perLine]="7"
         [isNative]="true"
         [virtualize]="true"
+        [virtualizeOffset]="100"
         [emojiTooltip]="true"
         [emoji]="''"
       ></emoji-mart>
