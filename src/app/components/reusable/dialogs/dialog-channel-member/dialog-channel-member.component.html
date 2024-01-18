@@ -1,6 +1,6 @@
 <div class="dialog__headline-container">
   <h2 class="dialog__headline">Mitglieder</h2>
-  <mat-icon class="dialog__headline-close">close</mat-icon>
+  <mat-icon (click)="closeDialog()" class="dialog__headline-close">close</mat-icon>
 </div>
 
 <div *ngIf="data" class="dialog__container">

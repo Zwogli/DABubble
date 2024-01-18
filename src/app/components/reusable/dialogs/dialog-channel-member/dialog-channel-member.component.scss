@@ -10,6 +10,14 @@
 
 .dialog__headline-close {
     margin: 20px 16px 0 0;
+    cursor: pointer;
+    border-radius: 100%;
+    padding: 8px;
+    transition: 225ms ease-in-out;
+
+    &:hover {
+        background-color: var(--color-blue-bg);
+    }
 }
 
 .dialog__container {
