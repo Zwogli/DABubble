@@ -33,6 +33,7 @@ export class DialogAddMemberToChannelComponent {
   }
 
   closeDialog() {
+    this.searchService.matchedUsers = [];
     this.dialogRef.close();
   }
 }

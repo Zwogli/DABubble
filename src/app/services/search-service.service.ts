@@ -31,7 +31,7 @@ export class SearchServiceService {
       const q = query(
         collection(this.firestore, 'user'),
         where('name', '>=', formattedSearch),
-        where('name', '<=', formattedSearch + '~')
+        where('name', '<=', formattedSearch + '\uf8ff')
       );
 
       const querySnapshot = await getDocs(q);
