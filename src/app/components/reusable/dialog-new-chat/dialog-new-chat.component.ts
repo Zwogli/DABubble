@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 import { ResponsiveService } from 'src/app/services/responsive.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-new-chat',
@@ -28,7 +29,8 @@ export class DialogNewChatComponent {
     private authService: AuthService,
     private firestoreService:FirestoreService,
     public dialogService: DialogManagerService,
-    public rs: ResponsiveService, 
+    public rs: ResponsiveService,
+    private router: Router
   ){}
   
 //<<<<<<<<<<<<<<<< subscribe >>>>>>>>>>>>
@@ -104,7 +106,11 @@ export class DialogNewChatComponent {
       console.error('DABubble: chat already excist');
     }else{
       this.firestoreService.createNewChat(this.selectedUser[0]);
+      this.router.navigateByUrl(
+        `/home(channel:chat/private)?channelID=${this.firestoreService.newChatRefId}`
+      );
       this.removeUser();
+      this.dialogService.showDialogNewChat();
     }
   }
 

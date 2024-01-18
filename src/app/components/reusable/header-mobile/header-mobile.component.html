@@ -3,7 +3,7 @@
   *ngIf="(parent === 'navbar' || 'main') && (rs.isDesktop$ | async)"
   [class.desktop]="rs.isDesktop$ | async"
 >
-  <img src="assets/img/logo_dabubble-mobile.png" alt="Logo_DABubble" />
+  <img src="assets/img/logo-text.png" alt="Logo_DABubble" />
 
   <app-navbar-searchbar *ngIf="rs.isDesktop$ | async"></app-navbar-searchbar>
 
@@ -17,6 +17,7 @@
       class="avatar-small"
       src="{{ currentUser.photoUrl }}"
       alt="avatar"
+      referrerpolicy="no-referrer"
     />
 
     <mat-icon *ngIf="rs.isDesktop$ | async">keyboard_arrow_down</mat-icon>
