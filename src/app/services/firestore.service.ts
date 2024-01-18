@@ -289,7 +289,7 @@ export class FirestoreService {
     docId: any
   ) {
     await setDoc(doc(this.firestore, 'user', docId), {
-      name: name,
+      name: name.charAt(0).toUpperCase() + name.slice(1),
       email: userObject?.email,
       id: docId,
       photoUrl: photoUrl,

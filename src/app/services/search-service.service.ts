@@ -19,8 +19,11 @@ export class SearchServiceService {
   constructor() {}
 
   async searchForUser(search: string) {
+    // Uppercases the first letter to match database
+    const formattedSearch = search.charAt(0).toUpperCase() + search.slice(1);
+
     // Delete cache and return if search term is shorter than 2
-    if (search.length < 2) {
+    if (formattedSearch.length < 2) {
       this.matchedUsers = [];
       console.log(this.matchedUsers);
       return;
@@ -28,8 +31,8 @@ export class SearchServiceService {
       // Search for User
       const q = query(
         collection(this.firestore, 'user'),
-        where('name', '>=', search),
-        where('name', '<=', search + '~')
+        where('name', '>=', formattedSearch),
+        where('name', '<=', formattedSearch + '~')
       );
 
       const querySnapshot = await getDocs(q);
