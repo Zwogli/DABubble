@@ -4,28 +4,23 @@
   *ngIf="(rs.isDesktop$|async) && auth.isHeaderVisible"
   parent="'main'"
   ></app-header-mobile>
-  
-  <div
-  [class.view__desktop]="rs.isDesktop$ | async"
-  >
-  
+
+  <div [class.view__desktop]="rs.isDesktop$ | async">
     <router-outlet></router-outlet>
-  
+
     <router-outlet
-    *ngIf="rs.isDesktop$ | async"
-    id="channelOutlet"
-    name="channel"
+      *ngIf="rs.isDesktop$ | async"
+      id="channelOutlet"
+      name="channel"
     ></router-outlet>
 
     <router-outlet
-    *ngIf="rs.isDesktop$ | async"
-    id="threadOutlet"
-    name="thread"
-    class="thread"
+      *ngIf="rs.isDesktop$ | async"
+      id="threadOutlet"
+      name="thread"
+      class="thread"
     ></router-outlet>
-  
   </div>
 
   <app-dialog-manager></app-dialog-manager>
-
 </div>
