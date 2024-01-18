@@ -31,7 +31,7 @@
             [data]="{ user: selectedUser, showStatus: true, size: 'xsmall' }"
           ></app-avatar-display>
           <p>{{ selectedUser.name }}</p>
-          <mat-icon>close</mat-icon>
+          <mat-icon (click)="cancelUser()">close</mat-icon>
         </div>
       </div>
     </ng-template>
@@ -49,11 +49,16 @@
     </div>
   </div>
 
+  <span *ngIf="showError" class="dialog__add-error-tooltip"
+    >Nutzer ist bereits in diesem Channel!</span
+  >
+
   <button
     mat-button
     class="dialog__add-btn text-btn-flat"
-    [disabled]="!userIsSelected"
-    [ngClass]="userIsSelected ? 'enabled' : 'disabled'"
+    [disabled]="(showError && userIsSelected) || !userIsSelected"
+    [ngClass]="userIsSelected && !showError ? 'enabled' : 'disabled'"
+    (click)="addUserToChannel()"
   >
     Hinzufügen
   </button>

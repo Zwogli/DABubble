@@ -21,6 +21,8 @@ export class DialogAddMemberToChannelComponent {
   public userIsSelected: boolean = false;
   public selectedUser!: User;
 
+  public showError: boolean = false;
+
   constructor(
     public dialogRef: MatDialogRef<ChatSubHeaderComponent>,
     private route: ActivatedRoute
@@ -37,7 +39,18 @@ export class DialogAddMemberToChannelComponent {
   selectUser(user: User) {
     this.selectedUser = user;
     this.userIsSelected = true;
+    this.searchService.matchedUsers = [];
+    if (this.currentChannel.member.includes(user.id)) {
+      this.showError = true;
+    } 
   }
+
+  cancelUser() {
+    this.userIsSelected = false;
+    this.showError = false;
+  }
+
+  addUserToChannel() {}
 
   closeDialog() {
     this.searchService.matchedUsers = [];
