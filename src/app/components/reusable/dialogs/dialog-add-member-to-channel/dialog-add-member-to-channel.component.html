@@ -16,6 +16,7 @@
       #searchInput
       class="dialog__search-input"
       placeholder="Name eingeben"
+      (keyup)="searchService.searchForUser(searchInput.value)"
       type="text"
     />
   </div>

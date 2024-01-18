@@ -4,6 +4,7 @@ import { ChatSubHeaderComponent } from '../../chat/chat-sub-header/chat-sub-head
 import { ChatService } from 'src/app/services/chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { SearchServiceService } from 'src/app/services/search-service.service';
 
 @Component({
   selector: 'app-dialog-add-member-to-channel',
@@ -13,6 +14,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class DialogAddMemberToChannelComponent {
   chatService: ChatService = inject(ChatService);
   fireService: FirestoreService = inject(FirestoreService);
+  searchService: SearchServiceService = inject(SearchServiceService);
 
   public currentChannel!: any;
   public userIsSelected: boolean = false;
