@@ -1,7 +1,7 @@
 <div class="wrapper">
 
   <app-header-mobile
-  *ngIf="(rs.isDesktop$|async) && auth.isHeaderVisible"
+  *ngIf="(rs.isDesktop$|async) && auth.isLoggedIn"
   parent="'main'"
   ></app-header-mobile>
 
