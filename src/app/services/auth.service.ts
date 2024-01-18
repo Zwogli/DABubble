@@ -34,6 +34,7 @@ export class AuthService {
     public afAuth: AngularFireAuth
   ) {
     this.getCurrentUser();
+    console.log(this.isHeaderVisible);
   }
 
   //////////sign-in
@@ -161,10 +162,13 @@ export class AuthService {
         await this.firestoreService.checkSignUpEmail(user?.email);
         this.currentUserId = this.firestoreService.currentUserId;
         this.firestoreService.startSubUser(this.currentUserId);
+        this.firestoreService.setOnlineStatus(this.currentUserId, 'online');
         localStorage.setItem('userId', this.currentUserId);
       } else {
         // User is signed out
         this.currentUserId = '';
+        const docId = localStorage.getItem('userId');
+        this.firestoreService.setOnlineStatus(docId, 'offline');
       }
     });
   }

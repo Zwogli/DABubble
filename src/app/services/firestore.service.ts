@@ -46,7 +46,9 @@ export class FirestoreService {
 
   // subject item
   private allUsersSubject = new BehaviorSubject<Array<User>>(this.allUsers);
-  private allChannelsSubject = new BehaviorSubject<Array<Channel>>(this.allChannels);
+  private allChannelsSubject = new BehaviorSubject<Array<Channel>>(
+    this.allChannels
+  );
   private currentUserSubject = new BehaviorSubject<User>(this.currentUser);
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private privateChatsSubject = new BehaviorSubject<any>(this.privateChats);
@@ -174,8 +176,9 @@ export class FirestoreService {
     });
   }
 
-  getAllChannelsObservable(){
-    return onSnapshot(query(collection(this.firestore, 'channels')),
+  getAllChannelsObservable() {
+    return onSnapshot(
+      query(collection(this.firestore, 'channels')),
       (channels) => {
         this.allChannels = [];
         channels.forEach((channel: any) => {
@@ -487,6 +490,19 @@ export class FirestoreService {
         }
       );
     });
+  }
+
+  async setOnlineStatus(docId: any, status: string) {
+    if (status == 'online') {
+      await updateDoc(doc(this.firestore, 'user', docId), {
+        onlineStatus: true,
+      });
+    }
+    if (status == 'offline') {
+      await updateDoc(doc(this.firestore, 'user', docId), {
+        onlineStatus: false,
+      });
+    }
   }
 
   async checkIfGoogleAccount(id: any): Promise<void> {
