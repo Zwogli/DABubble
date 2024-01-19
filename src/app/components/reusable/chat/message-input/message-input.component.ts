@@ -1,9 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  inject,
-} from '@angular/core';
+import { Component, Input, OnChanges, inject } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/models/message.class';
 import { ChatTypes } from 'src/app/interfaces/chats/types';
@@ -11,7 +6,6 @@ import { ChatService } from 'src/app/services/chat.service';
 import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
 import { EmojiPickerService } from 'src/app/services/emoji-picker.service';
-
 
 @Component({
   selector: 'app-message-input',
@@ -34,12 +28,10 @@ export class MessageInputComponent implements OnChanges {
   constructor(
     private fireService: FirestoreService,
     private chatService: ChatService
-  ) {
-  
-  }
+  ) {}
 
   ngOnChanges(): void {
-    this.setPlaceholder();
+    if (this.channel) this.setPlaceholder();
   }
 
   setPlaceholder() {
