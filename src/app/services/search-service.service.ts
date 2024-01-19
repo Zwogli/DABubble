@@ -29,7 +29,7 @@ export class SearchServiceService {
       searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1);
 
     // Delete cache and return if search term is shorter than 2
-    if (formattedSearch.length < 1) {
+    if (formattedSearch.length < 2) {
       this.matchedUsers = [];
       return;
     } else {
