@@ -36,6 +36,11 @@ export class ForgotPasswordComponent implements OnDestroy {
     return this.forgotPasswordForm.get('emailForm');
   }
 
+  /**
+   *
+   *
+   * @param email
+   */
   async forgotPassword(email: string) {
     await this.authService.forgotPassword(email);
     this.forgotPasswordForm.reset();
