@@ -66,7 +66,7 @@ export class ChatSubHeaderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   loadChannelMember() {
-    this.fireService.startSubChannelMember(this.channel.member);
+    this.fireService.startSubChannelMember(this.channel.id);
   }
 
   openMemberDialog() {

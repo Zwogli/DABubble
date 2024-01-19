@@ -53,6 +53,7 @@
     width: fit-content;
 
     border-radius: 30px;
+    padding: 8px;
 
     font-size: 1.111rem;
 
@@ -77,7 +78,8 @@
     }
 
     &:hover {
-        background-color: antiquewhite;
+        color: var(--color-blue-primary-hover) !important;
+        background-color: var(--color-blue-bg);
     }
 }
 

@@ -109,8 +109,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
           const chatBetween: string[] = privateChat['chatBetween'];
           if (privateChat['id'] === this.currentUser.id) {
             // Private Chat with yourself
-            this.privateChatOpponentUser = this.currentUser;
-            // this.setAvatarConfigData();
+            this.privateChatOpponentUser = this.currentUser; 
           } else {
             // Private Chat with another User
             const currentUserIndex = chatBetween.indexOf(this.currentUser.id);
@@ -120,7 +119,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
               .then((user: User | undefined) => {
                 if (user) {
                   this.privateChatOpponentUser = user;
-                  // this.setAvatarConfigData();
                 }
               });
           }

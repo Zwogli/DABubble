@@ -140,29 +140,35 @@ export class FirestoreService {
     });
   }
 
-  subChannelMember(userIds: string[]) {
-    const q = query(
-      collection(this.firestore, 'user').withConverter(userConverter),
-      where('id', 'in', userIds)
-    );
+  subChannelMember(channelId: string) {
+    return onSnapshot(
+      doc(this.firestore, 'channels', channelId),
+      async (doc) => {
+        if (doc.exists()) {
+          const q = query(
+            collection(this.firestore, 'user').withConverter(userConverter),
+            where('id', 'in', doc.data()['member'])
+          );
 
-    return onSnapshot(q, (querySnapshot) => {
-      const members: User[] = [];
-      querySnapshot.forEach((doc) => {
-        members.push(doc.data());
-      });
-      this.channelMemberSubject.next(members);
-      this.channelMember = members;
-    });
+          const querySnapshot = await getDocs(q);
+          const members: User[] = [];
+          querySnapshot.forEach((doc) => {
+            members.push(doc.data());
+          });
+          this.channelMemberSubject.next(members);
+          this.channelMember = members;
+        }
+      }
+    );
   }
 
   startSubUser(docId: string) {
     this.unsubCurrentUser = this.subCurrentUser(docId);
   }
 
-  startSubChannelMember(userIds: string[]) {
-    if (userIds) {
-      this.unsubChannelMember = this.subChannelMember(userIds);
+  startSubChannelMember(channelId: string) {
+    if (channelId) {
+      this.unsubChannelMember = this.subChannelMember(channelId);
     }
   }
 

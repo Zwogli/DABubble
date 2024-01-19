@@ -51,8 +51,6 @@ export class DialogAddMemberToChannelComponent {
     this.showError = false;
   }
 
-
-
   closeDialog() {
     this.searchService.matchedUsers = [];
     this.dialogRef.close();
