@@ -179,7 +179,7 @@ export class AuthService {
       .then(() => {
         // Sign-out successfully
         this.currentUserId = '';
-        localStorage.removeItem('userId');
+        //localStorage.removeItem('userId');
         this.router.navigateByUrl('');
       })
       .catch((error) => {});
