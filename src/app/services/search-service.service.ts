@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
+  arrayRemove,
   arrayUnion,
   collection,
   doc,
@@ -69,6 +70,18 @@ export class SearchServiceService {
     });
     await updateDoc(channelRef, {
       member: arrayUnion(user.id),
+    });
+  }
+
+  async deleteUserFromChannel(user: User, channel: Channel) {
+    const userRef = doc(this.firestore, 'user', user.id);
+    const channelRef = doc(this.firestore, 'channels', channel.id);
+
+    await updateDoc(userRef, {
+      memberInChannel: arrayRemove(channel.id),
+    });
+    await updateDoc(channelRef, {
+      member: arrayRemove(user.id),
     });
   }
 }

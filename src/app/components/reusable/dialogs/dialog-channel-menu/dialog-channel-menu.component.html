@@ -31,12 +31,22 @@
       <div class="box-header">
         <span>Erstellt von</span>
       </div>
-      <span class="created-by purple-text">{{ createdBy }}</span>
+      <span *ngIf="createdBy" class="created-by purple-text">{{
+        createdBy.name
+      }}</span>
     </div>
   </div>
 
   <!-- Action Btn -->
   <div class="action-btn-container">
-    <span class="text-btn-flat">Channel verlassen</span>
+    <span
+      (click)="
+        searchService.deleteUserFromChannel(fireService.currentUser, channel);
+        closeDialog();
+        router.navigate(['**'])
+      "
+      class="text-btn-flat"
+      >Channel verlassen</span
+    >
   </div>
 </div>
