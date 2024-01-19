@@ -31,6 +31,11 @@
     height: 24px;
 }
 
+.active-btn {
+    background-color: var(--color-blue-bg);
+    color: var(--color-blue-primary-default);
+}
+
 .message__input {
     display: flex;
     flex-direction: column;

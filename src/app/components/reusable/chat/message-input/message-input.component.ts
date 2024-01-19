@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Message } from 'src/app/models/message.class';
 import { ChatTypes } from 'src/app/interfaces/chats/types';
@@ -17,6 +24,8 @@ export class MessageInputComponent implements OnChanges {
   emojiService: EmojiPickerService = inject(EmojiPickerService);
   searchService: SearchServiceService = inject(SearchServiceService);
 
+  @ViewChild('msgInput') input!: ElementRef<HTMLTextAreaElement>;
+
   @Input() currentChatRecordId!: string;
   @Input() parentChat!: ChatTypes;
   @Input() channel!: Channel;
@@ -26,6 +35,7 @@ export class MessageInputComponent implements OnChanges {
   public fileToUpload!: any;
   public placeholderText!: string;
   public fileName!: string;
+  public showPopupModal: boolean = false;
 
   constructor(
     private fireService: FirestoreService,
@@ -153,6 +163,13 @@ export class MessageInputComponent implements OnChanges {
   }
 
   selectUser(user: User) {
-    this.msgPayload += ` ${user.name}`;
+    this.msgPayload += `@${user.name} `;
+    this.input.nativeElement.focus();
+    this.toggleSearchModal();
+  }
+
+  toggleSearchModal() {
+    this.searchService.matchedUsers = [];
+    this.showPopupModal = !this.showPopupModal;
   }
 }
