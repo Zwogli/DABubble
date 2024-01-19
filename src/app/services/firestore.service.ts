@@ -85,6 +85,9 @@ export class FirestoreService {
   newChannelRefId!: string;
   searchedUser: User[] = [];
 
+  //create chat
+  newChatRefId:string = "";
+
   constructor(
     private chatService: ChatService,
     private storageService: StorageService
@@ -422,16 +425,17 @@ export class FirestoreService {
 
   async createNewChat(selectedUser: User) {
     const newChatRef = doc(collection(this.firestore, 'privateChat'));
-    let newChatRefId = newChatRef.id;
+    this.newChatRefId = newChatRef.id;
     let chatBetween: string[] = [];
     this.getCleanArrayChatBetween(chatBetween, selectedUser);
     await setDoc(
       newChatRef,
-      this.getNewChatCleanJson(chatBetween, newChatRefId)
+      this.getNewChatCleanJson(chatBetween, this.newChatRefId)
     );
-    this.updateUsersPrivatChat(selectedUser, newChatRefId);
+    this.updateUsersPrivatChat(selectedUser, this.newChatRefId);
     chatBetween = [];
     this.chatService.createNewChatRecord('private', newChatRef.id);
+    this.newChatRefId = '';
   }
 
   getCleanArrayChatBetween(chatBetween: string[], selectedUser: User) {

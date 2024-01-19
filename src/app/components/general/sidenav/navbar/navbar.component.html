@@ -4,6 +4,7 @@
 ></app-header-mobile>
 
 <main
+*ngIf="(dialogService.showNavbar$ | async)"
 [class.view__desktop-main]="rs.isDesktop$ | async"
 >
   <app-navbar-searchbar
@@ -11,7 +12,8 @@
   [class.element__margin--bottom]="(rs.isMobile$|async) || (rs.isTablet$|async)"
   ></app-navbar-searchbar>
 
-  <button
+  <!-- Btn new message chat or channel -->
+  <!-- <button
     *ngIf="!(rs.isDesktop$ | async)"
     [routerLink]="'/home/' + 'newChat'"
     mat-fab
@@ -19,7 +21,7 @@
     aria-label="Example icon button with a delete icon"
   >
     <mat-icon> edit_square </mat-icon>
-  </button>
+  </button> -->
 
   <article>
     <app-navbar-panel-channels></app-navbar-panel-channels>

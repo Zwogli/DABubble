@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 import { ResponsiveService } from 'src/app/services/responsive.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-new-chat',
@@ -13,13 +14,14 @@ import { ResponsiveService } from 'src/app/services/responsive.service';
 })
 export class DialogNewChatComponent {
   @ViewChild('searchbarUser') searchbarUser!: ElementRef;
-  showCloseAnimation:boolean = false;
+  public showCloseAnimation:boolean = false;
   currentUser!:User;
   allUsers!:User[];
   filteredUser:User[] = [];
   selectedUser:User[] = [];
   userSelected:boolean = true;
   isAlreadyInChat:boolean = false;
+  windowWidth:number = window.innerWidth;
   private currentUserIsDestroyed$ = new Subject<boolean>();
   private allUsersIsDestroyed$ = new Subject<boolean>();
 
@@ -27,7 +29,8 @@ export class DialogNewChatComponent {
     private authService: AuthService,
     private firestoreService:FirestoreService,
     public dialogService: DialogManagerService,
-    public rs: ResponsiveService, 
+    public rs: ResponsiveService,
+    private router: Router
   ){}
   
 //<<<<<<<<<<<<<<<< subscribe >>>>>>>>>>>>
@@ -103,7 +106,11 @@ export class DialogNewChatComponent {
       console.error('DABubble: chat already excist');
     }else{
       this.firestoreService.createNewChat(this.selectedUser[0]);
+      this.router.navigateByUrl(
+        `/home(channel:chat/private)?channelID=${this.firestoreService.newChatRefId}`
+      );
       this.removeUser();
+      this.dialogService.showDialogNewChat();
     }
   }
 
@@ -119,7 +126,7 @@ export class DialogNewChatComponent {
 
 //<<<<<<<<<<<<<<<< manage dialog >>>>>>>>>>>>
   closeDialogNewChat(){
-    if(this.rs.isMobile$ || this.rs.isTablet$){
+    if(this.windowWidth < 1370.02){
       this.showCloseAnimation = true;
       this.closeAnimation();
     }else{

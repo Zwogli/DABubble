@@ -298,13 +298,13 @@
 
 
 //responsive for bigger devices
-@media(min-width: 1920px) {
+@media(min-width: 2560px) {
   .intro-create-account-desktop {
-    right: calc(100% - 1920px);
+    right: calc(100% - 2560px);
   }
 
   .img-position-desktop {
-    left: calc(100% - 1920px);
+    left: calc(100% - 2560px);
   }
 }
 

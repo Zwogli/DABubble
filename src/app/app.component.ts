@@ -17,6 +17,11 @@ export class AppComponent {
   constructor(
     public auth: AuthService,
     public firestoreService: FirestoreService, 
-    public rs: ResponsiveService, 
+    public rs: ResponsiveService,
+    public dialogService: DialogManagerService,
     ) {}
+
+    toggleNavbar(){
+      this.dialogService.showNavbar();
+    }
 }
