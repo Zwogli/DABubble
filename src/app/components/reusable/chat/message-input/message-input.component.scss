@@ -110,6 +110,12 @@
     box-shadow: var(--shadow-subheader);
     background-color: white;
     z-index: 100;
+
+    @media screen and (max-width: 600px) {
+        border-radius: 20px;
+        left: -172px;
+        top: -220%;
+    }
 }
 
 .message__popup-found-wrapper {
