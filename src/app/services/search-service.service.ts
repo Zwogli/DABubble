@@ -23,14 +23,14 @@ export class SearchServiceService {
 
   constructor() {}
 
-  async searchForUser(search: string) {
+  async searchForUser(searchTerm: string) {
     // Uppercases the first letter to match database
-    const formattedSearch = search.charAt(0).toUpperCase() + search.slice(1);
+    const formattedSearch =
+      searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1);
 
     // Delete cache and return if search term is shorter than 2
     if (formattedSearch.length < 2) {
       this.matchedUsers = [];
-      console.log(this.matchedUsers);
       return;
     } else {
       // Search for User
@@ -45,7 +45,6 @@ export class SearchServiceService {
       // when user backspaces in the input
       this.matchedUsers = [];
       querySnapshot.forEach((doc) => {
-        console.log(doc.data());
         // Return if User is already in cache
         if (
           this.matchedUsers.some((user: any) => user.id === doc.data()['id'])
@@ -54,10 +53,8 @@ export class SearchServiceService {
         } else {
           // Push found User to cache
           this.matchedUsers.push(doc.data());
-          console.log(this.matchedUsers);
         }
       });
-      console.log(this.matchedUsers);
     }
   }
 

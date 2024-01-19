@@ -46,6 +46,7 @@
   <!-- Button row menu -->
   <div class="message-input__btn-container">
     <div class="btn-container__extra-btn-wrapper">
+      <!-- Upload -->
       <button
         (click)="openFileUpload()"
         mat-icon-button
@@ -63,6 +64,7 @@
 
       <mat-divider [vertical]="true"></mat-divider>
 
+      <!-- Emoji -->
       <button
         (click)="emojiService.toggleEmojiPicker('Main')"
         mat-icon-button
@@ -78,6 +80,7 @@
           >sentiment_satisfied</mat-icon
         >
       </button>
+      <!-- @-Link -->
       <button
         mat-icon-button
         aria-label="Icon button to link another user"
