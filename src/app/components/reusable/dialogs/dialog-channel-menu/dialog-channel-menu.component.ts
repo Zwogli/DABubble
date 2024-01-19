@@ -23,17 +23,41 @@ export class DialogChannelMenuComponent {
   public channel: Channel;
   public createdBy!: User;
 
+  public editNameIsOpen: boolean = false;
+  public editDescriptionIsOpen: boolean = false;
+
   constructor(
     public dialogRef: MatDialogRef<ChatSubHeaderComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Channel,
     public dialog: MatDialog,
     public router: Router
   ) {
-    this.channel = data;
-    console.log(data);
+    this.channel = new Channel(data);
     this.fireService.getUserDoc('user', data.createdBy).then((data) => {
       if (data) this.createdBy = data;
     });
+  }
+
+  toggleEditName() {
+    this.editNameIsOpen = !this.editNameIsOpen;
+  }
+
+  saveName() {
+    this.fireService.updateSingleDoc('channels', this.channel.id, {
+      name: this.channel.name.trim(),
+    });
+    this.toggleEditName();
+  }
+
+  saveDescription() {
+    this.fireService.updateSingleDoc('channels', this.channel.id, {
+      description: this.channel.description.trim(),
+    });
+    this.toggleEditDescription();
+  }
+
+  toggleEditDescription() {
+    this.editDescriptionIsOpen = !this.editDescriptionIsOpen;
   }
 
   closeDialog() {

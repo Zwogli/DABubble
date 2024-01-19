@@ -6,24 +6,87 @@
   </div>
 
   <!-- Name box -->
-  <div class="box-container">
+  <div class="box-container" [ngClass]="{ 'open-edit': editNameIsOpen }">
     <div class="box-header">
       <span>Channel-Name</span>
-      <span class="purple-text">Bearbeiten</span>
+      <ng-container
+        [ngTemplateOutlet]="editNameIsOpen ? closeNameEdit : openNameEdit"
+      ></ng-container>
+      <ng-template #closeNameEdit>
+        <span (click)="saveName()" class="purple-text">Speichern</span>
+      </ng-template>
+      <ng-template #openNameEdit>
+        <span (click)="toggleEditName()" class="purple-text">Bearbeiten</span>
+      </ng-template>
     </div>
 
-    <div># {{ channel.name }}</div>
+    <!-- Edit Field -->
+    <ng-container
+      [ngTemplateOutlet]="editNameIsOpen ? editNameTemp : nameTemp"
+    ></ng-container>
+    <ng-template #editNameTemp>
+      <div class="name__input-wrapper">
+        <span>#</span>
+        <input
+          customAutofocus
+          [(ngModel)]="channel.name"
+          name="nameEdit"
+          class="edit__input"
+        />
+      </div>
+    </ng-template>
+    <ng-template #nameTemp>
+      <div># {{ channel.name }}</div>
+    </ng-template>
   </div>
 
   <!-- Description Box -->
-  <div class="box-container">
+  <div class="box-container" [ngClass]="{ 'open-edit': editDescriptionIsOpen }">
     <div class="box-wrapper">
       <div class="box-header">
         <span>Beschreibung</span>
-        <span class="purple-text">Bearbeiten</span>
+        <ng-container
+          [ngTemplateOutlet]="
+            editDescriptionIsOpen ? closeDescriptionEdit : openDescriptionEdit
+          "
+        ></ng-container>
+        <ng-template #closeDescriptionEdit>
+          <span (click)="saveDescription()" class="purple-text">Speichern</span>
+        </ng-template>
+        <ng-template #openDescriptionEdit>
+          <span (click)="toggleEditDescription()" class="purple-text"
+            >Bearbeiten</span
+          >
+        </ng-template>
       </div>
 
-      <span class="description__content">{{ channel.description }}</span>
+      <ng-container
+        [ngTemplateOutlet]="
+          editDescriptionIsOpen
+            ? openDesEdit
+            : channel.description
+            ? description
+            : placeholder
+        "
+      ></ng-container>
+
+      <ng-template #openDesEdit>
+        <input
+          customAutofocus
+          [(ngModel)]="channel.description"
+          name="descriptionEdit"
+          class="edit__input"
+        />
+      </ng-template>
+
+      <ng-template #description>
+        <span class="description__content">{{ channel.description }}</span>
+      </ng-template>
+      <ng-template #placeholder>
+        <i class="description__placeholder"
+          >"Noch keine Beschreibung vorhanden!"</i
+        >
+      </ng-template>
     </div>
 
     <mat-divider></mat-divider>

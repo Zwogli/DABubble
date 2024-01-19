@@ -31,15 +31,18 @@ export class MessageInputComponent implements OnChanges {
   ) {}
 
   ngOnChanges(): void {
-    if (this.channel) this.setPlaceholder();
+    this.setPlaceholder();
   }
 
   setPlaceholder() {
     if (this.parentChat === 'thread') {
       this.placeholderText = 'Antworten...';
-    } else if (this.channel.name) {
+    } else if (this.channel) {
       this.placeholderText = `Nachricht an #${this.channel.name}`;
-    } else if (this.privateChatOpponentUser !== this.fireService.currentUser) {
+    } else if (
+      this.privateChatOpponentUser &&
+      this.privateChatOpponentUser !== this.fireService.currentUser
+    ) {
       this.placeholderText = `Nachricht an ${this.privateChatOpponentUser.name}`;
     } else {
       this.placeholderText = 'Notiz für mich...';
