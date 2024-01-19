@@ -42,8 +42,8 @@
         message__menuOpened: message === selectedMsg
       }"
       (click)="toggleMsgMenu(message)"
-      (mouseenter)="toggleMsgMenu(message)"
-      (mouseleave)="toggleMsgMenu(message)"
+      (mouseenter)="openMsgMenu(message)"
+      (mouseleave)="closeMsgMenu(message)"
     >
       <div class="message__avatar-container">
         <img
@@ -127,7 +127,7 @@
                 </div>
                 <!-- Modal -->
                 <div
-                  [id]="reaction.id+message.id"
+                  [id]="reaction.id + message.id"
                   class="reaction__detail-modal-container"
                 >
                   <span>{{ reaction.url }}</span>
@@ -311,7 +311,7 @@
           <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
         </button>
         <button
-          *ngIf="message.thread.length <= 0 && parentType !== 'thread'"
+          *ngIf="message.thread.length <= 0 && parentType === 'channel'"
           (click)="this.startThread.emit(message)"
           [customLink]="['thread', channelId, message.id]"
           mat-icon-button

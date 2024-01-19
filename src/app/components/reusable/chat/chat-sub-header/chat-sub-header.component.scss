@@ -1,7 +1,3 @@
-.pointer {
-    cursor: pointer;
-}
-
 .sub-header {
     display: flex;
     justify-content: space-between;
@@ -76,11 +72,6 @@
         font-size: 0.778rem;
         margin-left: 5px;
     }
-
-    &:hover {
-        color: var(--color-blue-primary-hover) !important;
-        background-color: var(--color-blue-bg);
-    }
 }
 
 .subheader__icon-container {
@@ -142,6 +133,19 @@
     // Same px as in ngFor style
     margin-left: -14px;
     z-index: 2;
+}
+
+.channel__title {
+    cursor: pointer;
+    transition: 125ms ease-in-out;
+
+    &:hover {
+        background-color: var(--color-blue-bg);
+
+        .title__main {
+            color: var(--color-blue-primary-hover) !important;
+        }
+    }
 }
 
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

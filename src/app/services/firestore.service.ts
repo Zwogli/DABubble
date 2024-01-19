@@ -86,7 +86,7 @@ export class FirestoreService {
   searchedUser: User[] = [];
 
   //create chat
-  newChatRefId:string = "";
+  newChatRefId: string = '';
 
   constructor(
     private chatService: ChatService,
@@ -163,6 +163,11 @@ export class FirestoreService {
         }
       }
     );
+  }
+
+  async updateSingleDoc(colId: string, docId: string, data: {}) {
+    const docRef = doc(this.firestore, colId, docId);
+    await updateDoc(docRef, data);
   }
 
   startSubUser(docId: string) {

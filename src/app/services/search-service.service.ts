@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
+  arrayRemove,
   arrayUnion,
   collection,
   doc,
@@ -22,14 +23,14 @@ export class SearchServiceService {
 
   constructor() {}
 
-  async searchForUser(search: string) {
+  async searchForUser(searchTerm: string) {
     // Uppercases the first letter to match database
-    const formattedSearch = search.charAt(0).toUpperCase() + search.slice(1);
+    const formattedSearch =
+      searchTerm.charAt(0).toUpperCase() + searchTerm.slice(1);
 
     // Delete cache and return if search term is shorter than 2
     if (formattedSearch.length < 2) {
       this.matchedUsers = [];
-      console.log(this.matchedUsers);
       return;
     } else {
       // Search for User
@@ -44,7 +45,6 @@ export class SearchServiceService {
       // when user backspaces in the input
       this.matchedUsers = [];
       querySnapshot.forEach((doc) => {
-        console.log(doc.data());
         // Return if User is already in cache
         if (
           this.matchedUsers.some((user: any) => user.id === doc.data()['id'])
@@ -53,10 +53,8 @@ export class SearchServiceService {
         } else {
           // Push found User to cache
           this.matchedUsers.push(doc.data());
-          console.log(this.matchedUsers);
         }
       });
-      console.log(this.matchedUsers);
     }
   }
 
@@ -69,6 +67,18 @@ export class SearchServiceService {
     });
     await updateDoc(channelRef, {
       member: arrayUnion(user.id),
+    });
+  }
+
+  async deleteUserFromChannel(user: User, channel: Channel) {
+    const userRef = doc(this.firestore, 'user', user.id);
+    const channelRef = doc(this.firestore, 'channels', channel.id);
+
+    await updateDoc(userRef, {
+      memberInChannel: arrayRemove(channel.id),
+    });
+    await updateDoc(channelRef, {
+      member: arrayRemove(user.id),
     });
   }
 }

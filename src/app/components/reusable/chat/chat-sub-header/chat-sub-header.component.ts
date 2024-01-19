@@ -13,9 +13,10 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { ResponsiveService } from 'src/app/services/responsive.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogChannelMemberComponent } from '../../dialogs/dialog-channel-member/dialog-channel-member.component';
 import { DialogAddMemberToChannelComponent } from '../../dialogs/dialog-add-member-to-channel/dialog-add-member-to-channel.component';
+import { DialogChannelMenuComponent } from '../../dialogs/dialog-channel-menu/dialog-channel-menu.component';
 
 @Component({
   selector: 'app-chat-sub-header',
@@ -34,12 +35,19 @@ export class ChatSubHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   public currentUser!: User;
   public isDesktop!: boolean;
+  public isMobile!: boolean;
 
   constructor(private chatService: ChatService, public dialog: MatDialog) {
     this.rs.isDesktop$
       .pipe(takeUntil(this.componentIsDestroyed$))
       .subscribe((val) => {
         this.isDesktop = val;
+      });
+
+    this.rs.isMobile$
+      .pipe(takeUntil(this.componentIsDestroyed$))
+      .subscribe((val) => {
+        this.isMobile = val;
       });
   }
 
@@ -48,8 +56,7 @@ export class ChatSubHeaderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-    if (this.isDesktop && this.channel && this.type === 'channel')
-      this.loadChannelMember();
+    if (this.channel && this.type === 'channel') this.loadChannelMember();
   }
 
   ngOnDestroy() {
@@ -77,8 +84,24 @@ export class ChatSubHeaderComponent implements OnInit, OnChanges, OnDestroy {
 
   openAddMemberDialog() {
     this.dialog.open(DialogAddMemberToChannelComponent, {
-      width: '430px'
+      width: '430px',
     });
+  }
+
+  openChannelMenuDialog() {
+    if (!this.isMobile) {
+      this.dialog.open(DialogChannelMenuComponent, {
+        data: this.channel,
+        width: '750px',
+      });
+    } else {
+      this.dialog.open(DialogChannelMenuComponent, {
+        data: this.channel,
+        panelClass: 'mobile__channel-menu-container',
+        height: '100svh',
+        width: '100%',
+      });
+    }
   }
 
   navigateBack(): void {

@@ -46,6 +46,7 @@
   <!-- Button row menu -->
   <div class="message-input__btn-container">
     <div class="btn-container__extra-btn-wrapper">
+      <!-- Upload -->
       <button
         (click)="openFileUpload()"
         mat-icon-button
@@ -63,17 +64,23 @@
 
       <mat-divider [vertical]="true"></mat-divider>
 
+      <!-- Emoji -->
       <button
         (click)="emojiService.toggleEmojiPicker('Main')"
         mat-icon-button
         class="btn__icon-wo-bg"
-        [ngClass]="emojiService.openEmojiPicker === 'Main' ? 'btn__icon-wo-bg__focus' : ''"
+        [ngClass]="
+          emojiService.openEmojiPicker === 'Main'
+            ? 'btn__icon-wo-bg__focus'
+            : ''
+        "
         aria-label="Icon button to select emotes"
       >
         <mat-icon fontSet="material-icons-outlined"
           >sentiment_satisfied</mat-icon
         >
       </button>
+      <!-- @-Link -->
       <button
         mat-icon-button
         aria-label="Icon button to link another user"
