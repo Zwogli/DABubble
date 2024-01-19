@@ -84,9 +84,33 @@
       <button
         mat-icon-button
         aria-label="Icon button to link another user"
-        class="btn__icon-wo-bg"
+        class="btn__icon-wo-bg relative"
       >
         <mat-icon fontSet="material-icons-outlined">alternate_email</mat-icon>
+
+        <!-- Popup Modal for Search -->
+        <div class="message__link-popup-container">
+          <div class="popup__wrapper">
+            <div
+              *ngFor="let user of searchService.matchedUsers"
+              class="message__popup-found-wrapper"
+              (click)="selectUser(user)"
+            >
+              <app-avatar-display
+                [data]="{ user: user, showStatus: true, size: 'xsmall' }"
+              ></app-avatar-display>
+              <p>{{ user.name }}</p>
+            </div>
+          </div>
+
+          <input
+            #searchInput
+            class="message__popup-input"
+            placeholder="Name eingeben"
+            (keyup)="searchService.searchForUser(searchInput.value)"
+            type="text"
+          />
+        </div>
       </button>
     </div>
 

@@ -6,6 +6,7 @@ import { ChatService } from 'src/app/services/chat.service';
 import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
 import { EmojiPickerService } from 'src/app/services/emoji-picker.service';
+import { SearchServiceService } from 'src/app/services/search-service.service';
 
 @Component({
   selector: 'app-message-input',
@@ -14,6 +15,7 @@ import { EmojiPickerService } from 'src/app/services/emoji-picker.service';
 })
 export class MessageInputComponent implements OnChanges {
   emojiService: EmojiPickerService = inject(EmojiPickerService);
+  searchService: SearchServiceService = inject(SearchServiceService);
 
   @Input() currentChatRecordId!: string;
   @Input() parentChat!: ChatTypes;
@@ -148,5 +150,9 @@ export class MessageInputComponent implements OnChanges {
     console.log(event.emoji.native);
     this.msgPayload += event.emoji.native;
     document.getElementById('msgInput')!.focus();
+  }
+
+  selectUser(user: User) {
+    this.msgPayload += ` ${user.name}`;
   }
 }
