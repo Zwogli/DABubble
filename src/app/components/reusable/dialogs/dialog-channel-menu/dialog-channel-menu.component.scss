@@ -1,14 +1,25 @@
+@import 'src/app/style/_channel-dialogs.scss';
+
 .purple-text {
     color: var(--color-blue-secondary-hover);
 }
 
+.mobile__member-container {
+    border: 1px solid var(--color-blue-border);
+    border-radius: 20px;
+}
+
+.mobile__member-wrapper {
+    max-height: 140px;
+    overflow-y: auto;
+}
 
 .dialog__container {
     display: flex;
     flex-direction: column;
     gap: 25px;
 
-    padding: 36px;
+    padding: 24px;
     font-size: 1rem;
 }
 

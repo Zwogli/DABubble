@@ -56,8 +56,7 @@ export class ChatSubHeaderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-    if (this.isDesktop && this.channel && this.type === 'channel')
-      this.loadChannelMember();
+    if (this.channel && this.type === 'channel') this.loadChannelMember();
   }
 
   ngOnDestroy() {

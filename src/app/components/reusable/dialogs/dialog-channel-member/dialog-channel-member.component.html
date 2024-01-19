@@ -5,7 +5,7 @@
   >
 </div>
 
-<div *ngIf="data" class="dialog__container">
+<div *ngIf="data" class="dialog__member-container">
   <div *ngFor="let member of members" class="dialog__member-wrapper">
     <app-avatar-display
       [data]="{ user: member, showStatus: true, size: 'small' }"
@@ -15,7 +15,10 @@
 </div>
 
 <div class="dialog__add-member__container">
-  <div (click)="closeDialog(); openAddMemberDialog()" class="dialog__add-member__wrapper">
+  <div
+    (click)="closeDialog(); openAddMemberDialog()"
+    class="dialog__add-member__wrapper"
+  >
     <mat-icon fontSet="material-icons-outlined">person_add</mat-icon>
     <p>Mitglieder hinzufügen</p>
   </div>

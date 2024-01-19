@@ -146,6 +146,32 @@
     </div>
   </div>
 
+  <!-- Member for mobile -->
+  <div *ngIf="rs.isMobile$ | async" class="mobile__member-container">
+    <div class="dialog__headline-container">
+      <h2 class="dialog__headline">Mitglieder</h2>
+    </div>
+
+    <div class="dialog__member-container mobile__member-wrapper">
+      <div
+        *ngFor="let member of fireService.channelMemberSubject | async"
+        class="dialog__member-wrapper"
+      >
+        <app-avatar-display
+          [data]="{ user: member, showStatus: true, size: 'small' }"
+        ></app-avatar-display>
+        <p>{{ member.name }}</p>
+      </div>
+    </div>
+
+    <div class="dialog__add-member__container">
+      <div (click)="openAddMemberDialog()" class="dialog__add-member__wrapper">
+        <mat-icon fontSet="material-icons-outlined">person_add</mat-icon>
+        <p>Mitglieder hinzufügen</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Action Btn -->
   <div class="action-btn-container">
     <span
