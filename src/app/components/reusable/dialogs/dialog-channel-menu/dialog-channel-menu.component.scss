@@ -2,6 +2,7 @@
     color: var(--color-blue-secondary-hover);
 }
 
+
 .dialog__container {
     display: flex;
     flex-direction: column;
@@ -54,11 +55,24 @@
         font-weight: bold;
     }
 
-    :last-child {
+    span:last-of-type {
+
         &:hover {
             font-weight: bold;
             cursor: pointer;
         }
+    }
+}
+
+.edit__btn-mobile {
+    padding: 4px;
+    border-radius: 100%;
+
+    transition: 125ms ease-in-out;
+
+    &:hover {
+        background-color: var(--color-blue-bg);
+
     }
 }
 

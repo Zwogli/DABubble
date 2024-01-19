@@ -5,6 +5,8 @@
 main {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+
     overflow-y: auto;
     scroll-behavior: smooth;
     background-color: var(--color-white);

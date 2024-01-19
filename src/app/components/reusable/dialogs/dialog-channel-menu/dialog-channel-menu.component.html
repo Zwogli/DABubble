@@ -9,14 +9,40 @@
   <div class="box-container" [ngClass]="{ 'open-edit': editNameIsOpen }">
     <div class="box-header">
       <span>Channel-Name</span>
+
+      <!-- Toggle edit/non-edit and also mobile/ non-mobile Mode -->
       <ng-container
-        [ngTemplateOutlet]="editNameIsOpen ? closeNameEdit : openNameEdit"
+        [ngTemplateOutlet]="
+          editNameIsOpen && (rs.isMobile$ | async)
+            ? closeNameEditMobile
+            : editNameIsOpen
+            ? closeNameEdit
+            : !editNameIsOpen && (rs.isMobile$ | async)
+            ? openNameEditMobile
+            : openNameEdit
+        "
       ></ng-container>
+
       <ng-template #closeNameEdit>
         <span (click)="saveName()" class="purple-text">Speichern</span>
       </ng-template>
       <ng-template #openNameEdit>
         <span (click)="toggleEditName()" class="purple-text">Bearbeiten</span>
+      </ng-template>
+
+      <ng-template #closeNameEditMobile>
+        <span (click)="saveName()" class="purple-text">
+          <mat-icon class="edit__btn-mobile" fontSet="material-icons-outlined"
+            >check_circle</mat-icon
+          >
+        </span>
+      </ng-template>
+      <ng-template #openNameEditMobile>
+        <span (click)="toggleEditName()" class="purple-text">
+          <mat-icon class="edit__btn-mobile" fontSet="material-icons-outlined"
+            >edit</mat-icon
+          >
+        </span>
       </ng-template>
     </div>
 

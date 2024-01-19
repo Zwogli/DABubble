@@ -10,6 +10,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { SearchServiceService } from 'src/app/services/search-service.service';
 import { User } from 'src/app/models/user.class';
 import { Router } from '@angular/router';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-dialog-channel-menu',
@@ -19,6 +20,7 @@ import { Router } from '@angular/router';
 export class DialogChannelMenuComponent {
   fireService: FirestoreService = inject(FirestoreService);
   searchService: SearchServiceService = inject(SearchServiceService);
+  rs: ResponsiveService = inject(ResponsiveService);
 
   public channel: Channel;
   public createdBy!: User;

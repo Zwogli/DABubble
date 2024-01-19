@@ -139,6 +139,14 @@ app-create-channel {
   color: var(--color-blue-secondary-hover) !important;
 }
 
+.mobile__channel-menu-container {
+  max-width: 100% !important;
+
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 0px !important;
+  }
+}
+
 .d-none {
   display: none;
 }

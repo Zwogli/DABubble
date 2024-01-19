@@ -1,5 +1,6 @@
 @import 'src/app/style/_chat.scss';
-.main{
+
+.main {
     display: flex;
     flex-direction: column;
     height: 100svh;
@@ -44,7 +45,7 @@ app-avatar-display {
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 responsive
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-.view__desktop-main{
+.view__desktop-main {
     margin: 1rem;
     border-radius: 30px;
     height: calc(100svh - 80px - 2rem);
