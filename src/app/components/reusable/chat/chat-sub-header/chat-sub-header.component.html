@@ -4,7 +4,7 @@
   [class.view__desktop-sub-header]="rs.isDesktop$ | async"
   class="sub-header"
 >
-  <div *ngIf="channel" class="sub-header__title channel__title">
+  <div (click)="openChannelMenuDialog()" *ngIf="channel" class="sub-header__title channel__title">
     <span class="title__main"
       ># {{ channel.name }}
       <mat-icon>expand_more</mat-icon>

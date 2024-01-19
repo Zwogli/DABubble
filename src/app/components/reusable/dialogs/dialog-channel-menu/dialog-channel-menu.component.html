@@ -1,0 +1,42 @@
+<div class="dialog__container">
+  <!-- Header -->
+  <div class="dialog__header">
+    <span># {{ channel.name }}</span>
+    <mat-icon (click)="closeDialog()">close</mat-icon>
+  </div>
+
+  <!-- Name box -->
+  <div class="box-container">
+    <div class="box-header">
+      <span>Channel-Name</span>
+      <span class="purple-text">Bearbeiten</span>
+    </div>
+
+    <div># {{ channel.name }}</div>
+  </div>
+
+  <!-- Description Box -->
+  <div class="box-container">
+    <div class="box-wrapper">
+      <div class="box-header">
+        <span>Beschreibung</span>
+        <span class="purple-text">Bearbeiten</span>
+      </div>
+
+      <span class="description__content">{{ channel.description }}</span>
+    </div>
+
+    <mat-divider></mat-divider>
+    <div class="box-wrapper">
+      <div class="box-header">
+        <span>Erstellt von</span>
+      </div>
+      <span class="created-by purple-text">{{ createdBy }}</span>
+    </div>
+  </div>
+
+  <!-- Action Btn -->
+  <div class="action-btn-container">
+    <span class="text-btn-flat">Channel verlassen</span>
+  </div>
+</div>
