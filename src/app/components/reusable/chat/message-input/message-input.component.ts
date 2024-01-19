@@ -37,7 +37,7 @@ export class MessageInputComponent implements OnChanges {
   setPlaceholder() {
     if (this.parentChat === 'thread') {
       this.placeholderText = 'Antworten...';
-    } else if (this.channel) {
+    } else if (this.channel && this.channel.name) {
       this.placeholderText = `Nachricht an #${this.channel.name}`;
     } else if (
       this.privateChatOpponentUser &&
