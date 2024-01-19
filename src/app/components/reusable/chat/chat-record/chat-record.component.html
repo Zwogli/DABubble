@@ -311,7 +311,7 @@
           <mat-icon fontSet="material-icons-outlined">add_reaction</mat-icon>
         </button>
         <button
-          *ngIf="message.thread.length <= 0 && parentType !== 'thread'"
+          *ngIf="message.thread.length <= 0 && parentType === 'channel'"
           (click)="this.startThread.emit(message)"
           [customLink]="['thread', channelId, message.id]"
           mat-icon-button
