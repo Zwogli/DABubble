@@ -40,7 +40,9 @@ ul {
   margin-bottom: 30px;
 }
 
-//responsive for bigger devices
+ /*---------------------------------------------*\
+    Responsive for bigger devices
+ \*---------------------------------------------*/
 @media (min-width: 500px) {
   mat-card {
     width: calc(100% - 32px);

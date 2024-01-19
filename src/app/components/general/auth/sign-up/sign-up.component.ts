@@ -35,7 +35,6 @@ export class SignUpComponent implements OnDestroy {
   });
 
   constructor(public authService: AuthService, public firestoreService: FirestoreService, public rs: ResponsiveService) {
-    console.log(this.firestoreService.emailAlreadyExist);
     this.rs.isDesktop$.subscribe((val) => {
       if (val) {
         this.isDesktop = true;
@@ -45,12 +44,16 @@ export class SignUpComponent implements OnDestroy {
     });
   }
 
-
   ngOnDestroy(): void {
     this.firestoreService.emailAlreadyExist = false;
   }
 
-
+ /**
+   * This function works as a validator for the form controls and counts the used character
+   *
+   * @param minCount - The number of the characters they should be use at least
+   *
+   */
   requireUniqueCharacters(minCount: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value) {
@@ -97,7 +100,7 @@ export class SignUpComponent implements OnDestroy {
   }
 
   /**
-   * Get the password input field from the form group to use form control
+   * Get the checkbox from the form group to use form control
    *
    */
   get checkboxForm() {

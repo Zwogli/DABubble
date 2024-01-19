@@ -476,8 +476,15 @@ export class FirestoreService {
     activePrivateChats = [];
   }
 
-  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>create new chat END
 
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>prepare and set data from/for firebase for AUTHENTICATION
+
+  /**
+   * This function looks for the email of the current user in the collection 'user' and saves the found object
+   *
+   * @param email - The email adress of the current logged-in user
+   *
+   */
   async checkSignUpEmail(email: any): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       onSnapshot(
@@ -491,11 +498,9 @@ export class FirestoreService {
           } else {
             this.emailAlreadyExist = false;
           }
-          // Resolve das Versprechen, nachdem die Überprüfung abgeschlossen ist
           resolve();
         },
         (error) => {
-          // Falls ein Fehler auftritt, reject das Versprechen
           reject(error);
         }
       );
@@ -515,6 +520,12 @@ export class FirestoreService {
     }
   }
 
+  /**
+   * Gets the information if the current user is already a google account or not
+   *
+   * @param id - Id/ docId of the current user
+   *
+   */
   async checkIfGoogleAccount(id: any): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       onSnapshot(
@@ -522,10 +533,10 @@ export class FirestoreService {
         (list) => {
           const userData = list.data();
           this.isGoogleAccount = userData?.['googleAccount'];
-          resolve(); // Resolve das Versprechen, wenn die Überprüfung abgeschlossen ist
+          resolve();
         },
         (error) => {
-          reject(error); // Falls ein Fehler auftritt, reject das Versprechen
+          reject(error);
         }
       );
     });
@@ -549,8 +560,6 @@ export class FirestoreService {
     };
   }
 
-  //The following functions gets the current sign up data to use in choose-avater.component
-
   getCurrentDataCol(coll: string) {
     return collection(this.firestore, coll);
   }
@@ -559,6 +568,13 @@ export class FirestoreService {
     return doc(collection(this.firestore, coll), docId);
   }
 
+  /**
+   * This function gets clear json's of different data from different collections
+   *
+   * @param coll - Collection (firebase)
+   * @param docId - Document id (firebase)
+   *
+   */
   async getJsonOfCurrentData(coll: string, docId: any): Promise<any> {
     return new Promise((resolve, reject) => {
       onSnapshot(
@@ -593,6 +609,13 @@ export class FirestoreService {
     });
   }
 
+  /**
+   * This function saves the current sign up data from sign-up.component and give it to choose-avatar-component to use for sign-up function
+   *
+   * @param name - The used name of current user
+   * @param email - The used email of current user
+   * @param password - The used password of current user
+   */
   async addCurrentSignUpData(name: string, email: string, password: string) {
     await setDoc(
       doc(this.firestore, 'currentSignUpData', this.currentSignUpId),
@@ -604,6 +627,10 @@ export class FirestoreService {
     );
   }
 
+  /**
+   * This function saves the current user data meanwhile to merge the email-password-account with the google-account
+   *
+   */
   async addCurrentUserData() {
     return new Promise(async (resolve, reject) => {
       try {

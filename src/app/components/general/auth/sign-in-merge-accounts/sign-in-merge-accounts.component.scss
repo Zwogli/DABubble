@@ -61,7 +61,9 @@ mat-card-content {
 }
 
 
-//responsive for bigger devices
+ /*---------------------------------------------*\
+    Responsive for bigger devices
+ \*---------------------------------------------*/
 @media(min-width: 460px) {
   mat-card {
     height: 557px !important;
@@ -117,13 +119,15 @@ mat-card-content {
   }
 }
 
-@media(min-width: 1920px) {
+@media(min-width: 2560px) {
   .img-after-intro {
-    left: calc(100% - 1920px);
+    left: calc(100% - 2560px);
   }
 }
 
-//responsive for smaller devices
+ /*---------------------------------------------*\
+    Responsive for smaller devices
+ \*---------------------------------------------*/
 @media(max-width: 350px) {
   .sign-in__info-text {
     margin: 10px 0 10px 0;

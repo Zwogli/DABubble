@@ -1,7 +1,6 @@
 import {
   Component,
   ElementRef,
-  HostListener,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -28,34 +27,54 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private fireStorage: AngularFireStorage,
     public firestoreService: FirestoreService,
-    private Route: ActivatedRoute,
+    private Route: ActivatedRoute
   ) {}
 
   async ngOnInit() {
     await this.getIdFromUrl();
-    this.firestoreService.getJsonOfCurrentData('currentSignUpData', this.idFromUrl);
+    this.firestoreService.getJsonOfCurrentData(
+      'currentSignUpData',
+      this.idFromUrl
+    );
   }
 
   ngOnDestroy(): void {
-    this.firestoreService.deleteCurrentData('currentSignUpData', this.idFromUrl);
+    this.firestoreService.deleteCurrentData(
+      'currentSignUpData',
+      this.idFromUrl
+    );
     this.authService.errorUnexpected = false;
     this.authService.signUpError = false;
     this.authService.signUpSuccessfully = false;
     this.avatarIsChoosen = false;
   }
 
+  /**
+   * This function gets the id from the url link
+   *
+   */
   async getIdFromUrl() {
     this.Route.params.subscribe((params) => {
       this.idFromUrl = params['id'];
     });
   }
 
+  /**
+   * This function occurs when the user choose an avatar, the chosen avatar will be save
+   *
+   * @param avatarNr - Number of the avatar (between 1 - 6)
+   */
   chooseAvatar(avatarNr: number) {
     this.unchoosenAvatar.nativeElement.src = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
     this.choosenAvatar = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
     this.avatarIsChoosen = true;
   }
 
+  /**
+   * If the user uploads an image, this function saves and shows the image
+   *
+   * @param event
+   */
   async onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -68,12 +87,20 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * If the user doesn't choose an avatar, this function sets the guest avatar
+   *
+   */
   async prepareChoosenAvatar() {
     if (this.choosenAvatar == 0) {
       this.choosenAvatar = '../../../../assets/img/avatars/guest-avatar.png';
     }
   }
 
+  /**
+   * This function prepares the necessary data for sign up and then call the sign-up function in auth service
+   *
+   */
   async prepareSignUp() {
     await this.prepareChoosenAvatar();
     await this.authService.signUp(
@@ -83,19 +110,15 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
       this.choosenAvatar,
       'sign-up',
       [],
-      ['82C9Qh2AsibAiC6Ehti2'],
+      ['82C9Qh2AsibAiC6Ehti2']
     );
     setTimeout(() => {
       if (this.authService.signUpSuccessfully) {
-        this.firestoreService.deleteCurrentData('currentSignUpData', this.idFromUrl);
+        this.firestoreService.deleteCurrentData(
+          'currentSignUpData',
+          this.idFromUrl
+        );
       }
     }, 3500);
   }
-
-  //Diese Funktion noch mal überprüfen, es funktioniert, aber löscht die coll auch bei aktualisieren der Seite
-  //If the user closes the window or app, the collection currentSignUpData will be deleted automatically
-  // @HostListener('window:beforeunload', ['$event'])
-  // beforeUnloadHandler(event:any) {
-  //   this.firestoreService.deleteCurrentData('currentSignUpData', this.idFromUrl);
-  // }
 }
