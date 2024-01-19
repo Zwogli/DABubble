@@ -15,6 +15,7 @@ import { User } from 'src/app/models/user.class';
 import { ResponsiveService } from 'src/app/services/responsive.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogChannelMemberComponent } from '../../dialogs/dialog-channel-member/dialog-channel-member.component';
+import { DialogAddMemberToChannelComponent } from '../../dialogs/dialog-add-member-to-channel/dialog-add-member-to-channel.component';
 
 @Component({
   selector: 'app-chat-sub-header',
@@ -65,12 +66,18 @@ export class ChatSubHeaderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   loadChannelMember() {
-    this.fireService.startSubChannelMember(this.channel.member);
+    this.fireService.startSubChannelMember(this.channel.id);
   }
 
   openMemberDialog() {
     this.dialog.open(DialogChannelMemberComponent, {
       data: this.fireService.channelMember,
+    });
+  }
+
+  openAddMemberDialog() {
+    this.dialog.open(DialogAddMemberToChannelComponent, {
+      width: '430px'
     });
   }
 
