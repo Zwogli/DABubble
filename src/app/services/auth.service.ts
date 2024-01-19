@@ -41,7 +41,16 @@ export class AuthService {
     this.getCurrentUser();
   }
 
-  //////////sign-in
+
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>sign-in
+
+  /**
+   * Execute the firebase function for sign-in
+   *
+   * @param email - User email adress
+   * @param password - User password
+   * @param location - Location from where the function is called (merge-accounts.component or not)
+   */
   signIn(email: string, password: string, location: string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
@@ -57,24 +66,28 @@ export class AuthService {
       });
   }
 
-  async getExistingUserCredentials(email: any, password: string) {
-    signInWithEmailAndPassword(this.auth, email, password).then(
-      (userCredential) => {
-        console.log(userCredential);
-      }
-    );
-  }
+  // async getExistingUserCredentials(email: any, password: string) {
+  //   signInWithEmailAndPassword(this.auth, email, password).then(
+  //     (userCredential) => {
+  //       console.log(userCredential);
+  //     }
+  //   );
+  // }
 
   guestSignIn() {
     this.signIn('guest@mail.com', 'guest_User123', 'guest');
     this.redirectToLandingPage();
   }
 
-  //////////google authentication
+
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>google authentication
+
+  /**
+   * This function starts the google auth process and leed to one of three ways: google sign-in, google sign-up or merge existing email/password account with google account
+   *
+   */
   async googleAuthentication() {
-    const userCredential = await this.afAuth.signInWithPopup(
-      new GoogleAuthProvider()
-    );
+    const userCredential = await this.afAuth.signInWithPopup(new GoogleAuthProvider());
     const user = userCredential.user;
     try {
       await this.firestoreService.checkSignUpEmail(user?.email);
@@ -84,39 +97,35 @@ export class AuthService {
       } else {
         await this.firestoreService.checkIfGoogleAccount(userId);
 
-        if (
-          this.firestoreService.emailAlreadyExist &&
-          this.firestoreService.isGoogleAccount
-        ) {
+        if (this.firestoreService.emailAlreadyExist && this.firestoreService.isGoogleAccount) {
           this.googleSignIn(user, userId);
         }
-        if (
-          this.firestoreService.emailAlreadyExist &&
-          !this.firestoreService.isGoogleAccount
-        ) {
+        if (this.firestoreService.emailAlreadyExist && !this.firestoreService.isGoogleAccount) {
           this.prepareAccountLinking(user);
         }
       }
     } catch {}
   }
 
+  /**
+   * The user will be register for the first time with a google account
+   *
+   * @param user - Google user credentiial data
+   */
   async googleSignUp(user: any) {
     this.googleAccount = true;
-    await this.firestoreService.addUser(
-      user,
-      user?.displayName,
-      user?.photoURL,
-      this.googleAccount,
-      [user?.uid],
-      [this.defaultChannel],
-      user?.uid
-    );
+    await this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [user?.uid], [this.defaultChannel], user?.uid);
     await this.firestoreService.addPrivateChat(user?.uid);
     await this.firestoreService.updateChannelMember(user?.uid);
-
     this.redirectToLandingPage();
   }
 
+  /**
+   * Sign-in into an excisting google account
+   *
+   * @param user - Google user credentiial data
+   * @param userId - Id of the current user
+   */
   async googleSignIn(user: any, userId: any) {
     this.googleAccount = true;
     await this.firestoreService.getJsonOfCurrentData('user', userId);
@@ -130,13 +139,15 @@ export class AuthService {
       this.firestoreService.currentUserData.memberInChannel,
       this.firestoreService.currentUserData.id
     );
-    this.firestoreService.deleteCurrentData(
-      'currentUserData',
-      this.firestoreService.currentUserData.id
-    );
+    this.firestoreService.deleteCurrentData('currentUserData', this.firestoreService.currentUserData.id);
     this.redirectToLandingPage();
   }
 
+  /**
+   * This function prepares the account linking(email/password account & google account)
+   *
+   * @param user - Google user credentiial data
+   */
   async prepareAccountLinking(user: any) {
     await this.firestoreService.getJsonOfCurrentData('user', user?.uid);
     this.afAuth.signOut();
@@ -160,11 +171,13 @@ export class AuthService {
       .catch((error) => {});
   }
 
-  //////////sign-out
+
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>sign-out
+
   signOut() {
     signOut(this.auth)
       .then(() => {
-        // Sign-out successful.
+        // Sign-out successfully
         this.currentUserId = '';
         localStorage.removeItem('userId');
         this.router.navigateByUrl('');
@@ -172,7 +185,16 @@ export class AuthService {
       .catch((error) => {});
   }
 
-  //////////data preparing
+
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>get current user data
+
+  /**
+   * Saves the current user data from sign-up for the choose-avatar.component to execute the sign up at the end
+   *
+   * @param name - User name
+   * @param email - User email
+   * @param password - User password
+   */
   async saveCurrentUserData(name: string, email: string, password: any) {
     await this.firestoreService.addCurrentSignUpData(name, email, password);
     this.router.navigate([
@@ -188,7 +210,9 @@ export class AuthService {
         this.firestoreService.startSubUser(this.currentUserId);
         this.firestoreService.setOnlineStatus(this.currentUserId, 'online');
         localStorage.setItem('userId', this.currentUserId);
-        this.isLoggedIn = true;
+        setTimeout((() => {
+          this.isLoggedIn = true;
+        }),3500)
       } else {
         // User is signed out
         this.currentUserId = '';
@@ -199,19 +223,13 @@ export class AuthService {
     });
   }
 
-  //////////sign-up
-  async signUp(
-    name: string,
-    email: string,
-    password: string,
-    photoUrl: any,
-    location: string,
-    activePrivateChats: any,
-    memberInChannel: string[]
-  ) {
+
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>sign-up
+
+  async signUp(name: string, email: string, password: string, photoUrl: any, location: string, activePrivateChats: any, memberInChannel: string[]) {
     await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
+        //const user = userCredential.user;
         this.executeSignUp(
           userCredential,
           name,
@@ -223,24 +241,17 @@ export class AuthService {
       })
       .catch((error) => {
         this.failedSignUp();
+        console.log(error.code);
       });
   }
 
-  async executeSignUp(
-    userCredential: any,
-    name: any,
-    photoUrl: any,
-    location: any,
-    activePrivateChats: any,
-    memberInChannel: string[]
-  ) {
+  async executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats: any, memberInChannel: string[]) {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
       let docId = '';
       this.signUpError = false;
       this.dataError = false;
-      //this.checkLocationToPrepareData(location, activePrivateChats, user?.uid);
       if (location == 'merge-accounts') {
         this.isLoggedInForMerging = true;
         this.googleAccount = true;
@@ -249,37 +260,15 @@ export class AuthService {
         this.googleAccount = false;
         docId = user?.uid;
         this.firestoreService.updateChannelMember(docId);
-
         this.redirectToLandingPage();
       }
       if (activePrivateChats == 0) {
         activePrivateChats = [user?.uid];
       }
-      this.firestoreService.addUser(
-        user,
-        name,
-        photoUrl,
-        this.googleAccount,
-        activePrivateChats,
-        memberInChannel,
-        docId
-      );
+      this.firestoreService.addUser(user, name, photoUrl, this.googleAccount, activePrivateChats, memberInChannel, docId);
       this.firestoreService.addPrivateChat(user.uid);
     }, 3500);
   }
-
-  // async checkLocationToPrepareData(location:string, activePrivateChats:any, userId:any) {
-  //   if (location == 'merge-accounts') {
-  //     this.isLoggedInForMerging = true;
-  //     this.googleAccount = true;
-  //   } else {
-  //     this.googleAccount = false;
-  //     this.redirectToLandingPage();
-  //   }
-  //   if (activePrivateChats == 0) {
-  //     activePrivateChats = [userId];
-  //   }
-  // }
 
   failedSignUp() {
     this.errorUnexpected = true;
@@ -287,7 +276,14 @@ export class AuthService {
     this.signUpSuccessfully = false;
   }
 
-  //////////forgot password
+
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>forgot password
+
+  /**
+   * Executes the firebase function to send the email for resetting the password
+   *
+   * @param email
+   */
   async forgotPassword(email: string) {
     sendPasswordResetEmail(this.auth, email)
       .then(() => {
@@ -301,6 +297,9 @@ export class AuthService {
         this.sendMailError = true;
       });
   }
+
+
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>redirection
 
   redirectToLandingPage() {
     this.rs.isDesktop$.pipe(take(1)).subscribe((val) => {

@@ -170,12 +170,14 @@ mat-card {
   }
 
   /*------------------------------------*\
-
+    Design for checkbox END
   \*------------------------------------*/
 }
 
 
-//responsive for smaller devices
+ /*---------------------------------------------*\
+    Responsive for smaller devices
+ \*---------------------------------------------*/
 @media(max-width: 400px) {
   .block__alert-name {
     top: 141px;
@@ -269,7 +271,9 @@ mat-card {
 }
 
 
-//responsive for bigger devices
+ /*---------------------------------------------*\
+    Responsive for bigger devices
+ \*---------------------------------------------*/
 @media(min-width: 465px) {
   .block__error {
     margin-top: 0;

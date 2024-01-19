@@ -1,6 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
 import { confirmPasswordReset } from '@angular/fire/auth';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -8,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+  styleUrls: ['./reset-password.component.scss'],
 })
 export class ResetPasswordComponent implements OnDestroy {
   passwordsSimilar = false;
@@ -17,15 +24,17 @@ export class ResetPasswordComponent implements OnDestroy {
   finishedReset = false;
   unexpectedError = false;
 
-  constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.oobCode = this.route.snapshot.queryParams['oobCode'] || null;
   }
-
 
   ngOnDestroy(): void {
     this.unexpectedError = false;
   }
-
 
   resetPasswordForm = new FormGroup({
     password1Form: new FormControl('', [
@@ -46,7 +55,6 @@ export class ResetPasswordComponent implements OnDestroy {
     ]),
   });
 
-
   /**
    * Get the first password input field from the form group to use form control
    *
@@ -55,16 +63,20 @@ export class ResetPasswordComponent implements OnDestroy {
     return this.resetPasswordForm.get('password1Form');
   }
 
-
-   /**
+  /**
    * Get the second password input field from the form group to use form control
    *
    */
-   get password2Form() {
+  get password2Form() {
     return this.resetPasswordForm.get('password2Form');
   }
 
-
+  /**
+   * This function works as a validator for the form controls and counts the used character
+   *
+   * @param minCount - The number of the characters they should be use at least
+   *
+   */
   requireUniqueCharacters(minCount: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value) {
@@ -77,25 +89,23 @@ export class ResetPasswordComponent implements OnDestroy {
     };
   }
 
-
   resetPassword() {
     confirmPasswordReset(this.authService.auth, this.oobCode, this.newPassword)
-    .then(() => {
-      this.finishedReset = true;
-      this.resetPasswordForm.reset();
-      this.passwordsSimilar = false;
-      setTimeout(() => {
-        this.finishedReset = false;
-        this.router.navigate(['']);
-      }, 4000)
-    })
-    .catch(() => {
-      this.unexpectedError = true;
-    })
+      .then(() => {
+        this.finishedReset = true;
+        this.resetPasswordForm.reset();
+        this.passwordsSimilar = false;
+        setTimeout(() => {
+          this.finishedReset = false;
+          this.router.navigate(['']);
+        }, 4000);
+      })
+      .catch(() => {
+        this.unexpectedError = true;
+      });
   }
 
-
-  checkPasswords(password1:string, password2:string) {
+  checkPasswords(password1: string, password2: string) {
     if (password1 == password2) {
       this.passwordsSimilar = true;
       this.newPassword = password1;
@@ -104,4 +114,3 @@ export class ResetPasswordComponent implements OnDestroy {
     }
   }
 }
-

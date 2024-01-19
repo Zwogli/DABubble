@@ -31,10 +31,6 @@ mat-icon {
   color: var(--color-grey-primary-disable);
 }
 
-// .margin-desktop {
-//   margin-left: 130px;
-// }
-
 form {
   display: flex;
   flex-direction: column;
@@ -42,7 +38,9 @@ form {
   position: relative;
 }
 
-//when loading the card the opacity will be increase step by step that the intro animation is visible
+ /*---------------------------------------------------------------------------------*\
+    When the logo moves top (intro animation), this animation runs at the same time
+ \*---------------------------------------------------------------------------------*/
 @keyframes IncreaseOpacity {
   0% {
     opacity: 0;
@@ -244,8 +242,6 @@ form {
 }
 
 .create-account-desktop {
-  // margin-top: 0 !important;
-  // margin-left: 30px !important;
   display: none;
 }
 
@@ -300,7 +296,9 @@ form {
   }
 }
 
-//responsive for bigger devices
+ /*---------------------------------------------*\
+    Responsive for bigger devices
+ \*---------------------------------------------*/
 @media(min-width: 410px) {
   .block__error {
     top: 438px;
@@ -385,8 +383,9 @@ form {
 }
 
 
-
-//responsive for smaller devices
+ /*---------------------------------------------*\
+    Responsive for smaller devices
+ \*---------------------------------------------*/
 @media(max-width: 410px) {
   .block__google-log-in {
     padding: 5px 16px;

@@ -29,7 +29,7 @@ export class ForgotPasswordComponent implements OnDestroy {
   });
 
   /**
-   * Get the email input field from the form group to use form control
+   * Get the password input field from the form group to use form control
    *
    */
   get emailForm() {
@@ -37,9 +37,9 @@ export class ForgotPasswordComponent implements OnDestroy {
   }
 
   /**
+   * Starts the forgot-password function in auth service and resets the password form field
    *
-   *
-   * @param email
+   * @param email - The email adress where the mail should be send to
    */
   async forgotPassword(email: string) {
     await this.authService.forgotPassword(email);
