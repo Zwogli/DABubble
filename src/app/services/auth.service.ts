@@ -63,16 +63,9 @@ export class AuthService {
       })
       .catch((error) => {
         this.logInError = true;
+        console.log(error.code);
       });
   }
-
-  // async getExistingUserCredentials(email: any, password: string) {
-  //   signInWithEmailAndPassword(this.auth, email, password).then(
-  //     (userCredential) => {
-  //       console.log(userCredential);
-  //     }
-  //   );
-  // }
 
   guestSignIn() {
     this.signIn('guest@mail.com', 'guest_User123', 'guest');
@@ -179,7 +172,7 @@ export class AuthService {
       .then(() => {
         // Sign-out successfully
         this.currentUserId = '';
-        localStorage.removeItem('userId');
+        this.firestoreService.emailAlreadyExist = false;
         this.router.navigateByUrl('');
       })
       .catch((error) => {});
@@ -212,13 +205,15 @@ export class AuthService {
         localStorage.setItem('userId', this.currentUserId);
         setTimeout((() => {
           this.isLoggedIn = true;
-        }),3500)
+        }),500)
       } else {
         // User is signed out
         this.currentUserId = '';
         this.isLoggedIn = false;
         const docId = localStorage.getItem('userId');
-        this.firestoreService.setOnlineStatus(docId, 'offline');
+        if (docId !== null) {
+          this.firestoreService.setOnlineStatus(docId, 'offline');
+        }
       }
     });
   }

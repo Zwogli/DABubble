@@ -318,7 +318,6 @@ export class FirestoreService {
     await deleteDoc(this.getCurrentUserDataDoc(docId)).catch((err) => {
       console.log(err);
     });
-    console.log('Account wurde gelöscht');
   }
 
   async updateCurrentUserData(
@@ -521,6 +520,9 @@ export class FirestoreService {
       await updateDoc(doc(this.firestore, 'user', docId), {
         onlineStatus: false,
       });
+    }
+    if (docId == null) {
+      //do nothing
     }
   }
 
