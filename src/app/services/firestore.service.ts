@@ -49,7 +49,7 @@ export class FirestoreService {
   private allChannelsSubject = new BehaviorSubject<Array<Channel>>(
     this.allChannels
   );
-  private currentUserSubject = new BehaviorSubject<User>(this.currentUser);
+  public currentUserSubject = new BehaviorSubject<User>(this.currentUser);
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private privateChatsSubject = new BehaviorSubject<any>(this.privateChats);
   private chatUserDataSubject = new BehaviorSubject<any>(this.chatUserData);
@@ -86,7 +86,7 @@ export class FirestoreService {
   searchedUser: User[] = [];
 
   //create chat
-  newChatRefId:string = "";
+  newChatRefId: string = '';
 
   constructor(
     private chatService: ChatService,
@@ -143,29 +143,40 @@ export class FirestoreService {
     });
   }
 
-  subChannelMember(userIds: string[]) {
-    const q = query(
-      collection(this.firestore, 'user').withConverter(userConverter),
-      where('id', 'in', userIds)
-    );
+  subChannelMember(channelId: string) {
+    return onSnapshot(
+      doc(this.firestore, 'channels', channelId),
+      async (doc) => {
+        if (doc.exists()) {
+          const q = query(
+            collection(this.firestore, 'user').withConverter(userConverter),
+            where('id', 'in', doc.data()['member'])
+          );
 
-    return onSnapshot(q, (querySnapshot) => {
-      const members: User[] = [];
-      querySnapshot.forEach((doc) => {
-        members.push(doc.data());
-      });
-      this.channelMemberSubject.next(members);
-      this.channelMember = members;
-    });
+          const querySnapshot = await getDocs(q);
+          const members: User[] = [];
+          querySnapshot.forEach((doc) => {
+            members.push(doc.data());
+          });
+          this.channelMemberSubject.next(members);
+          this.channelMember = members;
+        }
+      }
+    );
+  }
+
+  async updateSingleDoc(colId: string, docId: string, data: {}) {
+    const docRef = doc(this.firestore, colId, docId);
+    await updateDoc(docRef, data);
   }
 
   startSubUser(docId: string) {
     this.unsubCurrentUser = this.subCurrentUser(docId);
   }
 
-  startSubChannelMember(userIds: string[]) {
-    if (userIds) {
-      this.unsubChannelMember = this.subChannelMember(userIds);
+  startSubChannelMember(channelId: string) {
+    if (channelId) {
+      this.unsubChannelMember = this.subChannelMember(channelId);
     }
   }
 
@@ -292,7 +303,7 @@ export class FirestoreService {
     docId: any
   ) {
     await setDoc(doc(this.firestore, 'user', docId), {
-      name: name,
+      name: name.charAt(0).toUpperCase() + name.slice(1),
       email: userObject?.email,
       id: docId,
       photoUrl: photoUrl,
@@ -469,7 +480,6 @@ export class FirestoreService {
     });
     activePrivateChats = [];
   }
-
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>prepare and set data from/for firebase for AUTHENTICATION
 

@@ -1,7 +1,9 @@
 import {
   Component,
+  ElementRef,
   Input,
   OnChanges,
+  ViewChild,
   inject,
 } from '@angular/core';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -11,7 +13,7 @@ import { ChatService } from 'src/app/services/chat.service';
 import { Channel } from 'src/app/models/channel.class';
 import { User } from 'src/app/models/user.class';
 import { EmojiPickerService } from 'src/app/services/emoji-picker.service';
-
+import { SearchServiceService } from 'src/app/services/search-service.service';
 
 @Component({
   selector: 'app-message-input',
@@ -20,6 +22,9 @@ import { EmojiPickerService } from 'src/app/services/emoji-picker.service';
 })
 export class MessageInputComponent implements OnChanges {
   emojiService: EmojiPickerService = inject(EmojiPickerService);
+  searchService: SearchServiceService = inject(SearchServiceService);
+
+  @ViewChild('msgInput') input!: ElementRef<HTMLTextAreaElement>;
 
   @Input() currentChatRecordId!: string;
   @Input() parentChat!: ChatTypes;
@@ -30,13 +35,12 @@ export class MessageInputComponent implements OnChanges {
   public fileToUpload!: any;
   public placeholderText!: string;
   public fileName!: string;
+  public showPopupModal: boolean = false;
 
   constructor(
     private fireService: FirestoreService,
     private chatService: ChatService
-  ) {
-  
-  }
+  ) {}
 
   ngOnChanges(): void {
     this.setPlaceholder();
@@ -45,9 +49,12 @@ export class MessageInputComponent implements OnChanges {
   setPlaceholder() {
     if (this.parentChat === 'thread') {
       this.placeholderText = 'Antworten...';
-    } else if (this.channel.name) {
+    } else if (this.channel && this.channel.name) {
       this.placeholderText = `Nachricht an #${this.channel.name}`;
-    } else if (this.privateChatOpponentUser !== this.fireService.currentUser) {
+    } else if (
+      this.privateChatOpponentUser &&
+      this.privateChatOpponentUser !== this.fireService.currentUser
+    ) {
       this.placeholderText = `Nachricht an ${this.privateChatOpponentUser.name}`;
     } else {
       this.placeholderText = 'Notiz für mich...';
@@ -153,5 +160,16 @@ export class MessageInputComponent implements OnChanges {
     console.log(event.emoji.native);
     this.msgPayload += event.emoji.native;
     document.getElementById('msgInput')!.focus();
+  }
+
+  selectUser(user: User) {
+    this.msgPayload += `@${user.name} `;
+    this.input.nativeElement.focus();
+    this.toggleSearchModal();
+  }
+
+  toggleSearchModal() {
+    this.searchService.matchedUsers = [];
+    this.showPopupModal = !this.showPopupModal;
   }
 }

@@ -53,26 +53,27 @@ html {
 body {
   margin: 0;
   font-family: var(--font-selection);
+  @include nunito;
 }
 
 .avatar-xsmall {
-  width: 34px;
-  height: 34px;
+  width: 34px !important;
+  height: 34px !important;
   border: 2px solid white;
   border-radius: 100%;
   cursor: pointer;
 }
 
 .avatar-small {
-  width: 50px;
-  height: 50px;
+  width: 50px !important;
+  height: 50px !important;
   border-radius: 100%;
   cursor: pointer;
 }
 
 .avatar-medium {
-  width: 88px;
-  height: 88px;
+  width: 88px !important;
+  height: 88px !important;
   border-radius: 100%;
   cursor: pointer;
 }
@@ -86,11 +87,6 @@ body {
 
 .element__margin--bottom {
   margin-bottom: 1rem;
-}
-
-html,
-body {
-  height: 100%;
 }
 
 button {
@@ -110,6 +106,7 @@ app-create-channel {
   color: var(--color-blue-primary-default) !important;
   border-color: var(--color-blue-primary-default) !important;
   border-radius: 50px !important;
+  cursor: pointer;
 }
 
 .text-btn-flat {
@@ -117,13 +114,21 @@ app-create-channel {
   color: white !important;
   background-color: var(--color-blue-primary-default) !important;
   border-radius: 50px !important;
+  cursor: pointer;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: var(--color-blue-primary-hover) !important;
+  }
 }
 
 .btn__icon-wo-bg {
 
   &:hover {
-    background-color: var(--color-blue-bg) !important;
-    color: var(--color-blue-secondary-hover) !important;
+    mat-icon {
+      background-color: var(--color-blue-bg) !important;
+      color: var(--color-blue-secondary-hover) !important;
+    }
   }
 }
 
@@ -132,12 +137,24 @@ app-create-channel {
   color: var(--color-blue-secondary-hover) !important;
 }
 
+.mobile__channel-menu-container {
+  max-width: 100% !important;
+
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 0px !important;
+  }
+}
+
 .d-none {
   display: none;
 }
 
 .d-block {
   display: block;
+}
+
+.relative {
+  position: relative;
 }
 
 @media(max-width:400px) {
@@ -152,6 +169,7 @@ app-create-channel {
     justify-content: center;
     background-color: var(--color-blue-bg)
   }
+
   app-intro,
   app-imprint,
   app-privacy-policy,
@@ -160,8 +178,7 @@ app-create-channel {
   app-sign-in,
   app-sign-in-merge-accounts,
   app-sign-up,
-  app-choose-avatar
-  {
+  app-choose-avatar {
     left: 0;
   }
 }
@@ -173,6 +190,7 @@ animation dialog
   bottom: 0;
   animation: 0.5s slide-up;
 }
+
 .slide--down {
   bottom: 0;
   transform: translateY(300px);
@@ -183,14 +201,17 @@ animation dialog
   0% {
     transform: translateY(300px);
   }
+
   100% {
     transform: translateY(0px);
   }
 }
+
 @keyframes slide-down {
   0% {
     transform: translateY(0px);
   }
+
   100% {
     transform: translateY(300px);
   }
@@ -199,24 +220,24 @@ animation dialog
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 scroll-bar
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-  /* width */
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    //box-shadow: inset 0 0 5px var(--color-grey-hover);
-    border-radius: 10px;
-  }
+/* Track */
+::-webkit-scrollbar-track {
+  //box-shadow: inset 0 0 5px var(--color-grey-hover);
+  border-radius: 10px;
+}
 
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-blue-border);
-    border-radius: 10px;
-  }
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--color-blue-border);
+  border-radius: 10px;
+}
 
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-blue-primary-default);
-  }
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-blue-primary-default);
+}

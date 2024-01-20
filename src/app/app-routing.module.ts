@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule, Routes } from '@angular/router';
 import { IntroComponent } from './components/general/auth/intro/intro.component';
 import { ChannelComponent } from './components/general/chats/channel/channel.component';
@@ -13,6 +13,7 @@ import { SignInMergeAccountsComponent } from './components/general/auth/sign-in-
 import { ResponsiveService } from './services/responsive.service';
 import { ImprintComponent } from './components/general/auth/imprint/imprint.component';
 import { PrivacyPolicyComponent } from './components/general/auth/privacy-policy/privacy-policy.component';
+import { AuthService } from './services/auth.service';
 
 const mobileRoutes: Routes = [
   { path: '', component: IntroComponent },
@@ -69,34 +70,27 @@ const desktopRoutes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {
+  auth: AuthService = inject(AuthService);
+
   constructor(public router: Router, private rs: ResponsiveService) {
     this.rs.isMobile$.subscribe((val) => {
       if (val) {
         router.resetConfig(mobileRoutes);
-        this.rs.changeRoutes(!val);
-        // console.log('Mobile Route config:', router.config);
+        if (this.auth.isLoggedIn) this.rs.changeRoutes(!val);
       }
     });
 
     this.rs.isTablet$.subscribe((val) => {
-      // console.log('Tablet in routing', val);
-
       if (val) {
         router.resetConfig(mobileRoutes);
-        // console.log('Tablet Route config:', router.config);
-        // console.log('Change routes');
-        this.rs.changeRoutes(!val);
+        if (this.auth.isLoggedIn) this.rs.changeRoutes(!val);
       }
     });
 
     this.rs.isDesktop$.subscribe((val) => {
-      // console.log('Desktop in routing', val);
-
       if (val) {
         router.resetConfig(desktopRoutes);
-        // console.log('Desktop Route config:', router.config);
-        // console.log('Change routes');
-        this.rs.changeRoutes(val);
+        if (this.auth.isLoggedIn) this.rs.changeRoutes(val);
       }
     });
   }

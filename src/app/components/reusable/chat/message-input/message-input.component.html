@@ -14,6 +14,7 @@
   <textarea
     [(ngModel)]="msgPayload"
     name="msgInput"
+    #msgInput
     id="msgInput"
     type="text"
     placeholder="{{ placeholderText }}"
@@ -46,6 +47,7 @@
   <!-- Button row menu -->
   <div class="message-input__btn-container">
     <div class="btn-container__extra-btn-wrapper">
+      <!-- Upload -->
       <button
         (click)="openFileUpload()"
         mat-icon-button
@@ -63,26 +65,61 @@
 
       <mat-divider [vertical]="true"></mat-divider>
 
+      <!-- Emoji -->
       <button
         (click)="emojiService.toggleEmojiPicker('Main')"
         mat-icon-button
         class="btn__icon-wo-bg"
-        [ngClass]="emojiService.openEmojiPicker === 'Main' ? 'btn__icon-wo-bg__focus' : ''"
+        [ngClass]="
+          emojiService.openEmojiPicker === 'Main'
+            ? 'btn__icon-wo-bg__focus'
+            : ''
+        "
         aria-label="Icon button to select emotes"
       >
         <mat-icon fontSet="material-icons-outlined"
           >sentiment_satisfied</mat-icon
         >
       </button>
+      <!-- @-Link -->
       <button
         mat-icon-button
         aria-label="Icon button to link another user"
         class="btn__icon-wo-bg"
+        [ngClass]="showPopupModal ? 'active-btn' : ''"
+        (click)="toggleSearchModal()"
       >
         <mat-icon fontSet="material-icons-outlined">alternate_email</mat-icon>
       </button>
+
+      <div class="relative">
+        <!-- Popup Modal for Search -->
+        <div *ngIf="showPopupModal" class="message__link-popup-container">
+          <div class="popup__wrapper">
+            <div
+              *ngFor="let user of searchService.matchedUsers"
+              class="message__popup-found-wrapper"
+              (click)="selectUser(user)"
+            >
+              <app-avatar-display
+                [data]="{ user: user, showStatus: true, size: 'xsmall' }"
+              ></app-avatar-display>
+              <p>{{ user.name }}</p>
+            </div>
+          </div>
+
+          <input
+            #searchInput
+            class="message__popup-input"
+            placeholder="Name eingeben"
+            (keyup)="searchService.searchForUser(searchInput.value)"
+            type="text"
+          />
+        </div>
+      </div>
     </div>
 
+    <!-- Send Button -->
     <div>
       <button
         (click)="sendMessage()"

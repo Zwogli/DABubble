@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DocumentData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { AvatarConfig } from 'src/app/interfaces/chats/types';
+import { AvatarConfig, ChatTypes } from 'src/app/interfaces/chats/types';
 import { Channel } from 'src/app/models/channel.class';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
@@ -24,7 +24,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
   public chatRecordId!: string;
   private catchAttempts: number = 0;
   public chatRecordLength!: number;
-  public mainType!: string;
+  public mainType!: ChatTypes;
 
   public privateChatOpponentUser!: User;
   public privateChatAvatarConfig!: AvatarConfig;
@@ -37,7 +37,14 @@ export class ChannelComponent implements OnInit, OnDestroy {
   ) {
     this.route.queryParamMap.subscribe((p: any) => {
       this.currentChannelID = p['params'].channelID;
-      this.mainType = this.route.snapshot.paramMap.get('type')!;
+      const routeSnap = this.route.snapshot.paramMap.get('type')!;
+      if (
+        routeSnap === 'channel' ||
+        routeSnap === 'private' ||
+        routeSnap === 'thread'
+      ) {
+        this.mainType = routeSnap;
+      }
       this.setChatRecordId('channels');
       this.setCurrentUser();
     });
@@ -110,7 +117,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
           if (privateChat['id'] === this.currentUser.id) {
             // Private Chat with yourself
             this.privateChatOpponentUser = this.currentUser;
-            // this.setAvatarConfigData();
           } else {
             // Private Chat with another User
             const currentUserIndex = chatBetween.indexOf(this.currentUser.id);
@@ -120,7 +126,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
               .then((user: User | undefined) => {
                 if (user) {
                   this.privateChatOpponentUser = user;
-                  // this.setAvatarConfigData();
                 }
               });
           }

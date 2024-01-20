@@ -134,6 +134,16 @@ export class ChatRecordComponent
     }
   }
 
+  openMsgMenu(msg: Message) {
+    this.showEditMsgMenu = false;
+    this.selectedMsg = msg;
+  }
+
+  closeMsgMenu(msg: Message) {
+    this.showEditMsgMenu = false;
+    this.selectedMsg = null;
+  }
+
   /**
    * This function validates wether or not the current message is the first
    * one of the day. Returns boolean to render the given Date-Pill to the template
@@ -214,12 +224,12 @@ export class ChatRecordComponent
   }
 
   showReactionModal(id: string, msgId: string) {
-    const pill = document.getElementById(id+msgId);
+    const pill = document.getElementById(id + msgId);
     (pill as HTMLDivElement).style.opacity = '100';
   }
 
   hideReactionModal(id: string, msgId: string) {
-    const pill = document.getElementById(id+msgId);
+    const pill = document.getElementById(id + msgId);
     (pill as HTMLDivElement).style.opacity = '0';
   }
 }

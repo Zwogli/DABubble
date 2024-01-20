@@ -1,7 +1,3 @@
-.pointer {
-    cursor: pointer;
-}
-
 .sub-header {
     display: flex;
     justify-content: space-between;
@@ -53,6 +49,7 @@
     width: fit-content;
 
     border-radius: 30px;
+    padding: 8px;
 
     font-size: 1.111rem;
 
@@ -75,10 +72,6 @@
         font-size: 0.778rem;
         margin-left: 5px;
     }
-
-    &:hover {
-        background-color: antiquewhite;
-    }
 }
 
 .subheader__icon-container {
@@ -92,6 +85,7 @@
     display: flex;
     align-items: center;
     flex-direction: row;
+    gap: 28px;
 
     margin-right: 20px;
     padding: 4px 6px;
@@ -112,6 +106,8 @@
 .subheader__avatar-wrapper {
     display: flex;
     align-items: center;
+    flex-direction: row-reverse;
+    isolation: isolate;
 
     app-avatar-display {
         position: relative;
@@ -129,9 +125,32 @@
     font-size: 1.111rem;
 }
 
+.avatar-wrapper_additional-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-blue-bg);
+    // Same px as in ngFor style
+    margin-left: -14px;
+    z-index: 2;
+}
+
+.channel__title {
+    cursor: pointer;
+    transition: 125ms ease-in-out;
+
+    &:hover {
+        background-color: var(--color-blue-bg);
+
+        .title__main {
+            color: var(--color-blue-primary-hover) !important;
+        }
+    }
+}
+
 /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 responsive
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-.view__desktop-sub-header{
+.view__desktop-sub-header {
     border-radius: 30px 30px 0 0;
 }

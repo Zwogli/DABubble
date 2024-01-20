@@ -18,3 +18,8 @@ export interface ReactionEmoji {
   url: string;
   user: ReactionUser[];
 }
+
+export interface IMessagePanel {
+  id: string;
+  chatWith: User;
+}

@@ -22,12 +22,13 @@
       (chatRecordLength)="setChatRecordLength($event)"
       [chatRecordId]="chatRecordId"
       [currentUser]="currentUser"
+      [parentType]="mainType"
     ></app-chat-record>
   </main>
   <!-- Placeholder for empty chat record -->
   <div class="placeholder__container" *ngIf="chatRecordLength === 0">
     <ng-container
-      *ngIf="privateChatOpponentUser"
+      *ngIf="privateChatOpponentUser || mainType === 'channel'"
       [ngTemplateOutlet]="
         mainType === 'channel'
           ? channelPlaceholder
