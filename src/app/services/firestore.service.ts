@@ -405,7 +405,7 @@ export class FirestoreService {
   }
 
   getDefaultChannel() {
-    return doc(collection(this.firestore, 'channels'), '82C9Qh2AsibAiC6Ehti2');
+    return doc(collection(this.firestore, 'channels'), '3ZNVPzTSepCzgFNVsxUS');
   }
 
   async updateChannelMember(id: string) {
