@@ -4,7 +4,7 @@
 
 mat-card {
   height: 597px !important;
-  margin: 10px 16px 0 16px !important;
+  margin: 30px 16px 0 16px !important;
   width: calc(100% - 32px);
 }
 
@@ -116,6 +116,12 @@ mat-card-content {
 @media(min-width: 1000px) {
   mat-card {
     width: 475px;
+  }
+}
+
+@media(min-width: 1370px) {
+  mat-card {
+    margin: 10% 16px 0 16px !important;
   }
 }
 

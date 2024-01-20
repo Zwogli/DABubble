@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,7 +11,7 @@ import { ResponsiveService } from 'src/app/services/responsive.service';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
-export class SignUpComponent implements OnDestroy {
+export class SignUpComponent implements OnDestroy, OnInit {
   isDesktop!:boolean;
   signUpForm = new FormGroup({
     nameForm: new FormControl('', [
@@ -42,6 +42,10 @@ export class SignUpComponent implements OnDestroy {
         this.isDesktop = false;
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.firestoreService.emailAlreadyExist = false;
   }
 
   ngOnDestroy(): void {
