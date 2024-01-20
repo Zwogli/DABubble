@@ -56,6 +56,10 @@ body {
   @include nunito;
 }
 
+textarea {
+  font-family: var(--font-selection);
+}
+
 .avatar-xsmall {
   width: 34px !important;
   height: 34px !important;
