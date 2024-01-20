@@ -1,6 +1,4 @@
 <main>
-    <!-- [class.element__margin--bottom]="rs.isMobile$ | async" -->
-
     <div class="searchbar">
         <input 
         #searchbarNavbar
@@ -9,6 +7,7 @@
         [(ngModel)]="searchterm" 
         type="text" 
         placeholder="Suche nach...">
+
         <label for="searchbar">
             <span class="material-icons-outlined"> search </span>
         </label>
@@ -16,52 +15,60 @@
 
     <div 
     class="container__result"
-    *ngIf="searchbarActive">
-
+    *ngIf="searchbarActive"
+    >
+        <!-- 
+            result container
+         -->
         <div 
         class="container__result--close"
         (click)="searchbarActive = false; searchterm = ''" 
-        ><mat-icon>close</mat-icon></div>
-
-        <div class="container__result--section">
-            <span class="container__result--section-header">Channel:</span>
-                <span 
-                *ngIf="(searchCacheChannel.length == 0)"
-                class="container__result--empty">
-                    Keine Einträge gefunden
-                </span>
-
-                <div *ngFor="let channel of searchCacheChannel">
-                    <div class="container__Elements--row">
-                        <span>#{{ channel.name }}</span>
-                    </div>
-                </div>
+        >
+            <mat-icon>close</mat-icon>
         </div>
 
         <div class="container__result--section">
-            <span class="container__result--section-header">
-                Mitglieder:
-            </span>
+            <span class="container__result--section-header">Channel:</span>
+
+            <span 
+            *ngIf="(searchCacheChannel.length == 0)"
+            class="container__result--empty"
+            >Keine Einträge gefunden</span>
+
+            <!-- 
+                render result channel
+            -->
+            <div *ngFor="let channel of searchCacheChannel">
+                <div class="container__Elements--row">
+                    <span>#{{ channel.name }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container__result--section">
+            <span 
+            class="container__result--section-header"
+            >Mitglieder:</span>
 
             <span 
             *ngIf="(searchCacheUser.length == 0)"
-            class="container__result--empty">
-            Keine Einträge gefunden
-            </span>
-                
-            <div *ngFor="let user of searchCacheUser"> 
+            class="container__result--empty"
+            >Keine Einträge gefunden</span>
 
-                <div class="container__Elements--row">
+               <!-- 
+                   render result user
+               -->
+               <div *ngFor="let user of searchCacheUser"> 
+                   <div class="container__Elements--row">
 				    <div class="user__container--avatar">
 				        <img class="user__container--avatar-icon" src="{{ user.photoUrl}}" alt="avatar">
 				        <span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
 				    </div>
 
 				    <p>{{ user.name}}
-				        <span *ngIf="user.id == currentUser.id">(You)</span>
+				        <span *ngIf="user.id == currentUser.id">(Du)</span>
 				    </p>
 			    </div>
-
             </div>
         </div>
     </div>

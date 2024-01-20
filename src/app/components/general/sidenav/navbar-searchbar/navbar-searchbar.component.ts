@@ -28,9 +28,6 @@ export class NavbarSearchbarComponent {
     public rs: ResponsiveService,  
   ){}
 
-  /**
-   * subscribe
-   */
   ngOnInit(){
     this.setCurrentUser();
     this.setAllUser();
@@ -82,11 +79,6 @@ export class NavbarSearchbarComponent {
     }else if(this.isFiltered('@', filterItem, searchedItem)){
       this.searchForUser(searchedItem);
     }
-    console.log('search', this.allChannels);
-    
-    // else{
-    //   console.log('Search for Message', value);
-    // }
   }
 
   resetSearchCache(){
