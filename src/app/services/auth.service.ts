@@ -218,7 +218,9 @@ export class AuthService {
         this.currentUserId = '';
         this.isLoggedIn = false;
         const docId = localStorage.getItem('userId');
-        this.firestoreService.setOnlineStatus(docId, 'offline');
+        if (docId !== null) {
+          this.firestoreService.setOnlineStatus(docId, 'offline');
+        }
       }
     });
   }

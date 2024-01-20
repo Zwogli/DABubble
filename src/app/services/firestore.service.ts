@@ -512,6 +512,9 @@ export class FirestoreService {
         onlineStatus: false,
       });
     }
+    if (docId == null) {
+      //do nothing
+    }
   }
 
   /**
