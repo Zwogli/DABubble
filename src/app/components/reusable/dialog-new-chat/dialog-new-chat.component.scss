@@ -151,6 +151,9 @@ filtered user
 }
 .input__label{
 position: relative;
+input{
+  display: flex;
+}
 }
 
 .container__user-Elements--selected{
