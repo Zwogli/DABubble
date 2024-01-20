@@ -33,7 +33,6 @@ export class DialogProfilEditComponent {
     private authService: AuthService,
     private firestoreService: FirestoreService,
     public dialogRef: MatDialogRef<DialogProfilComponent>,
-    // public dialogRef: MatDialogRef<MenuProfilMobileComponent>,
     ) {}
 
     ngOnInit() {

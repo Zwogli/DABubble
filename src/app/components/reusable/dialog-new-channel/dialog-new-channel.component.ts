@@ -33,7 +33,6 @@ export class DialogNewChannelComponent {
     public router: Router,
   ){}
   
-  // sub currentUSer
     ngOnInit() {
     this.setCurrentUser();
   }
@@ -67,7 +66,7 @@ export class DialogNewChannelComponent {
         this.createNewChannel();
       }
     }else{
-      console.error('You have not selected anything');
+      console.error('No Selection');
     }
   }
 

@@ -30,7 +30,7 @@
   color: #535af1;
 }
 .fix--space-left {
-  margin-left: calc(0.5rem); //gap between arrow -> channel-titel
+  margin-left: calc(0.5rem);
 }
 .user__container--avatar {
   height: 50px;
@@ -83,27 +83,3 @@ material design
 p {
   margin: 0 0 0;
 }
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-scroll-bar
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-  /* width */
-  ::-webkit-scrollbar {
-    width: .5rem;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px var(--color-grey-hover); 
-    border-radius: 10px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-blue-bg); 
-    border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-blue-primary-hover); 
-  }
