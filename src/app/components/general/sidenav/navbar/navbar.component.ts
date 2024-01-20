@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -18,7 +17,6 @@ export class NavbarComponent {
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
-    public dialog: MatDialog,
     public rs: ResponsiveService,
     public dialogService: DialogManagerService
     ){}
