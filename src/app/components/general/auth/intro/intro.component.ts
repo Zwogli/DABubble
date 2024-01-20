@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-intro',
@@ -11,6 +12,17 @@ export class IntroComponent implements OnInit {
   animationToTop = false;
   playedIntroAmount = [0];
   introIsDone!: boolean;
+  isDesktop!: boolean;
+
+  constructor(public rs: ResponsiveService) {
+    this.rs.isDesktop$.subscribe((val) => {
+      if (val) {
+        this.isDesktop = true;
+      } else {
+        this.isDesktop = false;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loadLoadingAmounts();

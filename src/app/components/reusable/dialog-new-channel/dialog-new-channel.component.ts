@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-dialog-new-channel',
@@ -13,8 +14,8 @@ import { NavbarService } from 'src/app/services/navbar.service';
   styleUrls: ['./dialog-new-channel.component.scss']
 })
 export class DialogNewChannelComponent {
-  currentUser!:User;
   private currentUserIsDestroyed$ = new Subject<boolean>();
+  currentUser!:User;
   searchUserForm = new FormGroup({
     searchInputForm: new FormControl('', [
       Validators.minLength(2),
@@ -22,15 +23,16 @@ export class DialogNewChannelComponent {
   });
   filteredUser:User[] = [];
   alreadyFiltered:boolean = false;
+  showCloseAnimation:boolean = false;
 
   constructor(
     private authService: AuthService,
     public firestoreService:FirestoreService,
-    private navbarService: NavbarService, 
+    public dialogService: DialogManagerService, 
+    public rs: ResponsiveService, 
     public router: Router,
   ){}
   
-  // sub currentUSer
     ngOnInit() {
     this.setCurrentUser();
   }
@@ -64,7 +66,7 @@ export class DialogNewChannelComponent {
         this.createNewChannel();
       }
     }else{
-      console.error('You have not selected anything');
+      console.error('No Selection');
     }
   }
 
@@ -83,7 +85,8 @@ export class DialogNewChannelComponent {
   async createNewChannel(){
     await this.firestoreService.addNewChannel(this.currentUser.id);
     await this.firestoreService.updateUsers();
-    this.navbarService.toggleOverlay();
+    this.closeDialogNewChannel();
+    this.dialogService.showDialogAddChannel();
     this.router.navigate(['home/', this.firestoreService.newChannelRefId]);
     this.resetVariables();
   }
@@ -186,7 +189,7 @@ export class DialogNewChannelComponent {
     }
   }
 
-  closeMenu() {
+  closeDialogNewChannel(){
     let radioBtnAll:any = document.getElementById('radioAllUser');
     let radioBtnSingle:any = document.getElementById('radioSingleUser');
     if(radioBtnSingle.checked = true){
@@ -194,9 +197,7 @@ export class DialogNewChannelComponent {
       radioBtnAll.checked = true;
     }
     this.hideUserSearchbarNewChannel();
-    setTimeout(() => {
-      this.navbarService.toggleOverlay();
-    }, 250);
-    this.navbarService.menuSlideDown();
+    this.showCloseAnimation = true;
+    this.dialogService.showDialogNewChannel();
   }
 }

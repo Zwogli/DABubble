@@ -1,8 +1,8 @@
 <main>
-
     <header>
         <h2> 
-            <span> Edit your Profil </span>  
+            <span> Dein Profil bearbeiten </span>  
+
             <span (click)="onNoClick()" class="material-icons-outlined close__element"> close </span>
         </h2>
     </header>
@@ -13,11 +13,11 @@
     
     <form action="" [formGroup]="updateUserForm">
         <div class="dialog__content">
-
             <div class="dialog__content--name">
                 <div class="dialog__content--name-headline">
                     <span class="material-icons-outlined"> account_circle </span>
-                    <span class="dialog__content--name-headline-txt"> Full name </span>
+
+                    <span class="dialog__content--name-headline-txt"> Vollständiger Name </span>
                 </div>
 
                 <div class="dialog__content--input">
@@ -27,8 +27,12 @@
                         type="text" 
                         placeholder="{{ currentUser.name }}"
                     >
-                    <label for="userName" class="block__alert" *ngIf="nameForm?.invalid && (nameForm?.dirty || nameForm?.touched)">
-                        <!-- <div *ngIf="nameForm?.errors?.['required']">*Bitte gib einen Vor- und Nachnamen ein.</div> -->
+
+                    <label 
+                    for="userName" 
+                    class="block__alert" 
+                    *ngIf="nameForm?.invalid && (nameForm?.dirty || nameForm?.touched)"
+                    >
                         <div *ngIf="nameForm?.errors?.['pattern']">*Bitte verwende nur Buchstaben.</div>
                     </label>
                 </div>
@@ -38,7 +42,8 @@
             <div class="dialog__content--email">
                 <div class="dialog__content--email-headline">
                     <span class="material-icons-outlined"> email </span>
-                    <span class="dialog__content--email-headline-txt"> E-Mail-Address </span>
+
+                    <span class="dialog__content--email-headline-txt"> E-Mail-Adresse </span>
                 </div>
 
                 <div class="dialog__content--input">
@@ -49,11 +54,9 @@
                         placeholder="{{ currentUser.email }}"
                     >
                     <div class="block__alert" *ngIf="emailForm?.invalid && emailForm?.touched">
-                        <!-- <div *ngIf="emailForm?.errors?.['required']">*Bitte gib eine E-Mail-Adresse ein.</div> -->
                         <div *ngIf="emailForm?.errors?.['email']">*Diese E-Mail-Adresse ist leider ungültig.</div>
                         <div *ngIf="emailForm?.errors?.['pattern']">*E-Mail-Adresse enthält ungültige Zeichen.</div>
                     </div>
-
                 </div>
             </div>
 
@@ -62,14 +65,15 @@
                 <button
                     (click)="onNoClick()" 
                     class="dialog__btn--cancel"> 
-                    Cancel 
+                    Abbrechen 
                 </button>
+                
                 <button 
                     class="dialog__btn--save"
                     [disabled]="updateUserForm.invalid"
                     [class.btn-disabled]="updateUserForm.invalid"
                     (click)="updateCurrentUserData(userName.value, userEmail.value)"> 
-                    Save 
+                    Speichern 
                 </button>
             </div>
         </div>

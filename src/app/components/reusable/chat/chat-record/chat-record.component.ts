@@ -1,56 +1,91 @@
 import {
+  AfterViewChecked,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnChanges,
+  OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
+  inject,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { chatTypes } from 'src/app/interfaces/chats/types';
+import { ChatTypes } from 'src/app/interfaces/chats/types';
 import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
 import { ChatService } from 'src/app/services/chat.service';
+import { EmojiPickerService } from 'src/app/services/emoji-picker.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-chat-record',
   templateUrl: './chat-record.component.html',
   styleUrls: ['./chat-record.component.scss'],
 })
-export class ChatRecordComponent implements OnInit {
+export class ChatRecordComponent
+  implements OnInit, OnDestroy, AfterViewChecked, OnChanges
+{
+  emojiService: EmojiPickerService = inject(EmojiPickerService);
+
   @Input() chatRecordId!: string;
   @Input() currentUser!: User;
-  @Input() parentType!: chatTypes;
+  @Input() parentType!: ChatTypes;
   @Output('startThread') startThread: EventEmitter<any> = new EventEmitter();
+  @Output('chatRecordLength') chatRecordLength: EventEmitter<number> =
+    new EventEmitter();
 
   public selectedMsg!: Message | null;
   public today: Date = new Date();
   public chatRecord!: Message[];
+  public fileURL!: string;
+  public channelId!: string;
+
+  public showEditMsgMenu: boolean = false;
+  public showEditMsgInput!: Message | null;
+  private deletedFileDataCache!: {
+    url: string;
+    type: string;
+    name: string;
+  } | null;
+  public editMsgPayload: string = '';
+
+  public reactionPickerOnMsg!: Message;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
   constructor(
     private chatService: ChatService,
     private changeDetector: ChangeDetectorRef,
+    public rs: ResponsiveService,
     private route: ActivatedRoute
   ) {
-    this.chatRecord = [];
+    this.route.queryParamMap.subscribe((p: any) => {
+      this.channelId = p['params'].channelID;
+    });
   }
 
   ngOnInit() {
     if (this.parentType === 'thread') {
-      this.chatService.threadChatRecordIdChanged$.subscribe((chatRecordId) => {
-        this.chatRecordId = chatRecordId;
-        this.loadChatRecord();
-      });
+      this.chatService.threadChatRecordIdChanged$
+        .pipe(takeUntil(this.componentIsDestroyed$))
+        .subscribe((chatRecordId) => {
+          this.chatRecordId = chatRecordId;
+          this.loadChatRecord();
+        });
     } else {
-      this.chatService.chatRecordIdChanged$.subscribe((chatRecordId) => {
-        this.chatRecordId = chatRecordId;
-        this.loadChatRecord();
-      });
+      this.chatService.chatRecordIdChanged$
+        .pipe(takeUntil(this.componentIsDestroyed$))
+        .subscribe((chatRecordId) => {
+          this.chatRecordId = chatRecordId;
+          this.loadChatRecord();
+        });
     }
   }
+
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnDestroy() {
     this.componentIsDestroyed$.next(true);
@@ -59,7 +94,9 @@ export class ChatRecordComponent implements OnInit {
 
   ngAfterViewChecked() {
     // Prevents initial scroll-state on chat div to throw err
-    this.changeDetector.detectChanges();
+    setTimeout(() => {
+      this.changeDetector.detectChanges();
+    }, 500);
   }
 
   loadChatRecord() {
@@ -69,6 +106,7 @@ export class ChatRecordComponent implements OnInit {
         .pipe(takeUntil(this.componentIsDestroyed$))
         .subscribe((chat: Message[]) => {
           this.chatRecord = chat;
+          this.checkChatRecordLength();
         });
     } else {
       this.chatService.startSubChat(this.chatRecordId);
@@ -76,24 +114,34 @@ export class ChatRecordComponent implements OnInit {
         .pipe(takeUntil(this.componentIsDestroyed$))
         .subscribe((chat: Message[]) => {
           this.chatRecord = chat;
+          this.checkChatRecordLength();
         });
     }
   }
 
-  openThread(msg: Message, event: any) {
-    if (msg != this.selectedMsg) {
-      event.stopPropagation();
+  checkChatRecordLength() {
+    if (this.chatRecord) {
+      this.chatRecordLength.emit(this.chatRecord.length);
     }
-    const channelId = this.route.snapshot.paramMap.get('channelId')!;
-    this.chatService.openThread(msg, channelId);
   }
 
   toggleMsgMenu(msg: Message) {
-    if (this.selectedMsg == msg) {
+    this.showEditMsgMenu = false;
+    if (this.selectedMsg === msg) {
       this.selectedMsg = null;
     } else {
       this.selectedMsg = msg;
     }
+  }
+
+  openMsgMenu(msg: Message) {
+    this.showEditMsgMenu = false;
+    this.selectedMsg = msg;
+  }
+
+  closeMsgMenu(msg: Message) {
+    this.showEditMsgMenu = false;
+    this.selectedMsg = null;
   }
 
   /**
@@ -111,5 +159,77 @@ export class ChatRecordComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  loadFile(url: string) {
+    this.chatService.openFile(url);
+  }
+
+  openEditMsgMenu(event: any) {
+    event.stopPropagation();
+    this.toggleEditMsgMenu();
+  }
+
+  toggleEditMsgMenu() {
+    this.showEditMsgMenu = !this.showEditMsgMenu;
+  }
+
+  editMsg(msg: Message) {
+    this.toggleEditMsgMenu();
+    this.showEditMsgInput = msg;
+    this.editMsgPayload = msg.message;
+  }
+
+  closeEditInput(msg: Message) {
+    this.showEditMsgInput = null;
+    if (this.deletedFileDataCache) {
+      msg.file = this.deletedFileDataCache;
+    }
+    this.toggleMsgMenu(msg);
+  }
+
+  removeFileFromMsg(msg: Message) {
+    this.deletedFileDataCache = msg.file;
+    msg.file = {
+      url: '',
+      name: '',
+      type: '',
+    };
+  }
+
+  saveEditMsg(msg: Message) {
+    this.chatService.updateMessage(
+      this.chatRecordId,
+      msg,
+      this.editMsgPayload.trim()
+    );
+    this.closeEditInput(msg);
+    this.deletedFileDataCache = null;
+  }
+
+  addEmoji(event: any) {
+    this.editMsgPayload += event.emoji.native;
+  }
+
+  toggleReactionOnMsg(msg: Message) {
+    this.reactionPickerOnMsg = msg;
+  }
+
+  closeReaction() {
+    this.emojiService.openEmojiPicker = '';
+  }
+
+  stopPropagation(event: any) {
+    event.stopPropagation();
+  }
+
+  showReactionModal(id: string, msgId: string) {
+    const pill = document.getElementById(id + msgId);
+    (pill as HTMLDivElement).style.opacity = '100';
+  }
+
+  hideReactionModal(id: string, msgId: string) {
+    const pill = document.getElementById(id + msgId);
+    (pill as HTMLDivElement).style.opacity = '0';
   }
 }

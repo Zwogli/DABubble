@@ -1,8 +1,9 @@
-import { Injectable, OnInit, inject } from '@angular/core';
+import { Injectable, OnDestroy, OnInit, inject } from '@angular/core';
 import { Message } from '../models/message.class';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { chatTypes } from '../interfaces/chats/types';
+import { ChatTypes } from '../interfaces/chats/types';
+import { Unsubscribe } from '@angular/fire/auth';
 import {
   DocumentData,
   DocumentReference,
@@ -19,12 +20,11 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
-import { Unsubscribe } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ChatService implements OnInit {
+export class ChatService implements OnInit, OnDestroy {
   firestore: Firestore = inject(Firestore);
 
   public leadingThreadMsg!: any;
@@ -114,11 +114,6 @@ export class ChatService implements OnInit {
     this.channelId = channelId;
     this.leadingThreadMsgId = msgId;
     await this.createNewChatRecord('thread', msgId, this.chatRecordId);
-    this.router.navigate(['/thread/', msgId, this.channelId]);
-  }
-
-  openThread(msg: Message, channelId: string) {
-    this.router.navigate(['/thread/', msg.id, channelId]);
   }
 
   /**
@@ -146,7 +141,7 @@ export class ChatService implements OnInit {
   }
 
   /**
-   * This function creates a new chatRecord and takes several params 
+   * This function creates a new chatRecord and takes several params
    * to determine where the reference of the new chatRecord needs to
    * be stored
    *
@@ -155,12 +150,14 @@ export class ChatService implements OnInit {
    * @param {string} [chatRecordId] - Optional, just needed for threads to locate the specific message in a given chatRecord
    */
   async createNewChatRecord(
-    hostType: chatTypes,
+    hostType: ChatTypes,
     targetId: string,
     chatRecordId?: string
   ) {
     const newChatRecordRef = doc(collection(this.firestore, 'chatRecords'));
-    await setDoc(newChatRecordRef, {});
+    await setDoc(newChatRecordRef, {
+      type: hostType,
+    });
 
     switch (hostType) {
       case 'channel':
@@ -223,7 +220,7 @@ export class ChatService implements OnInit {
     });
   }
 
-  async navigateBack(src: chatTypes) {
+  async navigateBack(src: ChatTypes) {
     const msgThread = this.leadingThreadMsg.thread;
     if (src === 'thread' && msgThread.length === 0) {
       await this.deleteChatRecord(msgThread.id);
@@ -233,7 +230,6 @@ export class ChatService implements OnInit {
         this.leadingThreadMsg.id
       );
     }
-    this.router.navigate(['/home/', this.channelId]);
   }
 
   setChatRecordId(chatRecordId: string) {
@@ -270,5 +266,45 @@ export class ChatService implements OnInit {
     });
 
     this.setLeadingMsg(this.leadingThreadMsg.id, this.threadParentChatRecordId);
+  }
+
+  async getUserDataFromPrivateChat(docId: string) {
+    const docRef = doc(this.firestore, 'privateChat', docId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      return undefined;
+    }
+  }
+
+  openFile(url: string) {
+    window.open(url, '_blank');
+  }
+
+  async updateMessage(chatRecordId: string, msg: Message, content: string) {
+    const msgRef = doc(
+      this.firestore,
+      'chatRecords',
+      chatRecordId,
+      'messages',
+      msg.id
+    );
+    if (!msg.file.url) {
+      await updateDoc(msgRef, {
+        message: content,
+        'file.name': '',
+        'file.type': '',
+        'file.url': '',
+      });
+    } else {
+      await updateDoc(msgRef, {
+        message: content,
+        'file.name': msg.file.name,
+        'file.type': msg.file.type,
+        'file.url': msg.file.url,
+      });
+    }
   }
 }

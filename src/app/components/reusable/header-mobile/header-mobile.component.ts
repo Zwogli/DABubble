@@ -2,8 +2,9 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user.class';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { NavbarService } from 'src/app/services/navbar.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-header-mobile',
@@ -17,9 +18,10 @@ export class HeaderMobileComponent {
   private currentUserIsDestroyed$ = new Subject<boolean>();
 
   constructor(
-    private navbarService: NavbarService,
+    private dialogService: DialogManagerService,
     private router: Router,
     private firestoreService: FirestoreService,
+    public rs: ResponsiveService
     ) {    }
     
   ngOnInit(){
@@ -40,7 +42,7 @@ export class HeaderMobileComponent {
   }
 
   openMenu(){
-    this.navbarService.menuSlideUp('menu');
+    this.dialogService.showDialogProfilMenu();
   }
 
   navigateBack() {

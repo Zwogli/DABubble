@@ -1,16 +1,18 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
-export class SignUpComponent implements OnDestroy {
+export class SignUpComponent implements OnDestroy, OnInit {
+  isDesktop!:boolean;
   signUpForm = new FormGroup({
     nameForm: new FormControl('', [
       Validators.required,
@@ -32,14 +34,30 @@ export class SignUpComponent implements OnDestroy {
     checkboxForm: new FormControl(),
   });
 
-  constructor(public authService: AuthService, public firestoreService: FirestoreService) {}
+  constructor(public authService: AuthService, public firestoreService: FirestoreService, public rs: ResponsiveService) {
+    this.rs.isDesktop$.subscribe((val) => {
+      if (val) {
+        this.isDesktop = true;
+      } else {
+        this.isDesktop = false;
+      }
+    });
+  }
 
+  ngOnInit(): void {
+    this.firestoreService.emailAlreadyExist = false;
+  }
 
   ngOnDestroy(): void {
     this.firestoreService.emailAlreadyExist = false;
   }
 
-
+ /**
+   * This function works as a validator for the form controls and counts the used character
+   *
+   * @param minCount - The number of the characters they should be use at least
+   *
+   */
   requireUniqueCharacters(minCount: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value) {
@@ -86,7 +104,7 @@ export class SignUpComponent implements OnDestroy {
   }
 
   /**
-   * Get the password input field from the form group to use form control
+   * Get the checkbox from the form group to use form control
    *
    */
   get checkboxForm() {

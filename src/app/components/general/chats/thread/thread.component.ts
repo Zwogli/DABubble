@@ -6,6 +6,7 @@ import { Message } from 'src/app/models/message.class';
 import { User } from 'src/app/models/user.class';
 import { ChatService } from 'src/app/services/chat.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
+import { ResponsiveService } from 'src/app/services/responsive.service';
 
 @Component({
   selector: 'app-thread',
@@ -18,6 +19,7 @@ export class ThreadComponent implements OnInit {
 
   public chatRecordId!: string;
   public currentChannel!: Channel;
+  private currentChannelId!: string;
   public leadingMsg!: Message;
   public leadingMsgId!: string;
   public currentUser!: User;
@@ -27,7 +29,8 @@ export class ThreadComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fireService: FirestoreService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    public rs: ResponsiveService
   ) {
     this.setCurrentUser();
     this.setCurrentChannel();
@@ -49,17 +52,20 @@ export class ThreadComponent implements OnInit {
    *
    */
   async setCurrentChannel() {
-    const channelId = this.route.snapshot.paramMap.get('channelId');
-    if (channelId) {
-      this.chatService.channelId = channelId;
-      await this.fireService
-        .getSingleDoc('channels', channelId)
-        .then((doc: any) => {
-          this.currentChannel = doc;
-          this.parentChatRecordId = doc.chatRecord;
-          this.setChatRecordId();
-        });
-    }
+    this.route.queryParamMap.subscribe(async (p: any) => {
+      let channelId = p['params'].channelID;
+
+      if (channelId) {
+        this.chatService.channelId = channelId;
+        await this.fireService
+          .getSingleDoc('channels', channelId)
+          .then((doc: any) => {
+            this.currentChannel = doc;
+            this.parentChatRecordId = doc.chatRecord;
+            this.setChatRecordId();
+          });
+      }
+    });
   }
 
   /**
@@ -68,17 +74,19 @@ export class ThreadComponent implements OnInit {
    * in this certain way.
    *
    */
-  async setChatRecordId() {
-    const msgId = this.route.snapshot.paramMap.get('msgId');
-    if (msgId) {
-      await this.fireService
-        .getSingleSubDoc(this.currentChannel.chatRecord, msgId)
-        .then((doc: any) => {
-          this.chatRecordId = doc.thread.id;
-          this.chatService.setThreadChatRecordId(doc.thread.id);
-          this.setLeadingMsg(msgId);
-        });
-    }
+  setChatRecordId() {
+    this.route.queryParamMap.subscribe(async (p: any) => {
+      let msgId = p['params'].msgID;
+      if (msgId) {
+        await this.fireService
+          .getSingleSubDoc(this.currentChannel.chatRecord, msgId)
+          .then((doc: any) => {
+            this.chatRecordId = doc.thread.id;
+            this.chatService.setThreadChatRecordId(doc.thread.id);
+            this.setLeadingMsg(msgId);
+          });
+      }
+    });
   }
 
   async setLeadingMsg(msgId: string) {
@@ -92,5 +100,9 @@ export class ThreadComponent implements OnInit {
       .subscribe((msg: Message) => {
         this.leadingMsg = msg;
       });
+  }
+
+  loadFile(url: string) {
+    this.chatService.openFile(url);
   }
 }

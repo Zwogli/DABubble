@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MenuProfilMobileComponent } from '../../general/sidenav/menu-profil-mobile/menu-profil-mobile.component';
 import { DialogProfilEditComponent } from '../dialog-profil-edit/dialog-profil-edit.component';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -20,8 +19,8 @@ export class DialogProfilComponent {
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
-    public dialogRef: MatDialogRef<MenuProfilMobileComponent>,
-    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<DialogProfilEditComponent>,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -46,7 +45,9 @@ export class DialogProfilComponent {
   }
 
   openDialogProfilEdit() {
-    this.dialog.open(DialogProfilEditComponent);
+    this.dialog.open(DialogProfilEditComponent, {
+      width: '350px',
+    });
     this.onNoClick();
   }
 }
