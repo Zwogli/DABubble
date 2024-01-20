@@ -53,6 +53,7 @@ html {
 body {
   margin: 0;
   font-family: var(--font-selection);
+  @include nunito;
 }
 
 .avatar-xsmall {
@@ -86,11 +87,6 @@ body {
 
 .element__margin--bottom {
   margin-bottom: 1rem;
-}
-
-html,
-body {
-  height: 100%;
 }
 
 button {
