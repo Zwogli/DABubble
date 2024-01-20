@@ -64,17 +64,18 @@
         display: flex;
         justify-content: space-between;
 
+        button {
+
+            &:hover {
+                background-color: var(--color-blue-bg) !important;
+                color: var(--color-blue-secondary-hover) !important;
+            }
+        }
+
         .btn-container__extra-btn-wrapper {
             display: flex;
             gap: 5px;
 
-            button {
-
-                &:hover {
-                    background-color: var(--color-blue-bg) !important;
-                    color: var(--color-blue-secondary-hover) !important;
-                }
-            }
         }
     }
 }
