@@ -11,15 +11,11 @@ import {
   getDoc,
   updateDoc,
   QuerySnapshot,
-  addDoc,
   serverTimestamp,
-  orderBy,
   getDocs,
-  QueryDocumentSnapshot,
-  DocumentData,
 } from '@angular/fire/firestore';
 import { Unsubscribe } from '@angular/fire/auth';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Message } from '../models/message.class';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';

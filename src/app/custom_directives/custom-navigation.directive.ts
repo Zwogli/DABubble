@@ -89,8 +89,4 @@ export class CustomNavigationDirective {
       );
     }
   }
-
-  startThread() {
-    // console.log('thread');
-  }
 }

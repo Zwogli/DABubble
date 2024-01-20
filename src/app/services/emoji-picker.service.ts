@@ -4,13 +4,8 @@ import {
   DocumentData,
   DocumentReference,
   Firestore,
-  arrayUnion,
-  collection,
   doc,
-  getDoc,
   runTransaction,
-  setDoc,
-  updateDoc,
 } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 
