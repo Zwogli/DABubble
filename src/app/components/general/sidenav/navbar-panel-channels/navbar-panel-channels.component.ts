@@ -36,6 +36,10 @@ export class NavbarPanelChannelsComponent {
     this.setMemberInChannelArray();
   }
   
+  ngOnDestroy() {
+    this.currentUserIsDestroyed$.next(true);
+  }
+
   setMemberInChannelArray(){
     this.firestoreService.channelsArray$
     .pipe(takeUntil(this.currentUserIsDestroyed$)) // destroy subscribe
@@ -44,10 +48,6 @@ export class NavbarPanelChannelsComponent {
     });
   }
 
-  ngOnDestroy() {
-    this.currentUserIsDestroyed$.next(true);
-  }
-  
   setCurrentUser() {
     this.firestoreService.currentUser$
     .pipe(takeUntil(this.currentUserIsDestroyed$))
