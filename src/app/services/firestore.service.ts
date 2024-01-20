@@ -99,7 +99,6 @@ export class FirestoreService {
     if (docSnap.exists()) {
       return docSnap.data();
     } else {
-      console.log(`Document: ${docId} not found in Collection: ${colId}`);
       return;
     }
   }
@@ -111,7 +110,6 @@ export class FirestoreService {
     if (docSnap.exists()) {
       return docSnap.data();
     } else {
-      console.log(`Document: ${docId} not found in Collection: ${colId}`);
       return;
     }
   }
@@ -123,7 +121,6 @@ export class FirestoreService {
     if (docSnap.exists()) {
       return docSnap.data();
     } else {
-      console.log('No such document found!');
       return;
     }
   }
