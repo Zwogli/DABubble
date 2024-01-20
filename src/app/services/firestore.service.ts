@@ -49,7 +49,7 @@ export class FirestoreService {
   private allChannelsSubject = new BehaviorSubject<Array<Channel>>(
     this.allChannels
   );
-  private currentUserSubject = new BehaviorSubject<User>(this.currentUser);
+  public currentUserSubject = new BehaviorSubject<User>(this.currentUser);
   private channelsArraySubject = new BehaviorSubject<any>(this.channelsArray);
   private privateChatsSubject = new BehaviorSubject<any>(this.privateChats);
   private chatUserDataSubject = new BehaviorSubject<any>(this.chatUserData);
@@ -480,7 +480,6 @@ export class FirestoreService {
     });
     activePrivateChats = [];
   }
-
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>prepare and set data from/for firebase for AUTHENTICATION
 

@@ -21,43 +21,30 @@
   </mat-expansion-panel-header>
 
   <div class="mat-expansion-panel__content container__elements--column">
-    <!-- 
-		elements for expansion-panel
-		
-	-->
+    <!-- elements for expansion-panel -->
     <div
-      *ngFor="let user of chatUserData; index as i"
+      *ngFor="let chat of sidebarService.privateChatsPanelDataSubject | async"
       class="fix--space-left sort__elemts--row cursor__add"
     >
       <div
-        *ngIf="privateChats[i]"
-        [customLink]="['private', privateChats[i].id]"
+        *ngIf="chat"
+        [customLink]="['private', chat.id]"
         class="container__Elemets--row"
       >
-        <div class="user__container--avatar">
-          <img
-            class="avatar-small"
-            src="{{ chatUserData[i].photoUrl }}"
-            alt="avatar"
-            referrerpolicy="no-referrer"
-          />
-          <span
-            class="onlinestatus onlinestatus--color-{{
-              chatUserData[i].onlineStatus
-            }}"
-          ></span>
-        </div>
+        <app-avatar-display
+          [data]="{ user: chat.chatWith, showStatus: true, size: 'small' }"
+        ></app-avatar-display>
 
-        <p>
-          {{ chatUserData[i].name }}
-          <span *ngIf="chatUserData[i].id == currentUser.id">(You)</span>
+        <p *ngIf="chat.chatWith.name">
+          {{ chat.chatWith.name }}
+          <span *ngIf="chat.id == currentUser.id">(Du)</span>
         </p>
       </div>
     </div>
 
     <div
-    (click)="openDialogNewChat()"
-    class="fix--space-left sort__elemts--row cursor__add"
+      (click)="openDialogNewChat()"
+      class="fix--space-left sort__elemts--row cursor__add"
     >
       <div class="container--small">
         <div class="circle__add--bg">

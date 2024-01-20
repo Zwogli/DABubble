@@ -10,30 +10,30 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-dialog-new-chat',
   templateUrl: './dialog-new-chat.component.html',
-  styleUrls: ['./dialog-new-chat.component.scss']
+  styleUrls: ['./dialog-new-chat.component.scss'],
 })
 export class DialogNewChatComponent {
   @ViewChild('searchbarUser') searchbarUser!: ElementRef;
-  public showCloseAnimation:boolean = false;
-  currentUser!:User;
-  allUsers!:User[];
-  filteredUser:User[] = [];
-  selectedUser:User[] = [];
-  userSelected:boolean = true;
-  isAlreadyInChat:boolean = false;
-  windowWidth:number = window.innerWidth;
+  public showCloseAnimation: boolean = false;
+  currentUser!: User;
+  allUsers!: User[];
+  filteredUser: User[] = [];
+  selectedUser: User[] = [];
+  userSelected: boolean = true;
+  isAlreadyInChat: boolean = false;
+  windowWidth: number = window.innerWidth;
   private currentUserIsDestroyed$ = new Subject<boolean>();
   private allUsersIsDestroyed$ = new Subject<boolean>();
 
   constructor(
     private authService: AuthService,
-    private firestoreService:FirestoreService,
+    private firestoreService: FirestoreService,
     public dialogService: DialogManagerService,
     public rs: ResponsiveService,
     private router: Router
-  ){}
-  
-//<<<<<<<<<<<<<<<< subscribe >>>>>>>>>>>>
+  ) {}
+
+  //<<<<<<<<<<<<<<<< subscribe >>>>>>>>>>>>
   ngOnInit() {
     this.setCurrentUser();
     this.setAllUser();
@@ -60,51 +60,52 @@ export class DialogNewChatComponent {
       });
   }
 
-//<<<<<<<<<<<<<<<< search user >>>>>>>>>>>>
-  searchForUser(){
+  //<<<<<<<<<<<<<<<< search user >>>>>>>>>>>>
+  searchForUser() {
     let searchbarValue = this.searchbarUser.nativeElement.value.toLowerCase();
     this.filteredUser = [];
-    if(searchbarValue === null || searchbarValue === ""){
+    if (searchbarValue === null || searchbarValue === '') {
       this.filteredUser = [];
-    }else{
+    } else {
       this.filterForUser(searchbarValue);
     }
   }
 
-  filterForUser(inputName:string){
+  filterForUser(inputName: string) {
     this.allUsers.forEach((user) => {
       let userName = user.name.toLowerCase();
-      if(this.isCheckedInput(inputName, userName)){
+      if (this.isCheckedInput(inputName, userName)) {
         this.filteredUser.push(user);
       }
-    })
+    });
   }
 
-  isCheckedInput(inputName:string, userName:string){
-    return userName.includes(inputName) &&
-    !userName.includes(this.currentUser.name);
+  isCheckedInput(inputName: string, userName: string) {
+    return (
+      userName.includes(inputName) && !userName.includes(this.currentUser.name)
+    );
   }
 
-//<<<<<<<<<<<<<<<< slecet add/remove user >>>>>>>>>>>>
-  selectUser(user:User){
+  //<<<<<<<<<<<<<<<< slecet add/remove user >>>>>>>>>>>>
+  selectUser(user: User) {
     this.selectedUser.push(user);
     this.filteredUser = [];
     this.searchbarUser.nativeElement.value = null;
     this.userSelected = false;
   }
 
-  removeUser(){
+  removeUser() {
     this.selectedUser = [];
     this.userSelected = true;
     this.isAlreadyInChat = false;
   }
 
-  submitNewChat(){
+  submitNewChat() {
     this.isAlreadyInChat = false;
     this.checkIsAlreadyInChat();
-    if(this.isAlreadyInChat){
-      console.error('DABubble: chat already excist');
-    }else{
+    if (this.isAlreadyInChat) {
+      console.error('DABubble: chat already exists');
+    } else {
       this.firestoreService.createNewChat(this.selectedUser[0]);
       this.router.navigateByUrl(
         `/home(channel:chat/private)?channelID=${this.firestoreService.newChatRefId}`
@@ -114,38 +115,38 @@ export class DialogNewChatComponent {
     }
   }
 
-  checkIsAlreadyInChat(){
+  checkIsAlreadyInChat() {
     let selectedUserId = this.selectedUser[0].id;
     let allChatsUserData = this.firestoreService.chatUserData;
     allChatsUserData.forEach((user) => {
-      if(user.id == selectedUserId){
+      if (user.id == selectedUserId) {
         this.isAlreadyInChat = true;
       }
-    })
+    });
   }
 
-//<<<<<<<<<<<<<<<< manage dialog >>>>>>>>>>>>
-  closeDialogNewChat(){
-    if(this.windowWidth < 1370.02){
+  //<<<<<<<<<<<<<<<< manage dialog >>>>>>>>>>>>
+  closeDialogNewChat() {
+    if (this.windowWidth < 1370.02) {
       this.showCloseAnimation = true;
       this.closeAnimation();
-    }else{
+    } else {
       this.dialogService.showDialogNewChat();
     }
     this.removeUser();
     this.clearIputField();
   }
 
-  clearIputField(){
+  clearIputField() {
     let inputSearchbarUser: any = document.getElementById('searchbar-newChat');
-    if(inputSearchbarUser != null){
+    if (inputSearchbarUser != null) {
       inputSearchbarUser.value = null;
       this.filteredUser = [];
     }
   }
 
-  closeAnimation(){
-    if(this.showCloseAnimation){
+  closeAnimation() {
+    if (this.showCloseAnimation) {
       setTimeout(() => {
         this.showCloseAnimation = false;
         this.dialogService.showDialogNewChat();
