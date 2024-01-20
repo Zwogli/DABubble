@@ -10,7 +10,9 @@ class="overlay"
 [class.slide--up]="!showCloseAnimation && (dialogService.showDialogNewChat$ | async) && ((rs.isMobile$ | async) || (rs.isTablet$ | async))"
 [class.slide--down]="showCloseAnimation && ((rs.isMobile$ | async) || (rs.isTablet$ | async))"
 >
-
+	<!-- 
+		mobile dialog bar
+	 -->
     <div 
     (click)="closeDialogNewChat()"
     *ngIf="(rs.isMobile$ | async) || (rs.isTablet$|async)"
@@ -20,7 +22,9 @@ class="overlay"
             <span></span>
         </div>
     </div>
-
+	<!-- 
+		dialog header
+	 -->
     <div class="container__header" [class.element__margin--bottom]="(rs.isDesktop$|async)">
         <span>Leute hinzufügen</span>
         <span 
@@ -29,7 +33,9 @@ class="overlay"
         *ngIf="(rs.isDesktop$ | async)"
         > close </span>
     </div>
-
+	<!-- 
+		dialog form
+	 -->
     <form class="search-user-form">
         <div class="container__search">
             <div class="input__label">
@@ -49,9 +55,8 @@ class="overlay"
                 </label>
 
                 <!-- 
-                    selected User 
+                    selected user into input
                 -->
-                
                 <div 
                 *ngFor="let user of this.selectedUser"
                 class="container__user-Elements--selected" 
@@ -66,11 +71,10 @@ class="overlay"
                         close 
                     </span>
                 </div>
-
             </div>
 
             <!-- 
-                render filtered User 
+                render filtered User into container under input
             -->
             <div id="filtered-user" 
             class="container__filteredUser"
@@ -83,6 +87,7 @@ class="overlay"
                 >
                     <div class="container__user-Elements--avatar">
                         <img class="avatar-small" src="{{ user.photoUrl}}" alt="avatar">
+						
                         <span class="onlinestatus onlinestatus--color-{{ user.onlineStatus }}"></span>
                     </div>
 

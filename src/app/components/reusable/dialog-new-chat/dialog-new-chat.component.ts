@@ -33,7 +33,6 @@ export class DialogNewChatComponent {
     private router: Router
   ) {}
 
-  //<<<<<<<<<<<<<<<< subscribe >>>>>>>>>>>>
   ngOnInit() {
     this.setCurrentUser();
     this.setAllUser();
@@ -86,7 +85,7 @@ export class DialogNewChatComponent {
     );
   }
 
-  //<<<<<<<<<<<<<<<< slecet add/remove user >>>>>>>>>>>>
+  //<<<<<<<<<<<<<<<< selected add/remove user >>>>>>>>>>>>
   selectUser(user: User) {
     this.selectedUser.push(user);
     this.filteredUser = [];
