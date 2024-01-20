@@ -3,6 +3,7 @@ import { AuthService } from './services/auth.service';
 import { ResponsiveService } from './services/responsive.service';
 import { DialogManagerService } from './services/dialog-manager.service';
 import { FirestoreService } from './services/firestore.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +17,13 @@ export class AppComponent {
   // after manually reload of the page
   constructor(
     public auth: AuthService,
-    public firestoreService: FirestoreService, 
+    public firestoreService: FirestoreService,
     public rs: ResponsiveService,
     public dialogService: DialogManagerService,
-    ) {}
+    public router: Router
+  ) {}
 
-    toggleNavbar(){
-      this.dialogService.showNavbar();
-    }
+  toggleNavbar() {
+    this.dialogService.showNavbar();
+  }
 }
