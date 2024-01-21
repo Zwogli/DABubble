@@ -84,7 +84,6 @@ export class EmojiPickerService {
         ],
       };
       msg.reactions.push(newEmoji);
-      console.log(msg.reactions);
 
       this.startTransaction(docRef, msg.reactions);
     }
@@ -105,7 +104,6 @@ export class EmojiPickerService {
           reactions: data,
         });
       });
-      console.log('Transaction successfully committed!');
     } catch (e) {
       console.log('Transaction failed: ', e);
     }

@@ -36,6 +36,7 @@ export class MessageInputComponent implements OnChanges {
   public placeholderText!: string;
   public fileName!: string;
   public showPopupModal: boolean = false;
+  public openEmojiPicker: boolean = false;
 
   constructor(
     private fireService: FirestoreService,
@@ -80,6 +81,8 @@ export class MessageInputComponent implements OnChanges {
     this.toggleThumbnail();
     this.toggleFileName();
     this.checkParentType();
+    this.openEmojiPicker = false;
+    this.showPopupModal = false;
   }
 
   setMsgData() {
@@ -171,5 +174,9 @@ export class MessageInputComponent implements OnChanges {
   toggleSearchModal() {
     this.searchService.matchedUsers = [];
     this.showPopupModal = !this.showPopupModal;
+  }
+
+  toggleEmojiPicker() {
+    this.openEmojiPicker = !this.openEmojiPicker;
   }
 }

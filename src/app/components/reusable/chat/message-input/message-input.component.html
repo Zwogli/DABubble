@@ -1,6 +1,6 @@
 <div class="message__input">
   <emoji-mart
-    *ngIf="emojiService.openEmojiPicker === 'Main'"
+    *ngIf="openEmojiPicker"
     class="emoji-picker"
     [darkMode]="false"
     (emojiClick)="addEmoji($event)"
@@ -67,14 +67,10 @@
 
       <!-- Emoji -->
       <button
-        (click)="emojiService.toggleEmojiPicker('Main')"
+        (click)="toggleEmojiPicker()"
         mat-icon-button
         class="btn__icon-wo-bg"
-        [ngClass]="
-          emojiService.openEmojiPicker === 'Main'
-            ? 'btn__icon-wo-bg__focus'
-            : ''
-        "
+        [ngClass]="openEmojiPicker ? 'active-btn' : ''"
         aria-label="Icon button to select emotes"
       >
         <mat-icon fontSet="material-icons-outlined"
