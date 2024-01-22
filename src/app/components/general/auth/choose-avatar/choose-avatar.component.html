@@ -1,5 +1,5 @@
 <div class="block__sign-up">
-  <img class="img-after-intro" src="../../../../assets/img/logo-text.png">
+  <img class="img-after-intro" src="assets/img/logo-text.png">
 
   <mat-card>
     <mat-card-content>
@@ -10,19 +10,19 @@
           <span class="sign-in__headline">Wähle deinen Avatar</span>
         </div>
 
-        <img class="img__profile-choose-avatar" [class.img-border-color]="avatarIsChoosen" #unchoosenAvatar src="../../../../assets/img/avatars/guest-avatar.png">
+        <img class="img__profile-choose-avatar" [class.img-border-color]="avatarIsChoosen" #unchoosenAvatar src="assets/img/avatars/guest-avatar.png">
 
         <span class="text__name">{{ this.firestoreService.currentSignUpData.name }}</span>
 
         <span class="text__choose-avatar">Aus der Liste wählen</span>
 
         <div class="block__img-box">
-          <img (click)="chooseAvatar(1)" src="../../../../assets/img/avatars/avatar1.png">
-          <img (click)="chooseAvatar(2)" src="../../../../assets/img/avatars/avatar2.png">
-          <img (click)="chooseAvatar(3)" src="../../../../assets/img/avatars/avatar3.png">
-          <img (click)="chooseAvatar(4)" src="../../../../assets/img/avatars/avatar4.png">
-          <img (click)="chooseAvatar(5)" src="../../../../assets/img/avatars/avatar5.png">
-          <img (click)="chooseAvatar(6)" src="../../../../assets/img/avatars/avatar6.png">
+          <img (click)="chooseAvatar(1)" src="assets/img/avatars/avatar1.png">
+          <img (click)="chooseAvatar(2)" src="assets/img/avatars/avatar2.png">
+          <img (click)="chooseAvatar(3)" src="assets/img/avatars/avatar3.png">
+          <img (click)="chooseAvatar(4)" src="assets/img/avatars/avatar4.png">
+          <img (click)="chooseAvatar(5)" src="assets/img/avatars/avatar5.png">
+          <img (click)="chooseAvatar(6)" src="assets/img/avatars/avatar6.png">
         </div>
 
         <div class="block__upload-img">

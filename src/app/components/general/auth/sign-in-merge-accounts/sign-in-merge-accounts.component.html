@@ -1,5 +1,5 @@
 <div class="block__sign-up">
-  <img class="img-after-intro" src="../../../../assets/img/logo-text.png">
+  <img class="img-after-intro" src="assets/img/logo-text.png">
 
   <mat-card *ngIf="!this.authService.isLoggedInForMerging">
     <mat-card-content>
@@ -54,7 +54,7 @@
       <b class="email">Wichtig:</b> Verwende bitte die selbe E-Mail-Adresse, die du auch für dein bisheriges DABubble Konto verwendet hast
       <b class="email">({{ this.firestoreService.currentUserData.email }})</b>.</span>
     <div class="block__google-log-in" (click)="prepareAccountLinking()">
-      <img src="../../../../../assets/img/google-icon.png">
+      <img src="assets/img/google-icon.png">
       <span>Mit Google anmelden & Accounts verbinden</span>
     </div>
   </mat-card>
