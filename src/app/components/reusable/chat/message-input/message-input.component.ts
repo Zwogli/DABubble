@@ -159,8 +159,6 @@ export class MessageInputComponent implements OnChanges {
   }
 
   addEmoji(event: any) {
-    console.log('Emoji picked: ', event);
-    console.log(event.emoji.native);
     this.msgPayload += event.emoji.native;
     document.getElementById('msgInput')!.focus();
   }
