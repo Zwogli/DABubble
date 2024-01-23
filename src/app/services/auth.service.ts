@@ -12,6 +12,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider, signOut, linkWithPopup } from '@angular/fire/auth';
 import { ResponsiveService } from './responsive.service';
 import { take } from 'rxjs';
+import { SidebarService } from './sidebar.service';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +21,7 @@ import { take } from 'rxjs';
 export class AuthService {
   auth: any = getAuth();
   rs: ResponsiveService = inject(ResponsiveService);
+  sidebarS: SidebarService = inject(SidebarService);
 
   signUpError = false;
   signUpSuccessfully = false;
@@ -40,7 +43,6 @@ export class AuthService {
   ) {
     this.getCurrentUser();
   }
-
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>sign-in
 
@@ -72,7 +74,6 @@ export class AuthService {
     this.redirectToLandingPage();
   }
 
-
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>google authentication
 
   /**
@@ -80,7 +81,9 @@ export class AuthService {
    *
    */
   async googleAuthentication() {
-    const userCredential = await this.afAuth.signInWithPopup(new GoogleAuthProvider());
+    const userCredential = await this.afAuth.signInWithPopup(
+      new GoogleAuthProvider()
+    );
     const user = userCredential.user;
     try {
       await this.firestoreService.checkSignUpEmail(user?.email);
@@ -90,10 +93,16 @@ export class AuthService {
       } else {
         await this.firestoreService.checkIfGoogleAccount(userId);
 
-        if (this.firestoreService.emailAlreadyExist && this.firestoreService.isGoogleAccount) {
+        if (
+          this.firestoreService.emailAlreadyExist &&
+          this.firestoreService.isGoogleAccount
+        ) {
           this.googleSignIn(user, userId);
         }
-        if (this.firestoreService.emailAlreadyExist && !this.firestoreService.isGoogleAccount) {
+        if (
+          this.firestoreService.emailAlreadyExist &&
+          !this.firestoreService.isGoogleAccount
+        ) {
           this.prepareAccountLinking(user);
         }
       }
@@ -107,7 +116,15 @@ export class AuthService {
    */
   async googleSignUp(user: any) {
     this.googleAccount = true;
-    await this.firestoreService.addUser(user, user?.displayName, user?.photoURL, this.googleAccount, [user?.uid], [this.defaultChannel], user?.uid);
+    await this.firestoreService.addUser(
+      user,
+      user?.displayName,
+      user?.photoURL,
+      this.googleAccount,
+      [user?.uid],
+      [this.defaultChannel],
+      user?.uid
+    );
     await this.firestoreService.addPrivateChat(user?.uid);
     await this.firestoreService.updateChannelMember(user?.uid);
     this.redirectToLandingPage();
@@ -132,7 +149,10 @@ export class AuthService {
       this.firestoreService.currentUserData.memberInChannel,
       this.firestoreService.currentUserData.id
     );
-    this.firestoreService.deleteCurrentData('currentUserData', this.firestoreService.currentUserData.id);
+    this.firestoreService.deleteCurrentData(
+      'currentUserData',
+      this.firestoreService.currentUserData.id
+    );
     this.redirectToLandingPage();
   }
 
@@ -164,7 +184,6 @@ export class AuthService {
       .catch((error) => {});
   }
 
-
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>sign-out
 
   signOut() {
@@ -177,7 +196,6 @@ export class AuthService {
       })
       .catch((error) => {});
   }
-
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>get current user data
 
@@ -203,13 +221,20 @@ export class AuthService {
         this.firestoreService.startSubUser(this.currentUserId);
         this.firestoreService.setOnlineStatus(this.currentUserId, 'online');
         localStorage.setItem('userId', this.currentUserId);
-        setTimeout((() => {
+        setTimeout(() => {
           this.isLoggedIn = true;
-        }),500)
+        }, 500);
       } else {
         // User is signed out
+
         this.currentUserId = '';
         this.isLoggedIn = false;
+        
+        setTimeout(() => {
+          this.sidebarS.privateChats = [];
+          this.sidebarS.privateChatsPanelData = [];
+        }, 500);
+
         const docId = localStorage.getItem('userId');
         if (docId !== null) {
           this.firestoreService.setOnlineStatus(docId, 'offline');
@@ -218,10 +243,17 @@ export class AuthService {
     });
   }
 
-
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>sign-up
 
-  async signUp(name: string, email: string, password: string, photoUrl: any, location: string, activePrivateChats: any, memberInChannel: string[]) {
+  async signUp(
+    name: string,
+    email: string,
+    password: string,
+    photoUrl: any,
+    location: string,
+    activePrivateChats: any,
+    memberInChannel: string[]
+  ) {
     await createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         //const user = userCredential.user;
@@ -240,7 +272,14 @@ export class AuthService {
       });
   }
 
-  async executeSignUp(userCredential: any, name: any, photoUrl: any, location: any, activePrivateChats: any, memberInChannel: string[]) {
+  async executeSignUp(
+    userCredential: any,
+    name: any,
+    photoUrl: any,
+    location: any,
+    activePrivateChats: any,
+    memberInChannel: string[]
+  ) {
     this.signUpSuccessfully = true;
     setTimeout(() => {
       const user = userCredential.user;
@@ -260,7 +299,15 @@ export class AuthService {
       if (activePrivateChats == 0) {
         activePrivateChats = [user?.uid];
       }
-      this.firestoreService.addUser(user, name, photoUrl, this.googleAccount, activePrivateChats, memberInChannel, docId);
+      this.firestoreService.addUser(
+        user,
+        name,
+        photoUrl,
+        this.googleAccount,
+        activePrivateChats,
+        memberInChannel,
+        docId
+      );
       this.firestoreService.addPrivateChat(user.uid);
     }, 3500);
   }
@@ -270,7 +317,6 @@ export class AuthService {
     this.signUpError = true;
     this.signUpSuccessfully = false;
   }
-
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>forgot password
 
@@ -292,7 +338,6 @@ export class AuthService {
         this.sendMailError = true;
       });
   }
-
 
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>redirection
 

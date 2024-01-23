@@ -34,17 +34,18 @@ export class SidebarService implements OnDestroy {
     new BehaviorSubject<IMessagePanel[]>([]);
 
   constructor() {
-    this.firestoreService.currentUser$
+    this.firestoreService.currentUserSubject
       .pipe(takeUntil(this.currentUserIsDestroyed$))
       .subscribe((user: User) => {
-        this.loadPrivateChats();
         this.currentUser = user;
+        this.loadPrivateChats();
       });
   }
 
   ngOnDestroy(): void {
     this.currentUserIsDestroyed$.next(true);
     this.currentUserIsDestroyed$.complete();
+    this.privateChatsPanelDataSubject.complete();
   }
 
   async loadPrivateChats() {
