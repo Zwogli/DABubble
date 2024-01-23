@@ -65,8 +65,8 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
    * @param avatarNr - Number of the avatar (between 1 - 6)
    */
   chooseAvatar(avatarNr: number) {
-    this.unchoosenAvatar.nativeElement.src = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
-    this.choosenAvatar = `../../../../assets/img/avatars/avatar${avatarNr}.png`;
+    this.unchoosenAvatar.nativeElement.src = `assets/img/avatars/avatar${avatarNr}.png`;
+    this.choosenAvatar = `assets/img/avatars/avatar${avatarNr}.png`;
     this.avatarIsChoosen = true;
   }
 
@@ -93,7 +93,7 @@ export class ChooseAvatarComponent implements OnInit, OnDestroy {
    */
   async prepareChoosenAvatar() {
     if (this.choosenAvatar == 0) {
-      this.choosenAvatar = '../../../../assets/img/avatars/guest-avatar.png';
+      this.choosenAvatar = 'assets/img/avatars/guest-avatar.png';
     }
   }
 
