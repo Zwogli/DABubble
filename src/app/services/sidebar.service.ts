@@ -97,25 +97,28 @@ export class SidebarService implements OnDestroy {
         } else {
           userId = chat.chatBetween[0];
         }
-        const user = await getDoc(
-          doc(this.firestore, 'user', userId).withConverter(userConverter)
-        );
+        let userData: IMessagePanel;
 
-        const userData = {
-          id: chat.id,
-          chatWith: user.data()!,
-        };
-
-        if (
-          // Cancel if object is already in Template array
-          this.privateChatsPanelData.some(
-            (chat: IMessagePanel) => chat.id === userData.id
-          )
-        ) {
-          return;
-        } else {
-          this.privateChatsPanelData.push(userData);
-        }
+        try {
+          await getDoc(
+            doc(this.firestore, 'user', userId).withConverter(userConverter)
+          ).then((user) => {
+            userData = {
+              id: chat.id,
+              chatWith: user.data()!,
+            };
+            if (
+              // Cancel if object is already in Template array
+              this.privateChatsPanelData.some(
+                (chat: IMessagePanel) => chat.id === userData.id
+              )
+            ) {
+              return;
+            } else {
+              this.privateChatsPanelData.push(userData);
+            }
+          });
+        } catch (error) {}
       }
     });
     // Emit to subject
