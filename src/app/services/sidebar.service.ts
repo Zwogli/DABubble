@@ -7,6 +7,7 @@ import {
   getDoc,
   doc,
   getDocs,
+  onSnapshot,
 } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 import { FirestoreService } from './firestore.service';
@@ -17,6 +18,7 @@ import {
   userConverter,
 } from '../interfaces/firestore/converter';
 import { Chat } from '../models/chat.class';
+import { Unsubscribe } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -29,12 +31,16 @@ export class SidebarService implements OnDestroy {
   public currentUser!: User;
   public privateChats: Chat[] = [];
   public privateChatsPanelData: IMessagePanel[] = [];
+  public docIdsForQuerySnapUser: string[] = [];
+  public docIdsForQuerySnapRecord: string[] = [];
 
   public privateChatsPanelDataSubject: BehaviorSubject<IMessagePanel[]> =
     new BehaviorSubject<IMessagePanel[]>([]);
 
+  private unsubSidebarPanelUser!: Unsubscribe;
+
   constructor() {
-    this.firestoreService.currentUserSubject
+    this.firestoreService.currentUser$
       .pipe(takeUntil(this.currentUserIsDestroyed$))
       .subscribe((user: User) => {
         this.currentUser = user;
@@ -46,6 +52,7 @@ export class SidebarService implements OnDestroy {
     this.currentUserIsDestroyed$.next(true);
     this.currentUserIsDestroyed$.complete();
     this.privateChatsPanelDataSubject.complete();
+    this.unsubSidebarPanelUser();
   }
 
   async loadPrivateChats() {
@@ -73,8 +80,12 @@ export class SidebarService implements OnDestroy {
     this.loadUserFromPrivateChats();
   }
 
-  loadUserFromPrivateChats() {
-    this.privateChats.forEach(async (chat: Chat) => {
+  async loadUserFromPrivateChats() {
+    this.docIdsForQuerySnapUser = [];
+    this.docIdsForQuerySnapRecord = [];
+    console.log(this.privateChats);
+
+    this.privateChats.forEach((chat: Chat) => {
       if (
         // Determine if chat is chat of the user itself and if its already in the array
         chat.chatBetween.length === 1 &&
@@ -91,38 +102,82 @@ export class SidebarService implements OnDestroy {
       } else {
         // Chat is with another user
         const index = chat.chatBetween.indexOf(this.currentUser.id);
-        let userId;
-        // Find index of the other user
-        if (index === 0) {
-          userId = chat.chatBetween[1];
-        } else {
-          userId = chat.chatBetween[0];
-        }
-        let userData: IMessagePanel;
+        console.log(chat.chatBetween);
 
-        try {
-          await getDoc(
-            doc(this.firestore, 'user', userId).withConverter(userConverter)
-          ).then((user) => {
-            userData = {
-              id: chat.id,
-              chatWith: user.data()!,
-            };
-            if (
-              // Cancel if object is already in Template array
-              this.privateChatsPanelData.some(
-                (chat: IMessagePanel) => chat.id === userData.id
-              )
-            ) {
-              return;
-            } else {
-              this.privateChatsPanelData.push(userData);
-            }
-          });
-        } catch (error) {}
+        // Find index of the other user
+        if (chat.chatBetween.length > 1 && index === 0) {
+          this.docIdsForQuerySnapUser.push(chat.chatBetween[1]);
+          this.docIdsForQuerySnapRecord.push(chat.id);
+        } else {
+          this.docIdsForQuerySnapUser.push(chat.chatBetween[0]);
+          this.docIdsForQuerySnapRecord.push(chat.id);
+        }
       }
+      console.log(chat);
     });
-    // Emit to subject
-    this.privateChatsPanelDataSubject.next(this.privateChatsPanelData);
+
+    try {
+      console.log('Array for query snap ', this.docIdsForQuerySnapUser);
+      console.log('Array for query snap ', this.docIdsForQuerySnapRecord);
+
+      const q = query(
+        collection(this.firestore, 'user'),
+        where('id', 'in', this.docIdsForQuerySnapUser)
+      ).withConverter(userConverter);
+
+      let userData: IMessagePanel;
+      this.unsubSidebarPanelUser = onSnapshot(q, (querySnapshot) => {
+        this.privateChatsPanelData = [];
+
+        let chatRecord: string;
+        querySnapshot.forEach((user) => {
+          user.data().activePrivateChats.forEach((str) => {
+            this.privateChats.includes(str);
+            chatRecord = str;
+          });
+
+          userData = {
+            id: chatRecord,
+            chatWith: user.data(),
+          };
+
+          console.log('User to push in render arr ', user.data());
+
+          if (userData.id === this.currentUser.id) {
+            this.privateChatsPanelData.unshift(userData);
+          } else {
+            this.privateChatsPanelData.push(userData);
+          }
+
+          console.log(
+            'before emit to render subject ',
+            this.privateChatsPanelData
+          );
+          // Emit to subject
+          this.privateChatsPanelDataSubject.next(this.privateChatsPanelData);
+        });
+      });
+    } catch (error) {}
+
+    // try {
+    //   await getDoc(
+    //     doc(this.firestore, 'user', userId).withConverter(userConverter)
+    //   ).then((user) => {
+    //     userData = {
+    //       id: chat.id,
+    //       chatWith: user.data()!,
+    //     };
+    //     if (
+    //       // Cancel if object is already in Template array
+    //       this.privateChatsPanelData.some(
+    //         (chat: IMessagePanel) => chat.id === userData.id
+    //       )
+    //     ) {
+    //       return;
+    //     } else {
+    //       this.privateChatsPanelData.push(userData);
+    //     }
+    //   });
+    // } catch (error) {}
   }
 }
