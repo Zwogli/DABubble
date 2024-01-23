@@ -13,7 +13,6 @@ import { GoogleAuthProvider, signOut, linkWithPopup } from '@angular/fire/auth';
 import { ResponsiveService } from './responsive.service';
 import { take } from 'rxjs';
 import { SidebarService } from './sidebar.service';
-import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -229,7 +228,7 @@ export class AuthService {
 
         this.currentUserId = '';
         this.isLoggedIn = false;
-        
+
         setTimeout(() => {
           this.sidebarS.privateChats = [];
           this.sidebarS.privateChatsPanelData = [];

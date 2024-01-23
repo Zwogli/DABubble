@@ -104,12 +104,16 @@ export class FirestoreService {
   }
 
   async getUserDoc(colId: string, docId: string) {
-    const docSnap = await getDoc(
-      doc(this.firestore, colId, docId).withConverter(userConverter)
-    );
-    if (docSnap.exists()) {
-      return docSnap.data();
-    } else {
+    try {
+      const docSnap = await getDoc(
+        doc(this.firestore, colId, docId).withConverter(userConverter)
+      );
+      if (docSnap.exists()) {
+        return docSnap.data();
+      } else {
+        return;
+      }
+    } catch (error) {
       return;
     }
   }
