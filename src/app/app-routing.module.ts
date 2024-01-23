@@ -29,7 +29,7 @@ const mobileRoutes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'home', component: NavbarComponent },
   // { path: 'home/addChannel', component: CreateChannelComponent },
-  { path: 'chat/:type', component: ChannelComponent },
+  { path: ':type', component: ChannelComponent },
   { path: 'thread', component: ThreadComponent },
   { path: '**', redirectTo: '/home', pathMatch: 'full' },
 ];
@@ -49,7 +49,7 @@ const desktopRoutes: Routes = [
   { path: 'home', component: NavbarComponent },
   // { path: 'home/addChannel', component: CreateChannelComponent },
   {
-    path: 'chat/:type',
+    path: ':type',
     component: ChannelComponent,
     outlet: 'channel',
   },
@@ -60,7 +60,7 @@ const desktopRoutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/home(channel:chat/channel)?channelID=3ZNVPzTSepCzgFNVsxUS',
+    redirectTo: '/home(channel:channel)?channelID=3ZNVPzTSepCzgFNVsxUS',
     pathMatch: 'full',
   },
 ];
@@ -73,12 +73,12 @@ export class AppRoutingModule {
   auth: AuthService = inject(AuthService);
 
   constructor(public router: Router, private rs: ResponsiveService) {
-    this.rs.isMobile$.subscribe((val) => {
-      if (val) {
-        router.resetConfig(mobileRoutes);
-        if (this.auth.isLoggedIn) this.rs.changeRoutes(!val);
-      }
-    });
+    // this.rs.isMobile$.subscribe((val) => {
+    //   if (val) {
+    //     router.resetConfig(mobileRoutes);
+    //     if (this.auth.isLoggedIn) this.rs.changeRoutes(!val);
+    //   }
+    // });
 
     this.rs.isTablet$.subscribe((val) => {
       if (val) {

@@ -17,7 +17,7 @@ export class ResponsiveService {
       .pipe(map((result) => result.matches));
 
     this.isTablet$ = this.responsive
-      .observe('(min-width: 600px) and (max-width: 1370px)')
+      .observe('(max-width: 1370px)')
       .pipe(map((result) => result.matches));
 
     this.isDesktop$ = this.responsive
@@ -30,6 +30,10 @@ export class ResponsiveService {
     const channelID: string = tree.queryParams['channelID'];
     const msgID: string = tree.queryParams['msgID'];
     let channelType: string;
+    console.log(tree);
+    console.log(tree.root.children['primary'].segments[0].path);
+
+    if (tree.root.children['primary'].segments[0].path === 'home' && !channelID) return;
 
     if (!msgID) {
       channelType = this.getChannelType(tree, val);
@@ -45,11 +49,13 @@ export class ResponsiveService {
   }
 
   getChannelType(tree: UrlTree, val: boolean): string {
-    if (val && tree.root.children[PRIMARY_OUTLET].segments[1]) {
-      const type = tree.root.children[PRIMARY_OUTLET].segments[1].path;
+    console.log(tree.root.children['primary'].segments[0].path);
+    
+    if (val && tree.root.children['primary'].segments[0]) {
+      const type = tree.root.children['primary'].segments[0].path;
       return type;
-    } else if (val === false && tree.root.children['channel'].segments[1]) {
-      const type = tree.root.children['channel'].segments[1].path;
+    } else if (!val && tree.root.children['channel'].segments[0]) {
+      const type = tree.root.children['channel'].segments[0].path;
       return type;
     } else {
       return '';
@@ -59,11 +65,11 @@ export class ResponsiveService {
   changeToDesktopUrl(channelType: string, channelID: string, msgID?: string) {
     if (msgID) {
       this.router.navigateByUrl(
-        `/home(channel:chat/${channelType}//thread:thread)?channelID=${channelID}&msgID=${msgID}`
+        `/home(channel:${channelType}//thread:thread)?channelID=${channelID}&msgID=${msgID}`
       );
     } else {
       this.router.navigateByUrl(
-        `/home(channel:chat/${channelType})?channelID=${channelID}`
+        `/home(channel:${channelType})?channelID=${channelID}`
       );
     }
   }
@@ -74,7 +80,7 @@ export class ResponsiveService {
         `/thread?channelID=${channelID}&msgID=${msgID}`
       );
     } else {
-      this.router.navigateByUrl(`/chat/${channelType}?channelID=${channelID}`);
+      this.router.navigateByUrl(`/${channelType}?channelID=${channelID}`);
     }
   }
 }
