@@ -295,6 +295,7 @@ export class FirestoreService {
     memberInChannel: any,
     docId: any
   ) {
+    name.trim();
     await setDoc(doc(this.firestore, 'user', docId), {
       name: name.charAt(0).toUpperCase() + name.slice(1),
       email: userObject?.email,
