@@ -31,17 +31,19 @@ export class ResponsiveService {
     const msgID: string = tree.queryParams['msgID'];
     let channelType: string;
 
-    if (!msgID) {
-      channelType = this.getChannelType(tree, val);
-    } else {
-      channelType = 'channel';
-    }
+    try {
+      if (!msgID) {
+        channelType = this.getChannelType(tree, val);
+      } else {
+        channelType = 'channel';
+      }
 
-    if (val && channelID) {
-      this.changeToDesktopUrl(channelType, channelID, msgID);
-    } else {
-      this.changeToMobileUrl(channelType, channelID, msgID);
-    }
+      if (val && channelID) {
+        this.changeToDesktopUrl(channelType, channelID, msgID);
+      } else {
+        this.changeToMobileUrl(channelType, channelID, msgID);
+      }
+    } catch (error) {}
   }
 
   getChannelType(tree: UrlTree, val: boolean): string {
