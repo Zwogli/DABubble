@@ -61,27 +61,27 @@ export class CustomNavigationDirective {
   navigateToChannel() {
     if (this.isDesktop) {
       this.router.navigateByUrl(
-        `/home(channel:channel)?channelID=${this.mainChatID}`
+        `/home(channel:chat/channel)?channelID=${this.mainChatID}`
       );
     } else {
-      this.router.navigateByUrl(`/channel?channelID=${this.mainChatID}`);
+      this.router.navigateByUrl(`/chat/channel?channelID=${this.mainChatID}`);
     }
   }
 
   navigateToPrivate() {
     if (this.isDesktop) {
       this.router.navigateByUrl(
-        `/home(channel:private)?channelID=${this.mainChatID}`
+        `/home(channel:chat/private)?channelID=${this.mainChatID}`
       );
     } else {
-      this.router.navigateByUrl(`/private?channelID=${this.mainChatID}`);
+      this.router.navigateByUrl(`/chat/private?channelID=${this.mainChatID}`);
     }
   }
 
   navigateToThread() {
     if (this.isDesktop) {
       this.router.navigateByUrl(
-        `/home(channel:channel//thread:thread)?channelID=${this.mainChatID}&msgID=${this.msgID}`
+        `/home(channel:chat/channel//thread:thread)?channelID=${this.mainChatID}&msgID=${this.msgID}`
       );
     } else {
       this.router.navigateByUrl(
