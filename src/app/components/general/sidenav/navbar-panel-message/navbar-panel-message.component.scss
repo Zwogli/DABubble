@@ -21,6 +21,10 @@
 .container__element--spacebetween {
   justify-content: space-between;
 }
+
+.container__element--center {
+  gap: 4px !important;
+}
 .sort__elemts--row {
   display: flex;
   align-items: center;
