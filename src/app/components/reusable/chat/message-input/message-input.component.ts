@@ -77,7 +77,7 @@ export class MessageInputComponent implements OnChanges {
       this.fileToUpload
     );
     this.msgPayload = '';
-    this.fileToUpload = '';
+    this.cancelUpload();
     this.toggleThumbnail();
     this.toggleFileName();
     this.checkParentType();
