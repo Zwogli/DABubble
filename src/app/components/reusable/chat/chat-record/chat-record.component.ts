@@ -53,6 +53,7 @@ export class ChatRecordComponent
   public editMsgPayload: string = '';
 
   public reactionPickerOnMsg!: Message;
+  public reactionModalIsOpen: boolean = false;
 
   private componentIsDestroyed$ = new Subject<boolean>();
 
@@ -226,10 +227,12 @@ export class ChatRecordComponent
   showReactionModal(id: string, msgId: string) {
     const pill = document.getElementById(id + msgId);
     (pill as HTMLDivElement).style.opacity = '100';
+    (pill as HTMLDivElement).style.display = 'flex';
   }
 
   hideReactionModal(id: string, msgId: string) {
     const pill = document.getElementById(id + msgId);
     (pill as HTMLDivElement).style.opacity = '0';
+    (pill as HTMLDivElement).style.display = 'none';
   }
 }

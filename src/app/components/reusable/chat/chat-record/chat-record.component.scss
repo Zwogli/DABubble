@@ -146,8 +146,8 @@
 .msg-edit__input--file-wrapper {
     display: flex;
     object-fit: cover;
-    max-width: 200px;
-    overflow: hidden;
+    max-width: 260px;
+    gap: 4px;
 
     button {
         white-space: nowrap;
@@ -205,7 +205,7 @@
     left: 50%;
     bottom: 110%;
 
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
