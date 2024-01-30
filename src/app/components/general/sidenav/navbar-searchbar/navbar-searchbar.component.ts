@@ -8,6 +8,8 @@ import { ResponsiveService } from 'src/app/services/responsive.service';
 import { Router } from '@angular/router';
 import { DialogProfilComponent } from 'src/app/components/reusable/dialog-profil/dialog-profil.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogManagerService } from 'src/app/services/dialog-manager.service';
+import { DialogProfilMainSearchComponent } from 'src/app/components/reusable/dialog-profil-main-search/dialog-profil-main-search.component';
 
 
 
@@ -24,7 +26,6 @@ export class NavbarSearchbarComponent {
   searchbarActive:boolean = false;
   searchCacheChannel: any[] = [];
   searchCacheUser: any[] = [];
-  selectedUser: any[] = [];
   searchterm!:string;
   private currentUserIsDestroyed$ = new Subject<boolean>();
   private componentIsDestroyed$ = new Subject<boolean>();
@@ -39,6 +40,8 @@ export class NavbarSearchbarComponent {
     public rs: ResponsiveService,
     private router: Router,
     public dialog: MatDialog,
+    public dialogManagerService: DialogManagerService,
+
 
   ){
     this.rs.isDesktop$
@@ -162,8 +165,8 @@ export class NavbarSearchbarComponent {
   }
 
   navigateToUser(user:any) {
-    this.dialog.open(DialogProfilComponent);
-    this.selectedUser = user;
+    this.dialog.open(DialogProfilMainSearchComponent);
+    this.dialogManagerService.selectedUser = user;
   }
 
 }
