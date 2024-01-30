@@ -127,7 +127,7 @@ export class NavbarSearchbarComponent {
   }
 
   isMinLength(searchedItem:string){
-    return searchedItem.length > 0
+    return searchedItem.length > 0;
   }
 
   /**
