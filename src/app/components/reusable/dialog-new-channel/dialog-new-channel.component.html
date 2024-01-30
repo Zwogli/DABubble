@@ -7,9 +7,9 @@ class="overlay"
 <div 
 [class.dialog__hide]="!(dialogService.showDialogNewChannel$ | async) && (rs.isDesktop$ | async)"
 [class.dialog__desktop]="(dialogService.showDialogNewChannel$ | async) && (rs.isDesktop$ | async)"
-[class.dialog__mobile]="(rs.isMobile$ | async) || (rs.isTablet$ | async)"
-[class.slide--up]="(dialogService.showDialogNewChannel$ | async) && (rs.isMobile$ | async) || (rs.isTablet$ | async)"
-[class.slide--down]="showCloseAnimation && !(dialogService.showDialogNewChannel$ | async) && (rs.isMobile$ | async) || (rs.isTablet$ | async)"
+[class.dialog__mobile]="(rs.isMobile$ | async) || (rs.isTablet$ | async) && !(rs.isDesktop$ | async)"
+[class.slide--up]="(dialogService.showDialogNewChannel$ | async) && ((rs.isMobile$ | async) || (rs.isTablet$ | async))"
+[class.slide--down]="showCloseAnimation && !(dialogService.showDialogNewChannel$ | async) && ((rs.isMobile$ | async) || (rs.isTablet$ | async))"
 >
 	<!-- 
 		mobile dialog bar
