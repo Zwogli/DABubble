@@ -139,8 +139,7 @@ main {
     }
 
     .message__footer {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: flex;
         gap: 20px;
 
         >span {
@@ -150,6 +149,7 @@ main {
         .message__footer-count {
             color: var(--color-blue-secondary-hover);
             font-size: 1rem;
+            min-width: 120px;
             cursor: pointer;
 
             &:hover {
